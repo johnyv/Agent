@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		525348591FBA98D50067D5FA /* CustomerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525348581FBA98D50067D5FA /* CustomerViewController.swift */; };
+		5253485B1FBA9F390067D5FA /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5253485A1FBA9F390067D5FA /* Common.swift */; };
 		52538AC01FAAF51400FCBC26 /* ProfileViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52538ABF1FAAF51400FCBC26 /* ProfileViewController1.swift */; };
 		52538AC31FAB041A00FCBC26 /* ProfileCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52538AC21FAB041A00FCBC26 /* ProfileCellModel.swift */; };
 		526F73DD1FB403BD0010599C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526F73DC1FB403BD0010599C /* ProfileViewController.swift */; };
@@ -45,6 +47,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		525348581FBA98D50067D5FA /* CustomerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomerViewController.swift; path = views/CustomerViewController.swift; sourceTree = "<group>"; };
+		5253485A1FBA9F390067D5FA /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		52538ABF1FAAF51400FCBC26 /* ProfileViewController1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController1.swift; sourceTree = "<group>"; };
 		52538AC21FAB041A00FCBC26 /* ProfileCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileCellModel.swift; path = model/ProfileCellModel.swift; sourceTree = "<group>"; };
 		526F73DC1FB403BD0010599C /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = views/ProfileViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +118,7 @@
 				528634821FA2D76C0001B964 /* MenuViewController.swift */,
 				52538ABF1FAAF51400FCBC26 /* ProfileViewController1.swift */,
 				526F73DC1FB403BD0010599C /* ProfileViewController.swift */,
+				525348581FBA98D50067D5FA /* CustomerViewController.swift */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -161,6 +166,7 @@
 				5288D6541F7A4EE900406C9B /* LaunchScreen.storyboard */,
 				5288D6571F7A4EE900406C9B /* Info.plist */,
 				527F652B1FA1F76A0004A938 /* Main.storyboard */,
+				5253485A1FBA9F390067D5FA /* Common.swift */,
 			);
 			path = Agent;
 			sourceTree = "<group>";
@@ -410,6 +416,7 @@
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/WMPageController/WMPageController.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -421,6 +428,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WMPageController.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -434,7 +442,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				525348591FBA98D50067D5FA /* CustomerViewController.swift in Sources */,
 				527F65241FA1E3D70004A938 /* LoginViewController.swift in Sources */,
+				5253485B1FBA9F390067D5FA /* Common.swift in Sources */,
 				5288D64E1F7A4EE900406C9B /* ViewController.swift in Sources */,
 				527F65281FA1F63F0004A938 /* AccountViewController.swift in Sources */,
 				527F65201FA18C110004A938 /* MainViewController.swift in Sources */,

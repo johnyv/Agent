@@ -11,6 +11,7 @@ target 'Agent' do
 	pod 'Moya', '~> 9.0'
 	pod 'SwiftyJSON'
 	pod 'SnapKit', '~> 3.0.0'
+	pod 'WMPageController', '~> 2.3.0'
 end
 
 post_install do |installer|

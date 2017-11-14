@@ -31,7 +31,7 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func startLogin(sender:UIButton){
-        SVProgressHUD.showInfo(withStatus: "loading...")
+        //SVProgressHUD.showInfo(withStatus: "loading...")
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainMenu") as! UITabBarController
         self.present(vc, animated: true, completion: nil)
     }
