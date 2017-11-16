@@ -12,8 +12,12 @@ class MenuViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
+        let appdelegate = UIApplication.shared.delegate as! AppDelegate
+        appdelegate.menuTab = self
+        
+        self.selectedIndex = 0
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,7 +25,6 @@ class MenuViewController: UITabBarController {
         // Dispose of any resources that can be recreated.
     }
     
-
     /*
     // MARK: - Navigation
 

@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		525348591FBA98D50067D5FA /* CustomerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525348581FBA98D50067D5FA /* CustomerViewController.swift */; };
 		5253485B1FBA9F390067D5FA /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5253485A1FBA9F390067D5FA /* Common.swift */; };
+		5253485E1FBC31C20067D5FA /* UIButton+TitleAlign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5253485D1FBC31C20067D5FA /* UIButton+TitleAlign.swift */; };
+		525348611FBC530A0067D5FA /* MainNaviController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525348601FBC530A0067D5FA /* MainNaviController.swift */; };
+		525348631FBC561D0067D5FA /* SalesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525348621FBC561D0067D5FA /* SalesViewController.swift */; };
 		52538AC01FAAF51400FCBC26 /* ProfileViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52538ABF1FAAF51400FCBC26 /* ProfileViewController1.swift */; };
 		52538AC31FAB041A00FCBC26 /* ProfileCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52538AC21FAB041A00FCBC26 /* ProfileCellModel.swift */; };
 		526F73DD1FB403BD0010599C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526F73DC1FB403BD0010599C /* ProfileViewController.swift */; };
@@ -26,6 +29,9 @@
 		5288D6561F7A4EE900406C9B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5288D6541F7A4EE900406C9B /* LaunchScreen.storyboard */; };
 		5288D6611F7A4EE900406C9B /* AgentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5288D6601F7A4EE900406C9B /* AgentTests.swift */; };
 		5288D66C1F7A4EE900406C9B /* AgentUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5288D66B1F7A4EE900406C9B /* AgentUITests.swift */; };
+		5292648B1FBD2A60000D98A4 /* DictViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5292648A1FBD2A60000D98A4 /* DictViews.swift */; };
+		5292648E1FBD6EC6000D98A4 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5292648D1FBD6EC6000D98A4 /* NetworkManager.swift */; };
+		529264901FBDA071000D98A4 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5292648F1FBDA071000D98A4 /* ErrorMessage.swift */; };
 		DB6F216607A6283FC03854C8 /* Pods_Agent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7ADCB9F5510FBAAB5DECF96 /* Pods_Agent.framework */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +55,9 @@
 /* Begin PBXFileReference section */
 		525348581FBA98D50067D5FA /* CustomerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomerViewController.swift; path = views/CustomerViewController.swift; sourceTree = "<group>"; };
 		5253485A1FBA9F390067D5FA /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		5253485D1FBC31C20067D5FA /* UIButton+TitleAlign.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIButton+TitleAlign.swift"; path = "mixins/UIButton+TitleAlign.swift"; sourceTree = "<group>"; };
+		525348601FBC530A0067D5FA /* MainNaviController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainNaviController.swift; path = navigation/MainNaviController.swift; sourceTree = "<group>"; };
+		525348621FBC561D0067D5FA /* SalesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SalesViewController.swift; path = views/SalesViewController.swift; sourceTree = "<group>"; };
 		52538ABF1FAAF51400FCBC26 /* ProfileViewController1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController1.swift; sourceTree = "<group>"; };
 		52538AC21FAB041A00FCBC26 /* ProfileCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileCellModel.swift; path = model/ProfileCellModel.swift; sourceTree = "<group>"; };
 		526F73DC1FB403BD0010599C /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = views/ProfileViewController.swift; sourceTree = "<group>"; };
@@ -73,6 +82,9 @@
 		5288D66B1F7A4EE900406C9B /* AgentUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentUITests.swift; sourceTree = "<group>"; };
 		5288D66D1F7A4EE900406C9B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5288D67B1F7A55D700406C9B /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
+		5292648A1FBD2A60000D98A4 /* DictViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DictViews.swift; path = static/DictViews.swift; sourceTree = "<group>"; };
+		5292648D1FBD6EC6000D98A4 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		5292648F1FBDA071000D98A4 /* ErrorMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorMessage.swift; path = model/ErrorMessage.swift; sourceTree = "<group>"; };
 		8C0FFD966F7EB019D310CF95 /* Pods_AgentUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AgentUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF6BFE71300EEAFDA348E605 /* Pods_AgentTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AgentTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D40BFC9BA92B27687221036F /* Pods-Agent.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Agent.release.xcconfig"; path = "Pods/Target Support Files/Pods-Agent/Pods-Agent.release.xcconfig"; sourceTree = "<group>"; };
@@ -119,14 +131,33 @@
 				52538ABF1FAAF51400FCBC26 /* ProfileViewController1.swift */,
 				526F73DC1FB403BD0010599C /* ProfileViewController.swift */,
 				525348581FBA98D50067D5FA /* CustomerViewController.swift */,
+				525348621FBC561D0067D5FA /* SalesViewController.swift */,
 			);
 			name = views;
+			sourceTree = "<group>";
+		};
+		5253485C1FBC311D0067D5FA /* mixins */ = {
+			isa = PBXGroup;
+			children = (
+				5253485D1FBC31C20067D5FA /* UIButton+TitleAlign.swift */,
+			);
+			name = mixins;
+			sourceTree = "<group>";
+		};
+		5253485F1FBC52150067D5FA /* navigation */ = {
+			isa = PBXGroup;
+			children = (
+				525348601FBC530A0067D5FA /* MainNaviController.swift */,
+			);
+			name = navigation;
 			sourceTree = "<group>";
 		};
 		52538AC11FAB036F00FCBC26 /* model */ = {
 			isa = PBXGroup;
 			children = (
 				52538AC21FAB041A00FCBC26 /* ProfileCellModel.swift */,
+				5292648A1FBD2A60000D98A4 /* DictViews.swift */,
+				5292648F1FBDA071000D98A4 /* ErrorMessage.swift */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -157,7 +188,8 @@
 		5288D64A1F7A4EE900406C9B /* Agent */ = {
 			isa = PBXGroup;
 			children = (
-				52D9EEE81FB57A4A004E2276 /* moyaHttp */,
+				5253485F1FBC52150067D5FA /* navigation */,
+				5253485C1FBC311D0067D5FA /* mixins */,
 				52538AC11FAB036F00FCBC26 /* model */,
 				5216EB511FA0889B0051D35C /* views */,
 				5288D64B1F7A4EE900406C9B /* AppDelegate.swift */,
@@ -167,6 +199,7 @@
 				5288D6571F7A4EE900406C9B /* Info.plist */,
 				527F652B1FA1F76A0004A938 /* Main.storyboard */,
 				5253485A1FBA9F390067D5FA /* Common.swift */,
+				5292648D1FBD6EC6000D98A4 /* NetworkManager.swift */,
 			);
 			path = Agent;
 			sourceTree = "<group>";
@@ -195,21 +228,6 @@
 				5288D67B1F7A55D700406C9B /* Bridging-Header.h */,
 			);
 			path = Bridging;
-			sourceTree = "<group>";
-		};
-		52D9EEE81FB57A4A004E2276 /* moyaHttp */ = {
-			isa = PBXGroup;
-			children = (
-				52D9EEE91FB57EB6004E2276 /* target */,
-			);
-			name = moyaHttp;
-			sourceTree = "<group>";
-		};
-		52D9EEE91FB57EB6004E2276 /* target */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = target;
 			sourceTree = "<group>";
 		};
 		BE6934126BC25E54D11E8C23 /* Frameworks */ = {
@@ -442,18 +460,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5292648E1FBD6EC6000D98A4 /* NetworkManager.swift in Sources */,
 				525348591FBA98D50067D5FA /* CustomerViewController.swift in Sources */,
 				527F65241FA1E3D70004A938 /* LoginViewController.swift in Sources */,
 				5253485B1FBA9F390067D5FA /* Common.swift in Sources */,
+				525348611FBC530A0067D5FA /* MainNaviController.swift in Sources */,
 				5288D64E1F7A4EE900406C9B /* ViewController.swift in Sources */,
 				527F65281FA1F63F0004A938 /* AccountViewController.swift in Sources */,
 				527F65201FA18C110004A938 /* MainViewController.swift in Sources */,
+				5253485E1FBC31C20067D5FA /* UIButton+TitleAlign.swift in Sources */,
+				5292648B1FBD2A60000D98A4 /* DictViews.swift in Sources */,
 				527F652A1FA1F6660004A938 /* ResetPwdViewController.swift in Sources */,
 				527F65261FA1F2150004A938 /* ForgotViewController.swift in Sources */,
 				526F73DD1FB403BD0010599C /* ProfileViewController.swift in Sources */,
+				525348631FBC561D0067D5FA /* SalesViewController.swift in Sources */,
 				52538AC01FAAF51400FCBC26 /* ProfileViewController1.swift in Sources */,
 				5288D64C1F7A4EE900406C9B /* AppDelegate.swift in Sources */,
 				528634831FA2D76C0001B964 /* MenuViewController.swift in Sources */,
+				529264901FBDA071000D98A4 /* ErrorMessage.swift in Sources */,
 				52538AC31FAB041A00FCBC26 /* ProfileCellModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

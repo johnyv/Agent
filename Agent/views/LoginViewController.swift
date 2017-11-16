@@ -22,8 +22,12 @@ class LoginViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         btnLogin.layer.cornerRadius = 3
+        btnLogin.layer.masksToBounds = true
         btnVerifySMS.layer.cornerRadius = 3
-    }
+
+        btnWeixin.setTitleAlign(position: .bottom)
+        btnAccount.setTitleAlign(position: .bottom)
+}
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -31,9 +35,11 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func startLogin(sender:UIButton){
+        let appdelegate = UIApplication.shared.delegate as! AppDelegate
+        appdelegate.login()
         //SVProgressHUD.showInfo(withStatus: "loading...")
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainMenu") as! UITabBarController
-        self.present(vc, animated: true, completion: nil)
+//        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainMenu") as! MenuViewController
+//        self.present(vc, animated: true, completion: nil)
     }
     /*
     // MARK: - Navigation

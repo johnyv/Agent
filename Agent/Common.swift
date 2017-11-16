@@ -14,3 +14,5 @@ func kRGBColorFromHex(rgbValue: Int) -> (UIColor) {
                    blue: ((CGFloat)(rgbValue & 0xFF)) / 255.0,
                    alpha: 1.0)
 }
+
+let dictView = DictViews()

@@ -8,16 +8,25 @@
 
 import UIKit
 import SVProgressHUD
+import SwiftyJSON
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    var menuTab: MenuViewController?
+    var mainNavi: MainNaviController?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        UINavigationBar.appearance().barTintColor = kRGBColorFromHex(rgbValue: 0x008ce6)
-        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 17.0),NSForegroundColorAttributeName: UIColor.white]
+        let nav = UINavigationBar.appearance()
+//        nav.barTintColor = kRGBColorFromHex(rgbValue: 0x008ce6)
+        nav.tintColor = UIColor.white
+        nav.backgroundColor = kRGBColorFromHex(rgbValue: 0x008ce6)
+        nav.titleTextAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 18.0),NSForegroundColorAttributeName: UIColor.white]
+        nav.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        nav.shadowImage = UIImage()
+        
         return true
     }
 
@@ -42,7 +51,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
+    
+    func login() -> () {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainMenu") as? MenuViewController
+        //var ret:Array<JSON> = []
+        window?.rootViewController?.present(vc!, animated: true, completion: nil)
+    }
 }
 

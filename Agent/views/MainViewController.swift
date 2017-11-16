@@ -9,11 +9,22 @@
 import UIKit
 
 class MainViewController: UIViewController {
-
+    
+    @IBOutlet weak var btnSale: UIButton!
+    @IBOutlet weak var btnPurchase: UIButton!
+    @IBOutlet weak var btnClub: UIButton!
+    @IBOutlet weak var vTopBG: UIView!
+    @IBOutlet weak var navMain: UINavigationItem!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+//        navMain.title = "首页"
+        btnSale.setTitleAlign(position: .bottom)
+        btnPurchase.setTitleAlign(position: .bottom)
+        btnClub.setTitleAlign(position: .bottom)
+        
+        vTopBG.backgroundColor = kRGBColorFromHex(rgbValue: 0x008ce6)
     }
 
     override func didReceiveMemoryWarning() {
@@ -22,6 +33,11 @@ class MainViewController: UIViewController {
     }
     
 
+    @IBAction func pushSalesView(_ sender: UIButton) {
+        let appdelegate = UIApplication.shared.delegate as! AppDelegate
+        appdelegate.mainNavi?.pushSalesView()
+//        navMain.title = "售卡"
+    }
     /*
     // MARK: - Navigation
 

@@ -1,15 +1,15 @@
 //
-//  CustomerViewController.swift
+//  SalesViewController.swift
 //  Agent
 //
-//  Created by 于劲 on 2017/11/14.
+//  Created by 于劲 on 2017/11/15.
 //  Copyright © 2017年 xianlai. All rights reserved.
 //
 
 import UIKit
 
-class CustomerViewController: UIViewController {
-    
+class SalesViewController: UIViewController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,10 +21,6 @@ class CustomerViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func backToPrev(_ sender: UIBarButtonItem) {
-        let appdelegate = UIApplication.shared.delegate as! AppDelegate
-        appdelegate.menuTab?.selectedIndex = 0
-    }
 
     /*
     // MARK: - Navigation

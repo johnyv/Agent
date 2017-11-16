@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class AccountViewController: UIViewController {
 
@@ -34,6 +35,34 @@ class AccountViewController: UIViewController {
     
     @IBAction func backToPrev(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
+    }
+    @IBAction func accountLogin(_ sender: UIButton) {
+        let usr = tfMobile.text
+        let pwd = tfPwd.text
+        NetProvider.request(.login(usr!, pwd!)){ result in
+            if case let .success(response) = result{
+                let data = try?response.mapJSON()
+                let json = JSON(data!)
+                let code = json["code"].intValue
+                if code == 200{
+                    print(json)
+                    let appdelegate = UIApplication.shared.delegate as! AppDelegate
+                    appdelegate.login()
+                }else{
+                    let alertController = UIAlertController(title: "系统提示",
+                                                            message: errMsg.desc(key: code), preferredStyle: .alert)
+//                    let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+                    let okAction = UIAlertAction(title: "好的", style: .default, handler: {
+                        action in
+                        print("点击了确定")
+                    })
+//                    alertController.addAction(cancelAction)
+                    alertController.addAction(okAction)
+                    self.present(alertController, animated: true, completion: nil)
+                }
+            }
+            
+        }
     }
     /*
     // MARK: - Navigation

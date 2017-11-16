@@ -1,19 +1,22 @@
 //
-//  CustomerViewController.swift
+//  MainNaviController.swift
 //  Agent
 //
-//  Created by 于劲 on 2017/11/14.
+//  Created by 于劲 on 2017/11/15.
 //  Copyright © 2017年 xianlai. All rights reserved.
 //
 
 import UIKit
 
-class CustomerViewController: UIViewController {
-    
+class MainNaviController: UINavigationController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        let appdelegate = UIApplication.shared.delegate as! AppDelegate
+        appdelegate.mainNavi = self
+//        self.title = "首页"
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,11 +24,11 @@ class CustomerViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func backToPrev(_ sender: UIBarButtonItem) {
-        let appdelegate = UIApplication.shared.delegate as! AppDelegate
-        appdelegate.menuTab?.selectedIndex = 0
+    func pushSalesView() -> () {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "salesView") as? SalesViewController
+        self.pushViewController(vc!, animated: true)
+//        self.title = "售卡"
     }
-
     /*
     // MARK: - Navigation
 

@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--首页-->
         <scene sceneID="wUQ-fI-Fuw">
             <objects>
-                <viewController id="BCf-JV-nd2" sceneMemberID="viewController">
+                <viewController id="BCf-JV-nd2" customClass="MainViewController" customModule="Agent" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="b6i-Dn-3ny"/>
                         <viewControllerLayoutGuide type="bottom" id="XAW-o5-wyr"/>
@@ -20,17 +20,91 @@
                     <view key="view" contentMode="scaleToFill" id="nvR-cN-17G">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u69-sJ-PQz">
+                                <rect key="frame" x="0.0" y="64" width="375" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NC0-Nj-dlu">
+                                        <rect key="frame" x="36" y="33" width="78" height="34"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="售卡" image="sale">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="pushSalesView:" destination="BCf-JV-nd2" eventType="touchUpInside" id="qwK-sz-F8R"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Zn-nf-vqr">
+                                        <rect key="frame" x="151" y="30" width="73" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="购卡" image="purchase">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W7p-r3-7uz">
+                                        <rect key="frame" x="260" y="33" width="100" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="俱乐部" image="club">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.54901960780000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" red="0.0" green="0.54901960780000003" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="O74-bL-z97">
+                    <navigationItem key="navigationItem" title="首页" id="O74-bL-z97">
                         <barButtonItem key="rightBarButtonItem" image="ico_add" id="IAy-4B-WFb">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="btnClub" destination="W7p-r3-7uz" id="YAV-Om-HK0"/>
+                        <outlet property="btnPurchase" destination="2Zn-nf-vqr" id="gU5-aB-dTl"/>
+                        <outlet property="btnSale" destination="NC0-Nj-dlu" id="y8L-qj-cst"/>
+                        <outlet property="navMain" destination="O74-bL-z97" id="by6-aw-Iqd"/>
+                        <outlet property="vTopBG" destination="u69-sJ-PQz" id="Zy0-0x-I2U"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BGk-da-ThS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-623" y="1325"/>
+        </scene>
+        <!--Sales View Controller-->
+        <scene sceneID="dVa-4a-fQU">
+            <objects>
+                <viewController storyboardIdentifier="salesView" id="iVb-cL-m7v" customClass="SalesViewController" customModule="Agent" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="adn-Zu-DbC"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ih8-Pg-jPb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3Ep-Jg-HkC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t1y-Ug-aZ8">
+                                <rect key="frame" x="0.0" y="134" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="e1Y-yV-x0F">
+                                <rect key="frame" x="82" y="89" width="211" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="给玩家售卡"/>
+                                    <segment title="给代理售卡"/>
+                                </segments>
+                            </segmentedControl>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xn8-5Y-yxV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-623.20000000000005" y="2093.7031484257873"/>
         </scene>
         <!--客户-->
         <scene sceneID="TY9-1S-1Ll">
@@ -49,7 +123,7 @@
                         <barButtonItem key="leftBarButtonItem" image="ico_back" id="uvF-G1-eJ6">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <action selector="backToPrev:" destination="ufh-o0-OHk" id="4fS-H6-6qX"/>
+                                <action selector="backToPrev:" destination="ufh-o0-OHk" id="AK0-ln-KJc"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="搜索" id="MI4-0f-Z9h">
@@ -449,7 +523,7 @@
         <!--首页-->
         <scene sceneID="0WA-kQ-8Hs">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8hs-wd-xFb" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8hs-wd-xFb" customClass="MainNaviController" customModule="Agent" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="首页" image="homepage_n" selectedImage="homepage_s" id="d9S-nt-3HS"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="aGi-jr-6SO">
@@ -524,6 +598,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="club" width="44" height="35"/>
         <image name="customer_n" width="25" height="21"/>
         <image name="customer_s" width="24" height="20"/>
         <image name="homepage_n" width="23" height="23"/>
@@ -533,7 +608,9 @@
         <image name="ico_back" width="12" height="20"/>
         <image name="profile_n" width="20" height="21"/>
         <image name="profile_s" width="19" height="20"/>
+        <image name="purchase" width="36" height="40"/>
         <image name="roomcards_n" width="17" height="22"/>
         <image name="roomcards_s" width="17" height="21"/>
+        <image name="sale" width="41" height="34"/>
     </resources>
 </document>
