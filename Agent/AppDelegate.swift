@@ -55,6 +55,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func login() -> () {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainMenu") as? MenuViewController
         //var ret:Array<JSON> = []
+        var topViewController:UIViewController?
+        topViewController = (UIApplication.shared.keyWindow?.rootViewController)!
+        while ((topViewController?.presentedViewController) != nil) {
+            topViewController = topViewController?.presentedViewController!
+        }
+        topViewController?.dismiss(animated: false, completion: nil)
+
         window?.rootViewController?.present(vc!, animated: true, completion: nil)
     }
 }

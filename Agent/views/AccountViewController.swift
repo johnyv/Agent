@@ -8,7 +8,7 @@
 
 import UIKit
 import SwiftyJSON
-
+//import JWT
 class AccountViewController: UIViewController {
 
     @IBOutlet weak var tfMobile: UITextField!
@@ -45,7 +45,19 @@ class AccountViewController: UIViewController {
                 let json = JSON(data!)
                 let code = json["code"].intValue
                 if code == 200{
-                    print(json)
+                    let token = json["token"].stringValue
+                    print(token)
+                    let jsonStr = decodeJWT(tokenstr: token)
+                    let jsonData = jsonStr.data(using: String.Encoding.utf8, allowLossyConversion: false)
+                    let jsonToken = JSON(jsonData!)//try?JSONSerialization.jsonObject(with: jsonData!, options: .mutableContainers) as! JSON
+                    print(jsonToken)
+                    
+                    let agentStr = jsonToken["agent"].stringValue
+                    let agentData = agentStr.data(using: String.Encoding.utf8, allowLossyConversion: false)
+                    let agent = JSON(agentData!)//try?JSONSerialization.jsonObject(with: agentData!, options: .mutableContainers) as! JSON
+                    
+                    print(agent)
+                    
                     let appdelegate = UIApplication.shared.delegate as! AppDelegate
                     appdelegate.login()
                 }else{

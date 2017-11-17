@@ -22,6 +22,7 @@
 		527F652A1FA1F6660004A938 /* ResetPwdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527F65291FA1F6660004A938 /* ResetPwdViewController.swift */; };
 		527F652C1FA1F76A0004A938 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 527F652B1FA1F76A0004A938 /* Main.storyboard */; };
 		528634831FA2D76C0001B964 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528634821FA2D76C0001B964 /* MenuViewController.swift */; };
+		528871621FBEDEC6004263E2 /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 528871611FBEDEC6004263E2 /* NSData+Compression.m */; };
 		5288D64C1F7A4EE900406C9B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5288D64B1F7A4EE900406C9B /* AppDelegate.swift */; };
 		5288D64E1F7A4EE900406C9B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5288D64D1F7A4EE900406C9B /* ViewController.swift */; };
 		5288D6511F7A4EE900406C9B /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5288D64F1F7A4EE900406C9B /* Login.storyboard */; };
@@ -68,6 +69,8 @@
 		527F65291FA1F6660004A938 /* ResetPwdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResetPwdViewController.swift; path = views/ResetPwdViewController.swift; sourceTree = "<group>"; };
 		527F652B1FA1F76A0004A938 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		528634821FA2D76C0001B964 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuViewController.swift; path = views/MenuViewController.swift; sourceTree = "<group>"; };
+		528871601FBEDEC6004263E2 /* NSData+Compression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Compression.h"; sourceTree = "<group>"; };
+		528871611FBEDEC6004263E2 /* NSData+Compression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Compression.m"; sourceTree = "<group>"; };
 		5288D6481F7A4EE900406C9B /* Agent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Agent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5288D64B1F7A4EE900406C9B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5288D64D1F7A4EE900406C9B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -162,6 +165,15 @@
 			name = model;
 			sourceTree = "<group>";
 		};
+		5288715F1FBEDE8D004263E2 /* ref */ = {
+			isa = PBXGroup;
+			children = (
+				528871601FBEDEC6004263E2 /* NSData+Compression.h */,
+				528871611FBEDEC6004263E2 /* NSData+Compression.m */,
+			);
+			name = ref;
+			sourceTree = "<group>";
+		};
 		5288D63F1F7A4EE800406C9B = {
 			isa = PBXGroup;
 			children = (
@@ -188,6 +200,7 @@
 		5288D64A1F7A4EE900406C9B /* Agent */ = {
 			isa = PBXGroup;
 			children = (
+				5288715F1FBEDE8D004263E2 /* ref */,
 				5253485F1FBC52150067D5FA /* navigation */,
 				5253485C1FBC311D0067D5FA /* mixins */,
 				52538AC11FAB036F00FCBC26 /* model */,
@@ -471,6 +484,7 @@
 				5253485E1FBC31C20067D5FA /* UIButton+TitleAlign.swift in Sources */,
 				5292648B1FBD2A60000D98A4 /* DictViews.swift in Sources */,
 				527F652A1FA1F6660004A938 /* ResetPwdViewController.swift in Sources */,
+				528871621FBEDEC6004263E2 /* NSData+Compression.m in Sources */,
 				527F65261FA1F2150004A938 /* ForgotViewController.swift in Sources */,
 				526F73DD1FB403BD0010599C /* ProfileViewController.swift in Sources */,
 				525348631FBC561D0067D5FA /* SalesViewController.swift in Sources */,

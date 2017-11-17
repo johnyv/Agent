@@ -16,3 +16,20 @@ func kRGBColorFromHex(rgbValue: Int) -> (UIColor) {
 }
 
 let dictView = DictViews()
+
+func decodeJWT(tokenstr:String)->(String){
+    let arr = tokenstr.components(separatedBy: ".")
+    
+    var base64Str = arr[1] as String
+    if base64Str.characters.count % 4 != 0 {
+        let padlen = 4 - base64Str.characters.count % 4
+        base64Str += String(repeating: "=", count: padlen)
+    }
+    
+    if let data = Data(base64Encoded: base64Str, options: []),
+        let str = String(data: data, encoding: String.Encoding.utf8) {
+        //print(str)
+        return str
+    }
+    return ""
+}

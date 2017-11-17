@@ -9,32 +9,46 @@
 import Foundation
 import Moya
 
-extension TargetType{
-    public var baseURL:URL{
-        return URL(string: "http://172.16.70.128:7010")!
-    }
-}
+//extension TargetType{
+//    public var baseURL:URL{
+//        return URL(string: "http://172.16.70.128:7010")!
+//    }
+//}
 
-let NetProvider = MoyaProvider<NetworkManager>(endpointClosure:endpointClosure)
+let NetProvider = MoyaProvider<NetworkManager>()
 
 enum NetworkManager{
-    case login(String,String)
+    case login(String, String) //用户账户密码登录接口
+    case loginByMobile(String, String, String) //用户手机号登录接口
+    case sms(String, String, Int) //获取手机短信验证码
+    case refresh //刷新token接口
 }
 
 extension NetworkManager:TargetType{
-//    var baseURL:URL{
-//        return URL(string: "http://172.16.70.128:6010")!
-//    }
+    var baseURL:URL{
+        return URL(string: "http://172.16.70.128:7010")!
+    }
 
     var path:String{
         switch self{
         case .login(_,_):
             return "/api/auth/login"
+        case .loginByMobile(_, _, _):
+            return "/api/auth/loginByMobile"
+        case .sms(_, _, _):
+            return "/api/auth/sms"
+        case .refresh:
+            return "/api/auth/refresh"
         }
     }
     
     var method:Moya.Method{
-        return .post
+        switch self {
+        case .refresh:
+            return .get
+        default:
+            return .post
+        }
     }
     
     public var task:Task{
@@ -44,6 +58,8 @@ extension NetworkManager:TargetType{
             params["username"] = usr//"18500206220"
             params["password"] = pwd//"Assassin1"
             return .requestParameters(parameters: params, encoding: JSONEncoding.default)
+        default:
+            return .requestPlain
         }
     }
     
@@ -56,23 +72,6 @@ extension NetworkManager:TargetType{
     }
     
     public var headers:[String:String]?{
-        return nil
+        return ["Content-Type" : "application/json"]
     }
-}
-
-// MARK: - 设置请求头部信息
-let endpointClosure = { (target: NetworkManager) -> Endpoint<NetworkManager> in
-    let url = target.baseURL.appendingPathComponent(target.path).absoluteString
-    let endpoint = Endpoint<NetworkManager>(
-        url: url,
-        sampleResponseClosure: { .networkResponse(200, target.sampleData) },
-        method: target.method,
-        task: target.task,
-        httpHeaderFields: target.headers
-    )
-    
-    return endpoint.adding(newHTTPHeaderFields: [
-        "Content-Type" : "application/json",
-        "ECP-COOKIE" : ""])
-    
 }

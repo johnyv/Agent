@@ -11,4 +11,5 @@
 
 #import "WXApi.h"
 #import <SVProgressHUD/SVProgressHUD.h>
+#import <NSData+Compression.h>
 #endif /* Bridging_Header_h */

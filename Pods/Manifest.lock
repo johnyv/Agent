@@ -1,18 +1,18 @@
 PODS:
   - Alamofire (4.5.1)
-  - MJRefresh (3.1.14.1)
+  - MJRefresh (3.1.15)
   - Moya (9.0.0):
     - Moya/Core (= 9.0.0)
   - Moya/Core (9.0.0):
     - Alamofire (~> 4.1)
     - Result (~> 3.0)
   - Result (3.2.4)
-  - SDWebImage (4.1.2):
-    - SDWebImage/Core (= 4.1.2)
-  - SDWebImage/Core (4.1.2)
+  - SDWebImage (4.2.2):
+    - SDWebImage/Core (= 4.2.2)
+  - SDWebImage/Core (4.2.2)
   - SnapKit (3.0.2)
   - SVProgressHUD (2.2.2)
-  - SwiftyJSON (3.1.4)
+  - SwiftyJSON (4.0.0)
   - WechatOpenSDK (1.8.0)
   - WMPageController (2.3.0)
 
@@ -29,13 +29,13 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
-  MJRefresh: 238e6a37e2dba12160ee3b79f6d2a2b26abcab42
+  MJRefresh: 9af70f5f9327a2cf87f0fb5929f35fcc2fa638ea
   Moya: cf5e6ee93af526532f92614004b8ad2ea60fd845
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
-  SDWebImage: cb6f9f266a9977741efcbc21e618e8be3734c774
+  SDWebImage: 89a9d32cd520bbb46eb14e541d5109b3564af198
   SnapKit: 2e456761aa92d4d4067a7a5594c18769d451a8ad
   SVProgressHUD: 59b2d3dabacbd051576d21d32293ca7228dc18b0
-  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
   WechatOpenSDK: 0ee07a8d492299d3e47372a33da5af26524a7576
   WMPageController: 9f219bb8912a1a1f51af11fde61e2682a7b7e7f2
 
