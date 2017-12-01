@@ -9,6 +9,8 @@
 import UIKit
 import SVProgressHUD
 import SwiftyJSON
+import Moya
+import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        IQKeyboardManager.sharedManager().enable = true
+        
         let nav = UINavigationBar.appearance()
 //        nav.barTintColor = kRGBColorFromHex(rgbValue: 0x008ce6)
         nav.tintColor = UIColor.white
@@ -27,6 +31,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         nav.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         nav.shadowImage = UIImage()
         
+//        self.reLogin()
+        
+        let source = TokenSource()
+        source.token = getSavedToken()
+        let provider = MoyaProvider<NetworkManager>(plugins:[
+            AuthPlugin(tokenClosure: {return source.token})])
+
+        func handleResult(json:JSON)->(){
+            print(json)
+            let code = json["code"].intValue
+            if (code == 200){
+                let token = json["token"].stringValue
+                UserDefaults.standard.set(token, forKey: "agentToken")
+                let agent = json["agent"]
+                AgentInfo.instance.account = agent["account"].stringValue
+                AgentInfo.instance.agentId = agent["agentId"].stringValue
+                AgentInfo.instance.roleId = agent["roleId"].stringValue
+                AgentInfo.instance.name = agent["name"].stringValue
+                AgentInfo.instance.nickName = agent["nickName"].stringValue
+                AgentInfo.instance.gameName = agent["gameName"].stringValue
+                AgentInfo.instance.serverCode = agent["serverCode"].stringValue
+                AgentInfo.instance.headImg = agent["headImg"].stringValue
+                AgentInfo.instance.lastBuyTime = agent["lastBuyTime"].stringValue
+                //UserDefaults.standard.set(authority as! [String], forKey: "Array")
+                print(AgentInfo.instance.nickName)
+                self.login()
+            }else{
+                self.reLogin()
+            }
+        }
+        Network.request(.refresh, success: handleResult, provider: provider)
+
         return true
     }
 
@@ -52,16 +88,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    func login() -> () {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainMenu") as? MenuViewController
-        //var ret:Array<JSON> = []
+    func reLogin() -> () {
+        window?.makeKeyAndVisible()
+ 
         var topViewController:UIViewController?
         topViewController = (UIApplication.shared.keyWindow?.rootViewController)!
         while ((topViewController?.presentedViewController) != nil) {
             topViewController = topViewController?.presentedViewController!
         }
         topViewController?.dismiss(animated: false, completion: nil)
+        
+        let vc = UIStoryboard(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "loginMain") as? LoginViewController
+        window?.rootViewController?.present(vc!, animated: true, completion: nil)
+    }
 
+    func login() -> () {
+        window?.makeKeyAndVisible()
+
+        var topViewController:UIViewController?
+        topViewController = (UIApplication.shared.keyWindow?.rootViewController)!
+        while ((topViewController?.presentedViewController) != nil) {
+            topViewController = topViewController?.presentedViewController!
+        }
+        topViewController?.dismiss(animated: false, completion: nil)
+        
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainMenu") as? MenuViewController
         window?.rootViewController?.present(vc!, animated: true, completion: nil)
     }
 }

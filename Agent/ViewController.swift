@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Moya
+import SwiftyJSON
 
 class ViewController: UIViewController {
     
@@ -14,6 +16,26 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         launchAnimation()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+//        let appdelegate = UIApplication.shared.delegate as! AppDelegate
+//        
+//        let source = TokenSource()
+//        source.token = getSavedToken()
+//        let provider = MoyaProvider<NetworkManager>(plugins:[
+//            AuthPlugin(tokenClosure: {return source.token})])
+//        
+//        func handleResult(json:JSON)->(){
+//            print(json)
+//            let code = json["code"].intValue
+//            if (code == 200){
+//                appdelegate.login()
+//            }else{
+//                appdelegate.reLogin()
+//            }
+//        }
+//        Network.request(.refresh, success: handleResult, provider: provider)
     }
     
     //播放启动画面动画

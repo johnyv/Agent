@@ -15,6 +15,7 @@ class MenuViewController: UITabBarController {
         
         // Do any additional setup after loading the view.
         let appdelegate = UIApplication.shared.delegate as! AppDelegate
+        appdelegate.window?.rootViewController = self
         appdelegate.menuTab = self
         
         self.selectedIndex = 0

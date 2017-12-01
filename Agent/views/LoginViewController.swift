@@ -8,6 +8,9 @@
 
 import UIKit
 import SVProgressHUD
+import SwiftyJSON
+import Moya
+
 class LoginViewController: UIViewController {
     @IBOutlet weak var btnLogin: UIButton!
     @IBOutlet weak var btnVerifySMS: UIButton!
@@ -17,12 +20,25 @@ class LoginViewController: UIViewController {
 
     @IBOutlet weak var btnWeixin: UIButton!
     @IBOutlet weak var btnAccount: UIButton!
+    @IBOutlet weak var imgLogo: UIImageView!
+    @IBOutlet weak var dividing1: UIView!
+    @IBOutlet weak var dividing2: UIView!
+    @IBOutlet weak var dividing3: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let appdelegate = UIApplication.shared.delegate as! AppDelegate
+        appdelegate.window?.rootViewController = self
         // Do any additional setup after loading the view.
+        imgLogo.snp.makeConstraints({(make) -> Void in
+            make.top.equalTo(60)
+            make.centerX.equalTo(self.view)})
         btnLogin.layer.cornerRadius = 3
         btnLogin.layer.masksToBounds = true
+        btnLogin.snp.makeConstraints({(make) -> Void in
+            make.top.equalTo(450)
+            make.width.equalTo(dividing1)
+            make.centerX.equalTo(self.view)})
         btnVerifySMS.layer.cornerRadius = 3
 
         btnWeixin.setTitleAlign(position: .bottom)
@@ -35,8 +51,53 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func startLogin(sender:UIButton){
+        let provider = MoyaProvider<NetworkManager>()
+
         let appdelegate = UIApplication.shared.delegate as! AppDelegate
-        appdelegate.login()
+        func handleLogin(json:JSON)->(){
+            let code = json["code"].intValue
+            print(json)
+            if code == 0 {
+                return
+            }
+            if code == 200 {
+                let token = json["token"].stringValue
+                UserDefaults.standard.set(token, forKey: "agentToken")
+                let agent = json["agent"]
+                AgentInfo.instance.account = agent["account"].stringValue
+                AgentInfo.instance.agentId = agent["agentId"].stringValue
+                AgentInfo.instance.roleId = agent["roleId"].stringValue
+                AgentInfo.instance.name = agent["name"].stringValue
+                AgentInfo.instance.nickName = agent["nickName"].stringValue
+                AgentInfo.instance.gameName = agent["gameName"].stringValue
+                AgentInfo.instance.serverCode = agent["serverCode"].stringValue
+                AgentInfo.instance.headImg = agent["headImg"].stringValue
+                AgentInfo.instance.lastBuyTime = agent["lastBuyTime"].stringValue
+                print(AgentInfo.instance.nickName)
+//                let authority = agent["authorityList"].array
+//                print(authority)
+                //UserDefaults.standard.set(authority, forKey: "Array")
+                appdelegate.login()
+            }else{
+                let alertController = UIAlertController(title: "系统提示",
+                                                        message: errMsg.desc(key: code), preferredStyle: .alert)
+                //                    let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+                let okAction = UIAlertAction(title: "好的", style: .default, handler: {
+                    action in
+                    print("点击了确定")
+                })
+                //                    alertController.addAction(cancelAction)
+                alertController.addAction(okAction)
+                self.present(alertController, animated: true, completion: nil)
+            }
+        }
+        
+        let usr = tfMobile.text
+        let pwd = tfSMS.text
+        let identifier = UIDevice.current.identifierForVendor
+        
+        Network.request(.login(usr!, pwd!), success: handleLogin, provider: provider)
+
         //SVProgressHUD.showInfo(withStatus: "loading...")
 //        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainMenu") as! MenuViewController
 //        self.present(vc, animated: true, completion: nil)

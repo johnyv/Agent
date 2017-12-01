@@ -8,7 +8,8 @@
 
 import UIKit
 import SwiftyJSON
-//import JWT
+import ObjectMapper
+import Moya
 class AccountViewController: UIViewController {
 
     @IBOutlet weak var tfMobile: UITextField!
@@ -37,44 +38,57 @@ class AccountViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     @IBAction func accountLogin(_ sender: UIButton) {
-        let usr = tfMobile.text
-        let pwd = tfPwd.text
-        NetProvider.request(.login(usr!, pwd!)){ result in
-            if case let .success(response) = result{
-                let data = try?response.mapJSON()
-                let json = JSON(data!)
-                let code = json["code"].intValue
-                if code == 200{
-                    let token = json["token"].stringValue
-                    print(token)
-                    let jsonStr = decodeJWT(tokenstr: token)
-                    let jsonData = jsonStr.data(using: String.Encoding.utf8, allowLossyConversion: false)
-                    let jsonToken = JSON(jsonData!)//try?JSONSerialization.jsonObject(with: jsonData!, options: .mutableContainers) as! JSON
-                    print(jsonToken)
-                    
-                    let agentStr = jsonToken["agent"].stringValue
-                    let agentData = agentStr.data(using: String.Encoding.utf8, allowLossyConversion: false)
-                    let agent = JSON(agentData!)//try?JSONSerialization.jsonObject(with: agentData!, options: .mutableContainers) as! JSON
-                    
-                    print(agent)
-                    
-                    let appdelegate = UIApplication.shared.delegate as! AppDelegate
-                    appdelegate.login()
-                }else{
-                    let alertController = UIAlertController(title: "系统提示",
-                                                            message: errMsg.desc(key: code), preferredStyle: .alert)
-//                    let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-                    let okAction = UIAlertAction(title: "好的", style: .default, handler: {
-                        action in
-                        print("点击了确定")
-                    })
-//                    alertController.addAction(cancelAction)
-                    alertController.addAction(okAction)
-                    self.present(alertController, animated: true, completion: nil)
-                }
-            }
-            
-        }
+//        let usr = tfMobile.text
+//        let pwd = tfPwd.text
+//        let identifier = UIDevice.current.identifierForVendor
+//        print(identifier)
+//        let netProvider = MoyaProvider<NetworkManager>()
+//        
+//        netProvider.request(.login(usr!, pwd!)){ result in
+//            if case let .success(response) = result{
+//                let data = try?response.mapJSON()
+//                let json = JSON(data!)
+//                let code = json["code"].intValue
+//                if code == 200{
+//                    let token = json["token"].stringValue
+//                    UserDefaults.standard.set(token, forKey: "agentToken")
+//                    //AuthHeader.sharedInstance.sso_tk = token
+//                    //print(token)
+//                    let agentInfo = json["agent"].stringValue
+////                    AgentInfo.instance = AgentInfo(JSONString: agentInfo)!
+////                    let jsonStr = decodeJWT(tokenstr: token)
+//                    //print(jsonStr)
+////                    let jsonData = token.data(using: String.Encoding.utf8, allowLossyConversion: false)
+////                    let jsonToken = JSON(jsonData!)
+//                    print(AgentInfo.instance.gameName)
+//                    
+////                    let agentStr = jsonToken["agent"].stringValue
+////                    let agentData = agentStr.data(using: String.Encoding.utf8, allowLossyConversion: false)
+////                    let agent = JSON(agentData!)//try?JSONSerialization.jsonObject(with: agentData!, options: .mutableContainers) as! JSON
+////                    print(agentInfo?.toJSONString())
+//////                    let data = NSData(base64Encoded: (agentInfo?.toJSONString())!)?.zlibInflate()
+////                    print(agentInfo?.account)
+////                    print(agentInfo?.nickName)
+////                    print(AuthHeader.sharedInstance.toJSONString())
+//                    
+//                    self.dismiss(animated: false, completion: nil)
+//                    let appdelegate = UIApplication.shared.delegate as! AppDelegate
+//                    appdelegate.login()
+//                }else{
+//                    let alertController = UIAlertController(title: "系统提示",
+//                                                            message: errMsg.desc(key: code), preferredStyle: .alert)
+////                    let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+//                    let okAction = UIAlertAction(title: "好的", style: .default, handler: {
+//                        action in
+//                        print("点击了确定")
+//                    })
+////                    alertController.addAction(cancelAction)
+//                    alertController.addAction(okAction)
+//                    self.present(alertController, animated: true, completion: nil)
+//                }
+//            }
+//            
+//        }
     }
     /*
     // MARK: - Navigation

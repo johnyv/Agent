@@ -12,10 +12,13 @@ class MainNaviController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
         let appdelegate = UIApplication.shared.delegate as! AppDelegate
+        //appdelegate.window?.rootViewController = self
         appdelegate.mainNavi = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
 //        self.title = "首页"
     }
 
@@ -25,7 +28,7 @@ class MainNaviController: UINavigationController {
     }
     
     func pushSalesView() -> () {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "salesView") as? SalesViewController
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "salesView") as? SalesView
         self.pushViewController(vc!, animated: true)
 //        self.title = "售卡"
     }

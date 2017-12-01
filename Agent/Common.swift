@@ -15,8 +15,6 @@ func kRGBColorFromHex(rgbValue: Int) -> (UIColor) {
                    alpha: 1.0)
 }
 
-let dictView = DictViews()
-
 func decodeJWT(tokenstr:String)->(String){
     let arr = tokenstr.components(separatedBy: ".")
     
@@ -28,8 +26,16 @@ func decodeJWT(tokenstr:String)->(String){
     
     if let data = Data(base64Encoded: base64Str, options: []),
         let str = String(data: data, encoding: String.Encoding.utf8) {
-        //print(str)
         return str
     }
     return ""
+}
+
+func getSavedToken()->(String){
+    let token = UserDefaults.standard.string(forKey: "agentToken")
+    if (token != nil){
+        return token!
+    }else{
+        return ""
+    }
 }

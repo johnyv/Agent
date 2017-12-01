@@ -10,6 +10,7 @@
 #define Bridging_Header_h
 
 #import "WXApi.h"
+#import "NSData+Compression.h"
 #import <SVProgressHUD/SVProgressHUD.h>
-#import <NSData+Compression.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 #endif /* Bridging_Header_h */

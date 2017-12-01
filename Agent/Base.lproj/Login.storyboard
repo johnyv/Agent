@@ -12,7 +12,7 @@
         <!--Login View Controller-->
         <scene sceneID="9Co-sh-UWU">
             <objects>
-                <viewController id="6xn-cY-ylU" customClass="LoginViewController" customModule="Agent" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="loginMain" id="6xn-cY-ylU" customClass="LoginViewController" customModule="Agent" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="K2Y-6l-wPh"/>
                         <viewControllerLayoutGuide type="bottom" id="N6v-El-1au"/>
@@ -40,7 +40,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入手机号" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hx2-G8-h7u">
-                                <rect key="frame" x="79" y="291" width="219" height="30"/>
+                                <rect key="frame" x="57" y="291" width="263" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -116,7 +116,7 @@
                                 </state>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="其他登录方式" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ebl-km-xLx">
-                                <rect key="frame" x="154" y="504" width="67.5" height="13.5"/>
+                                <rect key="frame" x="154" y="504" width="68" height="14"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="11"/>
                                 <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -141,6 +141,10 @@
                         <outlet property="btnSpeech" destination="hHE-dg-OFU" id="RCm-19-ufV"/>
                         <outlet property="btnVerifySMS" destination="dhi-fE-9lP" id="9Ul-aR-vce"/>
                         <outlet property="btnWeixin" destination="rD5-cz-eZu" id="mHb-km-71y"/>
+                        <outlet property="dividing1" destination="D5F-uc-Xsh" id="rld-7L-lWT"/>
+                        <outlet property="dividing2" destination="9Ez-Ai-oog" id="Jka-bK-PU3"/>
+                        <outlet property="dividing3" destination="USK-nG-hzJ" id="Ukk-3d-uhn"/>
+                        <outlet property="imgLogo" destination="SXm-0E-mCO" id="G2w-Rc-jlV"/>
                         <outlet property="tfMobile" destination="hx2-G8-h7u" id="XFO-Yt-RUX"/>
                         <outlet property="tfSMS" destination="c85-gG-mtu" id="AZB-Xs-gCc"/>
                     </connections>
