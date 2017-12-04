@@ -62,7 +62,7 @@ private struct CustomerPageOptions: PagingMenuControllerCustomizable {
     }
 }
 
-class CustomerViewController: UIViewController, PagingMenuControllerDelegate {
+class CustomerViewController: UIViewController {
     
     @IBOutlet weak var sellPerson: UILabel!
     @IBOutlet weak var sellCount: UILabel!
@@ -78,10 +78,9 @@ class CustomerViewController: UIViewController, PagingMenuControllerDelegate {
         let options = CustomerPageOptions()
         let customerPageController = PagingMenuController(options: options)
         customerPageController.view.frame.origin.y += 200
-        
         addChildViewController(customerPageController)
         view.addSubview(customerPageController.view)
-        //customerTableController.setup(options)
+        customerPageController.didMove(toParentViewController: self)
         
         let source = TokenSource()
         source.token = getSavedToken()

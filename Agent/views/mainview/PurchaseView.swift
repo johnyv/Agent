@@ -65,10 +65,26 @@ class PurchaseView: UIViewController, UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellGoodsIdentifier, for: indexPath) as! GoodsViewCell
         cell.lblCardNum.text = goodsData[indexPath.item].cardNum
-        
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //let cell = collectionView.cellForItem(at: indexPath) as! GoodsViewCell
+        let data = goodsData[indexPath.item]
+        print(data.desc)
+        let alertPay = UIAlertController(title: "确认付款", message: data.price,
+                                                preferredStyle: .actionSheet)
+        
+        alertPay.view.layer.cornerRadius = 0;
+        let wxPayAction = UIAlertAction(title: "微信支付", style: .default, handler: nil)
+        let aliPayAction = UIAlertAction(title: "支付宝支付", style: .default, handler: nil)
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        alertPay.addAction(wxPayAction)
+        alertPay.addAction(aliPayAction)
+        alertPay.addAction(cancelAction)
+        self.present(alertPay, animated: true, completion: nil)
+        
+    }
     /*
     // MARK: - Navigation
 

@@ -12,7 +12,7 @@ target 'Agent' do
 	pod 'SwiftyJSON'
 	pod 'ObjectMapper', '~>2.2'
 	pod 'SnapKit', '~> 3.0.0'
-	pod "PagingMenuController"
+	pod 'PagingMenuController'
 	pod 'IQKeyboardManagerSwift'
 end
 
