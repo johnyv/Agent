@@ -53,6 +53,9 @@ private struct RoomCardPageOptions: PagingMenuControllerCustomizable {
 
 class RoomCardViewController: UIViewController {
 
+    @IBOutlet weak var lblSalesCount: UILabel!
+    @IBOutlet weak var lblBuyCount: UILabel!
+    @IBOutlet weak var lblCurrent: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -63,6 +66,8 @@ class RoomCardViewController: UIViewController {
         
         addChildViewController(roomCardPageController)
         view.addSubview(roomCardPageController.view)
+        requestAllNum(time: "")
+        requestBuyCount(time: "")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -86,6 +91,42 @@ class RoomCardViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func requestBuyCount(time:String){
+        let source = TokenSource()
+        source.token = getSavedToken()
+        let provider = MoyaProvider<NetworkManager>(plugins:[
+            AuthPlugin(tokenClosure: {return source.token})])
+        
+        Network.request(.goodDetailCollect(time: time), success: handleBuyCount, provider: provider)
+    }
+    
+    func handleBuyCount(json:JSON)->(){
+        let result = json["result"]
+        let code = result["code"].intValue
+        if code == 200 {
+            print(result)
+            let data = result["data"]
+            lblBuyCount.text = data["buyCount"].stringValue
+        }
+    }
+
+    func requestAllNum(time:String){
+        let source = TokenSource()
+        source.token = getSavedToken()
+        let provider = MoyaProvider<NetworkManager>(plugins:[
+            AuthPlugin(tokenClosure: {return source.token})])
+        
+        Network.request(.statisticAllNum(time: time), success: handleAllNum, provider: provider)
+    }
+    
+    func handleAllNum(json:JSON)->(){
+        let result = json["result"]
+        let code = result["code"].intValue
+        if code == 200 {
+            print(result)
+            lblSalesCount.text = result["data"].stringValue
+        }
+    }
 
     /*
     // MARK: - Navigation

@@ -33,7 +33,7 @@ class GoodsViewCell: UICollectionViewCell {
     override func draw(_ rect: CGRect) {
         let pathRect = self.bounds.insetBy(dx: 1, dy: 1)
         let path = UIBezierPath(roundedRect: pathRect, cornerRadius: 10)
-        path.lineWidth = 2
+        path.lineWidth = 1
         UIColor.orange.setStroke()
         //path.fill()
         path.stroke()

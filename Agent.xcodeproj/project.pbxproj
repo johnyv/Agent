@@ -41,6 +41,11 @@
 		5271B12A1FCD38A000A8450C /* TableRecentlyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5271B1291FCD38A000A8450C /* TableRecentlyView.swift */; };
 		5271B12C1FCD39F400A8450C /* TableTotalView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5271B12B1FCD39F400A8450C /* TableTotalView1.swift */; };
 		5271B12E1FCD3A0300A8450C /* TableTotalView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5271B12D1FCD3A0300A8450C /* TableTotalView2.swift */; };
+		527651151FD6408B004F32EC /* OrderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527651131FD6408B004F32EC /* OrderListCell.swift */; };
+		527651161FD6408B004F32EC /* OrderListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 527651141FD6408B004F32EC /* OrderListCell.xib */; };
+		527651181FD645B7004F32EC /* OrderListCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527651171FD645B7004F32EC /* OrderListCellModel.swift */; };
+		5276511A1FD6849F004F32EC /* ExternalPayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527651191FD6849F004F32EC /* ExternalPayView.swift */; };
+		5276511C1FD6CC97004F32EC /* SalesConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5276511B1FD6CC97004F32EC /* SalesConfirmView.swift */; };
 		527F65201FA18C110004A938 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527F651F1FA18C110004A938 /* MainViewController.swift */; };
 		527F65241FA1E3D70004A938 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527F65231FA1E3D70004A938 /* LoginViewController.swift */; };
 		527F65261FA1F2150004A938 /* ForgotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527F65251FA1F2150004A938 /* ForgotViewController.swift */; };
@@ -117,6 +122,11 @@
 		5271B1291FCD38A000A8450C /* TableRecentlyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRecentlyView.swift; sourceTree = "<group>"; };
 		5271B12B1FCD39F400A8450C /* TableTotalView1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableTotalView1.swift; sourceTree = "<group>"; };
 		5271B12D1FCD3A0300A8450C /* TableTotalView2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableTotalView2.swift; sourceTree = "<group>"; };
+		527651131FD6408B004F32EC /* OrderListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrderListCell.swift; path = widget/OrderListCell.swift; sourceTree = "<group>"; };
+		527651141FD6408B004F32EC /* OrderListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OrderListCell.xib; path = widget/OrderListCell.xib; sourceTree = "<group>"; };
+		527651171FD645B7004F32EC /* OrderListCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrderListCellModel.swift; path = model/OrderListCellModel.swift; sourceTree = "<group>"; };
+		527651191FD6849F004F32EC /* ExternalPayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExternalPayView.swift; sourceTree = "<group>"; };
+		5276511B1FD6CC97004F32EC /* SalesConfirmView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SalesConfirmView.swift; sourceTree = "<group>"; };
 		527F651F1FA18C110004A938 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = views/MainViewController.swift; sourceTree = "<group>"; };
 		527F65231FA1E3D70004A938 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = views/LoginViewController.swift; sourceTree = "<group>"; };
 		527F65251FA1F2150004A938 /* ForgotViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ForgotViewController.swift; path = views/ForgotViewController.swift; sourceTree = "<group>"; };
@@ -205,6 +215,8 @@
 				522DD3971FCE556D00AE9D62 /* PurchaseView.swift */,
 				522DD3991FCE67F500AE9D62 /* OrdersView.swift */,
 				522DD39B1FCE7DED00AE9D62 /* OrdersListView.swift */,
+				527651191FD6849F004F32EC /* ExternalPayView.swift */,
+				5276511B1FD6CC97004F32EC /* SalesConfirmView.swift */,
 			);
 			name = mainview;
 			path = views/mainview;
@@ -236,6 +248,7 @@
 				5251424F1FC58621000046DF /* RequestBody.swift */,
 				522DD39F1FCEA59800AE9D62 /* CustomerTableCellModel.swift */,
 				5283DB5E1FD1453C009759EF /* PurchaseCellModel.swift */,
+				527651171FD645B7004F32EC /* OrderListCellModel.swift */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -256,6 +269,8 @@
 				5241521F1FD029AC00100989 /* ToolViewCell.xib */,
 				5283DB601FD1597C009759EF /* GoodsViewCell.swift */,
 				5283DB611FD1597C009759EF /* GoodsViewCell.xib */,
+				527651131FD6408B004F32EC /* OrderListCell.swift */,
+				527651141FD6408B004F32EC /* OrderListCell.xib */,
 			);
 			name = widget;
 			sourceTree = "<group>";
@@ -494,6 +509,7 @@
 			files = (
 				524152211FD029AC00100989 /* ToolViewCell.xib in Resources */,
 				5241521D1FCFD1B800100989 /* ProfileOptionCell.xib in Resources */,
+				527651161FD6408B004F32EC /* OrderListCell.xib in Resources */,
 				524152151FCFA12900100989 /* ProfileHeadCell.xib in Resources */,
 				524152191FCFA16D00100989 /* ProfileInfoCell.xib in Resources */,
 				5283DB631FD1597C009759EF /* GoodsViewCell.xib in Resources */,
@@ -608,6 +624,7 @@
 				522DD3A31FCEB3BC00AE9D62 /* CustomerTableCell.swift in Sources */,
 				5292648E1FBD6EC6000D98A4 /* NetworkManager.swift in Sources */,
 				525348591FBA98D50067D5FA /* CustomerViewController.swift in Sources */,
+				5276511A1FD6849F004F32EC /* ExternalPayView.swift in Sources */,
 				527F65241FA1E3D70004A938 /* LoginViewController.swift in Sources */,
 				5253485B1FBA9F390067D5FA /* Common.swift in Sources */,
 				5283DB621FD1597C009759EF /* GoodsViewCell.swift in Sources */,
@@ -635,9 +652,12 @@
 				522DD3931FCE4EA200AE9D62 /* CardDepleteView.swift in Sources */,
 				522DD39A1FCE67F500AE9D62 /* OrdersView.swift in Sources */,
 				522DD3981FCE556D00AE9D62 /* PurchaseView.swift in Sources */,
+				527651151FD6408B004F32EC /* OrderListCell.swift in Sources */,
 				522DD3951FCE4EFE00AE9D62 /* CardBuyView.swift in Sources */,
+				5276511C1FD6CC97004F32EC /* SalesConfirmView.swift in Sources */,
 				525348631FBC561D0067D5FA /* SalesView.swift in Sources */,
 				52582B871FC3C904003B871F /* AuthHeader.swift in Sources */,
+				527651181FD645B7004F32EC /* OrderListCellModel.swift in Sources */,
 				52538AC01FAAF51400FCBC26 /* ProfileViewController1.swift in Sources */,
 				529B2A531FC2CDBA001B15F2 /* AgentInfo.swift in Sources */,
 				5271B12A1FCD38A000A8450C /* TableRecentlyView.swift in Sources */,

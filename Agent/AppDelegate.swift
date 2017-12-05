@@ -23,6 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         IQKeyboardManager.sharedManager().enable = true
         
+        UIButton.appearance().layer.cornerRadius = 4
+        
         let nav = UINavigationBar.appearance()
 //        nav.barTintColor = kRGBColorFromHex(rgbValue: 0x008ce6)
         nav.tintColor = UIColor.white

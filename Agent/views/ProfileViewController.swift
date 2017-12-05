@@ -52,6 +52,8 @@ class ProfileViewController: UITableViewController {
         tableView.register(ProfileInfoCell.self, forCellReuseIdentifier: cellInfoIdentifier)
         let xibInfo = UINib(nibName: "ProfileInfoCell", bundle: nil)
         tableView.register(xibInfo, forCellReuseIdentifier: cellInfoIdentifier)
+        
+        tableView.bounces = false
 }
 
     override func didReceiveMemoryWarning() {

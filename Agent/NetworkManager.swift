@@ -46,8 +46,8 @@ enum NetworkManager{
     case goodDetail(time:String, page:Int) //查询购卡明细
     case goodDetailCollect(time:String) //查询购卡张数／次数接口
     case check //点击房卡校验接口
-    case good(payTypeInchannel:Int, channel:Int, paySource:Int, goodId:Int, activityId:Int) //支付接口
-    case unpaidTopay(orderNo:String) //待支付订单支付接口
+    case buycardGood(payTypeInchannel:Int, channel:Int, paySource:Int, goodId:Int, activityId:Int) //支付接口
+    case unpaidToPay(orderNo:String) //待支付订单支付接口
     //------------------
     //售卡服务
     case sellcardToPlayer(playerID:Int, number:Int) //1给玩家售卡接口
@@ -102,6 +102,8 @@ extension NetworkManager: AuthorizedTargetType{
 
     var path:String{
         switch self{
+        //------------------
+        //用户中心
         case .login(_,_):
             return "/api/auth/login"
         case .loginByMobile(_, _, _):
@@ -111,6 +113,10 @@ extension NetworkManager: AuthorizedTargetType{
         case .refresh:
             return "/api/auth/refresh"
             
+        //------------------
+        //基础&核心服务
+        case .gameInfo(_):
+            return "/api/agent/gameInfo"
         case .banner:
             return "/api/agent/core/banner/list"
         case.agreement:
@@ -124,23 +130,42 @@ extension NetworkManager: AuthorizedTargetType{
         case .noticeDetail(_):
             return "/api/agent/core/notice/detail"
             
+        //------------------
+        //购卡服务
         case .goodList:
             return "/api/agent/buycard/goodList"
         case .goodDetail(_, _):
             return "/api/agent/buycard/goodDetail"
         case .goodDetailCollect(_):
             return "/api/agent/buycard/goodDetailCollect"
+        case .check:
+            return "/api/agent/buycard/good/check"
+        case .buycardGood(_,_,_,_,_):
+            return "/api/agent/buycard/good"
+        case .unpaidToPay(_):
+            return "/api/agent/buycard/unpaidToPay"
+            
         //------------------
         //售卡服务
+        case .sellcardToPlayer(_, _):
+            return "/api/agent/sellcard/sellcardToPlayer"
+        case .sellcardToAgent(_, _):
+            return "/api/agent/sellcard/sellcardToAgent"
+        case .statisticAllNum(_):
+            return "/api/agent/sellcard/statistic/allNum"
         case .customerAllNum(_, _, _):
             return "/api/agent/sellcard/customer/allNum"
         case .customerRecently(_, _, _, _, _, _):
-            return "/api/agent/sellcard/recently/player"
+            return "/api/agent/sellcard/customer/recently"
         case .customerTotallist(_, _, _, _, _, _):
             return "/api/agent/sellcard/customer/totallist"
+        case .recentlyPlayer(_,_,_,_,_,_):
+            return "/api/agent/sellcard/recently/player"
+        case .recentlyAgent(_,_,_,_,_,_):
+            return "/api/agent/sellcard/recently/agent"
         //------------------
         //支付中心
-        case.cancel:
+        case.cancel(_):
             return "/api/agent/pay/processing/cancel"
         case .orderlist:
             return "/api/agent/pay/processing/orderlist"
@@ -176,7 +201,48 @@ extension NetworkManager: AuthorizedTargetType{
             params["page"] = page
             params["type"] = type
             return .requestParameters(parameters: params, encoding: DataEncoding.default)
+        case .buycardGood(let payTypeInchannel, let channel, let paySource, let goodId, let activityId):
+            var data:[String:Any] = [:]
+            
+            data["payTypeInchannel"] = payTypeInchannel
+            data["channel"] = channel
+            data["paySource"] = paySource
+            data["goodId"] = goodId
+            data["activityId"] = activityId
+            
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
+
+        // 购卡服务
+        case .goodDetailCollect(let time):
+            var data:[String:Any] = [:]
+            
+            data["time"] = time
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
+            
         // 售卡服务
+        case .sellcardToPlayer(let playerID, let number):
+            var data:[String:Any] = [:]
+            
+            data["playerID"] = playerID
+            data["number"] = number
+            
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
+            
+        case .sellcardToAgent(let agentID, let number):
+            var data:[String:Any] = [:]
+            
+            data["agentID"] = agentID
+            data["number"] = number
+            
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
+
+        case .statisticAllNum(let time):
+            var data:[String:Any] = [:]
+            
+            data["time"] = time
+            
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
+
         case .customerAllNum(let searchId, let startDate, let endDate):
             var data:[String:Any] = [:]
             if searchId != 0{
@@ -191,7 +257,9 @@ extension NetworkManager: AuthorizedTargetType{
             
             return .requestParameters(parameters: data, encoding: DataEncoding.default)
         case .customerRecently(let searchId, let startDate, let endDate, let sortType, let pageIndex, let pageNum),
-             .customerTotallist(let searchId, let startDate, let endDate, let sortType, let pageIndex, let pageNum):
+             .customerTotallist(let searchId, let startDate, let endDate, let sortType, let pageIndex, let pageNum),
+             .recentlyPlayer(let searchId, let startDate, let endDate, let sortType, let pageIndex, let pageNum),
+             .recentlyAgent(let searchId, let startDate, let endDate, let sortType, let pageIndex, let pageNum):
             
             var data:[String:Any] = [:]
             if searchId != 0{
@@ -213,6 +281,22 @@ extension NetworkManager: AuthorizedTargetType{
                 data["pageNum"] = pageNum
             }
 
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
+        // 支付
+        case .orderlist(let year, let month, let page, let type):
+            var data:[String:Any] = [:]
+            
+            data["year"] = year
+            data["month"] = month
+            data["page"] = page
+            data["type"] = type
+            
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
+        case .cancel(let orderNo):
+            var data:[String:Any] = [:]
+            
+            data["orderNo"] = orderNo
+            
             return .requestParameters(parameters: data, encoding: DataEncoding.default)
             
         case .refresh:

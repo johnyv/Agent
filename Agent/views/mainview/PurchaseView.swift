@@ -9,6 +9,8 @@
 import UIKit
 import SwiftyJSON
 import Moya
+import SVProgressHUD
+
 class PurchaseView: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     var goodsData = [PurchaseCellModel]()
     let cellGoodsIdentifier = "GoodsCell"
@@ -70,14 +72,26 @@ class PurchaseView: UIViewController, UICollectionViewDelegate, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //let cell = collectionView.cellForItem(at: indexPath) as! GoodsViewCell
+
+        let source = TokenSource()
+        source.token = getSavedToken()
+        let provider = MoyaProvider<NetworkManager>(plugins:[
+            AuthPlugin(tokenClosure: {return source.token})])
+
         let data = goodsData[indexPath.item]
         print(data.desc)
-        let alertPay = UIAlertController(title: "确认付款", message: data.price,
+        let alertPay = UIAlertController(title: "确认付款", message: "¥"+data.price!,
                                                 preferredStyle: .actionSheet)
         
         alertPay.view.layer.cornerRadius = 0;
-        let wxPayAction = UIAlertAction(title: "微信支付", style: .default, handler: nil)
-        let aliPayAction = UIAlertAction(title: "支付宝支付", style: .default, handler: nil)
+        let wxPayAction = UIAlertAction(title: "微信支付", style: .default, handler: {
+        action in
+            Network.request(.buycardGood(payTypeInchannel: 4, channel: 2, paySource: 4, goodId: Int(data.goodsId!)!, activityId: data.activityId!), success: self.handlePay, provider: provider)
+        })
+        let aliPayAction = UIAlertAction(title: "支付宝支付", style: .default, handler: {
+        action in
+            Network.request(.buycardGood(payTypeInchannel: 1, channel: 1, paySource: 9, goodId: Int(data.goodsId!)!, activityId: data.activityId!), success: self.handlePay, provider: provider)
+        })
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         alertPay.addAction(wxPayAction)
         alertPay.addAction(aliPayAction)
@@ -85,6 +99,27 @@ class PurchaseView: UIViewController, UICollectionViewDelegate, UICollectionView
         self.present(alertPay, animated: true, completion: nil)
         
     }
+    
+    func handlePay(json:JSON)->(){
+        let result = json["result"]
+        let code = result["code"].intValue
+        if code == 200 {
+            print(result)
+            let data = result["data"].stringValue
+            let url = URL(string: data)
+            print(url)
+            UserDefaults.standard.set(data, forKey: "payURL")
+
+            let payVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "externalPayView") as! ExternalPayView
+            
+            payVC.urlData = data
+            present(payVC, animated: true, completion: nil)
+        }else{
+            print(result)
+            SVProgressHUD.showInfo(withStatus: errMsg.desc(key: code))
+        }
+    }
+
     /*
     // MARK: - Navigation
 
