@@ -49,17 +49,43 @@ class LoginViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    @IBAction func sms(_ sender: UIButton) {
+        func handleSMS(json:JSON)->(){
+            let code = json["code"].intValue
+            print(json)
+            if code == 200 {
+            }else{
+                alertResult(code: code)
+            }
+        }
+        
+        let mobileNo = tfMobile.text!
+        
+        request(.sms(phoneNo: mobileNo, areaCode: "86", msgType: 2), success: handleSMS)
+//        Network.request(.login(usr!, pwd!), success: handleLogin, provider: provider)
+    }
     
+    @IBAction func smsVoice(_ sender: UIButton) {
+        func handleSMS(json:JSON)->(){
+            let code = json["code"].intValue
+            print(json)
+            if code == 200 {
+            }else{
+                alertResult(code: code)
+            }
+        }
+        
+        let mobileNo = tfMobile.text!
+        
+        request(.sms(phoneNo: mobileNo, areaCode: "86", msgType: 1), success: handleSMS)
+    }
     @IBAction func startLogin(sender:UIButton){
-        let provider = MoyaProvider<NetworkManager>()
+//        let provider = MoyaProvider<NetworkManager>()
 
         let appdelegate = UIApplication.shared.delegate as! AppDelegate
         func handleLogin(json:JSON)->(){
             let code = json["code"].intValue
             print(json)
-            if code == 0 {
-                return
-            }
             if code == 200 {
                 let token = json["token"].stringValue
                 UserDefaults.standard.set(token, forKey: "agentToken")
@@ -79,16 +105,17 @@ class LoginViewController: UIViewController {
                 //UserDefaults.standard.set(authority, forKey: "Array")
                 appdelegate.login()
             }else{
-                let alertController = UIAlertController(title: "系统提示",
-                                                        message: errMsg.desc(key: code), preferredStyle: .alert)
-                //                    let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-                let okAction = UIAlertAction(title: "好的", style: .default, handler: {
-                    action in
-                    print("点击了确定")
-                })
-                //                    alertController.addAction(cancelAction)
-                alertController.addAction(okAction)
-                self.present(alertController, animated: true, completion: nil)
+                alertResult(code: code)
+//                let alertController = UIAlertController(title: "系统提示",
+//                                                        message: errMsg.desc(key: code), preferredStyle: .alert)
+//                //                    let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+//                let okAction = UIAlertAction(title: "好的", style: .default, handler: {
+//                    action in
+//                    print("点击了确定")
+//                })
+//                //                    alertController.addAction(cancelAction)
+//                alertController.addAction(okAction)
+//                self.present(alertController, animated: true, completion: nil)
             }
         }
         
@@ -96,11 +123,25 @@ class LoginViewController: UIViewController {
         let pwd = tfSMS.text
         let identifier = UIDevice.current.identifierForVendor
         
-        Network.request(.login(usr!, pwd!), success: handleLogin, provider: provider)
-
+        //Network.request(.login(usr!, pwd!), success: handleLogin, provider: provider)
+        request(.login(usr!, pwd!), success: handleLogin)
         //SVProgressHUD.showInfo(withStatus: "loading...")
 //        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainMenu") as! MenuViewController
 //        self.present(vc, animated: true, completion: nil)
+    }
+    
+//    func alertResult(code:Int, vc:ViewController) -> Void {
+//        let alertController = UIAlertController(title: "系统提示",message: errMsg.desc(key: code), preferredStyle: .alert)
+//        let okAction = UIAlertAction(title: "好的", style: .default, handler: {
+//            action in
+//        })
+//        alertController.addAction(okAction)
+//        vc.present(alertController, animated: true, completion: nil)
+//    }
+    
+    @IBAction func accountLogin(_ sender: UIButton) {
+        let vcAccount = loadVCfromLogin(identifier: "accountController") as! AccountController
+        present(vcAccount, animated: true, completion: nil)
     }
     /*
     // MARK: - Navigation

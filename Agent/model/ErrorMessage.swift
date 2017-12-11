@@ -69,6 +69,8 @@ class ErrorMessage: NSObject {
         msg[12011]="抱歉，活动已过期，请重新下单"
         
         msg[503]="服务器开小差了，稍后再试吧"
+        msg[99]="此功能暂未开放"
+        msg[500]="无法连接至网络"
     }
     
     func desc(key:Int) -> (String) {

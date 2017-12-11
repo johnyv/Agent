@@ -12,6 +12,7 @@ class ProfileInfoCell: UITableViewCell {
 
     @IBOutlet weak var lblCaption: UILabel!
     @IBOutlet weak var lblContent: UILabel!
+    @IBOutlet weak var btnOpt: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

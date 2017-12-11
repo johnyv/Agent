@@ -69,6 +69,8 @@ class OrdersView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let cellTableIdentifier = "orderListCell"
     var orderListData = [OrderListCellModel]()
     
+    @IBOutlet weak var imgNoData: UIImageView!
+    @IBOutlet weak var lblNoData: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -93,6 +95,10 @@ class OrdersView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         requestData(idx: segSort.selectedSegmentIndex)
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        showNodata(dataCount: orderListData.count)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -135,7 +141,8 @@ class OrdersView: UIViewController, UITableViewDelegate, UITableViewDataSource {
             AuthPlugin(tokenClosure: {return source.token})])
         
         let type = String(idx + 1)
-        Network.request(.orderlist(year: "2017", month: "12", page: "1", type: type), success: handleData, provider: provider)
+        request(.orderlist(year: "2017", month: "12", page: "1", type: type), success: handleData)
+//        Network.request(.orderlist(year: "2017", month: "12", page: "1", type: type), success: handleData, provider: provider)
     }
 
     func handleData(json:JSON)->(){
@@ -150,15 +157,28 @@ class OrdersView: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 orderListData.append(OrderListCellModel(id: element["id"].stringValue,
                                                         orderNo: element["orderNo"].stringValue,
                                                         createTime: element["createTime"].stringValue,
-                                                        cardNum: element["cardNum"].stringValue,
-                                                        amount: element["amount"].stringValue,
+                                                        cardNum: element["cardNum"].intValue,
+                                                        amount: element["amount"].floatValue,
                                                         payWay: element["payWay"].stringValue,
                                                         gameName: element["gameName"].stringValue,
                                                         orderStatus: element["orderStatus"].stringValue))
             }
-            DispatchQueue.main.async(execute: { () -> Void in
-                self.tbOrderList.reloadData()
-            })
+//            DispatchQueue.main.async(execute: { () -> Void in
+                tbOrderList.reloadData()
+                showNodata(dataCount: orderListData.count)
+//            })
+        }
+    }
+
+    func showNodata(dataCount:Int){
+        if dataCount > 0 {
+            imgNoData.isHidden = true
+            lblNoData.isHidden = true
+            tbOrderList.isHidden = false
+        }else{
+            imgNoData.isHidden = false
+            lblNoData.isHidden = false
+            tbOrderList.isHidden = true
         }
     }
 
@@ -173,20 +193,26 @@ class OrdersView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellTableIdentifier, for: indexPath) as! OrderListCell
         let cellData = orderListData[indexPath.row]
-        cell.lblCardName.text = cellData.gameName
+        cell.lblCardName.text = cellData.gameName! + String.init(format: "%d张", cellData.cardNum!)
         cell.lblOrderNo.text = cellData.orderNo
-        cell.lblPrice.text = cellData.cardNum
-        cell.lblStatus.text = cellData.orderStatus
+        cell.lblPrice.text = String.init(format: "%.2f元", cellData.amount!)
+        if cellData.orderStatus == "UP" {
+            cell.lblStatus.textColor = .orange
+            cell.lblStatus.text = "待支付"
+        } else {
+            cell.lblStatus.textColor = .darkGray
+            cell.lblStatus.text = "已完成"
+        }
         return cell
     }
     
     func requestOrder(orderNo:String){
-        let source = TokenSource()
-        source.token = getSavedToken()
-        let provider = MoyaProvider<NetworkManager>(plugins:[
-            AuthPlugin(tokenClosure: {return source.token})])
-        
-        Network.request(.cancel(orderNo: orderNo), success: handleOrder, provider: provider)
+//        let source = TokenSource()
+//        source.token = getSavedToken()
+//        let provider = MoyaProvider<NetworkManager>(plugins:[
+//            AuthPlugin(tokenClosure: {return source.token})])
+        request(.cancel(orderNo: orderNo), success: handleOrder)
+//        Network.request(.cancel(orderNo: orderNo), success: handleOrder, provider: provider)
     }
 
     func handleOrder(json:JSON)->(){

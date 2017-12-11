@@ -38,57 +38,58 @@ class AccountViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     @IBAction func accountLogin(_ sender: UIButton) {
-//        let usr = tfMobile.text
-//        let pwd = tfPwd.text
-//        let identifier = UIDevice.current.identifierForVendor
-//        print(identifier)
-//        let netProvider = MoyaProvider<NetworkManager>()
-//        
-//        netProvider.request(.login(usr!, pwd!)){ result in
-//            if case let .success(response) = result{
-//                let data = try?response.mapJSON()
-//                let json = JSON(data!)
-//                let code = json["code"].intValue
-//                if code == 200{
-//                    let token = json["token"].stringValue
-//                    UserDefaults.standard.set(token, forKey: "agentToken")
-//                    //AuthHeader.sharedInstance.sso_tk = token
-//                    //print(token)
-//                    let agentInfo = json["agent"].stringValue
-////                    AgentInfo.instance = AgentInfo(JSONString: agentInfo)!
-////                    let jsonStr = decodeJWT(tokenstr: token)
-//                    //print(jsonStr)
-////                    let jsonData = token.data(using: String.Encoding.utf8, allowLossyConversion: false)
-////                    let jsonToken = JSON(jsonData!)
-//                    print(AgentInfo.instance.gameName)
-//                    
-////                    let agentStr = jsonToken["agent"].stringValue
-////                    let agentData = agentStr.data(using: String.Encoding.utf8, allowLossyConversion: false)
-////                    let agent = JSON(agentData!)//try?JSONSerialization.jsonObject(with: agentData!, options: .mutableContainers) as! JSON
-////                    print(agentInfo?.toJSONString())
-//////                    let data = NSData(base64Encoded: (agentInfo?.toJSONString())!)?.zlibInflate()
-////                    print(agentInfo?.account)
-////                    print(agentInfo?.nickName)
-////                    print(AuthHeader.sharedInstance.toJSONString())
-//                    
-//                    self.dismiss(animated: false, completion: nil)
-//                    let appdelegate = UIApplication.shared.delegate as! AppDelegate
-//                    appdelegate.login()
-//                }else{
-//                    let alertController = UIAlertController(title: "系统提示",
-//                                                            message: errMsg.desc(key: code), preferredStyle: .alert)
-////                    let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-//                    let okAction = UIAlertAction(title: "好的", style: .default, handler: {
-//                        action in
-//                        print("点击了确定")
-//                    })
-////                    alertController.addAction(cancelAction)
-//                    alertController.addAction(okAction)
-//                    self.present(alertController, animated: true, completion: nil)
-//                }
-//            }
-//            
-//        }
+//        let provider = MoyaProvider<NetworkManager>()
+        
+        let appdelegate = UIApplication.shared.delegate as! AppDelegate
+        func handleLogin(json:JSON)->(){
+            let code = json["code"].intValue
+            print(json)
+            if code == 0 {
+                return
+            }
+            if code == 200 {
+                let token = json["token"].stringValue
+                UserDefaults.standard.set(token, forKey: "agentToken")
+                let agent = json["agent"]
+                setAgent(data: agent)
+//                let authority = agent["authorityList"].array
+//                print(authority[1])
+//                UserDefaults.standard.set(authority, forKey: "authority")
+//                AgentInfo.instance.account = agent["account"].stringValue
+//                AgentInfo.instance.agentId = agent["agentId"].stringValue
+//                AgentInfo.instance.roleId = agent["roleId"].stringValue
+//                AgentInfo.instance.name = agent["name"].stringValue
+//                AgentInfo.instance.nickName = agent["nickName"].stringValue
+//                AgentInfo.instance.gameName = agent["gameName"].stringValue
+//                AgentInfo.instance.serverCode = agent["serverCode"].stringValue
+//                AgentInfo.instance.headImg = agent["headImg"].stringValue
+//                AgentInfo.instance.lastBuyTime = agent["lastBuyTime"].stringValue
+//                print(AgentInfo.instance.nickName)
+                //                let authority = agent["authorityList"].array
+                //                print(authority)
+                //UserDefaults.standard.set(authority, forKey: "Array")
+                appdelegate.login()
+            }else{
+                alertResult(code: code)
+//                let alertController = UIAlertController(title: "系统提示",
+//                                                        message: errMsg.desc(key: code), preferredStyle: .alert)
+//                let okAction = UIAlertAction(title: "好的", style: .default, handler: {
+//                    action in
+//                })
+//                alertController.addAction(okAction)
+//                self.present(alertController, animated: true, completion: nil)
+            }
+        }
+        
+        let usr = tfMobile.text
+        let pwd = tfPwd.text
+        let identifier = UIDevice.current.identifierForVendor
+        request(.login(usr!, pwd!), success: handleLogin)
+//        Network.request(.login(usr!, pwd!), success: handleLogin, provider: provider)
+    }
+    @IBAction func forgetPwd(_ sender: UIButton) {
+        let forgotVC = loadVCfromLogin(identifier: "forgotViewController") as! ForgotViewController
+        self.navigationController?.pushViewController(forgotVC, animated: true)
     }
     /*
     // MARK: - Navigation

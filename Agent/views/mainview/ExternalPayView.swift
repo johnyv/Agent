@@ -27,10 +27,11 @@ class ExternalPayView: UIViewController, WKUIDelegate, WKNavigationDelegate {
         print(urlData)
         let str = UserDefaults.standard.string(forKey: "payURL")
         print(str)
-        let urlStr = str?.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)
+        let urlStr = str?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         let url = URL(string: urlStr!)
         var request = URLRequest(url: url!)
-        request.setValue("https://gatewaytest.xianlaigame.com", forHTTPHeaderField: "Referer")
+        //var request = NSMutableURLRequest(url: url!)
+        request.setValue("https://bp124361qg2c8gw.xianlaigame.com", forHTTPHeaderField: "Referer")
         //request.httpMethod = "GET"
         view.addSubview(webView)
         webView.load(request)
@@ -40,9 +41,12 @@ class ExternalPayView: UIViewController, WKUIDelegate, WKNavigationDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    @IBAction func backToPrev(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
     
     lazy var webView : WKWebView = {
-        let web = WKWebView( frame: CGRect(x:0, y:0,
+        let web = WKWebView( frame: CGRect(x:0, y:64,
                                            width:UIScreen.main.bounds.size.width,
                                            height:UIScreen.main.bounds.size.height))
 //        let url = URL(string: "http://www.baidu.com")

@@ -14,8 +14,8 @@ class CustomerTableCellModel: NSObject {
     var header_img_src:String = ""
     var customerType:String = ""
     var cardNum:Int = 0
-    var sellTime:Int = 0
-    init(id:Int, nick:String, header_img_src:String, customerType:String, cardNum:Int, sellTime:Int) {
+    var sellTime:String = ""
+    init(id:Int, nick:String, header_img_src:String, customerType:String, cardNum:Int, sellTime:String) {
         self.id = id
         self.nick = nick
         self.header_img_src = header_img_src

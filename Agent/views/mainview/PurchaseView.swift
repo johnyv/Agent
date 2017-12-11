@@ -14,10 +14,38 @@ import SVProgressHUD
 class PurchaseView: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     var goodsData = [PurchaseCellModel]()
     let cellGoodsIdentifier = "GoodsCell"
+
+    let crDefault = UIColor(red: 1.0, green: 43.0/255.0, blue: 83.0/255.0, alpha: 1.0)
+    var dictTag = [String:Any]()
+    
+    let crCell = [
+//        "":[UIColor(red: 1.0, green: 43.0/255.0, blue: 83.0/255.0, alpha: 1.0),],
+        "1st":UIColor(red: 26.0/255.0, green: 173.0/255.0, blue: 25.0/255.0, alpha: 1.0),
+        "NEW":UIColor(red: 1.0, green: 83.0/255.0, blue: 42, alpha: 1.0),
+        "HOT":UIColor(red: 1.0, green: 145.0/255.0, blue: 0.0, alpha: 1.0),
+        "活动":UIColor(red: 0.0, green: 140.0/255.0, blue: 230.0/255.0, alpha: 1.0)
+    ]
+    
+    let tagCell = [
+        "1st":UIImage(named: "tag_1st"),
+        "NEW":UIImage(named: "tag_period"),
+        "HOT":UIImage(named: "tag_special"),
+        "活动":UIImage(named: "tag_activity")
+    ]
+    
+    @IBOutlet weak var imgHeadIco: UIImageView!
+    @IBOutlet weak var lblNickName: UILabel!
+    @IBOutlet weak var lblAccountID: UILabel!
+    @IBOutlet weak var lblGameName: UILabel!
     @IBOutlet weak var clvGoods: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        dictTag["1st"] = [UIColor(red: 26.0/255.0, green: 173.0/255.0, blue: 25.0/255.0, alpha: 1.0),UIImage(named: "tag_1st")]
+        dictTag["NEW"] = [UIColor(red: 1.0, green: 83.0/255.0, blue: 42, alpha: 1.0), UIImage(named: "tag_period")]
+        dictTag["HOT"] = [UIColor(red: 1.0, green: 145.0/255.0, blue: 0.0, alpha: 1.0), UIImage(named: "tag_special")]
+        dictTag["活动"] = [UIColor(red: 0.0, green: 140.0/255.0, blue: 230.0/255.0, alpha: 1.0), UIImage(named: "tag_activity")]
+        
         // Do any additional setup after loading the view.
         clvGoods.delegate = self
         clvGoods.dataSource = self
@@ -25,12 +53,28 @@ class PurchaseView: UIViewController, UICollectionViewDelegate, UICollectionView
         let xib = UINib(nibName: "GoodsViewCell", bundle: nil)
         clvGoods.register(xib, forCellWithReuseIdentifier: cellGoodsIdentifier)
         
-        let source = TokenSource()
-        source.token = getSavedToken()
-        let provider = MoyaProvider<NetworkManager>(plugins:[
-            AuthPlugin(tokenClosure: {return source.token})])
+//        let source = TokenSource()
+//        source.token = getSavedToken()
+//        let provider = MoyaProvider<NetworkManager>(plugins:[
+//            AuthPlugin(tokenClosure: {return source.token})])
+//        
+//        Network.request(.goodList, success: handleData, provider: provider)
+        request(.goodList, success: handleData)
         
-        Network.request(.goodList, success: handleData, provider: provider)
+        let agent = getAgent()
+        
+        let strURL = agent["headImg"] as? String
+        let icoURL = URL(string: strURL!)
+        imgHeadIco.sd_setImage(with: icoURL, completed: nil)
+
+        let nickName = agent["nickName"] as? String
+        lblNickName.text = nickName
+        
+        let gameName = agent["gameName"] as? String
+        lblGameName.text = gameName
+
+        let accountID = agent["agentId"] as? Int
+        lblAccountID.text = String.init(format: "ID:%d", accountID!)
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,7 +87,7 @@ class PurchaseView: UIViewController, UICollectionViewDelegate, UICollectionView
     }
 
     @IBAction func listOrders(_ sender: UIBarButtonItem) {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ordersView") as? OrdersView
+        let vc = loadVCfromMain(identifier: "ordersView") as? OrdersView
         present(vc!, animated: true, completion: nil)
     }
     
@@ -54,7 +98,7 @@ class PurchaseView: UIViewController, UICollectionViewDelegate, UICollectionView
             print(result)
             let dataArr = result["data"].array
             for(_, data) in (dataArr?.enumerated())!{
-                goodsData.append(PurchaseCellModel(goodsId: data["goodsId"].stringValue, activityId: data["activityId"].intValue, cardNum: data["cardNum"].stringValue, extraNum: data["extraNum"].intValue, activityExtraNum: data["activityExtraNum"].intValue, price: data["price"].stringValue, superscript: data["superscript"].stringValue, desc: data["desc"].stringValue, createTime: data["createTime"].stringValue))
+                goodsData.append(PurchaseCellModel(goodsId: data["goodsId"].stringValue, activityId: data["activityId"].intValue, cardNum: data["cardNum"].intValue, extraNum: data["extraNum"].intValue, activityExtraNum: data["activityExtraNum"].intValue, price: data["price"].floatValue, superscript: data["superscript"].stringValue, desc: data["desc"].stringValue, discount: data["discount"].doubleValue, discountFee: data["discountFee"].doubleValue, userGoodSuperscript: data["userGoodSuperscript"].intValue,createTime: data["createTime"].stringValue))
             }
             clvGoods.reloadData()
         }
@@ -66,31 +110,85 @@ class PurchaseView: UIViewController, UICollectionViewDelegate, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellGoodsIdentifier, for: indexPath) as! GoodsViewCell
-        cell.lblCardNum.text = goodsData[indexPath.item].cardNum
+
+        let tag = tagCell[goodsData[indexPath.item].superscript!]
+        let cr = crCell[goodsData[indexPath.item].superscript!]
+        if cr != nil {
+            cell.frColor = cr
+        }else{
+            cell.frColor = crDefault
+        }
+        cell.lblCardNum.text = String.init(format: "%d张",goodsData[indexPath.item].cardNum!)
+        cell.lblPrice.text = String.init(format: "¥%.2f", goodsData[indexPath.item].discountFee!)
+        let oldStr:String = String.init(format: "¥%.2f", goodsData[indexPath.item].price!)
+//        let aStr = NSAttributedString(string: oldStr, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 15),NSStrikethroughStyleAttributeName:NSUnderlineStyle.patternSolid])
+        cell.lblDiscount.text = String.init(format: "¥%.2f", goodsData[indexPath.item].price!)
+//        cell.lblDiscount.attributedText = aStr
+        cell.lblSuperscript.text = goodsData[indexPath.item].superscript
+        
+        if tag != nil {
+            let imgTag = UIImageView(image: tag!)
+            cell.addSubview(imgTag)
+        }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //let cell = collectionView.cellForItem(at: indexPath) as! GoodsViewCell
 
-        let source = TokenSource()
-        source.token = getSavedToken()
-        let provider = MoyaProvider<NetworkManager>(plugins:[
-            AuthPlugin(tokenClosure: {return source.token})])
+//        let source = TokenSource()
+//        source.token = getSavedToken()
+//        let provider = MoyaProvider<NetworkManager>(plugins:[
+//            AuthPlugin(tokenClosure: {return source.token})])
 
         let data = goodsData[indexPath.item]
         print(data.desc)
-        let alertPay = UIAlertController(title: "确认付款", message: "¥"+data.price!,
+        
+        func handlePay(json:JSON)->(){
+            let result = json["result"]
+            let code = result["code"].intValue
+            if code == 200 {
+                print(result)
+                let dataStr = result["data"].stringValue
+                let urlStr = dataStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+                let url = URL(string: urlStr!)
+                //            UIApplication.shared.openURL(url!)
+                print(url)
+                UserDefaults.standard.set(dataStr, forKey: "payURL")
+                
+                let payVC = loadVCfromMain(identifier: "doPayView") as! DoPayView
+                
+                //            payVC.urlData = data
+                present(payVC, animated: true, completion: nil)
+            }else{
+                print(result)
+                SVProgressHUD.showInfo(withStatus: errMsg.desc(key: code))
+            }
+        }
+
+        func doPayWx(){
+            request(.buycardGood(payTypeInchannel: 4, channel: 2, paySource: 4, goodId: Int(data.goodsId!)!, activityId: data.activityId!), success: handlePay)
+        }
+        
+        func doPayAli(){
+            request(.buycardGood(payTypeInchannel: 1, channel: 1, paySource: 9, goodId: Int(data.goodsId!)!, activityId: data.activityId!), success: handlePay)
+        }
+        
+        let alertPay = UIAlertController(title: "确认付款", message: String.init(format: "¥%.2f", data.price!),
                                                 preferredStyle: .actionSheet)
         
         alertPay.view.layer.cornerRadius = 0;
         let wxPayAction = UIAlertAction(title: "微信支付", style: .default, handler: {
         action in
-            Network.request(.buycardGood(payTypeInchannel: 4, channel: 2, paySource: 4, goodId: Int(data.goodsId!)!, activityId: data.activityId!), success: self.handlePay, provider: provider)
+            doPayWx()
+//            Network.request(.buycardGood(payTypeInchannel: 4, channel: 2, paySource: 4, goodId: Int(data.goodsId!)!, activityId: data.activityId!), success: self.handlePay, provider: provider)
+//            request(.buycardGood(payTypeInchannel: 4, channel: 2, paySource: 4, goodId: Int(data.goodsId!)!, activityId: data.activityId!), success: handlePay)
         })
         let aliPayAction = UIAlertAction(title: "支付宝支付", style: .default, handler: {
         action in
-            Network.request(.buycardGood(payTypeInchannel: 1, channel: 1, paySource: 9, goodId: Int(data.goodsId!)!, activityId: data.activityId!), success: self.handlePay, provider: provider)
+            doPayAli()
+//            Network.request(.buycardGood(payTypeInchannel: 1, channel: 1, paySource: 9, goodId: Int(data.goodsId!)!, activityId: data.activityId!), success: self.handlePay, provider: provider)
+//            request(.buycardGood(payTypeInchannel: 1, channel: 1, paySource: 9, goodId: Int(data.goodsId!)!, activityId: data.activityId!), success: handlePay)
         })
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         alertPay.addAction(wxPayAction)
@@ -100,25 +198,27 @@ class PurchaseView: UIViewController, UICollectionViewDelegate, UICollectionView
         
     }
     
-    func handlePay(json:JSON)->(){
-        let result = json["result"]
-        let code = result["code"].intValue
-        if code == 200 {
-            print(result)
-            let data = result["data"].stringValue
-            let url = URL(string: data)
-            print(url)
-            UserDefaults.standard.set(data, forKey: "payURL")
-
-            let payVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "externalPayView") as! ExternalPayView
-            
-            payVC.urlData = data
-            present(payVC, animated: true, completion: nil)
-        }else{
-            print(result)
-            SVProgressHUD.showInfo(withStatus: errMsg.desc(key: code))
-        }
-    }
+//    func handlePay(json:JSON)->(){
+//        let result = json["result"]
+//        let code = result["code"].intValue
+//        if code == 200 {
+//            print(result)
+//            let dataStr = result["data"].stringValue
+//            let urlStr = dataStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+//            let url = URL(string: urlStr!)
+////            UIApplication.shared.openURL(url!)
+//            print(url)
+//            UserDefaults.standard.set(dataStr, forKey: "payURL")
+//
+//            let payVC = loadVCfromMain(identifier: "doPayView") as! DoPayView
+//            
+////            payVC.urlData = data
+//            present(payVC, animated: true, completion: nil)
+//        }else{
+//            print(result)
+//            SVProgressHUD.showInfo(withStatus: errMsg.desc(key: code))
+//        }
+//    }
 
     /*
     // MARK: - Navigation

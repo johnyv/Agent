@@ -14,8 +14,8 @@ enum NetworkManager{
     //------------------
     //用户中心
     case login(String, String) //用户账户密码登录接口
-    case loginByMobile(String, String, String) //用户手机号登录接口
-    case sms(String, String, Int) //获取手机短信验证码
+    case loginByMobile(username:String, password:String, areaCode:String) //用户手机号登录接口
+    case sms(phoneNo:String, areaCode:String, msgType:Int) //获取手机短信验证码
     case refresh //刷新token接口
     //------------------
     //基础&核心服务
@@ -29,14 +29,15 @@ enum NetworkManager{
     case myagent(agentType:Int, page:Int, pageSize:Int) //查询我的代理列表
     case myagentInfo(subAgentId:Int) //查询我的代理详情
     case updateRemark(subAgentId:Int, remark:String) //修改我的代理备注
-    case myagentNew(name:String, userId:Int, tel:String, roleIde:Int, vipAgentOpenLimit:Int, normalAgentOpenLimit:Int, subAgentOpenLimit:Int, validityPeriod:String) //开通代理
+    case myagentNew(name:String, userId:Int, tel:String, roleId:Int, verificationCode:String, vipAgentOpenLimit:Int, normalAgentOpenLimit:Int, subAgentOpenLimit:Int, validityPeriod:String) //开通代理
     case agentSwitch(agentId:Int, enable:String) //启用，禁用代理
     case pwdChange(pwd:String, rpwd:String) //修改密码
-    case myInfo //查询当前代理信息
+    case myInfo //13查询当前代理信息
     case editHI(headerImgSrc:String) //修改头像
     case editNick(nickName:String) //修改昵称
     case typeInfo //查询特权信息
     case bind(tel:String, verificationCode:String) //绑定安全手机
+    case agentSMS(tel:String, smsType:Int) //24开通代理手机验证码
     //编辑安全手机
     case inviteGet //邀请玩家
     case inviteList(page:Int, pageSize:Int) //查询邀请玩家列表
@@ -129,6 +130,15 @@ extension NetworkManager: AuthorizedTargetType{
             return "/api/agent/core/notice/list"
         case .noticeDetail(_):
             return "/api/agent/core/notice/detail"
+        case .myagent(_, _, _):
+            return "/api/agent/core/myagent/list"
+        case .myagentNew(_, _, _, _, _, _, _, _, _):
+            return "/api/agent/core/myagent/new"
+        case .myInfo:
+            return "/api/agent/core/my/info"
+        case .agentSMS(_, _):
+            return "/api/agent/core/verificationCode/register"
+            
             
         //------------------
         //购卡服务
@@ -153,6 +163,8 @@ extension NetworkManager: AuthorizedTargetType{
             return "/api/agent/sellcard/sellcardToAgent"
         case .statisticAllNum(_):
             return "/api/agent/sellcard/statistic/allNum"
+        case .statisticList(_, _, _, _):
+            return "/api/agent/sellcard/statistic/list"
         case .customerAllNum(_, _, _):
             return "/api/agent/sellcard/customer/allNum"
         case .customerRecently(_, _, _, _, _, _):
@@ -185,11 +197,28 @@ extension NetworkManager: AuthorizedTargetType{
     
     public var task:Task{
         switch self {
+        //用户中心
         case .login(let usr, let pwd):
             var params:[String:Any] = [:]
-            params["username"] = usr//"18500206220"
-            params["password"] = pwd//"Assassin1"
+            params["username"] = usr
+            params["password"] = pwd
             return .requestParameters(parameters: params, encoding: JSONEncoding.default)
+            
+        case .loginByMobile(let username, let password, let areaCode):
+            var params:[String:Any] = [:]
+            params["username"] = username
+            params["password"] = password
+            params["areaCode"] = areaCode
+            return .requestParameters(parameters: params, encoding: JSONEncoding.default)
+            
+        case .sms(let phoneNo, let areaCode, let msgType):
+            var params:[String:Any] = [:]
+            params["phoneNo"] = phoneNo
+            params["areaCode"] = areaCode
+            params["msgType"] = msgType
+            return .requestParameters(parameters: params, encoding: JSONEncoding.default)
+            
+            
         case .cancel(let orderNo):
             var params:[String:Any] = [:]
             params["orderNo"] = orderNo
@@ -213,6 +242,14 @@ extension NetworkManager: AuthorizedTargetType{
             return .requestParameters(parameters: data, encoding: DataEncoding.default)
 
         // 购卡服务
+        case .goodDetail(let time, let page):
+            var data:[String:Any] = [:]
+            
+            data["time"] = time
+            data["page"] = page
+            
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
+            
         case .goodDetailCollect(let time):
             var data:[String:Any] = [:]
             
@@ -253,6 +290,22 @@ extension NetworkManager: AuthorizedTargetType{
             }
             if endDate != 0 {
                 data["endDate"] = endDate
+            }
+            
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
+            
+        case .statisticList(let time, let sortType, let pageIndex, let pageNum):
+            var data:[String:Any] = [:]
+            
+            data["time"] = time
+            if sortType != 0 {
+                data["sortType"] = sortType
+            }
+            if pageIndex != 0 {
+                data["pageIndex"] = pageIndex
+            }
+            if pageNum != 0{
+                data["pageNum"] = pageNum
             }
             
             return .requestParameters(parameters: data, encoding: DataEncoding.default)
@@ -302,6 +355,58 @@ extension NetworkManager: AuthorizedTargetType{
         case .refresh:
             return .requestPlain
             
+        // 服务
+        case .noticeList(let page, let pageSize):
+            var data:[String:Any] = [:]
+            if page != 0{
+                data["page"] = page
+            }
+            if pageSize != 0 {
+                data["pageSize"] = pageSize
+            }
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
+        case .noticeDetail(let noticeId):
+            var data:[String:Any] = [:]
+                data["noticeId"] = noticeId
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
+        case .myagent(let agentType, let page, let pageSize):
+            var data:[String:Any] = [:]
+            if agentType != 0{
+                data["agentType"] = agentType
+            }
+            if page != 0 {
+                data["page"] = page
+            }
+            if pageSize != 0 {
+                data["pageSize"] = pageSize
+            }
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
+            
+        case .myagentNew(let name, let userId, let tel, let roleId, let verificationCode, let vipAgentOpenLimit, let normalAgentOpenLimit, let subAgentOpenLimit, let validityPeriod):
+            var data:[String:Any] = [:]
+            data["name"] = name
+            data["userId"] = userId
+            data["tel"] = tel
+            data["roleId"] = roleId
+            data["verificationCode"] = verificationCode
+
+            if vipAgentOpenLimit != 0{
+                data["vipAgentOpenLimit"] = vipAgentOpenLimit
+            }
+            if normalAgentOpenLimit != 0 {
+                data["normalAgentOpenLimit"] = normalAgentOpenLimit
+            }
+            if subAgentOpenLimit != 0 {
+                data["subAgentOpenLimit"] = subAgentOpenLimit
+            }
+            data["validityPeriod"] = validityPeriod
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
+        case .agentSMS(let tel, let smsType):
+            var data:[String:Any] = [:]
+            data["tel"] = tel
+            data["smsType"] = smsType
+
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
         default:
             let params:[String:Any] = [:]
             return .requestParameters(parameters: params, encoding: DataEncoding.default)
@@ -335,40 +440,40 @@ extension NetworkManager: AuthorizedTargetType{
     }
 }
 
-func handleError(statusCode: Int) -> () {
-    //服务器报错等问题
-    print("请求错误！错误码：\(statusCode)")
-}
-
-func handleFailure(error: MoyaError) -> () {
-    //没有网络等问题
-    print("请求失败！错误信息：\(error.errorDescription ?? "")")
-}
-
-struct Network {
-    
-    static func request(_ target:NetworkManager,
-                        success successCallback: @escaping(JSON) -> Void,
-//                        error errorCallback: @escaping(Int) -> Void,
-//                        failure failureCallback: @escaping(MoyaError) -> Void,
-                        provider:MoyaProvider<NetworkManager>){
-        provider.request(target) { result in
-            switch result {
-            case let .success(response):
-                do {
-                    //如果数据返回成功则直接将结果转为JSON
-                    try response.filterSuccessfulStatusCodes()
-                    let json = try JSON(response.mapJSON())
-                    successCallback(json)
-                }
-                catch let error {
-                    //如果数据获取失败，则返回错误状态码
-                    handleError(statusCode: (error as! MoyaError).response!.statusCode)
-                }
-            case let .failure(error):
-                //如果连接异常，则返沪错误信息（必要时还可以将尝试重新发起请求）
-                handleFailure(error: error)
-            }
-        }
-    }
-}
+//func handleError(statusCode: Int) -> () {
+//    //服务器报错等问题
+//    print("请求错误！错误码：\(statusCode)")
+//}
+//
+//func handleFailure(error: MoyaError) -> () {
+//    //没有网络等问题
+//    print("请求失败！错误信息：\(error.errorDescription ?? "")")
+//}
+//
+//struct Network {
+//    
+//    static func request(_ target:NetworkManager,
+//                        success successCallback: @escaping(JSON) -> Void,
+////                        error errorCallback: @escaping(Int) -> Void,
+////                        failure failureCallback: @escaping(MoyaError) -> Void,
+//                        provider:MoyaProvider<NetworkManager>){
+//        provider.request(target) { result in
+//            switch result {
+//            case let .success(response):
+//                do {
+//                    //如果数据返回成功则直接将结果转为JSON
+//                    try response.filterSuccessfulStatusCodes()
+//                    let json = try JSON(response.mapJSON())
+//                    successCallback(json)
+//                }
+//                catch let error {
+//                    //如果数据获取失败，则返回错误状态码
+//                    handleError(statusCode: (error as! MoyaError).response!.statusCode)
+//                }
+//            case let .failure(error):
+//                //如果连接异常，则返沪错误信息（必要时还可以将尝试重新发起请求）
+//                handleFailure(error: error)
+//            }
+//        }
+//    }
+//}

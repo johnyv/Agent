@@ -25,6 +25,12 @@ import UIKit
 class GoodsViewCell: UICollectionViewCell {
 
     @IBOutlet weak var lblCardNum: UILabel!
+    @IBOutlet weak var lblPrice: UILabel!
+    @IBOutlet weak var lblDiscount: UILabel!
+    @IBOutlet weak var lblSuperscript: UILabel!
+    
+    var frColor:UIColor?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -32,9 +38,10 @@ class GoodsViewCell: UICollectionViewCell {
     
     override func draw(_ rect: CGRect) {
         let pathRect = self.bounds.insetBy(dx: 1, dy: 1)
-        let path = UIBezierPath(roundedRect: pathRect, cornerRadius: 10)
+        let path = UIBezierPath(roundedRect: pathRect, cornerRadius: 5)
         path.lineWidth = 1
-        UIColor.orange.setStroke()
+        //UIColor.orange.setStroke()
+        frColor?.setStroke()
         //path.fill()
         path.stroke()
     }

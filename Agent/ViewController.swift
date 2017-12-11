@@ -19,23 +19,31 @@ class ViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-//        let appdelegate = UIApplication.shared.delegate as! AppDelegate
-//        
-//        let source = TokenSource()
-//        source.token = getSavedToken()
-//        let provider = MoyaProvider<NetworkManager>(plugins:[
-//            AuthPlugin(tokenClosure: {return source.token})])
-//        
-//        func handleResult(json:JSON)->(){
-//            print(json)
-//            let code = json["code"].intValue
-//            if (code == 200){
-//                appdelegate.login()
-//            }else{
-//                appdelegate.reLogin()
-//            }
-//        }
-//        Network.request(.refresh, success: handleResult, provider: provider)
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        func handleResult(json:JSON)->(){
+            print(json)
+            let code = json["code"].intValue
+            if (code == 200){
+                //保存登录数据
+                let token = json["token"].stringValue
+                UserDefaults.standard.set(token, forKey: "agentToken")
+                let agent = json["agent"]
+                setAgent(data: agent)
+                setAuthority(agent:agent)
+
+                //进入主页
+//                let vc = loadVCfromMain(identifier: "mainMenu") as? MenuViewController
+//                present(vc!, animated: true, completion: nil)
+                delegate.login()
+                
+            }else{
+                //token失败，重新登录
+//                let vc = loadVCfromLogin(identifier: "loginMain") as? LoginViewController
+//                present(vc!, animated: true, completion: nil)
+                delegate.reLogin()
+            }
+        }
+        request(.refresh, success: handleResult)
     }
     
     //播放启动画面动画

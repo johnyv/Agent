@@ -13,21 +13,21 @@ import SDWebImage
 
 class MainViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    let tools = [
-        ["ico_club","俱乐部管理","这里是说明文案"],
-        ["ico_match","比赛场管理","即将上线"],
-        ["ico_bounus","积分商城","这里是说明文案"],
-        ["ico_notice_list","公告列表","这里是说明文案"],
-        ["ico_data_center","数据中心","这里是说明文案"],
-        ["ico_agent_manager","下级代理管理","开通/禁用"]
-    ]
+//    let tools = [
+//        ["ico_club","俱乐部管理","这里是说明文案"],
+//        ["ico_match","比赛场管理","即将上线"],
+//        ["ico_bounus","积分商城","这里是说明文案"],
+//        ["ico_notice_list","公告列表","这里是说明文案"],
+//        ["ico_data_center","数据中心","这里是说明文案"],
+//        ["ico_agent_manager","下级代理管理","开通/禁用"]
+//    ]
     let cellToolIdentifier = "toolCell"
     
+    @IBOutlet weak var navMain: UINavigationBar!
     @IBOutlet weak var btnSale: UIButton!
     @IBOutlet weak var btnPurchase: UIButton!
     @IBOutlet weak var btnClub: UIButton!
     @IBOutlet weak var vTopBG: UIView!
-    @IBOutlet weak var navMain: UINavigationItem!
     @IBOutlet weak var banner: BannerView!
     @IBOutlet weak var clvTools: UICollectionView!
     @IBOutlet weak var lblNotice: UILabel!
@@ -38,6 +38,11 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        let agent = getAgent()
+        let gameName = agent["gameName"] as? String
+
+//        let gameName = UserDefaults.standard.string(forKey: "gameName")
+        self.navigationItem.title = gameName
         btnSale.setTitleAlign(position: .bottom)
         btnPurchase.setTitleAlign(position: .bottom)
         btnClub.setTitleAlign(position: .bottom)
@@ -54,59 +59,14 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
 //            make.top.equalTo(450)
 //            make.width.equalTo(self.view)
 //            make.centerX.equalTo(self.view)})
-        let source = TokenSource()
-        source.token = getSavedToken()
-        let provider = MoyaProvider<NetworkManager>(plugins:[
-            AuthPlugin(tokenClosure: {return source.token})])
-        
-        func handleNotice(json:JSON)->(){
-            let result = json["result"]
-            let code = result["code"].intValue
-            if code == 200 {
-                print(result)
-            }
-        }
-        Network.request(.noticeScroll, success: handleNotice, provider: provider)
-
-        func handleBanner(json:JSON)->(){
-            let result = json["result"]
-            let code = result["code"].intValue
-            if code == 200 {
-                let dataArr = result["data"].array
-                if(dataArr == nil){
-                    return
-                }
-                for(_, data) in (dataArr?.enumerated())!{
-                    imgURLs.append(data["imageUrl"].stringValue as AnyObject)
-                }
-                banner.imageURLs = imgURLs
-            }
-        }
-
-//        func handleAgreement(json:JSON)->(){
-//            let result = json["result"]
-//            let code = result["code"].intValue
-//            if code == 200 {
-//                print(result)
-//            }
-//        }
-//        Network.request(.agreement, success: handleAgreement, provider: provider)
-
-        //netProvider.request(.orderlist(year: "2017", month: "09", page: "1", type: "1")){ result in
-        Network.request(.banner, success: handleBanner, provider: provider)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-
-//        Network.request(.banner){ result in
-//            switch result{
-//            case let .success(response):
-//                let data = try? response.mapJSON()
-//                let result = JSON(data!)
-//            case let .failure(error):
-//                break
-//            }
-//        }
+//        let source = TokenSource()
+//        source.token = getSavedToken()
+//        let provider = MoyaProvider<NetworkManager>(plugins:[AuthPlugin(tokenClosure: {return source.token})])
+//    }
+//    
+//    override func viewDidAppear(_ animated: Bool) {
+        request(.noticeScroll, success: handleNotice)
+        request(.banner, success: handleBanner)
     }
 
     override func didReceiveMemoryWarning() {
@@ -119,26 +79,76 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
 //        let appdelegate = UIApplication.shared.delegate as! AppDelegate
 //        appdelegate.mainNavi?.pushSalesView()
         
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "salesView") as? SalesView
+        let vc = loadVCfromMain(identifier: "salesView") as? SalesView
         present(vc!, animated: true, completion: nil)
     }
     
     @IBAction func startPurshase(_ sender: UIButton) {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "purchaseView") as? PurchaseView
+        let vc = loadVCfromMain(identifier: "purchaseView") as? PurchaseView
         present(vc!, animated: true, completion: nil)
     }
     
+    @IBAction func startClub(_ sender: UIButton) {
+        alertResult(code: 99)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let tools = authorityList.getToolsByAuthority()
         return tools.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellToolIdentifier, for: indexPath) as! ToolViewCell
+        let tools = authorityList.getToolsByAuthority()
+        
         cell.imgIco.image = UIImage(named: tools[indexPath.item][0])
         cell.lblTitle.text = tools[indexPath.item][1]
         cell.lblDesc.text = tools[indexPath.item][2]
 //        cell.imgIco.image = UIImage()
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let tools = authorityList.getToolsByAuthority()
+        let itemName = tools[indexPath.item][0]
+        switch itemName {
+        case "ico_agent_manager":
+            let vc = loadVCfromMain(identifier: "myAgentAdmin") as! MyAgentAdmin
+            present(vc, animated: true, completion: nil)
+        case "ico_notice_list":
+            let vc = loadVCfromMain(identifier: "noticeListView") as! NoticeListView
+            present(vc, animated: true, completion: nil)
+
+        default:
+            alertResult(code: 99)
+        }
+    }
+    
+    func handleNotice(json:JSON)->(){
+        let result = json["result"]
+        print(result)
+        let code = result["code"].intValue
+        if code == 200 {
+            let data = result["data"]
+            let title = data["title"].stringValue
+            lblNotice.text = title
+        }
+    }
+    
+    func handleBanner(json:JSON)->(){
+        let result = json["result"]
+        print(result)
+        let code = result["code"].intValue
+        if code == 200 {
+            let dataArr = result["data"].array
+            if(dataArr == nil){
+                return
+            }
+            for(_, data) in (dataArr?.enumerated())!{
+                imgURLs.append(data["imageUrl"].stringValue as AnyObject)
+            }
+            banner.imageURLs = imgURLs
+        }
     }
     /*
     // MARK: - Navigation

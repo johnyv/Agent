@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AdSupport
 
 class RequestBody: NSObject{
     var body:[String:[String:Any]] = [:]
@@ -19,7 +20,7 @@ class RequestBody: NSObject{
         
         header["apiLevel"] = "100"
         header["encode"] = "UTF-8"
-        header["platformId"] = "4"
+        header["platformId"] = UIDevice.current.systemVersion
         header["osType"] = "4"
         header["deviceToken"] = "token"
         header["model"] = UIDevice.current.model
@@ -28,7 +29,8 @@ class RequestBody: NSObject{
         header["sso_tk"] = getSavedToken()
         header["from"] = "hunan_db"
         header["mac"] = "mac"
-
+        header["udid"] = ASIdentifierManager.shared().advertisingIdentifier.uuidString
+        
         body["header"] = header
     }    
 }

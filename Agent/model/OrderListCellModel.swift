@@ -12,12 +12,12 @@ class OrderListCellModel: NSObject {
     var id:String?
     var orderNo:String?
     var createTime:String?
-    var cardNum:String?
-    var amount:String?
+    var cardNum:Int?
+    var amount:Float?
     var payWay:String?
     var gameName:String?
     var orderStatus:String?
-    init( id:String,orderNo:String,createTime:String,cardNum:String,amount:String,payWay:String,gameName:String,orderStatus:String) {
+    init( id:String,orderNo:String,createTime:String,cardNum:Int,amount:Float,payWay:String,gameName:String,orderStatus:String) {
         self.id = id
         self.orderNo = orderNo
         self.createTime = createTime

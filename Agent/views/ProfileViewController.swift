@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Moya
+import SwiftyJSON
 
 class ProfileViewController: UITableViewController {
     let cellNormalIdentifier = "normalCell"
@@ -22,6 +24,7 @@ class ProfileViewController: UITableViewController {
     ]
     
     let titleBtns = ["立即认证","立即绑定","立即授权"]
+    var profile:[String:Any] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,30 +34,32 @@ class ProfileViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        // self.tableView.tableFooterView = UIView(frame:CGRect.zero)
+        self.tableView.tableFooterView = UIView(frame:CGRect.zero)
 //        UILabel.appearance(whenContainedInInstancesOf: [UITableViewHeaderFooterView.self])
 //            .textColor = UIColor.gray
 //        UILabel.appearance(whenContainedInInstancesOf: [UITableViewHeaderFooterView.self])
 //            .font = UIFont.systemFont(ofSize: 13.0, weight: UIFontWeightMedium)
         //self.tableView.style = .grouped
-        tableView.estimatedRowHeight = 44
-        tableView.rowHeight = UITableViewAutomaticDimension
+//        tableView.estimatedRowHeight = 44
+//        tableView.rowHeight = UITableViewAutomaticDimension
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellNormalIdentifier)
         tableView.register(ProfileHeadCell.self, forCellReuseIdentifier: cellHeadIdentifier)
         let xibHead = UINib(nibName: "ProfileHeadCell", bundle: nil)
         tableView.register(xibHead, forCellReuseIdentifier: cellHeadIdentifier)
 
-        tableView.register(ProfileInfoCell.self, forCellReuseIdentifier: cellOptionIdentifier)
-        let xibOpt = UINib(nibName: "ProfileOptionCell", bundle: nil)
-        tableView.register(xibOpt, forCellReuseIdentifier: cellOptionIdentifier)
+//        tableView.register(ProfileInfoCell.self, forCellReuseIdentifier: cellOptionIdentifier)
+//        let xibOpt = UINib(nibName: "ProfileOptionCell", bundle: nil)
+//        tableView.register(xibOpt, forCellReuseIdentifier: cellOptionIdentifier)
 
         tableView.register(ProfileInfoCell.self, forCellReuseIdentifier: cellInfoIdentifier)
         let xibInfo = UINib(nibName: "ProfileInfoCell", bundle: nil)
         tableView.register(xibInfo, forCellReuseIdentifier: cellInfoIdentifier)
         
         tableView.bounces = false
-}
+        
+        request(.myInfo, success: handleInfo)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -79,25 +84,99 @@ class ProfileViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Configure the cell...
+        //let profile = getProfile()
         if indexPath.section == 0 && indexPath.row == 0{
             let cell = tableView.dequeueReusableCell(withIdentifier: cellHeadIdentifier) as! ProfileHeadCell
             cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
+            let strURL = profile["headerImgSrc"]
+            if strURL != nil {
+                let icoURL = URL(string: strURL as! String)
+                cell.imgHeadIco.sd_setImage(with: icoURL, completed: nil)
+            }
             cell.accessoryType = .disclosureIndicator
             return cell
-        }else if (indexPath.section == 1 && indexPath.row == 0) ||
-            (indexPath.section == 1 && indexPath.row == 1) ||
-            (indexPath.section == 1 && indexPath.row == 2){
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellOptionIdentifier, for: indexPath) as! ProfileOptionCell
-            cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
-            cell.btnOpt.setTitle(titleBtns[indexPath.row], for: .normal)
-            cell.selectionStyle = .none
-            return cell
+//        }else if indexPath.section == 1 && indexPath.row == 0 {
+//            if profile["proofName"] != nil{
+//                let proofName = profile["proofName"] as! String
+//                if proofName != "" {
+//                    let cell = tableView.dequeueReusableCell(withIdentifier: cellOptionIdentifier, for: indexPath) as! ProfileInfoCell
+//                    cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
+//                    cell.lblContent.text = proofName
+//                    cell.selectionStyle = .none
+//                    return cell
+//                }else{
+//                    let cell = tableView.dequeueReusableCell(withIdentifier: cellOptionIdentifier, for: indexPath) as! ProfileOptionCell
+//                    cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
+//                    cell.btnOpt.setTitle(titleBtns[indexPath.row], for: .normal)
+//                    cell.selectionStyle = .none
+//                    return cell
+//                }
+//            }
+//        }else if indexPath.section == 1 && indexPath.row == 1 {
+//            
+//        }else if indexPath.section == 1 /*&& indexPath.row == 2*/ {
+//            let cell = tableView.dequeueReusableCell(withIdentifier: cellNormalIdentifier, for: indexPath)// as! ProfileInfoCell
+//            cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
+////            cell.btnOpt.setTitle(titleBtns[indexPath.row], for: .normal)
+//            cell.lblContent.isHidden = true
+//            cell.accessoryType = .disclosureIndicator
+//            switch indexPath.row {
+//            case 0:
+//                if profile["proofName"] != nil{
+//                    let proofName = profile["proofName"] as! String
+//                    if proofName != "" {
+//                        let cell = cell as! ProfileInfoCell
+//                        cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
+//                        cell.lblContent.text = proofName
+//                        cell.selectionStyle = .none
+//                    }else{
+//                        let cell = cell as! ProfileOptionCell
+//                        cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
+//                        cell.btnOpt.setTitle(titleBtns[indexPath.row], for: .normal)
+//                        cell.selectionStyle = .none
+//                    }
+//                }
+//            case 1:
+//                if profile["bindTel"] != nil{
+//                    let bindTel = profile["bindTel"] as! String
+//                    if bindTel != "" {
+//                        let cell = cell as! ProfileInfoCell
+//                        cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
+//                        cell.lblContent.text = bindTel
+//                        cell.selectionStyle = .none
+//                    }else{
+//                        let cell = cell as! ProfileOptionCell
+//                        cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
+//                        cell.btnOpt.setTitle(titleBtns[indexPath.row], for: .normal)
+//                        cell.selectionStyle = .none
+//                    }
+//                }
+//            case 2:
+//                if profile["weChatLogin"] != nil{
+//                    let weChatLogin = profile["weChatLogin"] as! Bool
+//                    if weChatLogin == true {
+//                        let cell = cell as! ProfileInfoCell
+//                        cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
+//                        cell.lblContent.text = "已授权"
+//                        cell.selectionStyle = .none
+//                    }else{
+//                        let cell = cell as! ProfileOptionCell
+//                        cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
+//                        cell.btnOpt.setTitle(titleBtns[indexPath.row], for: .normal)
+//                        cell.selectionStyle = .none
+//                    }
+//                }
+//            default:
+//                break
+//            }
+//            return cell
         }else{
             let cell = tableView.dequeueReusableCell(withIdentifier: cellInfoIdentifier) as! ProfileInfoCell
             cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
+            cell.btnOpt.isHidden = true
             cell.selectionStyle = .none
             if (indexPath.section == 1 && indexPath.row == 3) || (indexPath.section == 3 && indexPath.row == 0){
-            cell.lblContent.text = ""
+            cell.lblContent.isHidden = true
                 cell.accessoryType = .disclosureIndicator
                 cell.selectionStyle = .default
             }
@@ -105,20 +184,71 @@ class ProfileViewController: UITableViewController {
             case 0:
                 switch indexPath.row{
                 case 1:
-                    cell.lblContent.text = AgentInfo.instance.nickName
+                    cell.lblContent.text = profile["nickName"] as? String
                 case 2:
-                    cell.lblContent.text = AgentInfo.instance.roleId
+                    cell.lblContent.text = profile["account"] as? String
                 case 3:
-                    cell.lblContent.text = AgentInfo.instance.agentId
+                    cell.lblContent.text = profile["agentId"] as? String
                 default:
                     cell.lblContent.text = ""
                 }
+            case 1:
+                switch indexPath.row {
+                case 0:
+                    if profile["proofName"] != nil{
+                        let proofName = profile["proofName"] as! String
+                        if proofName != "" {
+                            cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
+                            cell.lblContent.text = proofName
+                        }else{
+                            cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
+                            cell.btnOpt.isHidden = false
+                            cell.lblContent.isHidden = true
+                            cell.btnOpt.setTitle(titleBtns[indexPath.row], for: .normal)
+                        }
+                    }
+                case 1:
+                    if profile["bindTel"] != nil{
+                        let bindTel = profile["bindTel"] as! String
+                        if bindTel != "" {
+                            cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
+                            cell.lblContent.text = bindTel
+                        }else{
+                            cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
+                            cell.btnOpt.isHidden = false
+                            cell.lblContent.isHidden = true
+                            cell.btnOpt.setTitle(titleBtns[indexPath.row], for: .normal)
+                        }
+                    }
+                case 2:
+                    if profile["weChatLogin"] != nil{
+                        let weChatLogin = profile["weChatLogin"] as! Bool
+                        if weChatLogin == true {
+                            cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
+                            cell.lblContent.text = "已授权"
+                            cell.selectionStyle = .none
+                        }else{
+                            cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
+                            cell.btnOpt.isHidden = false
+                            cell.lblContent.isHidden = true
+                            cell.btnOpt.setTitle(titleBtns[indexPath.row], for: .normal)
+                            cell.selectionStyle = .none
+                        }
+                    }
+                default:
+                    break
+                }
+                
             case 2:
                 switch indexPath.row{
                 case 0:
-                    cell.lblContent.text = AgentInfo.instance.gameName
+                    cell.lblContent.text = profile["gameName"] as? String
                 case 1:
-                    cell.lblContent.text = AgentInfo.instance.serverCode
+                    cell.lblContent.text = profile["serverCity"] as? String
+                case 2:
+                    cell.lblContent.text = profile["createTime"] as? String
+                case 3:
+                    cell.lblContent.text = profile["agentType"] as? String
                 default:
                     cell.lblContent.text = ""
                 }
@@ -141,6 +271,75 @@ class ProfileViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 2.0
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 0:
+            switch indexPath.row {
+            case 0:
+                let vc = loadVCfromMain(identifier: "editImageView") as! EditImageView
+                present(vc, animated: true, completion: nil)
+
+            default:
+                break
+            }
+        case 3:
+            switch indexPath.row {
+            case 0:
+                let vc = loadVCfromMain(identifier: "aboutView") as! AboutView
+                present(vc, animated: true, completion: nil)
+                
+            default:
+                break
+            }
+            
+        default:
+            break
+        }
+    }
+    
+//    func requestInfo(){
+//        let source = TokenSource()
+//        source.token = getSavedToken()
+//        let provider = MoyaProvider<NetworkManager>(plugins:[
+//            AuthPlugin(tokenClosure: {return source.token})])
+//        
+//        Network.request(.myInfo, success: handleInfo, provider: provider)
+//    }
+    
+    func handleInfo(json:JSON)->(){
+        let result = json["result"]
+        print(result)
+        let code = result["code"].intValue
+        if code == 200 {
+            let data = result["data"]
+            profile = getProfileFromJSON(data: data)
+            setProfile(data: data)
+//            profile["headerImgSrc"] = data["headerImgSrc"].stringValue
+//            profile["nickName"] = data["nickName"].stringValue
+//            profile["account"] = data["account"].stringValue
+//            profile["agentId"] = data["agentId"].stringValue
+//            profile["proofName"] = data["proofName"].stringValue
+//            profile["bindTel"] = data["bindTel"].stringValue
+//            profile["weChatLogin"] = data["weChatLogin"].boolValue
+//            profile["gameName"] = data["gameName"].stringValue
+//            profile["serverCity"] = data["serverCity"].stringValue
+//            profile["createTime"] = data["createTime"].stringValue
+//            profile["cardCount"] = data["cardCount"].intValue
+//            profile["agentType"] = data["agentType"].stringValue
+            
+            tableView.reloadData()
+        }
+    }
+    
+    @IBAction func logOut(_ sender: UIBarButtonItem) {
+        let appdelegate = UIApplication.shared.delegate as! AppDelegate
+        appdelegate.reLogin()
+    }
+    @IBAction func backToIndex(_ sender: UIBarButtonItem) {
+        let appdelegate = UIApplication.shared.delegate as! AppDelegate
+        appdelegate.menuTab?.selectedIndex = 0
     }
     /*
     // Override to support conditional editing of the table view.

@@ -11,15 +11,18 @@ import UIKit
 class PurchaseCellModel: NSObject {
     var goodsId:String?
     var activityId:Int?
-    var cardNum:String?
+    var cardNum:Int?
     var extraNum:Int?
     var activityExtraNum:Int?
-    var price:String?
+    var price:Float?
     var superscript:String?
     var desc:String?
+    var discount:Double?
+    var discountFee:Double?
+    var userGoodSuperscript:Int?
     var createTime:String?
     
-    init(goodsId:String,activityId:Int,cardNum:String,extraNum:Int,activityExtraNum:Int,price:String,superscript:String,desc:String,createTime:String) {
+    init(goodsId:String,activityId:Int,cardNum:Int,extraNum:Int,activityExtraNum:Int,price:Float,superscript:String,desc:String, discount:Double, discountFee:Double, userGoodSuperscript:Int, createTime:String) {
         self.goodsId = goodsId
         self.activityId = activityId
         self.cardNum = cardNum
@@ -28,6 +31,9 @@ class PurchaseCellModel: NSObject {
         self.price = price
         self.superscript = superscript
         self.desc = desc
+        self.discount = discount
+        self.discountFee = discountFee
+        self.userGoodSuperscript = userGoodSuperscript
         self.createTime = createTime
     }
 }

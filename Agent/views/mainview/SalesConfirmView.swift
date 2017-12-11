@@ -7,13 +7,35 @@
 //
 
 import UIKit
+import Moya
+import SwiftyJSON
 
 class SalesConfirmView: UIViewController {
 
+    var buyer:CustomerTableCellModel?
+    
+    @IBOutlet weak var imgHeadIco: UIImageView!
+    @IBOutlet weak var lblNickName: UILabel!
+    @IBOutlet weak var lblUserId: UILabel!
+    @IBOutlet weak var btnConfirm: UIButton!
+    @IBOutlet weak var tfCount: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        lblNickName.text = buyer?.nick
+        lblUserId.text = String.init(format: "ID:%d", (buyer?.id)!)
+//        let icoURL = URL(string: (buyer?.header_img_src)!)
+//        imgHeadIco.sd_setImage(with: icoURL, completed: nil)
+        let strURL = buyer?.header_img_src
+        if strURL == "" {
+            imgHeadIco.image = UIImage(named: "headsmall")
+        } else {
+            let icoURL = URL(string: strURL!)
+            imgHeadIco.sd_setImage(with: icoURL, completed: nil)
+        }
+
+        btnConfirm.addTarget(self, action: #selector(onConfirm(_:)), for: .touchUpInside)
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,6 +43,40 @@ class SalesConfirmView: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func backToPrev(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+
+    func onConfirm(_ button:UIButton) {
+        let type = buyer?.customerType
+        requestSell(type: type!)
+    }
+    
+    func requestSell(type:String){
+//        let source = TokenSource()
+//        source.token = getSavedToken()
+//        let provider = MoyaProvider<NetworkManager>(plugins:[
+//            AuthPlugin(tokenClosure: {return source.token})])
+        let id = buyer?.id
+        let num = Int(tfCount.text!)
+        if type == "A" {
+            request(.sellcardToAgent(agentID: id!, number: num!), success: handleSell)
+//            Network.request(.sellcardToAgent(agentID: id!, number: num!), success: handleSell, provider: provider)
+            
+        }else
+        {
+            request(.sellcardToPlayer(playerID: id!, number: num!), success: handleSell)
+//            Network.request(.sellcardToPlayer(playerID: id!, number: num!), success: handleSell, provider: provider)
+        }
+    }
+    
+    func handleSell(json:JSON)->(){
+        let result = json["result"]
+        let code = result["code"].intValue
+        if code == 200 {
+            dismiss(animated: true, completion: nil)
+        }
+    }
 
     /*
     // MARK: - Navigation

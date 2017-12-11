@@ -62,29 +62,45 @@ class SalesView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         // Configure the cell...
         let cellData = sourceData[indexPath.row]
-        print(cellData.id)
-        print(cellData.nick)
-        //        cell.textLabel?.text = cellData.nick
-        cell.accessoryType = .disclosureIndicator
-        cell.selectionStyle = .none
-        cell.lblUserId.text = String(cellData.id)
+//        cell.accessoryType = .disclosureIndicator
+//        cell.selectionStyle = .none
+        let strURL = cellData.header_img_src
+        if strURL == "" {
+            cell.imgHeadIco.image = UIImage(named: "headsmall")
+        } else {
+            let icoURL = URL(string: strURL)
+            cell.imgHeadIco.sd_setImage(with: icoURL, completed: nil)
+        }
+//        let icoURL = URL(string: cellData.header_img_src)
+//        cell.imgHeadIco.sd_setImage(with: icoURL, completed: nil)
+        cell.lblUserId.text = String.init(format: "ID:%d", cellData.id)
         cell.lblNickName.text = cellData.nick
-        cell.lblCount.text = String(cellData.cardNum)
+        cell.lblCount.isHidden = true
+        cell.lblTime.isHidden = true
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cellData = sourceData[indexPath.row]
+        let vc = loadVCfromMain(identifier: "salesConfirmView") as! SalesConfirmView
+        vc.buyer = cellData
+        present(vc, animated: true, completion: nil)
+    }
+    
     func requestData(sort:Int){
-        let source = TokenSource()
-        source.token = getSavedToken()
-        let provider = MoyaProvider<NetworkManager>(plugins:[
-            AuthPlugin(tokenClosure: {return source.token})])
+//        let source = TokenSource()
+//        source.token = getSavedToken()
+//        let provider = MoyaProvider<NetworkManager>(plugins:[
+//            AuthPlugin(tokenClosure: {return source.token})])
         
         if sort == 0 {
-            Network.request(.recentlyPlayer(searchId: 0, startDate: 0, endDate: 0, sortType: 0, pageIndex: 0, pageNum: 0), success: handleData, provider: provider)
+            request(.recentlyPlayer(searchId: 0, startDate: 0, endDate: 0, sortType: 0, pageIndex: 0, pageNum: 0), success: handleData)
+//            Network.request(.recentlyPlayer(searchId: 0, startDate: 0, endDate: 0, sortType: 0, pageIndex: 0, pageNum: 0), success: handleData, provider: provider)
             
         }else
         {
-            Network.request(.recentlyAgent(searchId: 0, startDate: 0, endDate: 0, sortType: 0, pageIndex: 0, pageNum: 0), success: handleData, provider: provider)
+            request(.recentlyAgent(searchId: 0, startDate: 0, endDate: 0, sortType: 0, pageIndex: 0, pageNum: 0), success: handleData)
+//            Network.request(.recentlyAgent(searchId: 0, startDate: 0, endDate: 0, sortType: 0, pageIndex: 0, pageNum: 0), success: handleData, provider: provider)
         }
     }
     
@@ -97,7 +113,7 @@ class SalesView: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let data = result["data"]
             let dataArr = data["datas"].array
             for(_, data) in (dataArr?.enumerated())!{
-                sourceData.append(CustomerTableCellModel(id: data["id"].intValue, nick: data["nick"].stringValue, header_img_src: data["header_img_src"].stringValue, customerType: data["customerType"].stringValue, cardNum: data["cardNum"].intValue, sellTime: data["sellTime"].intValue))
+                sourceData.append(CustomerTableCellModel(id: data["id"].intValue, nick: data["nick"].stringValue, header_img_src: data["header_img_src"].stringValue, customerType: data["customerType"].stringValue, cardNum: data["cardNum"].intValue, sellTime: data["sellTime"].stringValue))
             }
             tableView.reloadData()
         }

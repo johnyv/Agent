@@ -68,7 +68,10 @@ class CustomerViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var sellCount: UILabel!
     @IBOutlet weak var segSort: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var vTopBg: UIView!
     
+    @IBOutlet weak var imgNoData: UIImageView!
+    @IBOutlet weak var lblNoData: UILabel!
     let cellTableIdentifier = "customerTableCell"
     var sourceData = [CustomerTableCellModel]()
 
@@ -80,6 +83,7 @@ class CustomerViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        vTopBg.backgroundColor = kRGBColorFromHex(rgbValue: 0x008ce6)
 //        let options = CustomerPageOptions()
 //        let customerPageController = PagingMenuController(options: options)
 //        customerPageController.view.frame.origin.y += 200
@@ -97,14 +101,15 @@ class CustomerViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.register(xib, forCellReuseIdentifier: cellTableIdentifier)
         tableView.rowHeight = 65
 
-        
-        let source = TokenSource()
-        source.token = getSavedToken()
-        let provider = MoyaProvider<NetworkManager>(plugins:[
-            AuthPlugin(tokenClosure: {return source.token})])
+    }
+    override func viewDidAppear(_ animated: Bool) {
+//        let source = TokenSource()
+//        source.token = getSavedToken()
+//        let provider = MoyaProvider<NetworkManager>(plugins:[
+//            AuthPlugin(tokenClosure: {return source.token})])
 
-        Network.request(.customerAllNum(searchId: 0, startDate: 0, endDate: 0), success: handleAllnum, provider: provider)
-        
+        //Network.request(.customerAllNum(searchId: 0, startDate: 0, endDate: 0), success: handleAllnum, provider: provider)
+        request(.customerAllNum(searchId: 0, startDate: 0, endDate: 0), success: handleAllnum)
         requestData(sort: segSort.selectedSegmentIndex)
     }
     
@@ -147,9 +152,17 @@ class CustomerViewController: UIViewController, UITableViewDelegate, UITableView
         //        cell.textLabel?.text = cellData.nick
         cell.accessoryType = .disclosureIndicator
         cell.selectionStyle = .none
-        cell.lblUserId.text = String(cellData.id)
+        let strURL = cellData.header_img_src
+        if strURL == "" {
+            cell.imgHeadIco.image = UIImage(named: "headsmall")
+        } else {
+            let icoURL = URL(string: strURL)
+            cell.imgHeadIco.sd_setImage(with: icoURL, completed: nil)
+        }
+        cell.lblUserId.text = String.init(format: "ID:%d", cellData.id)
         cell.lblNickName.text = cellData.nick
-        cell.lblCount.text = String(cellData.cardNum)
+        cell.lblCount.text = String.init(format: "%d张", cellData.cardNum)
+        cell.lblTime.text = cellData.sellTime
         return cell
     }
     
@@ -164,11 +177,6 @@ class CustomerViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     func requestData(sort:Int){
-        let source = TokenSource()
-        source.token = getSavedToken()
-        let provider = MoyaProvider<NetworkManager>(plugins:[
-            AuthPlugin(tokenClosure: {return source.token})])
-        
         var type:Int = 0
         
         switch sort {
@@ -181,7 +189,7 @@ class CustomerViewController: UIViewController, UITableViewDelegate, UITableView
         default:
             type = 0
         }
-        Network.request(.customerRecently(searchId: 0, startDate: 0, endDate: 0, sortType: type, pageIndex: 0, pageNum: 0), success: handleData, provider: provider)
+        request(.customerRecently(searchId: 0, startDate: 0, endDate: 0, sortType: type, pageIndex: 0, pageNum: 0), success: handleData)
     }
     
     func handleData(json:JSON)->(){
@@ -189,15 +197,29 @@ class CustomerViewController: UIViewController, UITableViewDelegate, UITableView
         let code = result["code"].intValue
         if code == 200 {
             print(result)
+            sourceData.removeAll()
             let data = result["data"]
             let dataArr = data["datas"].array
             for(_, data) in (dataArr?.enumerated())!{
-                sourceData.append(CustomerTableCellModel(id: data["id"].intValue, nick: data["nick"].stringValue, header_img_src: data["header_img_src"].stringValue, customerType: data["customerType"].stringValue, cardNum: data["cardNum"].intValue, sellTime: data["sellTime"].intValue))
+                sourceData.append(CustomerTableCellModel(id: data["id"].intValue, nick: data["nick"].stringValue, header_img_src: data["header_img_src"].stringValue, customerType: data["customerType"].stringValue, cardNum: data["cardNum"].intValue, sellTime: data["sellTime"].stringValue))
             }
             tableView.reloadData()
+            let count = sourceData.count
+            showNodata(dataCount: count)
         }
     }
 
+    func showNodata(dataCount:Int){
+        if dataCount > 0 {
+            imgNoData.isHidden = true
+            lblNoData.isHidden = true
+            tableView.isHidden = false
+        }else{
+            imgNoData.isHidden = false
+            lblNoData.isHidden = false
+            tableView.isHidden = true
+        }
+    }
     /*
     // MARK: - Navigation
 
