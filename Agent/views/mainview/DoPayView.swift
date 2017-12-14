@@ -77,11 +77,12 @@ class DoPayView: UIViewController, WKUIDelegate, WKNavigationDelegate{
     }
     
     lazy var webView : WKWebView = {
+        let cfg = WKWebViewConfiguration()
+        cfg.preferences = WKPreferences()
+
         let web = WKWebView( frame: CGRect(x:0, y:64,
                                            width:UIScreen.main.bounds.size.width,
                                            height:UIScreen.main.bounds.size.height))
-        let cfg = WKWebViewConfiguration()
-        cfg.preferences =
         web.uiDelegate = self
         web.navigationDelegate = self
         return web

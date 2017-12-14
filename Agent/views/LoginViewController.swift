@@ -25,12 +25,13 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Do any additional setup after loading the view.
+        autoFit()
         let appdelegate = UIApplication.shared.delegate as! AppDelegate
         appdelegate.window?.rootViewController = self
-        // Do any additional setup after loading the view.
-        imgLogo.snp.makeConstraints({(make) -> Void in
-            make.top.equalTo(60)
-            make.centerX.equalTo(self.view)})
+//        imgLogo.snp.makeConstraints({(make) -> Void in
+//            make.top.equalTo(60)
+//            make.centerX.equalTo(self.view)})
         btnLogin.layer.cornerRadius = 3
         btnLogin.layer.masksToBounds = true
 //        btnLogin.snp.makeConstraints({(make) -> Void in

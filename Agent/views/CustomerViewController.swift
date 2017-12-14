@@ -73,7 +73,7 @@ class CustomerViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var imgNoData: UIImageView!
     @IBOutlet weak var lblNoData: UILabel!
     let cellTableIdentifier = "customerTableCell"
-    var sourceData = [CustomerTableCellModel]()
+    var sourceData = [[String:Any]]()
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -83,6 +83,8 @@ class CustomerViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        autoFit()
+        
         vTopBg.backgroundColor = kRGBColorFromHex(rgbValue: 0x008ce6)
 //        let options = CustomerPageOptions()
 //        let customerPageController = PagingMenuController(options: options)
@@ -100,17 +102,6 @@ class CustomerViewController: UIViewController, UITableViewDelegate, UITableView
         let xib = UINib(nibName: "CustomerTableCell", bundle: nil)
         tableView.register(xib, forCellReuseIdentifier: cellTableIdentifier)
         tableView.rowHeight = 65
-        
-        let radioW:CGFloat = UIScreen.main.bounds.width / 375.0
-        let child = self.view.subviews
-        for(_, data) in child.enumerated(){
-            data.frame.origin.x *= radioW
-            data.frame.origin.y *= radioW
-            data.frame.size.width *= radioW
-            data.frame.size.height *= radioW
-        }
-
-
     }
     override func viewDidAppear(_ animated: Bool) {
 //        let source = TokenSource()
@@ -157,22 +148,26 @@ class CustomerViewController: UIViewController, UITableViewDelegate, UITableView
         
         // Configure the cell...
         let cellData = sourceData[indexPath.row]
-        print(cellData.id)
-        print(cellData.nick)
+//        print(cellData.id)
+//        print(cellData.nick)
         //        cell.textLabel?.text = cellData.nick
-        cell.accessoryType = .disclosureIndicator
         cell.selectionStyle = .none
-        let strURL = cellData.header_img_src
+        let strURL = cellData["header_img_src"] as! String
         if strURL == "" {
             cell.imgHeadIco.image = UIImage(named: "headsmall")
         } else {
             let icoURL = URL(string: strURL)
             cell.imgHeadIco.sd_setImage(with: icoURL, completed: nil)
         }
-        cell.lblUserId.text = String.init(format: "ID:%d", cellData.id)
-        cell.lblNickName.text = cellData.nick
-        cell.lblCount.text = String.init(format: "%d张", cellData.cardNum)
-        cell.lblTime.text = cellData.sellTime
+        cell.lblUserId.text = String.init(format: "ID:%d", cellData["id"] as! Int)
+        cell.lblNickName.text = cellData["nick"] as! String
+        cell.lblCount.text = String.init(format: "%d张", cellData["cardNum"] as! Int)
+        let sort = segSort.selectedSegmentIndex
+        if sort > 0 {
+            cell.lblTime.text = String.init(format: "%d次", cellData["sellCount"] as! Int)
+        } else {
+            cell.lblTime.text = cellData["sellTime"] as! String
+        }
         return cell
     }
     
@@ -196,15 +191,14 @@ class CustomerViewController: UIViewController, UITableViewDelegate, UITableView
         
         switch sort {
         case 0:
-            type = 0
+            request(.customerRecently(searchId: 0, startDate: 0, endDate: 0, sortType: 0, pageIndex: 0, pageNum: 0), success: handleData)
         case 1:
-            type = 2
+            request(.customerTotallist(searchId: 0, startDate: 0, endDate: 0, sortType: 3, pageIndex: 0, pageNum: 0), success: handleData)
         case 2:
-            type = 3
+            request(.customerTotallist(searchId: 0, startDate: 0, endDate: 0, sortType: 2, pageIndex: 0, pageNum: 0), success: handleData)
         default:
             type = 0
         }
-        request(.customerRecently(searchId: 0, startDate: 0, endDate: 0, sortType: type, pageIndex: 0, pageNum: 0), success: handleData)
     }
     
     func handleData(json:JSON)->(){
@@ -216,7 +210,16 @@ class CustomerViewController: UIViewController, UITableViewDelegate, UITableView
             let data = result["data"]
             let dataArr = data["datas"].array
             for(_, data) in (dataArr?.enumerated())!{
-                sourceData.append(CustomerTableCellModel(id: data["id"].intValue, nick: data["nick"].stringValue, header_img_src: data["header_img_src"].stringValue, customerType: data["customerType"].stringValue, cardNum: data["cardNum"].intValue, sellTime: data["sellTime"].stringValue))
+                var cellData:[String:Any] = [:]
+                cellData["id"] =  data["id"].intValue
+                cellData["nick"] =  data["nick"].stringValue
+                cellData["header_img_src"] =  data["header_img_src"].stringValue
+                cellData["customerType"] =  data["customerType"].stringValue
+                cellData["cardNum"] =  data["cardNum"].intValue
+                cellData["sellTime"] =  data["sellTime"].stringValue
+                cellData["sellCount"] = data["sellCount"].intValue
+//                sourceData.append(CustomerTableCellModel(id: data["id"].intValue, nick: data["nick"].stringValue, header_img_src: data["header_img_src"].stringValue, customerType: data["customerType"].stringValue, cardNum: data["cardNum"].intValue, sellTime: data["sellTime"].stringValue))
+                sourceData.append(cellData)
             }
             tableView.reloadData()
             let count = sourceData.count

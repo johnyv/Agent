@@ -16,7 +16,7 @@ class SalesView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
     
     let cellTableIdentifier = "customerTableCell"
-    var sourceData = [CustomerTableCellModel]()
+    var sourceData = [[String:Any]]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +34,8 @@ class SalesView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.register(xib, forCellReuseIdentifier: cellTableIdentifier)
         tableView.tableFooterView = UIView()
         tableView.rowHeight = 65
+        
+        autoFit()
     }
 
     override func didReceiveMemoryWarning() {
@@ -64,7 +66,7 @@ class SalesView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let cellData = sourceData[indexPath.row]
 //        cell.accessoryType = .disclosureIndicator
 //        cell.selectionStyle = .none
-        let strURL = cellData.header_img_src
+        let strURL = cellData["header_img_src"] as! String
         if strURL == "" {
             cell.imgHeadIco.image = UIImage(named: "headsmall")
         } else {
@@ -73,8 +75,8 @@ class SalesView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
 //        let icoURL = URL(string: cellData.header_img_src)
 //        cell.imgHeadIco.sd_setImage(with: icoURL, completed: nil)
-        cell.lblUserId.text = String.init(format: "ID:%d", cellData.id)
-        cell.lblNickName.text = cellData.nick
+        cell.lblUserId.text = String.init(format: "ID:%d", cellData["id"] as! Int)
+        cell.lblNickName.text = cellData["nick"] as! String
         cell.lblCount.isHidden = true
         cell.lblTime.isHidden = true
         return cell
@@ -113,8 +115,49 @@ class SalesView: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let data = result["data"]
             let dataArr = data["datas"].array
             for(_, data) in (dataArr?.enumerated())!{
-                sourceData.append(CustomerTableCellModel(id: data["id"].intValue, nick: data["nick"].stringValue, header_img_src: data["header_img_src"].stringValue, customerType: data["customerType"].stringValue, cardNum: data["cardNum"].intValue, sellTime: data["sellTime"].stringValue))
+                var cellData:[String:Any] = [:]
+                cellData["id"] =  data["id"].intValue
+                cellData["nick"] =  data["nick"].stringValue
+                cellData["header_img_src"] =  data["header_img_src"].stringValue
+                cellData["customerType"] =  data["customerType"].stringValue
+                cellData["cardNum"] =  data["cardNum"].intValue
+                cellData["sellTime"] =  data["sellTime"].stringValue
+                cellData["sellCount"] = data["sellCount"].intValue
+                sourceData.append(cellData)
+
             }
+            tableView.reloadData()
+        }
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let count = searchText.lengthOfBytes(using: .utf8)
+        if count >= 5 {
+            let sort = segSort.selectedSegmentIndex
+            switch sort {
+            case 0:
+                request(.playerSearch(searchId: Int(searchText)!), success: handleSearch)
+            case 1:
+                request(.agentSearch(searchId: Int(searchText)!), success: handleSearch)
+            default:
+                break
+            }
+            
+        }
+    }
+    
+    func handleSearch(json:JSON)->(){
+        let result = json["result"]
+        let code = result["code"].intValue
+        print(result)
+        if code == 200 {
+            sourceData.removeAll()
+//            print(result)
+//            let data = result["data"]
+//            let dataArr = data["datas"].array
+//            for(_, data) in (dataArr?.enumerated())!{
+//                sourceData.append(CustomerTableCellModel(id: data["id"].intValue, nick: data["nick"].stringValue, header_img_src: data["header_img_src"].stringValue, customerType: data["customerType"].stringValue, cardNum: data["cardNum"].intValue, sellTime: data["sellTime"].stringValue))
+//            }
             tableView.reloadData()
         }
     }

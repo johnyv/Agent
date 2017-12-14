@@ -74,6 +74,35 @@ extension UIViewController{
         }
     }
     
+    func autoFit(){
+        let radio:CGFloat = UIScreen.main.bounds.width / 375.0
+        //let radioH:Float =
+        let subviews = self.view.subviews
+        
+        
+        for(_, view) in subviews.enumerated(){
+            fitRadio(v: view, radio: radio)
+            if view.subviews.count > 0 {
+                let subviews = view.subviews
+                for(_, view) in subviews.enumerated(){
+                    fitRadio(v: view, radio: radio)
+                }
+            }
+//            view.frame.origin.x *= radio
+//            view.frame.origin.y *= radio
+//            view.frame.size.width *= radio
+//            view.frame.size.height *= radio
+        }
+    }
+    
+    private func fitRadio(v:UIView, radio:CGFloat){
+        v.autoresizesSubviews = true
+        v.frame.origin.x *= radio
+        v.frame.origin.y *= radio
+        v.frame.size.width *= radio
+        v.frame.size.height *= radio
+    }
+
 //    func setAgent(data:JSON)->(){
 //        var agent:[String:Any] = [:]
 //

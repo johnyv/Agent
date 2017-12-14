@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class SalesConfirmView: UIViewController {
 
-    var buyer:CustomerTableCellModel?
+    var buyer:[String:Any]?
     
     @IBOutlet weak var imgHeadIco: UIImageView!
     @IBOutlet weak var lblNickName: UILabel!
@@ -23,15 +23,15 @@ class SalesConfirmView: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        lblNickName.text = buyer?.nick
-        lblUserId.text = String.init(format: "ID:%d", (buyer?.id)!)
+        lblNickName.text = buyer?["nick"] as! String
+        lblUserId.text = String.init(format: "ID:%d", buyer?["id"] as! Int)
 //        let icoURL = URL(string: (buyer?.header_img_src)!)
 //        imgHeadIco.sd_setImage(with: icoURL, completed: nil)
-        let strURL = buyer?.header_img_src
+        let strURL = buyer?["header_img_src"] as! String
         if strURL == "" {
             imgHeadIco.image = UIImage(named: "headsmall")
         } else {
-            let icoURL = URL(string: strURL!)
+            let icoURL = URL(string: strURL)
             imgHeadIco.sd_setImage(with: icoURL, completed: nil)
         }
 
@@ -48,8 +48,8 @@ class SalesConfirmView: UIViewController {
     }
 
     func onConfirm(_ button:UIButton) {
-        let type = buyer?.customerType
-        requestSell(type: type!)
+        let type = buyer?["customerType"]
+        requestSell(type: type as! String)
     }
     
     func requestSell(type:String){
@@ -57,15 +57,15 @@ class SalesConfirmView: UIViewController {
 //        source.token = getSavedToken()
 //        let provider = MoyaProvider<NetworkManager>(plugins:[
 //            AuthPlugin(tokenClosure: {return source.token})])
-        let id = buyer?.id
+        let id = buyer?["id"]
         let num = Int(tfCount.text!)
         if type == "A" {
-            request(.sellcardToAgent(agentID: id!, number: num!), success: handleSell)
+            request(.sellcardToAgent(agentID: id as! Int, number: num!), success: handleSell)
 //            Network.request(.sellcardToAgent(agentID: id!, number: num!), success: handleSell, provider: provider)
             
         }else
         {
-            request(.sellcardToPlayer(playerID: id!, number: num!), success: handleSell)
+            request(.sellcardToPlayer(playerID: id as! Int, number: num!), success: handleSell)
 //            Network.request(.sellcardToPlayer(playerID: id!, number: num!), success: handleSell, provider: provider)
         }
     }

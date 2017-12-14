@@ -38,6 +38,8 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        autoFit()
+        
         let agent = getAgent()
         let gameName = agent["gameName"] as? String
 
@@ -72,17 +74,6 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
 //    override func viewDidAppear(_ animated: Bool) {
         request(.noticeScroll, success: handleNotice)
         request(.banner, success: handleBanner)
-        
-        let radioW:CGFloat = UIScreen.main.bounds.width / 375.0
-        //let radioH:Float =
-        let child = self.view.subviews
-        for(_, data) in child.enumerated(){
-            data.frame.origin.x *= radioW
-            data.frame.origin.y *= radioW
-            data.frame.size.width *= radioW
-            data.frame.size.height *= radioW
-        }
-        
     }
 
     override func didReceiveMemoryWarning() {

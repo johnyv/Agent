@@ -198,6 +198,10 @@ extension NetworkManager: AuthorizedTargetType{
             return "/api/agent/sellcard/recently/player"
         case .recentlyAgent(_,_,_,_,_,_):
             return "/api/agent/sellcard/recently/agent"
+        case .playerSearch(_):
+            return "/api/agent/sellcard/player/search"
+        case .agentSearch(_):
+            return "/api/agent/sellcard/agent/search"
         //------------------
         //支付中心
         case.cancel(_):

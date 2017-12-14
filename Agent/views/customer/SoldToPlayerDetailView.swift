@@ -16,6 +16,8 @@ class SoldToPlayerDetailView: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        autoFit()
+        
         let tap = UITapGestureRecognizer(target: self, action: #selector(selStartDate))
         lblDataStart.isUserInteractionEnabled = true
         lblDataStart.addGestureRecognizer(tap)

@@ -21,6 +21,7 @@ class AccountViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        autoFit()
         btnLogin.layer.cornerRadius = 3
 
         btnSMSLogin.layer.borderWidth = 1

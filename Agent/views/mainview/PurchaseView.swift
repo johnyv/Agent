@@ -57,6 +57,11 @@ class PurchaseView: UIViewController, UICollectionViewDelegate, UICollectionView
         let xib = UINib(nibName: "GoodsViewCell", bundle: nil)
         clvGoods.register(xib, forCellWithReuseIdentifier: cellGoodsIdentifier)
         
+        let layOut = UICollectionViewFlowLayout()
+        layOut.itemSize = CGSize(width: UIScreen.main.bounds.width/3, height: 80)
+        layOut.minimumLineSpacing = 0
+        layOut.minimumInteritemSpacing = 0
+        clvGoods.setCollectionViewLayout(layOut, animated: false)
 //        let source = TokenSource()
 //        source.token = getSavedToken()
 //        let provider = MoyaProvider<NetworkManager>(plugins:[
@@ -79,6 +84,8 @@ class PurchaseView: UIViewController, UICollectionViewDelegate, UICollectionView
 
         let accountID = agent["agentId"] as? Int
         lblAccountID.text = String.init(format: "ID:%d", accountID!)
+
+        autoFit()
     }
 
     override func didReceiveMemoryWarning() {
