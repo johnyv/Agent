@@ -261,6 +261,10 @@ class RoomCardViewController: UIViewController, UITableViewDelegate, UITableView
         let appdelegate = UIApplication.shared.delegate as! AppDelegate
         appdelegate.menuTab?.selectedIndex = 0
     }
+    
+    @IBAction func service(_ sender: UIBarButtonItem) {
+        alertResult(code: 99)
+    }
     /*
     // MARK: - Navigation
 

@@ -10,6 +10,7 @@ import UIKit
 import SwiftyJSON
 import Moya
 import SVProgressHUD
+import PopupController
 
 class PurchaseView: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     var goodsData = [PurchaseCellModel]()
@@ -38,6 +39,9 @@ class PurchaseView: UIViewController, UICollectionViewDelegate, UICollectionView
     @IBOutlet weak var lblAccountID: UILabel!
     @IBOutlet weak var lblGameName: UILabel!
     @IBOutlet weak var clvGoods: UICollectionView!
+    
+    var payDelegate:PaymentDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -98,7 +102,7 @@ class PurchaseView: UIViewController, UICollectionViewDelegate, UICollectionView
             print(result)
             let dataArr = result["data"].array
             for(_, data) in (dataArr?.enumerated())!{
-                goodsData.append(PurchaseCellModel(goodsId: data["goodsId"].stringValue, activityId: data["activityId"].intValue, cardNum: data["cardNum"].intValue, extraNum: data["extraNum"].intValue, activityExtraNum: data["activityExtraNum"].intValue, price: data["price"].floatValue, superscript: data["superscript"].stringValue, desc: data["desc"].stringValue, discount: data["discount"].doubleValue, discountFee: data["discountFee"].doubleValue, userGoodSuperscript: data["userGoodSuperscript"].intValue,createTime: data["createTime"].stringValue))
+                goodsData.append(PurchaseCellModel(goodsId: data["goodsId"].intValue, activityId: data["activityId"].intValue, cardNum: data["cardNum"].intValue, extraNum: data["extraNum"].intValue, activityExtraNum: data["activityExtraNum"].intValue, price: data["price"].floatValue, superscript: data["superscript"].stringValue, desc: data["desc"].stringValue, discount: data["discount"].doubleValue, discountFee: data["discountFee"].doubleValue, userGoodSuperscript: data["userGoodSuperscript"].intValue,createTime: data["createTime"].stringValue))
             }
             clvGoods.reloadData()
         }
@@ -144,6 +148,34 @@ class PurchaseView: UIViewController, UICollectionViewDelegate, UICollectionView
         let data = goodsData[indexPath.item]
         print(data.desc)
         
+        let payPopup = PopupController
+            .create(self)
+            .customize([.layout(.bottom)])
+        
+        let payContainer = PaymentSelection.instance()
+        payContainer.closeHandler = { _ in
+            payPopup.dismiss()
+        }
+        payContainer.finishHandler = { _ in
+            payPopup.dismiss()
+            let payVC = loadVCfromMain(identifier: "doPayView") as! DoPayView
+//            let vc = WKWebViewController()
+            let str = UserDefaults.standard.string(forKey: "payURL")
+            print(str)
+            //let urlStr = str?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+//            vc.addReferer("https://gatewaytest.xianlaigame.com")
+//
+//            vc.postWebURLSring(str, postData: nil)
+
+            //vc.loadWebURLSring(urlStr)
+
+            //            payVC.urlData = data
+            self.present(payVC, animated: true, completion: nil)
+        }
+        payPopup.show(payContainer)
+        payDelegate = payContainer.self
+        payDelegate?.dataForPay(data: data)
+        
         func handlePay(json:JSON)->(){
             let result = json["result"]
             let code = result["code"].intValue
@@ -166,12 +198,13 @@ class PurchaseView: UIViewController, UICollectionViewDelegate, UICollectionView
             }
         }
 
+        
         func doPayWx(){
-            request(.buycardGood(payTypeInchannel: 4, channel: 2, paySource: 4, goodId: Int(data.goodsId!)!, activityId: data.activityId!), success: handlePay)
+            request(.buycardGood(payTypeInchannel: 4, channel: 2, paySource: 4, goodId: data.goodsId!, activityId: data.activityId!), success: handlePay)
         }
         
         func doPayAli(){
-            request(.buycardGood(payTypeInchannel: 1, channel: 1, paySource: 9, goodId: Int(data.goodsId!)!, activityId: data.activityId!), success: handlePay)
+            request(.buycardGood(payTypeInchannel: 1, channel: 1, paySource: 9, goodId: data.goodsId!, activityId: data.activityId!), success: handlePay)
         }
         
         let alertPay = UIAlertController(title: "确认付款", message: String.init(format: "¥%.2f", data.price!),
@@ -194,7 +227,7 @@ class PurchaseView: UIViewController, UICollectionViewDelegate, UICollectionView
         alertPay.addAction(wxPayAction)
         alertPay.addAction(aliPayAction)
         alertPay.addAction(cancelAction)
-        self.present(alertPay, animated: true, completion: nil)
+        //self.present(alertPay, animated: true, completion: nil)
         
     }
     

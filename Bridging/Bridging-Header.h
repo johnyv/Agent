@@ -11,6 +11,7 @@
 
 #import "WXApi.h"
 #import "NSData+Compression.h"
+#import "WKWebViewController.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #endif /* Bridging_Header_h */

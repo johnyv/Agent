@@ -53,6 +53,11 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
         clvTools.register(xib, forCellWithReuseIdentifier: cellToolIdentifier)
         //clvTools.backgroundColor = UIColor.white
         //clvTools.contentInset = UIEdgeInsetsMake(0, 5, 0, 5)
+        let layOut = UICollectionViewFlowLayout()
+        layOut.itemSize = CGSize(width: UIScreen.main.bounds.width/2, height: 80)
+        layOut.minimumLineSpacing = 0
+        layOut.minimumInteritemSpacing = 0
+        clvTools.setCollectionViewLayout(layOut, animated: false)
         
         vTopBG.backgroundColor = kRGBColorFromHex(rgbValue: 0x008ce6)
 //        vTopBG.snp.makeConstraints({(make) -> Void in
@@ -67,6 +72,17 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
 //    override func viewDidAppear(_ animated: Bool) {
         request(.noticeScroll, success: handleNotice)
         request(.banner, success: handleBanner)
+        
+        let radioW:CGFloat = UIScreen.main.bounds.width / 375.0
+        //let radioH:Float =
+        let child = self.view.subviews
+        for(_, data) in child.enumerated(){
+            data.frame.origin.x *= radioW
+            data.frame.origin.y *= radioW
+            data.frame.size.width *= radioW
+            data.frame.size.height *= radioW
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -101,6 +117,12 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellToolIdentifier, for: indexPath) as! ToolViewCell
         let tools = authorityList.getToolsByAuthority()
         
+        let idx = indexPath.item % 2
+        if idx != 0 {
+            cell.div.isHidden = true
+        }else{
+            cell.div.isHidden = false
+        }
         cell.imgIco.image = UIImage(named: tools[indexPath.item][0])
         cell.lblTitle.text = tools[indexPath.item][1]
         cell.lblDesc.text = tools[indexPath.item][2]

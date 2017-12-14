@@ -100,6 +100,16 @@ class CustomerViewController: UIViewController, UITableViewDelegate, UITableView
         let xib = UINib(nibName: "CustomerTableCell", bundle: nil)
         tableView.register(xib, forCellReuseIdentifier: cellTableIdentifier)
         tableView.rowHeight = 65
+        
+        let radioW:CGFloat = UIScreen.main.bounds.width / 375.0
+        let child = self.view.subviews
+        for(_, data) in child.enumerated(){
+            data.frame.origin.x *= radioW
+            data.frame.origin.y *= radioW
+            data.frame.size.width *= radioW
+            data.frame.size.height *= radioW
+        }
+
 
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -167,10 +177,15 @@ class CustomerViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @IBAction func backToPrev(_ sender: UIBarButtonItem) {
-        let appdelegate = UIApplication.shared.delegate as! AppDelegate
-        appdelegate.menuTab?.selectedIndex = 0
+//        let appdelegate = UIApplication.shared.delegate as! AppDelegate
+//        appdelegate.menuTab?.selectedIndex = 0
+        self.tabBarController?.selectedIndex = 0
     }
 
+    @IBAction func showDetail(_ sender: UIBarButtonItem) {
+        let vc = loadVCfromMain(identifier: "soldToPlayerDetailView") as! SoldToPlayerDetailView
+        present(vc, animated: true, completion: nil)
+    }
     func segDidchange(_ segmented:UISegmentedControl){
         print(segmented.selectedSegmentIndex)
         requestData(sort: segmented.selectedSegmentIndex)

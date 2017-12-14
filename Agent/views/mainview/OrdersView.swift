@@ -71,6 +71,7 @@ class OrdersView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var imgNoData: UIImageView!
     @IBOutlet weak var lblNoData: UILabel!
+    @IBOutlet weak var btnSearch: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -92,6 +93,7 @@ class OrdersView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tbOrderList.register(xib, forCellReuseIdentifier: cellTableIdentifier)
         tbOrderList.rowHeight = 65
         
+        btnSearch.addTarget(self, action: #selector(searchByData(_:)), for: .touchUpInside)
         requestData(idx: segSort.selectedSegmentIndex)
     }
 
@@ -108,7 +110,7 @@ class OrdersView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         dismiss(animated: true, completion: nil)
     }
 
-    @IBAction func selectDate(_ sender: UIBarButtonItem) {
+    func searchByData(_ sender: UIButton) {
         let datePickerAlert:UIAlertController = UIAlertController(title: "\n\n\n\n\n\n\n", message: nil, preferredStyle: .alert)
         let datePicker = UIDatePicker()
         datePicker.locale = Locale(identifier: "zh_CN")

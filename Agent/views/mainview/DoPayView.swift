@@ -31,19 +31,45 @@ class DoPayView: UIViewController, WKUIDelegate, WKNavigationDelegate{
         print(str)
         let urlStr = str?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         let url = URL(string: urlStr!)
-        var request = URLRequest(url: url!)
+        var request = URLRequest(url: url!, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10)
         //var request = NSMutableURLRequest(url: url!)
-        //request.setValue("https://bp124361qg2c8gw.xianlaigame.com", forHTTPHeaderField: "Referer")
         //request.httpMethod = "GET"
         view.addSubview(webView)
 //        webView.load(<#T##data: Data##Data#>, mimeType: <#T##String#>, characterEncodingName: <#T##String#>, baseURL: <#T##URL#>)
+        
+        
+        
+        //request.setValue("https://gatewaytest.xianlaigame.com", forHTTPHeaderField: "Referer")
         webView.load(request)
+        //webView.reload()
 
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        
+    }
+    
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool
+    {
+        
+        print(request.allHTTPHeaderFields)
+        
+        
+        let referer = request.allHTTPHeaderFields?["Referer"]
+//        if referer == nil {
+//            let newURL = request.url
+//            var newResquest = URLRequest(url: newURL!, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10)
+//
+//            newResquest.setValue("https://gatewaytest.xianlaigame.com", forHTTPHeaderField: "Referer")
+//            webView.loadRequest(newResquest)
+//            webView.stringByEvaluatingJavaScript(from: "")
+//        }
+        return false
     }
     
     @IBAction func backToPrev(_ sender: UIBarButtonItem) {
@@ -54,6 +80,8 @@ class DoPayView: UIViewController, WKUIDelegate, WKNavigationDelegate{
         let web = WKWebView( frame: CGRect(x:0, y:64,
                                            width:UIScreen.main.bounds.size.width,
                                            height:UIScreen.main.bounds.size.height))
+        let cfg = WKWebViewConfiguration()
+        cfg.preferences =
         web.uiDelegate = self
         web.navigationDelegate = self
         return web

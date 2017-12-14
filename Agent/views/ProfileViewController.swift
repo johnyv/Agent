@@ -10,7 +10,11 @@ import UIKit
 import Moya
 import SwiftyJSON
 
-class ProfileViewController: UITableViewController {
+protocol ModifyProfileDelegage{
+    func refresh()
+}
+
+class ProfileViewController: UITableViewController, ModifyProfileDelegage {
     let cellNormalIdentifier = "normalCell"
     let cellHeadIdentifier = "headCell"
     let cellInfoIdentifier = "infoCell"
@@ -30,11 +34,11 @@ class ProfileViewController: UITableViewController {
         super.viewDidLoad()
 
         // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        self.tableView.tableFooterView = UIView(frame:CGRect.zero)
+        self.tableView.tableFooterView = UIView()
 //        UILabel.appearance(whenContainedInInstancesOf: [UITableViewHeaderFooterView.self])
 //            .textColor = UIColor.gray
 //        UILabel.appearance(whenContainedInInstancesOf: [UITableViewHeaderFooterView.self])
@@ -57,7 +61,7 @@ class ProfileViewController: UITableViewController {
         tableView.register(xibInfo, forCellReuseIdentifier: cellInfoIdentifier)
         
         tableView.bounces = false
-        
+
         request(.myInfo, success: handleInfo)
     }
 
@@ -84,113 +88,44 @@ class ProfileViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Configure the cell...
-        //let profile = getProfile()
         if indexPath.section == 0 && indexPath.row == 0{
             let cell = tableView.dequeueReusableCell(withIdentifier: cellHeadIdentifier) as! ProfileHeadCell
             cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
             let strURL = profile["headerImgSrc"]
             if strURL != nil {
-                let icoURL = URL(string: strURL as! String)
-                cell.imgHeadIco.sd_setImage(with: icoURL, completed: nil)
+                if strURL as! String != "" {
+                    let icoURL = URL(string: strURL as! String)
+                    cell.imgHeadIco.sd_setImage(with: icoURL, completed: nil)
+                }else{
+                    cell.imgHeadIco.image = UIImage(named: "headsmall")
+                }
             }
             cell.accessoryType = .disclosureIndicator
+            cell.selectionStyle = .none
             return cell
-//        }else if indexPath.section == 1 && indexPath.row == 0 {
-//            if profile["proofName"] != nil{
-//                let proofName = profile["proofName"] as! String
-//                if proofName != "" {
-//                    let cell = tableView.dequeueReusableCell(withIdentifier: cellOptionIdentifier, for: indexPath) as! ProfileInfoCell
-//                    cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
-//                    cell.lblContent.text = proofName
-//                    cell.selectionStyle = .none
-//                    return cell
-//                }else{
-//                    let cell = tableView.dequeueReusableCell(withIdentifier: cellOptionIdentifier, for: indexPath) as! ProfileOptionCell
-//                    cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
-//                    cell.btnOpt.setTitle(titleBtns[indexPath.row], for: .normal)
-//                    cell.selectionStyle = .none
-//                    return cell
-//                }
-//            }
-//        }else if indexPath.section == 1 && indexPath.row == 1 {
-//            
-//        }else if indexPath.section == 1 /*&& indexPath.row == 2*/ {
-//            let cell = tableView.dequeueReusableCell(withIdentifier: cellNormalIdentifier, for: indexPath)// as! ProfileInfoCell
-//            cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
-////            cell.btnOpt.setTitle(titleBtns[indexPath.row], for: .normal)
-//            cell.lblContent.isHidden = true
-//            cell.accessoryType = .disclosureIndicator
-//            switch indexPath.row {
-//            case 0:
-//                if profile["proofName"] != nil{
-//                    let proofName = profile["proofName"] as! String
-//                    if proofName != "" {
-//                        let cell = cell as! ProfileInfoCell
-//                        cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
-//                        cell.lblContent.text = proofName
-//                        cell.selectionStyle = .none
-//                    }else{
-//                        let cell = cell as! ProfileOptionCell
-//                        cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
-//                        cell.btnOpt.setTitle(titleBtns[indexPath.row], for: .normal)
-//                        cell.selectionStyle = .none
-//                    }
-//                }
-//            case 1:
-//                if profile["bindTel"] != nil{
-//                    let bindTel = profile["bindTel"] as! String
-//                    if bindTel != "" {
-//                        let cell = cell as! ProfileInfoCell
-//                        cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
-//                        cell.lblContent.text = bindTel
-//                        cell.selectionStyle = .none
-//                    }else{
-//                        let cell = cell as! ProfileOptionCell
-//                        cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
-//                        cell.btnOpt.setTitle(titleBtns[indexPath.row], for: .normal)
-//                        cell.selectionStyle = .none
-//                    }
-//                }
-//            case 2:
-//                if profile["weChatLogin"] != nil{
-//                    let weChatLogin = profile["weChatLogin"] as! Bool
-//                    if weChatLogin == true {
-//                        let cell = cell as! ProfileInfoCell
-//                        cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
-//                        cell.lblContent.text = "已授权"
-//                        cell.selectionStyle = .none
-//                    }else{
-//                        let cell = cell as! ProfileOptionCell
-//                        cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
-//                        cell.btnOpt.setTitle(titleBtns[indexPath.row], for: .normal)
-//                        cell.selectionStyle = .none
-//                    }
-//                }
-//            default:
-//                break
-//            }
-//            return cell
         }else{
             let cell = tableView.dequeueReusableCell(withIdentifier: cellInfoIdentifier) as! ProfileInfoCell
             cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
             cell.btnOpt.isHidden = true
             cell.selectionStyle = .none
             if (indexPath.section == 1 && indexPath.row == 3) || (indexPath.section == 3 && indexPath.row == 0){
-            cell.lblContent.isHidden = true
+                cell.lblContent.isHidden = true
                 cell.accessoryType = .disclosureIndicator
-                cell.selectionStyle = .default
+                //cell.selectionStyle = .default
             }
             switch indexPath.section {
             case 0:
                 switch indexPath.row{
                 case 1:
                     cell.lblContent.text = profile["nickName"] as? String
+                    cell.accessoryType = .disclosureIndicator
+                    cell.selectionStyle = .default
                 case 2:
                     cell.lblContent.text = profile["account"] as? String
                 case 3:
                     cell.lblContent.text = profile["agentId"] as? String
                 default:
-                    cell.lblContent.text = ""
+                    break
                 }
             case 1:
                 switch indexPath.row {
@@ -203,8 +138,10 @@ class ProfileViewController: UITableViewController {
                         }else{
                             cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
                             cell.btnOpt.isHidden = false
+                            cell.btnOpt.addTarget(self, action: #selector(self.doProof(_:)), for: .touchUpInside)
                             cell.lblContent.isHidden = true
                             cell.btnOpt.setTitle(titleBtns[indexPath.row], for: .normal)
+                            cell.accessoryType = .disclosureIndicator
                         }
                     }
                 case 1:
@@ -213,11 +150,14 @@ class ProfileViewController: UITableViewController {
                         if bindTel != "" {
                             cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
                             cell.lblContent.text = bindTel
+                            cell.accessoryType = .disclosureIndicator
                         }else{
                             cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
                             cell.btnOpt.isHidden = false
+                            cell.btnOpt.addTarget(self, action: #selector(self.doBind(_:)), for: .touchUpInside)
                             cell.lblContent.isHidden = true
                             cell.btnOpt.setTitle(titleBtns[indexPath.row], for: .normal)
+                            cell.accessoryType = .disclosureIndicator
                         }
                     }
                 case 2:
@@ -230,9 +170,10 @@ class ProfileViewController: UITableViewController {
                         }else{
                             cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
                             cell.btnOpt.isHidden = false
+                            cell.btnOpt.addTarget(self, action: #selector(self.doWeixinAuth(_:)), for: .touchUpInside)
                             cell.lblContent.isHidden = true
                             cell.btnOpt.setTitle(titleBtns[indexPath.row], for: .normal)
-                            cell.selectionStyle = .none
+                            cell.accessoryType = .disclosureIndicator
                         }
                     }
                 default:
@@ -250,7 +191,7 @@ class ProfileViewController: UITableViewController {
                 case 3:
                     cell.lblContent.text = profile["agentType"] as? String
                 default:
-                    cell.lblContent.text = ""
+                    break
                 }
             default: break
             }
@@ -279,11 +220,31 @@ class ProfileViewController: UITableViewController {
             switch indexPath.row {
             case 0:
                 let vc = loadVCfromMain(identifier: "editImageView") as! EditImageView
+//                navigationController?.pushViewController(vc, animated: true)
                 present(vc, animated: true, completion: nil)
-
+                
+            case 1:
+                let vc = loadVCfromMain(identifier: "modifyNickView") as! ModifyNickView
+                vc.delegateModify = self
+                present(vc, animated: true, completion: nil)
+                
             default:
                 break
             }
+        case 1:
+            switch indexPath.row {
+            case 1:
+                let vc = loadVCfromMain(identifier: "modifyTelView") as! ModifyTelView
+                vc.delegateModify = self
+                present(vc, animated: true, completion: nil)
+            case 3:
+                let vc = loadVCfromMain(identifier: "modifyPasswordView") as! ModifyPasswordView
+                present(vc, animated: true, completion: nil)
+                
+            default:
+                break
+            }
+            
         case 3:
             switch indexPath.row {
             case 0:
@@ -340,6 +301,23 @@ class ProfileViewController: UITableViewController {
     @IBAction func backToIndex(_ sender: UIBarButtonItem) {
         let appdelegate = UIApplication.shared.delegate as! AppDelegate
         appdelegate.menuTab?.selectedIndex = 0
+    }
+    
+    func doProof(_ sender:UIButton){
+        alertResult(code: 99)
+    }
+
+    func doBind(_ sender:UIButton){
+        let vc = loadVCfromMain(identifier: "bindTelView") as! BindTelView
+        present(vc, animated: true, completion: nil)
+    }
+
+    func doWeixinAuth(_ sender:UIButton){
+        alertResult(code: 99)
+    }
+
+    func refresh() {
+        request(.myInfo, success: handleInfo)
     }
     /*
     // Override to support conditional editing of the table view.

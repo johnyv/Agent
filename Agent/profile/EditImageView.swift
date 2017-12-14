@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import SwiftyJSON
 
-class EditImageView: UIViewController {
+class EditImageView: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var imgHead: UIImageView!
     @IBOutlet weak var btnChoose: UIButton!
@@ -17,6 +18,10 @@ class EditImageView: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        imgHead.isUserInteractionEnabled = true
+        
+        btnChoose.addTarget(self, action: #selector(self.doPickfromAlbum(_:)), for: .touchUpInside)
+        btnCamera.addTarget(self, action: #selector(self.doPickfromCamera(_:)), for: .touchUpInside)
     }
 
     override func didReceiveMemoryWarning() {
@@ -27,7 +32,69 @@ class EditImageView: UIViewController {
     @IBAction func backToPrev(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
+    
+    func doPickfromAlbum(_ sender: UIButton) {
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+            let picker = UIImagePickerController()
+            picker.delegate = self
+            picker.sourceType = .photoLibrary
+            self.present(picker, animated: true, completion: nil)
+        }else{
+            print("读取相册错误")
+        }
+    }
+    
+    func doPickfromCamera(_ sender: UIButton) {
+        if UIImagePickerController.isSourceTypeAvailable(.camera){
+            let picker = UIImagePickerController()
+            picker.sourceType = .camera
+            if UIImagePickerController.isCameraDeviceAvailable(.front){
+                picker.cameraDevice = .front
+            }
+            picker.delegate = self
+            picker.cameraFlashMode = .auto
+            picker.allowsEditing = true
+            self.present(picker, animated: true, completion: nil)
+        }else{
+            print("找不到相机")
+        }
+    }
 
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+
+        var image:UIImage!
+        image = info[UIImagePickerControllerOriginalImage] as! UIImage
+//        imgHead.image = image
+        let fileManager = FileManager.default
+        let rootPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+        let filePath = "\(rootPath)/HI.png"
+        let imageData = UIImagePNGRepresentation(image)
+        fileManager.createFile(atPath: filePath, contents: imageData, attributes: nil)
+        func handleResult(json:JSON)->(){
+            let result = json["result"]
+            let code = result["code"].intValue
+            print(result)
+            if code == 200 {
+                let newHI = result["data"].stringValue
+                let hiURL = URL(string: newHI)
+                imgHead.sd_setImage(with: hiURL, completed: nil)
+            }else{
+                alertResult(code: code)
+            }
+        }
+
+        if fileManager.fileExists(atPath: filePath) {
+            let imageURL = URL(fileURLWithPath: filePath)
+            request(.upload(file: imageURL), success: handleResult)
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+
+    }
+    
     /*
     // MARK: - Navigation
 

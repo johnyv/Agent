@@ -15,8 +15,6 @@ class MyAgentToOpen: UIViewController {
     @IBOutlet weak var lblGameName: UILabel!
     @IBOutlet weak var vVip: UIView!
     @IBOutlet weak var btnNew: UIButton!
-    @IBOutlet weak var btnSMS: UIButton!
-    @IBOutlet weak var btnVoice: UIButton!
     
     @IBOutlet weak var tfUSerName: UITextField!
     @IBOutlet weak var tfTel: UITextField!
@@ -36,8 +34,6 @@ class MyAgentToOpen: UIViewController {
         segSort.addTarget(self, action: #selector(self.segDidchange(_:)), for: .valueChanged)
 
         btnNew.addTarget(self, action: #selector(self.doNew(_:)), for: .touchUpInside)
-        btnSMS.addTarget(self, action: #selector(self.doSMS(_:)), for: .touchUpInside)
-        btnVoice.addTarget(self, action: #selector(self.doVoice(_:)), for: .touchUpInside)
         
         let agent = getAgent()
         let gameName = agent["gameName"] as? String
@@ -70,11 +66,15 @@ class MyAgentToOpen: UIViewController {
         }
     }
 
-    func doSMS(_ sender:UIButton) {
+    @IBAction func sms(_ sender:SMSCountButton) {
+        sender.isCounting = true
+        
         request(.agentSMS(tel: tfTel.text!, smsType: 2), success: handleSMS)
     }
     
-    func doVoice(_ sender:UIButton) {
+    @IBAction func smsVoice(_ sender:SMSCountButton) {
+        sender.isCounting = true
+        
         request(.agentSMS(tel: tfTel.text!, smsType: 1), success: handleSMS)
     }
 

@@ -9,7 +9,7 @@
 import UIKit
 
 class PurchaseCellModel: NSObject {
-    var goodsId:String?
+    var goodsId:Int?
     var activityId:Int?
     var cardNum:Int?
     var extraNum:Int?
@@ -22,7 +22,7 @@ class PurchaseCellModel: NSObject {
     var userGoodSuperscript:Int?
     var createTime:String?
     
-    init(goodsId:String,activityId:Int,cardNum:Int,extraNum:Int,activityExtraNum:Int,price:Float,superscript:String,desc:String, discount:Double, discountFee:Double, userGoodSuperscript:Int, createTime:String) {
+    init(goodsId:Int,activityId:Int,cardNum:Int,extraNum:Int,activityExtraNum:Int,price:Float,superscript:String,desc:String, discount:Double, discountFee:Double, userGoodSuperscript:Int, createTime:String) {
         self.goodsId = goodsId
         self.activityId = activityId
         self.cardNum = cardNum

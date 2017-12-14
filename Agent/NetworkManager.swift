@@ -33,11 +33,15 @@ enum NetworkManager{
     case agentSwitch(agentId:Int, enable:String) //启用，禁用代理
     case pwdChange(pwd:String, rpwd:String) //修改密码
     case myInfo //13查询当前代理信息
-    case editHI(headerImgSrc:String) //修改头像
-    case editNick(nickName:String) //修改昵称
+    case editHI(headerImgSrc:String) //14修改头像
+    case editNick(nickName:String) //15修改昵称
     case typeInfo //查询特权信息
-    case bind(tel:String, verificationCode:String) //绑定安全手机
+    case bindTel(tel:String, verificationCode:String) //17绑定安全手机
+    case updateBind(oldVerificationCode:String, tel:String, newVerificationCode:String) //18修改安全手机
+    case bindSMS(tel:String, smsType:Int) //22获取绑定安全手机验证码
+    case verificationCode(smsType:Int) //23修改安全手机验证码
     case agentSMS(tel:String, smsType:Int) //24开通代理手机验证码
+    case upload(file:URL)//25头像上传
     //编辑安全手机
     case inviteGet //邀请玩家
     case inviteList(page:Int, pageSize:Int) //查询邀请玩家列表
@@ -98,7 +102,13 @@ struct AuthPlugin: PluginType {
 
 extension NetworkManager: AuthorizedTargetType{
     var baseURL:URL{
-        return URL(string: "https://gatewaytest.xianlaigame.com")!
+//        switch self {
+//        case .upload(_, let fileName):
+//            return URL(string: "https://gatewaytest.xianlaigame.com?file="+fileName)!
+//        default:
+            return URL(string: "https://gatewaytest.xianlaigame.com")!
+//        return URL(string: "http://172.16.70.128:6010")!
+//        }
     }
 
     var path:String{
@@ -134,11 +144,24 @@ extension NetworkManager: AuthorizedTargetType{
             return "/api/agent/core/myagent/list"
         case .myagentNew(_, _, _, _, _, _, _, _, _):
             return "/api/agent/core/myagent/new"
+        case .pwdChange(_, _):
+            return "/api/agent/core/pwd/change"
         case .myInfo:
             return "/api/agent/core/my/info"
+        case .editNick(_):
+            return "/api/agent/core/my/edit/nick"
+        case .bindTel(_, _):
+            return "/api/agent/core/tel/bind"
+        case .bindSMS(_, _):
+            return "/api/agent/core/verificationCode/bindtel"
+        case .updateBind(_, _, _):
+            return "/api/agent/core/tel/bind/update"
+        case .verificationCode(_):
+            return "/api/agent/core/verificationCode"
         case .agentSMS(_, _):
             return "/api/agent/core/verificationCode/register"
-            
+        case .upload(_):
+            return "/api/agent/core/common/upload"
             
         //------------------
         //购卡服务
@@ -401,12 +424,55 @@ extension NetworkManager: AuthorizedTargetType{
             }
             data["validityPeriod"] = validityPeriod
             return .requestParameters(parameters: data, encoding: DataEncoding.default)
+            
+        case .editNick(let nickName):
+            var data:[String:Any] = [:]
+            data["nickName"] = nickName
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
+            
+        case .bindSMS(let tel, let smsType):
+            var data:[String:Any] = [:]
+            data["tel"] = tel
+            data["smsType"] = smsType
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
+            
+        case .bindTel(let tel, let verificationCode):
+            var data:[String:Any] = [:]
+            data["tel"] = tel
+            data["verificationCode"] = verificationCode
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
+
+        case .updateBind(let oldVerificationCode, let tel, let newVerificationCode):
+            var data:[String:Any] = [:]
+            data["oldVerificationCode"] = oldVerificationCode
+            data["tel"] = tel
+            data["newVerificationCode"] = newVerificationCode
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
+            
+        case .verificationCode(let smsType):
+            var data:[String:Any] = [:]
+            data["smsType"] = smsType
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
+            
         case .agentSMS(let tel, let smsType):
             var data:[String:Any] = [:]
             data["tel"] = tel
             data["smsType"] = smsType
-
             return .requestParameters(parameters: data, encoding: DataEncoding.default)
+            
+        case .pwdChange(let pwd, let rpwd):
+            var data:[String:Any] = [:]
+            data["pwd"] = pwd
+            data["rpwd"] = rpwd
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
+            
+        case .upload(let file):
+            let str = "file"
+            let strData = str.data(using: .utf8)
+            let formData1 = MultipartFormData(provider: .data(strData!), name: "file")
+            let fileData = try! Data(contentsOf: file)
+            let formData2 = MultipartFormData(provider: .data(fileData), name: "file", fileName: "h.png", mimeType: "image/png")
+            return .uploadMultipart([formData1,formData2])
         default:
             let params:[String:Any] = [:]
             return .requestParameters(parameters: params, encoding: DataEncoding.default)

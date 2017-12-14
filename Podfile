@@ -13,7 +13,11 @@ target 'Agent' do
 	pod 'ObjectMapper', '~>2.2'
 	pod 'SnapKit', '~> 3.0.0'
 	pod 'PagingMenuController'
+	pod 'XLPagerTabStrip', '~> 8.0'
 	pod 'IQKeyboardManagerSwift'
+	pod 'PopupDialog', '~> 0.5.4'
+	pod 'PopupController'
+	pod 'CVCalendar', '~> 1.5.0'
 end
 
 post_install do |installer|

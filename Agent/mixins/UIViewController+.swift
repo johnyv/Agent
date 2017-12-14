@@ -89,6 +89,4 @@ extension UIViewController{
 //        
 //        UserDefaults.standard.set(agent, forKey: "AGENT")
 //    }
-    
-
 }

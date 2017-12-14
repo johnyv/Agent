@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -36,10 +35,23 @@
                         <color key="textColor" red="0.24705882352941178" green="0.24705882352941178" blue="0.24705882352941178" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dOP-o2-IKC">
+                        <rect key="frame" x="196" y="10" width="1" height="75"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="1" id="eoM-QN-hl9"/>
+                        </constraints>
+                    </view>
                 </subviews>
             </view>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="dOP-o2-IKC" secondAttribute="bottom" constant="10" id="JxQ-zN-7N2"/>
+                <constraint firstItem="dOP-o2-IKC" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="aEg-Qq-h9V"/>
+                <constraint firstAttribute="trailing" secondItem="dOP-o2-IKC" secondAttribute="trailing" id="hRb-wK-udt"/>
+            </constraints>
             <size key="customSize" width="200" height="95"/>
             <connections>
+                <outlet property="div" destination="dOP-o2-IKC" id="x2b-WC-zbL"/>
                 <outlet property="imgIco" destination="Iab-0k-2uc" id="ur9-RV-Vvs"/>
                 <outlet property="lblDesc" destination="rpK-fv-yxO" id="Mhp-Gh-mI2"/>
                 <outlet property="lblTitle" destination="tiY-4f-4QS" id="76A-bp-uBN"/>

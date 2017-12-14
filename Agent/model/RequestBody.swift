@@ -13,7 +13,11 @@ class RequestBody: NSObject{
     var body:[String:[String:Any]] = [:]
     init(data:Dictionary<String, Any>){
         var param:[String:Any] = [:]
-        param["sid"] = "123456789"
+        let agent = getAgent()
+        
+        let timeInterVal = Int(Date().timeIntervalSince1970*1000)
+
+        param["sid"] = timeInterVal
         param["data"] = data
         body["body"] = param
         var header:[String:Any] = [:]
@@ -25,10 +29,10 @@ class RequestBody: NSObject{
         header["deviceToken"] = "token"
         header["model"] = UIDevice.current.model
         header["time"] = Int(Date().timeIntervalSince1970)
-        header["userId"] = "user"
+        header["userId"] = agent["agentId"]
         header["sso_tk"] = getSavedToken()
-        header["from"] = "hunan_db"
-        header["mac"] = "mac"
+        header["from"] = agent["serverCode"]
+        header["mac"] = "forbidden"
         header["udid"] = ASIdentifierManager.shared().advertisingIdentifier.uuidString
         
         body["header"] = header

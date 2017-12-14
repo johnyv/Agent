@@ -13,10 +13,8 @@ import Moya
 
 class LoginViewController: UIViewController {
     @IBOutlet weak var btnLogin: UIButton!
-    @IBOutlet weak var btnVerifySMS: UIButton!
     @IBOutlet weak var tfSMS: UITextField!
     @IBOutlet weak var tfMobile: UITextField!
-    @IBOutlet weak var btnSpeech: UIButton!
 
     @IBOutlet weak var btnWeixin: UIButton!
     @IBOutlet weak var btnAccount: UIButton!
@@ -35,13 +33,13 @@ class LoginViewController: UIViewController {
             make.centerX.equalTo(self.view)})
         btnLogin.layer.cornerRadius = 3
         btnLogin.layer.masksToBounds = true
-        btnLogin.snp.makeConstraints({(make) -> Void in
-            make.top.equalTo(450)
-            make.width.equalTo(dividing1)
-            make.centerX.equalTo(self.view)})
-        btnVerifySMS.layer.cornerRadius = 3
+//        btnLogin.snp.makeConstraints({(make) -> Void in
+//            make.top.equalTo(450)
+//            make.width.equalTo(dividing1)
+//            make.centerX.equalTo(self.view)})
 
         btnWeixin.setTitleAlign(position: .bottom)
+        btnWeixin.addTarget(self, action: #selector(self.wxLogin(_:)), for: .touchUpInside)
         btnAccount.setTitleAlign(position: .bottom)
 }
 
@@ -49,15 +47,18 @@ class LoginViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    @IBAction func sms(_ sender: UIButton) {
-        func handleSMS(json:JSON)->(){
-            let code = json["code"].intValue
-            print(json)
-            if code == 200 {
-            }else{
-                alertResult(code: code)
-            }
+    
+    func handleSMS(json:JSON)->(){
+        let code = json["code"].intValue
+        print(json)
+        if code == 200 {
+        }else{
+            alertResult(code: code)
         }
+    }
+
+    @IBAction func sms(_ sender: SMSCountButton) {
+        sender.isCounting = true
         
         let mobileNo = tfMobile.text!
         
@@ -65,15 +66,8 @@ class LoginViewController: UIViewController {
 //        Network.request(.login(usr!, pwd!), success: handleLogin, provider: provider)
     }
     
-    @IBAction func smsVoice(_ sender: UIButton) {
-        func handleSMS(json:JSON)->(){
-            let code = json["code"].intValue
-            print(json)
-            if code == 200 {
-            }else{
-                alertResult(code: code)
-            }
-        }
+    @IBAction func smsVoice(_ sender: SMSCountButton) {
+        sender.isCounting = true
         
         let mobileNo = tfMobile.text!
         
@@ -90,15 +84,15 @@ class LoginViewController: UIViewController {
                 let token = json["token"].stringValue
                 UserDefaults.standard.set(token, forKey: "agentToken")
                 let agent = json["agent"]
-                AgentInfo.instance.account = agent["account"].stringValue
-                AgentInfo.instance.agentId = agent["agentId"].stringValue
-                AgentInfo.instance.roleId = agent["roleId"].stringValue
-                AgentInfo.instance.name = agent["name"].stringValue
-                AgentInfo.instance.nickName = agent["nickName"].stringValue
-                AgentInfo.instance.gameName = agent["gameName"].stringValue
-                AgentInfo.instance.serverCode = agent["serverCode"].stringValue
-                AgentInfo.instance.headImg = agent["headImg"].stringValue
-                AgentInfo.instance.lastBuyTime = agent["lastBuyTime"].stringValue
+//                AgentInfo.instance.account = agent["account"].stringValue
+//                AgentInfo.instance.agentId = agent["agentId"].stringValue
+//                AgentInfo.instance.roleId = agent["roleId"].stringValue
+//                AgentInfo.instance.name = agent["name"].stringValue
+//                AgentInfo.instance.nickName = agent["nickName"].stringValue
+//                AgentInfo.instance.gameName = agent["gameName"].stringValue
+//                AgentInfo.instance.serverCode = agent["serverCode"].stringValue
+//                AgentInfo.instance.headImg = agent["headImg"].stringValue
+//                AgentInfo.instance.lastBuyTime = agent["lastBuyTime"].stringValue
                 print(AgentInfo.instance.nickName)
 //                let authority = agent["authorityList"].array
 //                print(authority)
@@ -139,10 +133,15 @@ class LoginViewController: UIViewController {
 //        vc.present(alertController, animated: true, completion: nil)
 //    }
     
+    func wxLogin(_ sender: UIButton) {
+        alertResult(code: 99)
+    }
+
     @IBAction func accountLogin(_ sender: UIButton) {
         let vcAccount = loadVCfromLogin(identifier: "accountController") as! AccountController
         present(vcAccount, animated: true, completion: nil)
     }
+    
     /*
     // MARK: - Navigation
 

@@ -20,13 +20,13 @@ class AccountViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Do any additional setup after loading the view.
         btnLogin.layer.cornerRadius = 3
 
         btnSMSLogin.layer.borderWidth = 1
         btnSMSLogin.layer.borderColor = kRGBColorFromHex(rgbValue: 0x008ce6).cgColor
         btnSMSLogin.layer.cornerRadius = 3
-
-        // Do any additional setup after loading the view.
+        btnSMSLogin.addTarget(self, action: #selector(self.backToPrev(_:)), for: .touchUpInside)
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,9 +34,14 @@ class AccountViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func backToPrev(_ sender: UIBarButtonItem) {
+    func back(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
+    
+    @IBAction func backToPrev(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     @IBAction func accountLogin(_ sender: UIButton) {
 //        let provider = MoyaProvider<NetworkManager>()
         
@@ -52,22 +57,7 @@ class AccountViewController: UIViewController {
                 UserDefaults.standard.set(token, forKey: "agentToken")
                 let agent = json["agent"]
                 setAgent(data: agent)
-//                let authority = agent["authorityList"].array
-//                print(authority[1])
-//                UserDefaults.standard.set(authority, forKey: "authority")
-//                AgentInfo.instance.account = agent["account"].stringValue
-//                AgentInfo.instance.agentId = agent["agentId"].stringValue
-//                AgentInfo.instance.roleId = agent["roleId"].stringValue
-//                AgentInfo.instance.name = agent["name"].stringValue
-//                AgentInfo.instance.nickName = agent["nickName"].stringValue
-//                AgentInfo.instance.gameName = agent["gameName"].stringValue
-//                AgentInfo.instance.serverCode = agent["serverCode"].stringValue
-//                AgentInfo.instance.headImg = agent["headImg"].stringValue
-//                AgentInfo.instance.lastBuyTime = agent["lastBuyTime"].stringValue
-//                print(AgentInfo.instance.nickName)
-                //                let authority = agent["authorityList"].array
-                //                print(authority)
-                //UserDefaults.standard.set(authority, forKey: "Array")
+                setAuthority(agent: agent)
                 appdelegate.login()
             }else{
                 alertResult(code: code)
@@ -88,8 +78,9 @@ class AccountViewController: UIViewController {
 //        Network.request(.login(usr!, pwd!), success: handleLogin, provider: provider)
     }
     @IBAction func forgetPwd(_ sender: UIButton) {
-        let forgotVC = loadVCfromLogin(identifier: "forgotViewController") as! ForgotViewController
-        self.navigationController?.pushViewController(forgotVC, animated: true)
+        alertResult(code: 99)
+//        let forgotVC = loadVCfromLogin(identifier: "forgotViewController") as! ForgotViewController
+//        self.navigationController?.pushViewController(forgotVC, animated: true)
     }
     /*
     // MARK: - Navigation
