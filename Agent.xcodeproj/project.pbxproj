@@ -49,6 +49,8 @@
 		523C23B81FDA8CFD006FD555 /* MyAgentUnOpen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523C23B71FDA8CFD006FD555 /* MyAgentUnOpen.swift */; };
 		523C23BA1FDA9DCB006FD555 /* MyAgentToOpen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523C23B91FDA9DCB006FD555 /* MyAgentToOpen.swift */; };
 		523C23BC1FDAA22B006FD555 /* MyAgentAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523C23BB1FDAA22B006FD555 /* MyAgentAdmin.swift */; };
+		5249488F1FE3C5C10081A447 /* PaymentOpt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5249488E1FE3C5C10081A447 /* PaymentOpt.swift */; };
+		524948911FE3C5D80081A447 /* PaymentOpt.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 524948901FE3C5D80081A447 /* PaymentOpt.storyboard */; };
 		5251424E1FC57CFB000046DF /* RoomCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5251424D1FC57CFB000046DF /* RoomCardViewController.swift */; };
 		525142501FC58621000046DF /* RequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5251424F1FC58621000046DF /* RequestBody.swift */; };
 		525348591FBA98D50067D5FA /* CustomerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525348581FBA98D50067D5FA /* CustomerViewController.swift */; };
@@ -160,6 +162,8 @@
 		523C23B71FDA8CFD006FD555 /* MyAgentUnOpen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAgentUnOpen.swift; sourceTree = "<group>"; };
 		523C23B91FDA9DCB006FD555 /* MyAgentToOpen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAgentToOpen.swift; sourceTree = "<group>"; };
 		523C23BB1FDAA22B006FD555 /* MyAgentAdmin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAgentAdmin.swift; sourceTree = "<group>"; };
+		5249488E1FE3C5C10081A447 /* PaymentOpt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentOpt.swift; sourceTree = "<group>"; };
+		524948901FE3C5D80081A447 /* PaymentOpt.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PaymentOpt.storyboard; sourceTree = "<group>"; };
 		5251424D1FC57CFB000046DF /* RoomCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RoomCardViewController.swift; path = views/RoomCardViewController.swift; sourceTree = "<group>"; };
 		5251424F1FC58621000046DF /* RequestBody.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestBody.swift; path = model/RequestBody.swift; sourceTree = "<group>"; };
 		525348581FBA98D50067D5FA /* CustomerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomerViewController.swift; path = views/CustomerViewController.swift; sourceTree = "<group>"; };
@@ -312,6 +316,8 @@
 				5232C6301FE1045E0004CF72 /* ToolViewCell.xib */,
 				5232C6431FE104830004CF72 /* PaymentSelection.storyboard */,
 				5232C6451FE104A00004CF72 /* PaymentSelection.swift */,
+				5249488E1FE3C5C10081A447 /* PaymentOpt.swift */,
+				524948901FE3C5D80081A447 /* PaymentOpt.storyboard */,
 			);
 			path = widget;
 			sourceTree = "<group>";
@@ -635,6 +641,7 @@
 				5232C63E1FE1045E0004CF72 /* ProfileOptionCell.xib in Resources */,
 				5232C6441FE104830004CF72 /* PaymentSelection.storyboard in Resources */,
 				5288D6511F7A4EE900406C9B /* Login.storyboard in Resources */,
+				524948911FE3C5D80081A447 /* PaymentOpt.storyboard in Resources */,
 				5232C64E1FE1309D0004CF72 /* backItemImage_hl@2x.png in Resources */,
 				5232C6401FE1045E0004CF72 /* RoomCardDetailCell.xib in Resources */,
 				5232C6421FE1045E0004CF72 /* ToolViewCell.xib in Resources */,
@@ -705,37 +712,37 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Agent/Pods-Agent-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/CVCalendar/CVCalendar.framework",
+				"${BUILT_PRODUCTS_DIR}/HooDatePicker/HooDatePicker.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/PagingMenuController/PagingMenuController.framework",
 				"${BUILT_PRODUCTS_DIR}/PopupController/PopupController.framework",
-				"${BUILT_PRODUCTS_DIR}/PopupDialog/PopupDialog.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/Toast-Swift/Toast_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CVCalendar.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HooDatePicker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJRefresh.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PagingMenuController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PopupController.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PopupDialog.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Toast_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -763,6 +770,7 @@
 				525348591FBA98D50067D5FA /* CustomerViewController.swift in Sources */,
 				5276511A1FD6849F004F32EC /* ExternalPayView.swift in Sources */,
 				523C23B41FDA7F7A006FD555 /* EditImageView.swift in Sources */,
+				5249488F1FE3C5C10081A447 /* PaymentOpt.swift in Sources */,
 				527F65241FA1E3D70004A938 /* LoginViewController.swift in Sources */,
 				5253485B1FBA9F390067D5FA /* Common.swift in Sources */,
 				5271B1131FCD309C00A8450C /* ProfileCellModel.swift in Sources */,

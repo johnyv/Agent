@@ -38,8 +38,6 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        autoFit()
-        
         let agent = getAgent()
         let gameName = agent["gameName"] as? String
 
@@ -74,6 +72,8 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
 //    override func viewDidAppear(_ animated: Bool) {
         request(.noticeScroll, success: handleNotice)
         request(.banner, success: handleBanner)
+
+        autoFit()
     }
 
     override func didReceiveMemoryWarning() {

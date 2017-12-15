@@ -35,6 +35,7 @@ class ExternalPayView: UIViewController, WKUIDelegate, WKNavigationDelegate {
         //request.httpMethod = "GET"
         view.addSubview(webView)
         webView.load(request)
+        autoFit()
     }
 
     override func didReceiveMemoryWarning() {

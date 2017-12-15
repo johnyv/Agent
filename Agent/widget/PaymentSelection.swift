@@ -18,7 +18,7 @@ protocol PaymentDelegate {
 class PaymentSelection: UIViewController, PopupContentViewController, PaymentDelegate  {
 
     var closeHandler:(()->Void)?
-    var finishHandler:(()->Void)?
+    var finishHandler:((_ result:JSON)->Void)?
     
     var payData:PurchaseCellModel?
     
@@ -55,30 +55,7 @@ class PaymentSelection: UIViewController, PopupContentViewController, PaymentDel
     
     func handlePay(json:JSON)->(){
         let result = json["result"]
-        let code = result["code"].intValue
-        if code == 200 {
-            print(result)
-            let dataStr = result["data"].stringValue
-//            let urlStr = dataStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-//            finishHandler!(urlStr!)
-//            let url = URL(string: urlStr!)
-//            if #available(iOS 10.0, *) {
-//                UIApplication.shared.open(url!, options: [UIApplicationOpenURLOptionUniversalLinksOnly:false], completionHandler: nil)
-//            } else {
-//                // Fallback on earlier versions
-//            }
-//            print(url)
-            UserDefaults.standard.set(dataStr, forKey: "payURL")
-            
-//            let payVC = loadVCfromMain(identifier: "doPayView") as! DoPayView
-//            
-//            //            payVC.urlData = data
-//            present(payVC, animated: true, completion: nil)
-            finishHandler!()
-        }else{
-            print(result)
-//            SVProgressHUD.showInfo(withStatus: errMsg.desc(key: code))
-        }
+        finishHandler!(result)
     }
     
     func pay(_ sender: UIButton){

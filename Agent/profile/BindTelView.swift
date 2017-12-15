@@ -23,6 +23,7 @@ class BindTelView: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        autoFit()
     }
 
     override func didReceiveMemoryWarning() {

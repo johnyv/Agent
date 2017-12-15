@@ -19,6 +19,8 @@ class ModifyPasswordView: UIViewController {
 
         // Do any additional setup after loading the view.
         btnModify.addTarget(self, action: #selector(self.doModify(_:)), for: .touchUpInside)
+        
+        autoFit()
     }
 
     override func didReceiveMemoryWarning() {

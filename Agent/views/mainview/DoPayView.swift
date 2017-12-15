@@ -42,7 +42,7 @@ class DoPayView: UIViewController, WKUIDelegate, WKNavigationDelegate{
         //request.setValue("https://gatewaytest.xianlaigame.com", forHTTPHeaderField: "Referer")
         webView.load(request)
         //webView.reload()
-
+        autoFit()
     }
 
     override func didReceiveMemoryWarning() {

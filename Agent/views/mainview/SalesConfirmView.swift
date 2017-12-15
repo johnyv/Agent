@@ -36,6 +36,8 @@ class SalesConfirmView: UIViewController {
         }
 
         btnConfirm.addTarget(self, action: #selector(onConfirm(_:)), for: .touchUpInside)
+        
+        autoFit()
     }
 
     override func didReceiveMemoryWarning() {
@@ -75,6 +77,8 @@ class SalesConfirmView: UIViewController {
         let code = result["code"].intValue
         if code == 200 {
             dismiss(animated: true, completion: nil)
+        } else {
+            toastMSG(result: result)
         }
     }
 

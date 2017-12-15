@@ -33,6 +33,8 @@ class ModifyTelView: UIViewController {
         btnVoiceSMnew.addTarget(self, action: #selector(sms(_:)), for: .touchUpInside)
         
         btnBind.addTarget(self, action: #selector(bind(_:)), for: .touchUpInside)
+
+        autoFit()
     }
 
     override func didReceiveMemoryWarning() {

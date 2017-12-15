@@ -9,9 +9,10 @@
 import Foundation
 import Moya
 import SwiftyJSON
+import Toast_Swift
 
 extension UIViewController{
-    @objc func alertResult(code:Int) -> Void {
+    func alertResult(code:Int) -> Void {
         let alertController = UIAlertController(title: "系统提示",message: errMsg.desc(key: code), preferredStyle: .alert)
         let okAction = UIAlertAction(title: "好的", style: .default, handler: {
             action in
@@ -20,6 +21,11 @@ extension UIViewController{
         self.present(alertController, animated: true, completion: nil)
     }
     
+    func toastMSG(result:JSON) -> Void {
+        let msg = result["message"].stringValue
+        self.view.makeToast(msg, duration: 2, position: .center)
+    }
+
     func request(_ target:NetworkManager,
                                        success successCallback: @escaping(JSON) -> Void
         //error errorCallback: @escaping(Int) -> Void,
@@ -81,17 +87,15 @@ extension UIViewController{
         
         
         for(_, view) in subviews.enumerated(){
-            fitRadio(v: view, radio: radio)
             if view.subviews.count > 0 {
                 let subviews = view.subviews
                 for(_, view) in subviews.enumerated(){
                     fitRadio(v: view, radio: radio)
                 }
+//                view.frame.size.width *= radio
+//                view.frame.size.height *= radio
             }
-//            view.frame.origin.x *= radio
-//            view.frame.origin.y *= radio
-//            view.frame.size.width *= radio
-//            view.frame.size.height *= radio
+            fitRadio(v: view, radio: radio)
         }
     }
     

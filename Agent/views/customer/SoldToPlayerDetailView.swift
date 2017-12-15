@@ -7,26 +7,30 @@
 //
 
 import UIKit
+import HooDatePicker
 
 class SoldToPlayerDetailView: UIViewController {
 
-    @IBOutlet weak var lblDataStart: UILabel!
+    @IBOutlet weak var lblDateBegin: UILabel!
     @IBOutlet weak var lblDateEnd: UILabel!
+    
+    let ft = DateFormatter()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        autoFit()
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(selStartDate))
-        lblDataStart.isUserInteractionEnabled = true
-        lblDataStart.addGestureRecognizer(tap)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(selDateBegin))
+        lblDateBegin.isUserInteractionEnabled = true
+        lblDateBegin.addGestureRecognizer(tap)
         
         let now = Date()
-        let ft = DateFormatter()
+        //let ft = DateFormatter()
         ft.dateFormat = "yyyy年MM月dd日"
-        lblDataStart.text = ft.string(from: now)
+        lblDateBegin.text = ft.string(from: now)
         lblDateEnd.text = ft.string(from:now)
+        
+        autoFit()
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,6 +38,13 @@ class SoldToPlayerDetailView: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func selDateBegin(){
+        let datePicker = HooDatePicker(superView: self.view)
+        datePicker?.delegate = self
+        datePicker?.locale = Locale(identifier: "zh_CN")
+        datePicker?.datePickerMode = HooDatePickerMode.date
+        datePicker?.show()
+    }
     func selStartDate(){
         let datePickerAlert:UIAlertController = UIAlertController(title: "\n\n\n\n\n\n\n", message: nil, preferredStyle: .alert)
         let datePicker = UIDatePicker()
@@ -46,7 +57,7 @@ class SoldToPlayerDetailView: UIViewController {
             print("date select: \(datePicker.date.description)")
             let ft = DateFormatter()
             ft.dateFormat = "yyyy年MM月dd日"
-            self.lblDataStart.text = ft.string(from:datePicker.date)
+            //self.lblDataStart.text = ft.string(from:datePicker.date)
             //            let myDateButton=self.Datebutt as? DateButton
             //            myDateButton?.thedate=datePicker.date
             //            //强制刷新
@@ -66,4 +77,10 @@ class SoldToPlayerDetailView: UIViewController {
     }
     */
 
+}
+
+extension SoldToPlayerDetailView: HooDatePickerDelegate {
+    func datePicker(_ dataPicker: HooDatePicker!, didSelectedDate date: Date!) {
+        lblDateBegin.text = ft.string(from: date)
+    }
 }

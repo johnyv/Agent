@@ -41,6 +41,7 @@ class MyAgentToOpen: UIViewController {
         
         showVip(idx: idx)
         setRoleId(idx: idx)
+        autoFit()
     }
     
     override func didReceiveMemoryWarning() {

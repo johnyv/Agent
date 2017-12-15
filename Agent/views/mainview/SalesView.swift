@@ -10,10 +10,13 @@ import UIKit
 import Moya
 import SwiftyJSON
 
-class SalesView: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SalesView: UIViewController {
 
     @IBOutlet weak var segSort: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var btnSearch: UIButton!
+    @IBOutlet weak var tfSearch: UITextField!
     
     let cellTableIdentifier = "customerTableCell"
     var sourceData = [[String:Any]]()
@@ -24,6 +27,7 @@ class SalesView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // Do any additional setup after loading the view.
         segSort.selectedSegmentIndex = 0
         segSort.addTarget(self, action: #selector(self.segDidchange(_:)), for: .valueChanged)
+        btnSearch.addTarget(self, action: #selector(self.doSearch(_:)), for: .touchUpInside)
         
         requestData(sort: segSort.selectedSegmentIndex)
         
@@ -51,42 +55,19 @@ class SalesView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBAction func backToPrev(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sourceData.count
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellTableIdentifier, for: indexPath) as! CustomerTableCell
-        
-        // Configure the cell...
-        let cellData = sourceData[indexPath.row]
-//        cell.accessoryType = .disclosureIndicator
-//        cell.selectionStyle = .none
-        let strURL = cellData["header_img_src"] as! String
-        if strURL == "" {
-            cell.imgHeadIco.image = UIImage(named: "headsmall")
-        } else {
-            let icoURL = URL(string: strURL)
-            cell.imgHeadIco.sd_setImage(with: icoURL, completed: nil)
+    func doSearch(_ sender:UIButton){
+        let id = Int(tfSearch.text!)
+        print(id)
+        let sort = segSort.selectedSegmentIndex
+        switch sort {
+        case 0:
+            request(.playerSearch(searchId: id!), success: handleSearch)
+        case 1:
+            request(.agentSearch(searchId: id!), success: handleSearch)
+        default:
+            break
         }
-//        let icoURL = URL(string: cellData.header_img_src)
-//        cell.imgHeadIco.sd_setImage(with: icoURL, completed: nil)
-        cell.lblUserId.text = String.init(format: "ID:%d", cellData["id"] as! Int)
-        cell.lblNickName.text = cellData["nick"] as! String
-        cell.lblCount.isHidden = true
-        cell.lblTime.isHidden = true
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cellData = sourceData[indexPath.row]
-        let vc = loadVCfromMain(identifier: "salesConfirmView") as! SalesConfirmView
-        vc.buyer = cellData
-        present(vc, animated: true, completion: nil)
     }
     
     func requestData(sort:Int){
@@ -131,18 +112,14 @@ class SalesView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        let count = searchText.lengthOfBytes(using: .utf8)
-        if count >= 5 {
-            let sort = segSort.selectedSegmentIndex
-            switch sort {
-            case 0:
-                request(.playerSearch(searchId: Int(searchText)!), success: handleSearch)
-            case 1:
-                request(.agentSearch(searchId: Int(searchText)!), success: handleSearch)
-            default:
-                break
-            }
-            
+        let sort = segSort.selectedSegmentIndex
+        switch sort {
+        case 0:
+            request(.playerSearch(searchId: Int(searchText)!), success: handleSearch)
+        case 1:
+            request(.agentSearch(searchId: Int(searchText)!), success: handleSearch)
+        default:
+            break
         }
     }
     
@@ -151,14 +128,30 @@ class SalesView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let code = result["code"].intValue
         print(result)
         if code == 200 {
-            sourceData.removeAll()
-//            print(result)
-//            let data = result["data"]
-//            let dataArr = data["datas"].array
-//            for(_, data) in (dataArr?.enumerated())!{
-//                sourceData.append(CustomerTableCellModel(id: data["id"].intValue, nick: data["nick"].stringValue, header_img_src: data["header_img_src"].stringValue, customerType: data["customerType"].stringValue, cardNum: data["cardNum"].intValue, sellTime: data["sellTime"].stringValue))
-//            }
-            tableView.reloadData()
+            let data = result["data"]
+            var cellData:[String:Any] = [:]
+            let sort = segSort.selectedSegmentIndex
+            cellData["nick"] =  data["nick"].stringValue
+            if sort == 0 {
+                cellData["id"] =  data["playerId"].intValue
+                cellData["header_img_src"] =  data["headImageUrl"].stringValue
+                cellData["customerType"] =  "P"
+//            cellData["customerType"] =  data["customerType"].stringValue
+//            cellData["cardNum"] =  data["cardNum"].intValue
+//            cellData["sellTime"] =  data["sellTime"].stringValue
+//            cellData["sellCount"] = data["sellCount"].intValue
+            } else {
+                cellData["id"] =  data["playerId"].intValue
+                cellData["header_img_src"] =  data["header_img_src"].stringValue
+                cellData["customerType"] =  "A"
+            }
+            
+            let vc = loadVCfromMain(identifier: "salesConfirmView") as! SalesConfirmView
+            vc.buyer = cellData
+            present(vc, animated: true, completion: nil)
+            
+        } else {
+            toastMSG(result: result)
         }
     }
 
@@ -172,4 +165,43 @@ class SalesView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     */
 
+}
+
+extension SalesView: UITableViewDelegate, UITableViewDataSource{
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return sourceData.count
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellTableIdentifier, for: indexPath) as! CustomerTableCell
+        
+        // Configure the cell...
+        let cellData = sourceData[indexPath.row]
+        //        cell.accessoryType = .disclosureIndicator
+        //        cell.selectionStyle = .none
+        let strURL = cellData["header_img_src"] as! String
+        if strURL == "" {
+            cell.imgHeadIco.image = UIImage(named: "headsmall")
+        } else {
+            let icoURL = URL(string: strURL)
+            cell.imgHeadIco.sd_setImage(with: icoURL, completed: nil)
+        }
+        //        let icoURL = URL(string: cellData.header_img_src)
+        //        cell.imgHeadIco.sd_setImage(with: icoURL, completed: nil)
+        cell.lblUserId.text = String.init(format: "ID:%d", cellData["id"] as! Int)
+        cell.lblNickName.text = cellData["nick"] as? String
+        cell.lblCount.isHidden = true
+        cell.lblTime.isHidden = true
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cellData = sourceData[indexPath.row]
+        let vc = loadVCfromMain(identifier: "salesConfirmView") as! SalesConfirmView
+        vc.buyer = cellData
+        present(vc, animated: true, completion: nil)
+    }
 }

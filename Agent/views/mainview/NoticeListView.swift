@@ -26,6 +26,7 @@ class NoticeListView: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         UILabel.appearance(whenContainedInInstancesOf: [UITableViewHeaderFooterView.self]).font = UIFont.systemFont(ofSize: 10.0)
         request(.noticeList(page: 1, pageSize: 0), success: handleData)
+        autoFit()
     }
 
     override func didReceiveMemoryWarning() {

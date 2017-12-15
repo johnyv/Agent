@@ -29,6 +29,7 @@ class MyAgentAdmin: UIViewController {
         
         btnOpen.addTarget(self, action: #selector(toOpen(_:)), for: .touchUpInside)
         request(.myagent(agentType: segSort.selectedSegmentIndex, page: 1, pageSize: 0), success: handleData)
+        autoFit()
     }
 
     override func viewDidAppear(_ animated: Bool) {

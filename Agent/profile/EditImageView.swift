@@ -22,6 +22,8 @@ class EditImageView: UIViewController, UIImagePickerControllerDelegate, UINaviga
         
         btnChoose.addTarget(self, action: #selector(self.doPickfromAlbum(_:)), for: .touchUpInside)
         btnCamera.addTarget(self, action: #selector(self.doPickfromCamera(_:)), for: .touchUpInside)
+        
+        autoFit()
     }
 
     override func didReceiveMemoryWarning() {

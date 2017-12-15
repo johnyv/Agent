@@ -163,11 +163,15 @@ class PurchaseView: UIViewController, UICollectionViewDelegate, UICollectionView
         payContainer.closeHandler = { _ in
             payPopup.dismiss()
         }
-        payContainer.finishHandler = { _ in
+        payContainer.finishHandler = { result in
             payPopup.dismiss()
-            let payVC = loadVCfromMain(identifier: "doPayView") as! DoPayView
+            let code = result["code"].intValue
+            if code == 200 {
+                let dataStr = result["data"].stringValue
+                UserDefaults.standard.set(dataStr, forKey: "payURL")
+                let payVC = loadVCfromMain(identifier: "doPayView") as! DoPayView
 //            let vc = WKWebViewController()
-            let str = UserDefaults.standard.string(forKey: "payURL")
+                let str = UserDefaults.standard.string(forKey: "payURL")
             print(str)
             //let urlStr = str?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
 //            vc.addReferer("https://gatewaytest.xianlaigame.com")
@@ -177,7 +181,10 @@ class PurchaseView: UIViewController, UICollectionViewDelegate, UICollectionView
             //vc.loadWebURLSring(urlStr)
 
             //            payVC.urlData = data
-            self.present(payVC, animated: true, completion: nil)
+                self.present(payVC, animated: true, completion: nil)
+            }else{
+                self.toastMSG(result: result)
+            }
         }
         payPopup.show(payContainer)
         payDelegate = payContainer.self

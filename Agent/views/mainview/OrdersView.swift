@@ -10,6 +10,8 @@ import UIKit
 import Moya
 import SwiftyJSON
 import SVProgressHUD
+import HooDatePicker
+import PopupController
 //import PagingMenuController
 //
 //private struct OrdersPageOptions: PagingMenuControllerCustomizable {
@@ -67,11 +69,15 @@ class OrdersView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tbOrderList: UITableView!
     @IBOutlet weak var segSort: UISegmentedControl!
     let cellTableIdentifier = "orderListCell"
-    var orderListData = [OrderListCellModel]()
-    
+//    var orderListData = [OrderListCellModel]()
+    var orderListData = [[String:Any]]()
+
     @IBOutlet weak var imgNoData: UIImageView!
     @IBOutlet weak var lblNoData: UILabel!
     @IBOutlet weak var btnSearch: UIButton!
+    
+    var payDelegate:PayOrderDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -93,8 +99,10 @@ class OrdersView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tbOrderList.register(xib, forCellReuseIdentifier: cellTableIdentifier)
         tbOrderList.rowHeight = 65
         
-        btnSearch.addTarget(self, action: #selector(searchByData(_:)), for: .touchUpInside)
+        btnSearch.addTarget(self, action: #selector(selectDate(_:)), for: .touchUpInside)
         requestData(idx: segSort.selectedSegmentIndex)
+        
+        autoFit()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -108,6 +116,14 @@ class OrdersView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func backToPrev(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
+    }
+
+    func selectDate(_ sender: UIButton){
+        let datePicker = HooDatePicker(superView: self.view)
+        datePicker?.delegate = self
+        datePicker?.locale = Locale(identifier: "zh_CN")
+        datePicker?.datePickerMode = HooDatePickerMode.yearAndMonth
+        datePicker?.show()
     }
 
     func searchByData(_ sender: UIButton) {
@@ -137,10 +153,10 @@ class OrdersView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func requestData(idx:Int){
-        let source = TokenSource()
-        source.token = getSavedToken()
-        let provider = MoyaProvider<NetworkManager>(plugins:[
-            AuthPlugin(tokenClosure: {return source.token})])
+//        let source = TokenSource()
+//        source.token = getSavedToken()
+//        let provider = MoyaProvider<NetworkManager>(plugins:[
+//            AuthPlugin(tokenClosure: {return source.token})])
         
         let type = String(idx + 1)
         request(.orderlist(year: "2017", month: "12", page: "1", type: type), success: handleData)
@@ -156,14 +172,25 @@ class OrdersView: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let data = result["data"]
             let dataArr = data["datas"].array
             for(_, element) in (dataArr?.enumerated())!{
-                orderListData.append(OrderListCellModel(id: element["id"].stringValue,
-                                                        orderNo: element["orderNo"].stringValue,
-                                                        createTime: element["createTime"].stringValue,
-                                                        cardNum: element["cardNum"].intValue,
-                                                        amount: element["amount"].floatValue,
-                                                        payWay: element["payWay"].stringValue,
-                                                        gameName: element["gameName"].stringValue,
-                                                        orderStatus: element["orderStatus"].stringValue))
+                var item:[String:Any] = [:]
+                item["id"] = element["id"].stringValue
+                item["orderNo"] = element["orderNo"].stringValue
+                item["createTime"] = element["createTime"].stringValue
+                item["cardNum"] = element["cardNum"].intValue
+                item["amount"] = element["amount"].floatValue
+                item["payWay"] = element["payWay"].stringValue
+                item["gameName"] = element["gameName"].stringValue
+                item["orderStatus"] = element["orderStatus"].stringValue
+                orderListData.append(item)
+                print(orderListData)
+//                orderListData.append(OrderListCellModel(id: element["id"].stringValue,
+//                                                        orderNo: element["orderNo"].stringValue,
+//                                                        createTime: element["createTime"].stringValue,
+//                                                        cardNum: element["cardNum"].intValue,
+//                                                        amount: element["amount"].floatValue,
+//                                                        payWay: element["payWay"].stringValue,
+//                                                        gameName: element["gameName"].stringValue,
+//                                                        orderStatus: element["orderStatus"].stringValue))
             }
 //            DispatchQueue.main.async(execute: { () -> Void in
                 tbOrderList.reloadData()
@@ -195,10 +222,15 @@ class OrdersView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellTableIdentifier, for: indexPath) as! OrderListCell
         let cellData = orderListData[indexPath.row]
-        cell.lblCardName.text = cellData.gameName! + String.init(format: "%d张", cellData.cardNum!)
-        cell.lblOrderNo.text = cellData.orderNo
-        cell.lblPrice.text = String.init(format: "%.2f元", cellData.amount!)
-        if cellData.orderStatus == "UP" {
+        let gameName = cellData["gameName"] as? String
+        let num = cellData["cardNum"] as? Int
+        cell.lblCardName.text = gameName! + String.init(format: "%d张", num!)
+        
+        cell.lblOrderNo.text = cellData["orderNo"] as? String
+        let amount = cellData["amount"] as! Float
+        cell.lblPrice.text = String.init(format: "%.2f元", amount)
+        let status = cellData["orderStatus"] as? String
+        if status == "UP" {
             cell.lblStatus.textColor = .orange
             cell.lblStatus.text = "待支付"
         } else {
@@ -208,40 +240,55 @@ class OrdersView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    func requestOrder(orderNo:String){
-//        let source = TokenSource()
-//        source.token = getSavedToken()
-//        let provider = MoyaProvider<NetworkManager>(plugins:[
-//            AuthPlugin(tokenClosure: {return source.token})])
-        request(.cancel(orderNo: orderNo), success: handleOrder)
-//        Network.request(.cancel(orderNo: orderNo), success: handleOrder, provider: provider)
-    }
-
-    func handleOrder(json:JSON)->(){
-        let result = json["result"]
-        let code = result["code"].intValue
-        if code == 200 {
-            print(result)
-            SVProgressHUD.showInfo(withStatus: "取消成功")
-            requestData(idx: segSort.selectedSegmentIndex)
-        }
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cellData = orderListData[indexPath.row]
         let type = segSort.selectedSegmentIndex
         if type == 0 {
-            let alertPay = UIAlertController(title: "确认", message: "取消"+cellData.orderNo!,
-                                             preferredStyle: .alert)
+            let payPopup = PopupController
+            .create(self)
+            .customize([.layout(.center)])
             
-            let okAction = UIAlertAction(title: "确定", style: .default, handler: {
-                action in
-                self.requestOrder(orderNo: cellData.orderNo!)
-            })
-            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-            alertPay.addAction(okAction)
-            alertPay.addAction(cancelAction)
-            self.present(alertPay, animated: true, completion: nil)
+            let payContainer = PaymentOpt.instance()
+            payContainer.closeHandler = { _ in
+                payPopup.dismiss()
+            }
+            payContainer.cancelHandler = { result in
+                payPopup.dismiss()
+                print(result)
+                let code = result["code"].intValue
+                if code == 200 {
+                    print(result)
+                    self.view.makeToast("取消成功")
+                    self.requestData(idx: self.segSort.selectedSegmentIndex)
+                }
+            }
+            payContainer.payHandler = { result in
+                print(result)
+                let code = result["code"].intValue
+                if code == 200 {
+                    let vc = loadVCfromMain(identifier: "doPayView") as! DoPayView
+                //            let vc = WKWebViewController()
+                    let dataStr = result["data"].stringValue
+                    UserDefaults.standard.set(dataStr, forKey: "payURL")
+                print(dataStr)
+                //let urlStr = str?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+                //            vc.addReferer("https://gatewaytest.xianlaigame.com")
+                //
+                //            vc.postWebURLSring(str, postData: nil)
+                
+                //vc.loadWebURLSring(urlStr)
+                
+                //            payVC.urlData = data
+                    self.present(vc, animated: true, completion: nil)
+                } else {
+                    self.toastMSG(result: result)
+                }
+            }
+            
+            payPopup.show(payContainer)
+            payDelegate = payContainer.self
+            let orderNo = cellData["orderNo"] as? String
+            payDelegate?.orderToPay(orderNo: orderNo!)
         }
     }
     /*
@@ -254,4 +301,18 @@ class OrdersView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     */
 
+}
+
+extension OrdersView : HooDatePickerDelegate{
+    func datePicker(_ dataPicker: HooDatePicker!, didSelectedDate date: Date!) {
+        print(date.description)
+        let calender = Calendar(identifier: .gregorian)
+        var comps:DateComponents = DateComponents()
+//        let units = Calendar.Component.month|Calendar.Component.day|Calendar.Component.year
+        comps = calender.dateComponents([.year, .month], from: date)
+        let year = comps.year
+        let month = comps.month
+        print(year)
+        print(month)
+    }
 }

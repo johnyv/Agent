@@ -83,8 +83,6 @@ class CustomerViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        autoFit()
-        
         vTopBg.backgroundColor = kRGBColorFromHex(rgbValue: 0x008ce6)
 //        let options = CustomerPageOptions()
 //        let customerPageController = PagingMenuController(options: options)
@@ -102,6 +100,8 @@ class CustomerViewController: UIViewController, UITableViewDelegate, UITableView
         let xib = UINib(nibName: "CustomerTableCell", bundle: nil)
         tableView.register(xib, forCellReuseIdentifier: cellTableIdentifier)
         tableView.rowHeight = 65
+        
+        autoFit()
     }
     override func viewDidAppear(_ animated: Bool) {
 //        let source = TokenSource()

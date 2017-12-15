@@ -8,7 +8,6 @@
 
 import UIKit
 import SwiftyJSON
-import ObjectMapper
 import Moya
 class AccountViewController: UIViewController {
 
@@ -21,13 +20,13 @@ class AccountViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        autoFit()
         btnLogin.layer.cornerRadius = 3
 
         btnSMSLogin.layer.borderWidth = 1
         btnSMSLogin.layer.borderColor = kRGBColorFromHex(rgbValue: 0x008ce6).cgColor
         btnSMSLogin.layer.cornerRadius = 3
         btnSMSLogin.addTarget(self, action: #selector(self.backToPrev(_:)), for: .touchUpInside)
+        autoFit()
     }
 
     override func didReceiveMemoryWarning() {

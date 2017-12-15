@@ -26,7 +26,6 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        autoFit()
         let appdelegate = UIApplication.shared.delegate as! AppDelegate
         appdelegate.window?.rootViewController = self
 //        imgLogo.snp.makeConstraints({(make) -> Void in
@@ -42,6 +41,8 @@ class LoginViewController: UIViewController {
         btnWeixin.setTitleAlign(position: .bottom)
         btnWeixin.addTarget(self, action: #selector(self.wxLogin(_:)), for: .touchUpInside)
         btnAccount.setTitleAlign(position: .bottom)
+        
+        autoFit()
 }
 
     override func didReceiveMemoryWarning() {

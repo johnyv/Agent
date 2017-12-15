@@ -24,6 +24,7 @@ class NoticeDetailView: UIViewController {
         request(.noticeDetail(noticeId: noticeId!), success: handleNotice)
         
         webView.scrollView.bounces = false
+        autoFit()
     }
 
     override func didReceiveMemoryWarning() {

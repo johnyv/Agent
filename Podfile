@@ -3,7 +3,7 @@ use_frameworks!
 
 target 'Agent' do
 	platform :ios, '8.0'
-    pod 'WechatOpenSDK'
+	pod 'WechatOpenSDK'
 	pod 'MJRefresh'
 	pod 'SVProgressHUD'
 	pod 'SDWebImage'
@@ -15,9 +15,9 @@ target 'Agent' do
 	pod 'PagingMenuController'
 	pod 'XLPagerTabStrip', '~> 8.0'
 	pod 'IQKeyboardManagerSwift'
-	pod 'PopupDialog', '~> 0.5.4'
 	pod 'PopupController'
-	pod 'CVCalendar', '~> 1.5.0'
+	pod 'HooDatePicker'
+	pod 'Toast-Swift'
 end
 
 post_install do |installer|

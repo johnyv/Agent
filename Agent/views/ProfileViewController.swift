@@ -33,7 +33,6 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        autoFit()
         // Uncomment the following line to preserve selection between presentations
         self.clearsSelectionOnViewWillAppear = false
 
@@ -64,6 +63,8 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
         tableView.bounces = false
 
         request(.myInfo, success: handleInfo)
+
+        autoFit()
     }
 
     override func didReceiveMemoryWarning() {

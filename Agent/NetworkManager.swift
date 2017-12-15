@@ -362,6 +362,12 @@ extension NetworkManager: AuthorizedTargetType{
             }
 
             return .requestParameters(parameters: data, encoding: DataEncoding.default)
+        case .playerSearch(let searchId),
+                 .agentSearch(let searchId):
+            var data:[String:Any] = [:]
+            data["searchId"] = searchId
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
+            
         // 支付
         case .orderlist(let year, let month, let page, let type):
             var data:[String:Any] = [:]
@@ -372,7 +378,8 @@ extension NetworkManager: AuthorizedTargetType{
             data["type"] = type
             
             return .requestParameters(parameters: data, encoding: DataEncoding.default)
-        case .cancel(let orderNo):
+        case .cancel(let orderNo),
+             .unpaidToPay(let orderNo):
             var data:[String:Any] = [:]
             
             data["orderNo"] = orderNo
