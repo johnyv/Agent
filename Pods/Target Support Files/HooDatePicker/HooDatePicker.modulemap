@@ -1,0 +1,6 @@
+framework module HooDatePicker {
+  umbrella header "HooDatePicker-umbrella.h"
+
+  export *
+  module * { export * }
+}
