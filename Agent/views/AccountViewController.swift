@@ -26,6 +26,10 @@ class AccountViewController: UIViewController {
         btnSMSLogin.layer.borderColor = kRGBColorFromHex(rgbValue: 0x008ce6).cgColor
         btnSMSLogin.layer.cornerRadius = 3
         btnSMSLogin.addTarget(self, action: #selector(self.backToPrev(_:)), for: .touchUpInside)
+        
+//        NotificationCenter.default.addObserver(self, selector: #selector(), name: Notification.Name.UITextFieldTextDidChange, object: tfMobile)
+        tfMobile.keyboardType = .numberPad
+        underLine(v: tfPwd)
         autoFit()
     }
 
@@ -82,6 +86,7 @@ class AccountViewController: UIViewController {
 //        let forgotVC = loadVCfromLogin(identifier: "forgotViewController") as! ForgotViewController
 //        self.navigationController?.pushViewController(forgotVC, animated: true)
     }
+    
     /*
     // MARK: - Navigation
 

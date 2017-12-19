@@ -16,7 +16,6 @@ class DataEncoding: ParameterEncoding {
         var request = try urlRequest.asURLRequest()
         
         let requestBody = RequestBody(data: parameters!)
-        print(requestBody.body)
 
         let data:NSData = try JSONSerialization.data(withJSONObject: requestBody.body, options: []) as NSData
         

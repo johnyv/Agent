@@ -87,6 +87,7 @@ class RoomCardViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.register(CustomerTableCell.self, forCellReuseIdentifier: cellTableIdentifier)
         let xib = UINib(nibName: "RoomCardDetailCell", bundle: nil)
         tableView.register(xib, forCellReuseIdentifier: cellTableIdentifier)
+        tableView.tableFooterView = UIView()
         
         tbHeader1.isHidden = true
         tbHeader2.isHidden = true

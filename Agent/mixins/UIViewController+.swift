@@ -100,6 +100,9 @@ extension UIViewController{
     }
     
     private func fitRadio(v:UIView, radio:CGFloat){
+        if v.isKind(of: UINavigationBar.self) {
+            return
+        }
         v.autoresizesSubviews = true
         v.frame.origin.x *= radio
         v.frame.origin.y *= radio
@@ -107,6 +110,30 @@ extension UIViewController{
         v.frame.size.height *= radio
     }
 
+    func underLine(v:UIView){
+        let line = UIView(frame: CGRect(x: -UIScreen.main.bounds.width/2, y: v.frame.origin.y + v.frame.height, width: UIScreen.main.bounds.width*0.9, height: 1))
+        view.addSubview(line)
+    }
+    
+    func addNavigationBar() -> UINavigationBar{
+        var navigationBar:UINavigationBar?
+        
+        let width = UIScreen.main.bounds.width
+        navigationBar = UINavigationBar(frame: CGRect(x: 0, y: 20, width: width, height: 44))
+        
+        let navigationItem = UINavigationItem()
+        let leftButton = UIBarButtonItem(image: UIImage(named: "ico_back"), style: .plain, target: self, action: #selector(onBack(_:)))
+        navigationItem.setLeftBarButton(leftButton, animated: true)
+        navigationBar?.pushItem(navigationItem, animated: true)
+        
+        view.addSubview(navigationBar!)
+        
+        return navigationBar!
+    }
+    
+    func onBack(_ sender:UIBarButtonItem){
+        dismiss(animated: true, completion: nil)
+    }
 //    func setAgent(data:JSON)->(){
 //        var agent:[String:Any] = [:]
 //

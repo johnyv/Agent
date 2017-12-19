@@ -41,23 +41,6 @@ import UIKit
         }
     }
     
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        
-//        sendButton = UIButton()
-//        sendButton.frame = CGRect(x: 40, y: 100, width: view.bounds.width - 80, height: 40)
-//        sendButton.backgroundColor = UIColor.red
-//        sendButton.setTitleColor(UIColor.white, for: .normal)
-//        sendButton.setTitle("获取验证码", for: .normal)
-//        sendButton.addTarget(self, action: #selector(ViewController.sendButtonClick(_:)), for: .touchUpInside)
-//        
-//        self.view.addSubview(sendButton)
-//    }
-    
-//    func sendButtonClick(_ sender: UIButton) {
-//        isCounting = true
-//    }
-    
     func updateTime(_ timer: Timer) {
         remainingSeconds -= 1
     }

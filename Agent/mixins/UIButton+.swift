@@ -46,4 +46,21 @@ extension UIButton{
         self.imageEdgeInsets = imageInsets
     }
     
+    @objc func setBorder(type:Int){
+        let clr = UIColor(red: 0, green: 140/255, blue: 230/255, alpha: 1.0)
+        self.layer.cornerRadius = 5
+        switch type {
+        case 0:
+            self.backgroundColor = clr
+            self.layer.borderWidth = 0
+            self.titleLabel!.textColor = .white
+        case 1:
+            self.backgroundColor = .clear
+            self.layer.borderWidth = 1
+            self.layer.borderColor = clr.cgColor
+            self.titleLabel!.textColor = clr
+        default:
+            break
+        }
+    }
 }

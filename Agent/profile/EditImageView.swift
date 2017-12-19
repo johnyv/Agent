@@ -23,6 +23,9 @@ class EditImageView: UIViewController, UIImagePickerControllerDelegate, UINaviga
         btnChoose.addTarget(self, action: #selector(self.doPickfromAlbum(_:)), for: .touchUpInside)
         btnCamera.addTarget(self, action: #selector(self.doPickfromCamera(_:)), for: .touchUpInside)
         
+        btnChoose.setBorder(type: 1)
+        btnCamera.setBorder(type: 0)
+        
         autoFit()
     }
 
@@ -68,11 +71,12 @@ class EditImageView: UIViewController, UIImagePickerControllerDelegate, UINaviga
         var image:UIImage!
         image = info[UIImagePickerControllerOriginalImage] as! UIImage
 //        imgHead.image = image
+        
+        
         let fileManager = FileManager.default
         let rootPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
         let filePath = "\(rootPath)/HI.png"
-        let imageData = UIImagePNGRepresentation(image)
-        fileManager.createFile(atPath: filePath, contents: imageData, attributes: nil)
+        
         func handleResult(json:JSON)->(){
             let result = json["result"]
             let code = result["code"].intValue
@@ -82,21 +86,27 @@ class EditImageView: UIViewController, UIImagePickerControllerDelegate, UINaviga
                 let hiURL = URL(string: newHI)
                 imgHead.sd_setImage(with: hiURL, completed: nil)
             }else{
-                alertResult(code: code)
+                toastMSG(result: result)
+                //alertResult(code: code)
             }
         }
 
-        if fileManager.fileExists(atPath: filePath) {
-            let imageURL = URL(fileURLWithPath: filePath)
-            request(.upload(file: imageURL), success: handleResult)
-        }
+//        DispatchQueue.main.async(execute: { () -> Void in
+            let imageData = UIImagePNGRepresentation(image)
+            fileManager.createFile(atPath: filePath, contents: imageData, attributes: nil)
+
+            if fileManager.fileExists(atPath: filePath) {
+                let fileURL = URL(fileURLWithPath: filePath)
+                let fileData = try! Data(contentsOf: fileURL)
+                request(.upload(file: fileData), success: handleResult)
+            }
+//        })
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
 
     }
-    
     /*
     // MARK: - Navigation
 

@@ -114,3 +114,4 @@ func loadVCfromMain(identifier:String)->(UIViewController){
     let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: identifier)
     return vc
 }
+

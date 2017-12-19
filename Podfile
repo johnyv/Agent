@@ -18,6 +18,7 @@ target 'Agent' do
 	pod 'PopupController'
 	pod 'HooDatePicker'
 	pod 'Toast-Swift'
+	pod 'TextFieldCounter'
 end
 
 post_install do |installer|

@@ -100,7 +100,7 @@ class CustomerViewController: UIViewController, UITableViewDelegate, UITableView
         let xib = UINib(nibName: "CustomerTableCell", bundle: nil)
         tableView.register(xib, forCellReuseIdentifier: cellTableIdentifier)
         tableView.rowHeight = 65
-        
+        tableView.tableFooterView = UIView()
         autoFit()
     }
     override func viewDidAppear(_ animated: Bool) {

@@ -41,7 +41,7 @@ enum NetworkManager{
     case bindSMS(tel:String, smsType:Int) //22获取绑定安全手机验证码
     case verificationCode(smsType:Int) //23修改安全手机验证码
     case agentSMS(tel:String, smsType:Int) //24开通代理手机验证码
-    case upload(file:URL)//25头像上传
+    case upload(file:Data)//25头像上传
     //编辑安全手机
     case inviteGet //邀请玩家
     case inviteList(page:Int, pageSize:Int) //查询邀请玩家列表
@@ -478,12 +478,14 @@ extension NetworkManager: AuthorizedTargetType{
             return .requestParameters(parameters: data, encoding: DataEncoding.default)
             
         case .upload(let file):
-            let str = "file"
-            let strData = str.data(using: .utf8)
-            let formData1 = MultipartFormData(provider: .data(strData!), name: "file")
-            let fileData = try! Data(contentsOf: file)
-            let formData2 = MultipartFormData(provider: .data(fileData), name: "file", fileName: "h.png", mimeType: "image/png")
-            return .uploadMultipart([formData1,formData2])
+            var data:[String:Any] = [:]
+            data["file"] = file
+//            let param = ["file":"file"]
+//            let fileData = try! Data(contentsOf: file)
+//            let formData2 = MultipartFormData(provider: .data(fileData), name: "file", fileName: "headImg.png", mimeType: "image/png")
+//            return .uploadCompositeMultipart([formData2], urlParameters: param)
+            return .requestParameters(parameters: data, encoding: ImageEncoding.default)
+            
         default:
             let params:[String:Any] = [:]
             return .requestParameters(parameters: params, encoding: DataEncoding.default)

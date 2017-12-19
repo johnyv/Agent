@@ -31,7 +31,7 @@ class LoginViewController: UIViewController {
 //        imgLogo.snp.makeConstraints({(make) -> Void in
 //            make.top.equalTo(60)
 //            make.centerX.equalTo(self.view)})
-        btnLogin.layer.cornerRadius = 3
+        btnLogin.layer.cornerRadius = 5
         btnLogin.layer.masksToBounds = true
 //        btnLogin.snp.makeConstraints({(make) -> Void in
 //            make.top.equalTo(450)

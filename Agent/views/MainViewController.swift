@@ -11,7 +11,7 @@ import SwiftyJSON
 import Moya
 import SDWebImage
 
-class MainViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class MainViewController: UIViewController {
     
 //    let tools = [
 //        ["ico_club","俱乐部管理","这里是说明文案"],
@@ -31,8 +31,10 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
     @IBOutlet weak var banner: BannerView!
     @IBOutlet weak var clvTools: UICollectionView!
     @IBOutlet weak var lblNotice: UILabel!
+    @IBOutlet weak var vNotice: UIView!
     
     var imgURLs = [AnyObject]()
+    var notice = [String:Any]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,6 +62,21 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
         clvTools.setCollectionViewLayout(layOut, animated: false)
         
         vTopBG.backgroundColor = kRGBColorFromHex(rgbValue: 0x008ce6)
+        vTopBG.frame.origin.y = self.navMain.frame.height
+        vTopBG.frame.size.height = vNotice.frame.origin.y - self.navMain.frame.height
+        let tapNotice = UITapGestureRecognizer(target: self, action: #selector(showNotice(_:)))
+        lblNotice.isUserInteractionEnabled = true
+        lblNotice.addGestureRecognizer(tapNotice)
+
+        let div1 = UIView(frame: CGRect(x: 0, y: banner.frame.origin.y, width: UIScreen.main.bounds.width, height: 5))
+        div1.backgroundColor = UIColor.lightGray
+        view.addSubview(div1)
+        banner.frame.origin.y += 5
+        
+        let div2 = UIView(frame: CGRect(x: 0, y: banner.frame.origin.y + banner.frame.height, width: UIScreen.main.bounds.width, height: 5))
+        div2.backgroundColor = UIColor.lightGray
+        view.addSubview(div2)
+
 //        vTopBG.snp.makeConstraints({(make) -> Void in
 //            make.top.equalTo(450)
 //            make.width.equalTo(self.view)
@@ -81,7 +98,6 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
         // Dispose of any resources that can be recreated.
     }
     
-
     @IBAction func pushSalesView(_ sender: UIButton) {
 //        let appdelegate = UIApplication.shared.delegate as! AppDelegate
 //        appdelegate.mainNavi?.pushSalesView()
@@ -99,42 +115,11 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
         alertResult(code: 99)
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let tools = authorityList.getToolsByAuthority()
-        return tools.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellToolIdentifier, for: indexPath) as! ToolViewCell
-        let tools = authorityList.getToolsByAuthority()
-        
-        let idx = indexPath.item % 2
-        if idx != 0 {
-            cell.div.isHidden = true
-        }else{
-            cell.div.isHidden = false
-        }
-        cell.imgIco.image = UIImage(named: tools[indexPath.item][0])
-        cell.lblTitle.text = tools[indexPath.item][1]
-        cell.lblDesc.text = tools[indexPath.item][2]
-//        cell.imgIco.image = UIImage()
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let tools = authorityList.getToolsByAuthority()
-        let itemName = tools[indexPath.item][0]
-        switch itemName {
-        case "ico_agent_manager":
-            let vc = loadVCfromMain(identifier: "myAgentAdmin") as! MyAgentAdmin
-            present(vc, animated: true, completion: nil)
-        case "ico_notice_list":
-            let vc = loadVCfromMain(identifier: "noticeListView") as! NoticeListView
-            present(vc, animated: true, completion: nil)
-
-        default:
-            alertResult(code: 99)
-        }
+    func showNotice(_ recognizer:UITapGestureRecognizer){
+        let vc = loadVCfromMain(identifier: "noticeDetailView") as! NoticeDetailView
+        let id = notice["id"] as! Int
+        vc.noticeId = id
+        present(vc, animated: true, completion: nil)
     }
     
     func handleNotice(json:JSON)->(){
@@ -143,6 +128,11 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let code = result["code"].intValue
         if code == 200 {
             let data = result["data"]
+
+            notice["id"] = data["id"].intValue
+            notice["createTime"] = data["createTime"].stringValue
+            notice["title"] = data["title"].stringValue
+            
             let title = data["title"].stringValue
             lblNotice.text = title
         }
@@ -172,5 +162,59 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
         // Pass the selected object to the new view controller.
     }
     */
+}
 
+extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource{
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let tools = authorityList.getToolsByAuthority()
+        return tools.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellToolIdentifier, for: indexPath) as! ToolViewCell
+        let tools = authorityList.getToolsByAuthority()
+        
+        let w = collectionView.frame.width * 0.9
+        let x = (collectionView.frame.width - w) / 2
+        let div = UIView(frame: CGRect(x: x, y: 0, width: w, height: 1))
+        div.backgroundColor = UIColor.lightGray
+        collectionView.addSubview(div)
+        
+        let idx = indexPath.item % 2
+        if idx != 0 {
+            cell.div.isHidden = true
+        }else{
+            cell.div.isHidden = false
+        }
+        let line:Int = indexPath.item / 2
+        if line > 0 {
+            //            let w = collectionView.frame.width * 0.8
+            //            let x = (collectionView.frame.width - w) / 2
+            let div = UIView(frame: CGRect(x: x, y: CGFloat(line) * cell.frame.height, width: w, height: 1))
+            div.backgroundColor = UIColor.lightGray
+            collectionView.addSubview(div)
+        }
+        cell.imgIco.image = UIImage(named: tools[indexPath.item][0])
+        cell.lblTitle.text = tools[indexPath.item][1]
+        cell.lblDesc.text = tools[indexPath.item][2]
+        //        cell.imgIco.image = UIImage()
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let tools = authorityList.getToolsByAuthority()
+        let itemName = tools[indexPath.item][0]
+        switch itemName {
+        case "ico_agent_manager":
+            let vc = loadVCfromMain(identifier: "myAgentAdmin") as! MyAgentAdmin
+            present(vc, animated: true, completion: nil)
+        case "ico_notice_list":
+            let vc = loadVCfromMain(identifier: "noticeListView") as! NoticeListView
+            present(vc, animated: true, completion: nil)
+            
+        default:
+            alertResult(code: 99)
+        }
+    }
 }
