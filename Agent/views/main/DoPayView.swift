@@ -15,35 +15,25 @@ class DoPayView: UIViewController, WKUIDelegate, WKNavigationDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-//        webView.delegate = self
+        let center = NotificationCenter.default
+        let mainQueue = OperationQueue.main
+        var token: NSObjectProtocol?
+        token = center.addObserver(forName: NSNotification.Name(rawValue: "receiveWeixinSuccess"), object: nil, queue: mainQueue) { (note) in
+            print("receiveWeixinSuccess!")
+            self.dismiss(animated: true, completion: nil)
+            center.removeObserver(token!)
+        }
         
-//        let str = UserDefaults.standard.string(forKey: "payURL")
-//        print(str)
-//        let urlStr = str?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-//        let url = URL(string: urlStr!)
-//        var request = URLRequest(url: url!)
-//        //var request = NSMutableURLRequest(url: url!)
-//        request.addValue("https://gatewaytest.xianlaigame.com ", forHTTPHeaderField: "Referer")
-//        webView.loadRequest(request)
-//        
-//        print(urlData)
         let str = UserDefaults.standard.string(forKey: "payURL")
         
-        print(str)
         let urlStr = str?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         let url = URL(string: urlStr!)
         var request = URLRequest(url: url!, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10)
-        //var request = NSMutableURLRequest(url: url!)
-        //request.httpMethod = "GET"
         view.addSubview(webView)
-//        webView.load(<#T##data: Data##Data#>, mimeType: <#T##String#>, characterEncodingName: <#T##String#>, baseURL: <#T##URL#>)
         
-        
-        
-        request.setValue("https://gatewaytest.xianlaigame.com", forHTTPHeaderField: "Referer")
+        request.setValue("gatewaytest.xianlaigame.com://", forHTTPHeaderField: "Referer")
         webView.load(request)
-        //webView.reload()
+        
         autoFit()
     }
 
@@ -53,17 +43,14 @@ class DoPayView: UIViewController, WKUIDelegate, WKNavigationDelegate{
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        //self.webView(webview, decidePolicyFor: navigationAction, decisionHandler: decisionHandler)
         
-        let requestURL = navigationAction.request
-        print(requestURL.allHTTPHeaderFields)
-//        switch navigationAction.navigationType {
-//        case .linkActivated:
-//            code
-//        default:
-//            <#code#>
-//        }
-        decisionHandler(.allow)
+        let requestURL = navigationAction.request.url
+        if requestURL?.scheme == "weixin" {
+            decisionHandler(.cancel)
+            UIApplication.shared.openURL(requestURL!)
+        } else {
+            decisionHandler(.allow)
+        }
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
