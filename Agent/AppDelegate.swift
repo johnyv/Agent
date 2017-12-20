@@ -25,12 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         IQKeyboardManager.sharedManager().enable = true
         
-        //UIButton.appearance().layer.cornerRadius = 4
-        
         let nav = UINavigationBar.appearance()
-//        nav.barTintColor = kRGBColorFromHex(rgbValue: 0x008ce6)
+        nav.barTintColor = UIColor(hex: "008ce6")
         nav.tintColor = UIColor.white
-        nav.backgroundColor = kRGBColorFromHex(rgbValue: 0x008ce6)
+        nav.backgroundColor = UIColor(hex: "008ce6")
         nav.titleTextAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 18.0),NSForegroundColorAttributeName: UIColor.white]
         nav.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         nav.shadowImage = UIImage()
@@ -116,13 +114,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         topViewController?.dismiss(animated: false, completion: nil)
         
-        let vc = loadVCfromLogin(identifier: "loginMain") as? LoginViewController
-        window?.rootViewController?.present(vc!, animated: true, completion: nil)
+        let rootVc = loadVCfromLogin(identifier: "loginMain") as? LoginViewController
+        window?.rootViewController = rootVc
     }
 
-    func login() -> () {
-//        window?.makeKeyAndVisible()
-
+    func enterApp() -> () {
         var topViewController:UIViewController?
         topViewController = (UIApplication.shared.keyWindow?.rootViewController)!
         while ((topViewController?.presentedViewController) != nil) {
@@ -130,8 +126,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         topViewController?.dismiss(animated: false, completion: nil)
         
-        let vc = loadVCfromMain(identifier: "mainMenu") as? MenuViewController
-        window?.rootViewController?.present(vc!, animated: true, completion: nil)
+        let rootVc = loadVCfromMain(identifier: "mainMenu") as? MenuViewController
+        window?.rootViewController = rootVc
     }
 }
 

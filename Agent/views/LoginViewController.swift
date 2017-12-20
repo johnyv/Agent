@@ -99,7 +99,7 @@ class LoginViewController: UIViewController {
 //                let authority = agent["authorityList"].array
 //                print(authority)
                 //UserDefaults.standard.set(authority, forKey: "Array")
-                appdelegate.login()
+                appdelegate.enterApp()
             }else{
                 alertResult(code: code)
 //                let alertController = UIAlertController(title: "系统提示",
@@ -140,8 +140,12 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func accountLogin(_ sender: UIButton) {
-        let vcAccount = loadVCfromLogin(identifier: "accountController") as! AccountController
-        present(vcAccount, animated: true, completion: nil)
+//        let vcAccount = loadVCfromLogin(identifier: "accountController") as! AccountController
+        let vc = AccountViewController()
+        let navAccount = UINavigationController(rootViewController: vc)
+        present(navAccount, animated: true, completion: nil)
+//        let appdelegate = UIApplication.shared.delegate as! AppDelegate
+//        appdelegate.window?.rootViewController = navAccount
     }
     
     /*

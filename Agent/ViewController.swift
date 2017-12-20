@@ -32,15 +32,15 @@ class ViewController: UIViewController {
                 setAuthority(agent:agent)
 
                 //进入主页
-//                let vc = loadVCfromMain(identifier: "mainMenu") as? MenuViewController
+                let vc = loadVCfromMain(identifier: "mainMenu") as? MenuViewController
 //                present(vc!, animated: true, completion: nil)
-                delegate.login()
+                delegate.window?.rootViewController = vc
                 
             }else{
                 //token失败，重新登录
-//                let vc = loadVCfromLogin(identifier: "loginMain") as? LoginViewController
+                let vc = loadVCfromLogin(identifier: "loginMain") as? LoginViewController
 //                present(vc!, animated: true, completion: nil)
-                delegate.reLogin()
+                delegate.window?.rootViewController = vc
             }
         }
         request(.refresh, success: handleResult)

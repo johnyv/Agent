@@ -40,6 +40,7 @@
 		52396BFA1FDE7E7400CEC050 /* NoticeListCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52396BF91FDE7E7400CEC050 /* NoticeListCellModel.swift */; };
 		52396BFC1FDE993900CEC050 /* MyAgentCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52396BFB1FDE993900CEC050 /* MyAgentCellModel.swift */; };
 		523B91501FEA03BF0045523A /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523B914F1FEA03BF0045523A /* UIColor+.swift */; };
+		523B91521FEA5F9C0045523A /* MobilephoneField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523B91511FEA5F9C0045523A /* MobilephoneField.swift */; };
 		523C23B11FDA68D0006FD555 /* Authority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523C23B01FDA68D0006FD555 /* Authority.swift */; };
 		523C23B41FDA7F7A006FD555 /* EditImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523C23B31FDA7F7A006FD555 /* EditImageView.swift */; };
 		523C23B61FDA824B006FD555 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523C23B51FDA824B006FD555 /* AboutView.swift */; };
@@ -163,6 +164,7 @@
 		52396BF91FDE7E7400CEC050 /* NoticeListCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoticeListCellModel.swift; path = model/NoticeListCellModel.swift; sourceTree = "<group>"; };
 		52396BFB1FDE993900CEC050 /* MyAgentCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyAgentCellModel.swift; path = model/MyAgentCellModel.swift; sourceTree = "<group>"; };
 		523B914F1FEA03BF0045523A /* UIColor+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+.swift"; path = "mixins/UIColor+.swift"; sourceTree = "<group>"; };
+		523B91511FEA5F9C0045523A /* MobilephoneField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MobilephoneField.swift; path = mixins/MobilephoneField.swift; sourceTree = "<group>"; };
 		523C23B01FDA68D0006FD555 /* Authority.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Authority.swift; path = model/Authority.swift; sourceTree = "<group>"; };
 		523C23B31FDA7F7A006FD555 /* EditImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditImageView.swift; sourceTree = "<group>"; };
 		523C23B51FDA824B006FD555 /* AboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
@@ -359,6 +361,7 @@
 				5266DA8F1FD8ED760025F23A /* UIViewController+.swift */,
 				52324E091FE7AB7800E2EEE1 /* UITextField+.swift */,
 				523B914F1FEA03BF0045523A /* UIColor+.swift */,
+				523B91511FEA5F9C0045523A /* MobilephoneField.swift */,
 			);
 			name = mixins;
 			sourceTree = "<group>";
@@ -862,6 +865,7 @@
 				5232C63F1FE1045E0004CF72 /* RoomCardDetailCell.swift in Sources */,
 				522DD3931FCE4EA200AE9D62 /* CardDepleteView.swift in Sources */,
 				522DD3951FCE4EFE00AE9D62 /* CardBuyView.swift in Sources */,
+				523B91521FEA5F9C0045523A /* MobilephoneField.swift in Sources */,
 				52DA9CDB1FE8E6CF007D15B1 /* ImageEncoding.swift in Sources */,
 				5232C63D1FE1045E0004CF72 /* ProfileOptionCell.swift in Sources */,
 				5232C6501FE1309D0004CF72 /* WKWebViewController.m in Sources */,

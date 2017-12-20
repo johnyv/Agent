@@ -159,6 +159,11 @@ extension UIViewController{
         return navigationBar!
     }
     
+    func addBackButtonToController(){
+        let leftButton = UIBarButtonItem(image: UIImage(named: "ico_back"), style: .plain, target: self, action: #selector(onBack(_:)))
+        navigationItem.setLeftBarButton(leftButton, animated: true)
+    }
+    
     func addLabel(title:String) -> UILabel
     {
         let label = UILabel()
@@ -171,25 +176,27 @@ extension UIViewController{
         return label
     }
     
-    func addTextField(value:String, action:Selector, sender:UITextFieldDelegate) -> UITextField
+    func addTextField(placeholder:String) -> UITextField
     {
         let textField = UITextField(frame:defaultFrame())
         textField.backgroundColor = UIColor.clear
         textField.textColor = UIColor.black
-        textField.text = value
+        textField.font = UIFont.systemFont(ofSize: 16)
+        textField.placeholder = placeholder
         textField.borderStyle = .none
-        textField.adjustsFontSizeToFitWidth = true
-        textField.delegate = sender
+        textField.textAlignment = .center
+        view.addSubview(textField)
         return textField
     }
     
     func addButton(title:String, action:Selector) -> UIButton {
         let button = UIButton(frame:defaultFrame())
         button.backgroundColor = UIColor.cyan
+        button.tintColor = UIColor.darkText
         button.setTitle(title, for:.normal)
-        button.titleLabel!.textColor = UIColor.white
-        button.titleLabel!.font = UIFont.systemFont(ofSize: 14)
+        button.titleLabel!.font = UIFont.systemFont(ofSize: 18)
         button.addTarget(self, action:action, for:.touchUpInside)
+        view.addSubview(button)
         return button
     }
 

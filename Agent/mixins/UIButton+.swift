@@ -47,18 +47,18 @@ extension UIButton{
     }
     
     @objc func setBorder(type:Int){
-        let clr = UIColor(red: 0, green: 140/255, blue: 230/255, alpha: 1.0)
+        let clr = UIColor(hex: "008ce6")
         self.layer.cornerRadius = 5
         switch type {
         case 0:
             self.backgroundColor = clr
             self.layer.borderWidth = 0
-            self.titleLabel!.textColor = .white
+            setTitleColor(.white, for: .normal)
         case 1:
-            self.backgroundColor = .clear
+            self.backgroundColor = .white
             self.layer.borderWidth = 1
             self.layer.borderColor = clr.cgColor
-            self.titleLabel!.textColor = clr
+            setTitleColor(clr, for: .normal)
         default:
             break
         }
