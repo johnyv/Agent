@@ -44,28 +44,6 @@ class DoPayView: UIViewController, WKUIDelegate, WKNavigationDelegate{
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
-<<<<<<< HEAD
-//        let requestURL = navigationAction.request
-//        print(requestURL.allHTTPHeaderFields)
-//        switch navigationAction.navigationType {
-//        case .linkActivated:
-//            code
-//        default:
-//            <#code#>
-//        }
-        
-        let requestURL = navigationAction.request.url
-        if requestURL?.scheme == "weixin" {
-            decisionHandler(.cancel)
-            let codeUrlStr = requestURL?.absoluteString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-            let newUrl = URL(string: codeUrlStr!)
-            let newRequest = URLRequest(url: newUrl!, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10)
-            //            self.webView.load(newRequest)
-            UIApplication.shared.openURL(newUrl!)
-        }
-        
-        decisionHandler(.allow)
-=======
         let requestURL = navigationAction.request.url
         if requestURL?.scheme == "weixin" {
             decisionHandler(.cancel)
@@ -73,7 +51,6 @@ class DoPayView: UIViewController, WKUIDelegate, WKNavigationDelegate{
         } else {
             decisionHandler(.allow)
         }
->>>>>>> e52c7d21daa5233b449161634596b71aa412bb96
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
