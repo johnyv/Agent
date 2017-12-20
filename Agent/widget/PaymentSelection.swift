@@ -12,7 +12,7 @@ import SwiftyJSON
 import SVProgressHUD
 
 protocol PaymentDelegate {
-    func dataForPay(data:PurchaseCellModel)
+    func dataForPay(data:[String:Any])
 }
 
 class PaymentSelection: UIViewController, PopupContentViewController, PaymentDelegate  {
@@ -20,7 +20,7 @@ class PaymentSelection: UIViewController, PopupContentViewController, PaymentDel
     var closeHandler:(()->Void)?
     var finishHandler:((_ result:JSON)->Void)?
     
-    var payData:PurchaseCellModel?
+    var payData = [String:Any]()
     
     @IBOutlet weak var btnClose: UIButton!
     @IBOutlet weak var lblAmount: UILabel!
@@ -59,16 +59,16 @@ class PaymentSelection: UIViewController, PopupContentViewController, PaymentDel
     }
     
     func pay(_ sender: UIButton){
-        let goodsId = payData?.goodsId
-        let activityId = payData?.activityId
+        let goodsId = payData["goodsId"] as! Int
+        let activityId = payData["activityId"] as! Int
         
         switch sender {
         case btnWeixin:
-            request(.buycardGood(payTypeInchannel: 4, channel: 2, paySource: 4, goodId: goodsId!, activityId: activityId!), success: handlePay)
+            request(.buycardGood(payTypeInchannel: 4, channel: 2, paySource: 4, goodId: goodsId, activityId: activityId), success: handlePay)
             closeHandler!()
             
         case btnAlipay:
-            request(.buycardGood(payTypeInchannel: 1, channel: 2, paySource: 9, goodId: goodsId!, activityId: activityId!), success: handlePay)
+            request(.buycardGood(payTypeInchannel: 1, channel: 2, paySource: 9, goodId: goodsId, activityId: activityId), success: handlePay)
             closeHandler!()
             
         case btnClose:
@@ -79,14 +79,14 @@ class PaymentSelection: UIViewController, PopupContentViewController, PaymentDel
         }
     }
     
-    func dataForPay(data: PurchaseCellModel) {
+    func dataForPay(data: [String:Any]) {
         self.payData = data
         let agent = getAgent()
         let goodsName = agent["gameName"] as! String
-        let goodsId = String.init(format: "ID:%d ", data.goodsId!)
-        let cardNum = String.init(format: "%d张", data.cardNum!)
+        let goodsId = String.init(format: "ID:%d ", data["goodsId"] as! Int)
+        let cardNum = String.init(format: "%d张", data["cardNum"] as! Int)
         lblOrderNo.text = goodsId + goodsName + cardNum
-        lblAmount.text = String.init(format: "¥%.2f", data.price!)
+        lblAmount.text = String.init(format: "¥%.2f", data["price"] as! Float)
     }
     /*
     // MARK: - Navigation

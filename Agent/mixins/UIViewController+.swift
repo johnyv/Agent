@@ -110,18 +110,46 @@ extension UIViewController{
         v.frame.size.height *= radio
     }
 
-    func underLine(v:UIView){
-        let line = UIView(frame: CGRect(x: -UIScreen.main.bounds.width/2, y: v.frame.origin.y + v.frame.height, width: UIScreen.main.bounds.width*0.9, height: 1))
-        view.addSubview(line)
+    private func defaultX() ->CGFloat {
+        let width = UIScreen.main.bounds.width * 0.9
+        let x = (UIScreen.main.bounds.width - width) / 2
+        return x
     }
     
-    func addNavigationBar() -> UINavigationBar{
+    private func defaultFrame() -> CGRect
+    {
+        let width = UIScreen.main.bounds.width * 0.9
+        let x = (UIScreen.main.bounds.width - width) / 2
+        let defaultFrame = CGRect(x: x, y: 0, width: 100, height: 25)
+        return defaultFrame
+    }
+
+    func addUnderLine(v:UIView) -> UIView{
+        let width = UIScreen.main.bounds.width * 0.9
+        let x = (UIScreen.main.bounds.width - width) / 2
+        let y = v.frame.origin.y + v.frame.height + 5
+        let line = UIView(frame: CGRect(x: x, y: y, width: width, height: 1))
+        line.backgroundColor = UIColor(hex: "cccccc")
+        view.addSubview(line)
+        return line
+    }
+    
+    func addDivLine(y:CGFloat) -> UIView{
+        let width = UIScreen.main.bounds.width
+        let line = UIView(frame: CGRect(x: 0, y: y, width: width, height: 5))
+        line.backgroundColor = UIColor(hex: "cccccc")
+        view.addSubview(line)
+        return line
+    }
+
+    func addNavigationBar(title:String) -> UINavigationBar{
         var navigationBar:UINavigationBar?
         
         let width = UIScreen.main.bounds.width
         navigationBar = UINavigationBar(frame: CGRect(x: 0, y: 20, width: width, height: 44))
         
         let navigationItem = UINavigationItem()
+        navigationItem.title = title
         let leftButton = UIBarButtonItem(image: UIImage(named: "ico_back"), style: .plain, target: self, action: #selector(onBack(_:)))
         navigationItem.setLeftBarButton(leftButton, animated: true)
         navigationBar?.pushItem(navigationItem, animated: true)
@@ -131,7 +159,48 @@ extension UIViewController{
         return navigationBar!
     }
     
-    func onBack(_ sender:UIBarButtonItem){
+    func addLabel(title:String) -> UILabel
+    {
+        let label = UILabel()
+        label.textColor = UIColor(hex: "565656")
+        label.backgroundColor = UIColor.clear
+        label.text = title
+        label.frame = defaultFrame()
+        label.font = .systemFont(ofSize: 14)
+        view.addSubview(label)
+        return label
+    }
+    
+    func addTextField(value:String, action:Selector, sender:UITextFieldDelegate) -> UITextField
+    {
+        let textField = UITextField(frame:defaultFrame())
+        textField.backgroundColor = UIColor.clear
+        textField.textColor = UIColor.black
+        textField.text = value
+        textField.borderStyle = .none
+        textField.adjustsFontSizeToFitWidth = true
+        textField.delegate = sender
+        return textField
+    }
+    
+    func addButton(title:String, action:Selector) -> UIButton {
+        let button = UIButton(frame:defaultFrame())
+        button.backgroundColor = UIColor.cyan
+        button.setTitle(title, for:.normal)
+        button.titleLabel!.textColor = UIColor.white
+        button.titleLabel!.font = UIFont.systemFont(ofSize: 14)
+        button.addTarget(self, action:action, for:.touchUpInside)
+        return button
+    }
+
+    func addImageView() -> UIImageView {
+        let frame = CGRect(x: defaultX(), y: 0, width: 56, height: 56)
+        let imageView = UIImageView(frame: frame)
+        view.addSubview(imageView)
+        return imageView
+    }
+    
+    func onBack(_ sender:Any){
         dismiss(animated: true, completion: nil)
     }
 //    func setAgent(data:JSON)->(){

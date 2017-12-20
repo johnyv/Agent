@@ -12,13 +12,14 @@ import XLPagerTabStrip
 class AgentViewPageController: ButtonBarPagerTabStripViewController {
     var isReload = false
     override func viewDidLoad() {
-        settings.style.buttonBarItemFont = .systemFont(ofSize: 14)
+        settings.style.buttonBarItemFont = .systemFont(ofSize: 15)
         settings.style.buttonBarItemTitleColor = UIColor.darkGray
         settings.style.buttonBarHeight = 35
         settings.style.buttonBarBackgroundColor = .white
         settings.style.buttonBarItemBackgroundColor = .white
         settings.style.selectedBarHeight = 2
         settings.style.selectedBarBackgroundColor = .orange
+        settings.style.buttonBarItemsShouldFillAvailableWidth = true
         super.viewDidLoad()
     }
     
@@ -43,40 +44,41 @@ class AgentViewPageController: ButtonBarPagerTabStripViewController {
 
 class MyAgentAdmin: UIViewController {
 
-    @IBOutlet weak var btnOpen: UIButton!
-    @IBOutlet weak var tableView: UITableView!
-    
-    @IBOutlet weak var imgNoData: UIImageView!
-    @IBOutlet weak var lblNoData: UILabel!
-
-    @IBOutlet weak var segSort: UISegmentedControl!
-    
-    var sourceData = [MyAgentCellModel]()
+//    @IBOutlet weak var btnOpen: UIButton!
+//    @IBOutlet weak var tableView: UITableView!
+//    
+//    @IBOutlet weak var imgNoData: UIImageView!
+//    @IBOutlet weak var lblNoData: UILabel!
+//
+//    @IBOutlet weak var segSort: UISegmentedControl!
+//    
+//    var sourceData = [MyAgentCellModel]()
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        segSort.selectedSegmentIndex = 0
-        segSort.addTarget(self, action: #selector(self.segDidchange(_:)), for: .valueChanged)
+        view.backgroundColor = .white
+        let btnOpen = Construct.createButton(title: "立即开通", action: #selector(toOpen(_:)), sender: self)
+//        create(type: .button, title: [], action: #selector(toOpen(_:)), sender: self)
+//        btnOpen.addTarget(self, action: #selector(toOpen(_:)), for: .touchUpInside)
+//        request(.myagent(agentType: segSort.selectedSegmentIndex, page: 1, pageSize: 0), success: handleData)
         
-        btnOpen.addTarget(self, action: #selector(toOpen(_:)), for: .touchUpInside)
-        request(.myagent(agentType: segSort.selectedSegmentIndex, page: 1, pageSize: 0), success: handleData)
-//                let customerPageController = PagingMenuController(options: options)
-//                customerPageController.view.frame.origin.y += 200
-//                addChildViewController(customerPageController)
-//                view.addSubview(customerPageController.view)
-        
+        let navi = addNavigationBar(title: "我的代理")
+
         let agentViewPage = AgentViewPageController()
-        agentViewPage.view.frame.origin.y += 150
+        agentViewPage.view.frame.origin.y = navi.frame.origin.y + navi.frame.height
         addChildViewController(agentViewPage)
         view.addSubview(agentViewPage.view)
         
-        autoFit()
+        btnOpen.frame = CGRect(x: 80, y: 200, width: 325, height: 41)
+        btnOpen.setBorder(type: 0)
+        view.addSubview(btnOpen)
+//        autoFit()
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        let count = sourceData.count
-        showNodata(dataCount: count)
+//        let count = sourceData.count
+//        showNodata(dataCount: count)
     }
     
     override func didReceiveMemoryWarning() {
@@ -84,9 +86,9 @@ class MyAgentAdmin: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func backToPrev(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
+//    @IBAction func backToPrev(_ sender: UIBarButtonItem) {
+//        dismiss(animated: true, completion: nil)
+//    }
     
     func toOpen(_ button:UIButton){
         let payVC = loadVCfromMain(identifier: "myAgentToOpen") as! MyAgentToOpen
@@ -94,41 +96,41 @@ class MyAgentAdmin: UIViewController {
     }
 
     func handleData(json:JSON)->(){
-        let result = json["result"]
-        let code = result["code"].intValue
-        if code == 200 {
-            //            sourceData.removeAll()
-            print(result)
-            let data = result["data"]
-            let dataArr = data["myAgentList"].array
-            for(_, data) in (dataArr?.enumerated())!{
-                //data["id"].intValue,data["createTime"].stringValue,data["title"].stringValue
-//                sourceData.append([NoticeListCellModel(id: data["id"].intValue, title: data["title"].stringValue, createTime: data["createTime"].stringValue)])
-            }
-            tableView.reloadData()
-            let count = sourceData.count
-            showNodata(dataCount: count)
-        }
+//        let result = json["result"]
+//        let code = result["code"].intValue
+//        if code == 200 {
+//            //            sourceData.removeAll()
+//            print(result)
+//            let data = result["data"]
+//            let dataArr = data["myAgentList"].array
+//            for(_, data) in (dataArr?.enumerated())!{
+//                //data["id"].intValue,data["createTime"].stringValue,data["title"].stringValue
+////                sourceData.append([NoticeListCellModel(id: data["id"].intValue, title: data["title"].stringValue, createTime: data["createTime"].stringValue)])
+//            }
+//            tableView.reloadData()
+//            let count = sourceData.count
+//            showNodata(dataCount: count)
+//        }
     }
     
-    func segDidchange(_ segmented:UISegmentedControl){
-        print(segmented.selectedSegmentIndex)
-        request(.myagent(agentType: segSort.selectedSegmentIndex, page: 1, pageSize: 0), success: handleData)
-    }
+//    func segDidchange(_ segmented:UISegmentedControl){
+//        print(segmented.selectedSegmentIndex)
+//        request(.myagent(agentType: segSort.selectedSegmentIndex, page: 1, pageSize: 0), success: handleData)
+//    }
 
-    func showNodata(dataCount:Int){
-        if dataCount > 0 {
-            imgNoData.isHidden = true
-            lblNoData.isHidden = true
-            btnOpen.isHidden = true
-            tableView.isHidden = false
-        }else{
-            imgNoData.isHidden = false
-            lblNoData.isHidden = false
-            btnOpen.isHidden = false
-            tableView.isHidden = true
-        }
-    }
+//    func showNodata(dataCount:Int){
+//        if dataCount > 0 {
+//            imgNoData.isHidden = true
+//            lblNoData.isHidden = true
+//            btnOpen.isHidden = true
+//            tableView.isHidden = false
+//        }else{
+//            imgNoData.isHidden = false
+//            lblNoData.isHidden = false
+//            btnOpen.isHidden = false
+//            tableView.isHidden = true
+//        }
+//    }
 
     /*
     // MARK: - Navigation

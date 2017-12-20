@@ -29,7 +29,6 @@ class AccountViewController: UIViewController {
         
 //        NotificationCenter.default.addObserver(self, selector: #selector(), name: Notification.Name.UITextFieldTextDidChange, object: tfMobile)
         tfMobile.keyboardType = .numberPad
-        underLine(v: tfPwd)
         autoFit()
     }
 

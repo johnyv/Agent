@@ -107,8 +107,9 @@ class MainViewController: UIViewController {
     }
     
     @IBAction func startPurshase(_ sender: UIButton) {
-        let vc = loadVCfromMain(identifier: "purchaseView") as? PurchaseView
-        present(vc!, animated: true, completion: nil)
+//        let vc = loadVCfromMain(identifier: "purchaseView") as? PurchaseView
+        let vc = PurchaseView()
+        present(vc, animated: true, completion: nil)
     }
     
     @IBAction func startClub(_ sender: UIButton) {
@@ -207,7 +208,9 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let itemName = tools[indexPath.item][0]
         switch itemName {
         case "ico_agent_manager":
-            let vc = loadVCfromMain(identifier: "myAgentAdmin") as! MyAgentAdmin
+            //let vc = loadVCfromMain(identifier: "myAgentAdmin") as! MyAgentAdmin
+            //let aCoder = NSCoder()
+            let vc = MyAgentAdmin()
             present(vc, animated: true, completion: nil)
         case "ico_notice_list":
             let vc = loadVCfromMain(identifier: "noticeListView") as! NoticeListView

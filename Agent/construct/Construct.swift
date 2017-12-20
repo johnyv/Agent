@@ -20,7 +20,7 @@ class Construct {
     
     class func defaultFrame() -> CGRect
     {
-        let defaultFrame = CGRect(x: 0, y: 0, width: 100, height: 30)
+        let defaultFrame = CGRect(x: 10, y: 0, width: 100, height: 25)
         return defaultFrame
     }
     

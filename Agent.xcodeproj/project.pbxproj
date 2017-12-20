@@ -39,6 +39,7 @@
 		5232C6501FE1309D0004CF72 /* WKWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5232C64C1FE1309D0004CF72 /* WKWebViewController.m */; };
 		52396BFA1FDE7E7400CEC050 /* NoticeListCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52396BF91FDE7E7400CEC050 /* NoticeListCellModel.swift */; };
 		52396BFC1FDE993900CEC050 /* MyAgentCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52396BFB1FDE993900CEC050 /* MyAgentCellModel.swift */; };
+		523B91501FEA03BF0045523A /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523B914F1FEA03BF0045523A /* UIColor+.swift */; };
 		523C23B11FDA68D0006FD555 /* Authority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523C23B01FDA68D0006FD555 /* Authority.swift */; };
 		523C23B41FDA7F7A006FD555 /* EditImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523C23B31FDA7F7A006FD555 /* EditImageView.swift */; };
 		523C23B61FDA824B006FD555 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523C23B51FDA824B006FD555 /* AboutView.swift */; };
@@ -100,6 +101,10 @@
 		52DA9CF81FE90D66007D15B1 /* SalesConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DA9CEB1FE90D66007D15B1 /* SalesConfirmView.swift */; };
 		52DA9CF91FE90D66007D15B1 /* SalesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DA9CEC1FE90D66007D15B1 /* SalesView.swift */; };
 		52DA9CFB1FE90DDF007D15B1 /* MyAgentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DA9CFA1FE90DDF007D15B1 /* MyAgentList.swift */; };
+		52DA9CFE1FE93D66007D15B1 /* MyAgentListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DA9CFC1FE93D66007D15B1 /* MyAgentListCell.swift */; };
+		52DA9CFF1FE93D66007D15B1 /* MyAgentListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52DA9CFD1FE93D66007D15B1 /* MyAgentListCell.xib */; };
+		52F8C5151FE93F5500C57134 /* MyAgentListTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F8C5131FE93F5500C57134 /* MyAgentListTitle.swift */; };
+		52F8C5161FE93F5500C57134 /* MyAgentListTitle.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F8C5141FE93F5500C57134 /* MyAgentListTitle.xib */; };
 		52FD52091FD7D868007E023A /* CardSellListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD52081FD7D868007E023A /* CardSellListModel.swift */; };
 		52FD520B1FD7D883007E023A /* CardBuyListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD520A1FD7D883007E023A /* CardBuyListModel.swift */; };
 		52FD520D1FD7DD84007E023A /* CardDetailCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD520C1FD7DD84007E023A /* CardDetailCellModel.swift */; };
@@ -157,6 +162,7 @@
 		5232C64C1FE1309D0004CF72 /* WKWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKWebViewController.m; sourceTree = "<group>"; };
 		52396BF91FDE7E7400CEC050 /* NoticeListCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoticeListCellModel.swift; path = model/NoticeListCellModel.swift; sourceTree = "<group>"; };
 		52396BFB1FDE993900CEC050 /* MyAgentCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyAgentCellModel.swift; path = model/MyAgentCellModel.swift; sourceTree = "<group>"; };
+		523B914F1FEA03BF0045523A /* UIColor+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+.swift"; path = "mixins/UIColor+.swift"; sourceTree = "<group>"; };
 		523C23B01FDA68D0006FD555 /* Authority.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Authority.swift; path = model/Authority.swift; sourceTree = "<group>"; };
 		523C23B31FDA7F7A006FD555 /* EditImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditImageView.swift; sourceTree = "<group>"; };
 		523C23B51FDA824B006FD555 /* AboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
@@ -226,6 +232,10 @@
 		52DA9CEB1FE90D66007D15B1 /* SalesConfirmView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SalesConfirmView.swift; sourceTree = "<group>"; };
 		52DA9CEC1FE90D66007D15B1 /* SalesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SalesView.swift; sourceTree = "<group>"; };
 		52DA9CFA1FE90DDF007D15B1 /* MyAgentList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAgentList.swift; sourceTree = "<group>"; };
+		52DA9CFC1FE93D66007D15B1 /* MyAgentListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAgentListCell.swift; sourceTree = "<group>"; };
+		52DA9CFD1FE93D66007D15B1 /* MyAgentListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyAgentListCell.xib; sourceTree = "<group>"; };
+		52F8C5131FE93F5500C57134 /* MyAgentListTitle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAgentListTitle.swift; sourceTree = "<group>"; };
+		52F8C5141FE93F5500C57134 /* MyAgentListTitle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyAgentListTitle.xib; sourceTree = "<group>"; };
 		52FD52081FD7D868007E023A /* CardSellListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardSellListModel.swift; path = model/CardSellListModel.swift; sourceTree = "<group>"; };
 		52FD520A1FD7D883007E023A /* CardBuyListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardBuyListModel.swift; path = model/CardBuyListModel.swift; sourceTree = "<group>"; };
 		52FD520C1FD7DD84007E023A /* CardDetailCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardDetailCellModel.swift; path = model/CardDetailCellModel.swift; sourceTree = "<group>"; };
@@ -308,6 +318,10 @@
 				5232C6451FE104A00004CF72 /* PaymentSelection.swift */,
 				5249488E1FE3C5C10081A447 /* PaymentOpt.swift */,
 				524948901FE3C5D80081A447 /* PaymentOpt.storyboard */,
+				52DA9CFC1FE93D66007D15B1 /* MyAgentListCell.swift */,
+				52DA9CFD1FE93D66007D15B1 /* MyAgentListCell.xib */,
+				52F8C5131FE93F5500C57134 /* MyAgentListTitle.swift */,
+				52F8C5141FE93F5500C57134 /* MyAgentListTitle.xib */,
 			);
 			path = widget;
 			sourceTree = "<group>";
@@ -344,6 +358,7 @@
 				5253485D1FBC31C20067D5FA /* UIButton+.swift */,
 				5266DA8F1FD8ED760025F23A /* UIViewController+.swift */,
 				52324E091FE7AB7800E2EEE1 /* UITextField+.swift */,
+				523B914F1FEA03BF0045523A /* UIColor+.swift */,
 			);
 			name = mixins;
 			sourceTree = "<group>";
@@ -669,9 +684,11 @@
 				5232C6331FE1045E0004CF72 /* CustomerTableCell.xib in Resources */,
 				5254531D1FC7B432001FD475 /* AppView.storyboard in Resources */,
 				5232C63A1FE1045E0004CF72 /* ProfileHeadCell.xib in Resources */,
+				52F8C5161FE93F5500C57134 /* MyAgentListTitle.xib in Resources */,
 				5232C63E1FE1045E0004CF72 /* ProfileOptionCell.xib in Resources */,
 				5232C6441FE104830004CF72 /* PaymentSelection.storyboard in Resources */,
 				5288D6511F7A4EE900406C9B /* Login.storyboard in Resources */,
+				52DA9CFF1FE93D66007D15B1 /* MyAgentListCell.xib in Resources */,
 				524948911FE3C5D80081A447 /* PaymentOpt.storyboard in Resources */,
 				5232C64E1FE1309D0004CF72 /* backItemImage_hl@2x.png in Resources */,
 				5232C6401FE1045E0004CF72 /* RoomCardDetailCell.xib in Resources */,
@@ -833,6 +850,7 @@
 				52DA9CF41FE90D66007D15B1 /* NoticeListView.swift in Sources */,
 				52AD190D1FE0063A00B99DDD /* ModifyNickView.swift in Sources */,
 				52DA9CEE1FE90D66007D15B1 /* DoPayView.swift in Sources */,
+				523B91501FEA03BF0045523A /* UIColor+.swift in Sources */,
 				52FD520B1FD7D883007E023A /* CardBuyListModel.swift in Sources */,
 				522DDCCE1FE0D37A00F4B296 /* ModifyTelView.swift in Sources */,
 				527F65261FA1F2150004A938 /* ForgotViewController.swift in Sources */,
@@ -854,6 +872,7 @@
 				52538AC01FAAF51400FCBC26 /* ProfileViewController1.swift in Sources */,
 				52DA9CF01FE90D66007D15B1 /* MyAgentAdmin.swift in Sources */,
 				52DA9CDE1FE8F6BF007D15B1 /* Construct.swift in Sources */,
+				52F8C5151FE93F5500C57134 /* MyAgentListTitle.swift in Sources */,
 				52DA9CF51FE90D66007D15B1 /* OrdersListView.swift in Sources */,
 				5232C6391FE1045E0004CF72 /* ProfileHeadCell.swift in Sources */,
 				5232C6321FE1045E0004CF72 /* CustomerTableCell.swift in Sources */,
@@ -864,6 +883,7 @@
 				52AD190B1FDFDE7F00B99DDD /* BindTelView.swift in Sources */,
 				5232C6411FE1045E0004CF72 /* ToolViewCell.swift in Sources */,
 				5221C54A1FDF7847003B0F6F /* SMSCountButton.swift in Sources */,
+				52DA9CFE1FE93D66007D15B1 /* MyAgentListCell.swift in Sources */,
 				528634831FA2D76C0001B964 /* MenuViewController.swift in Sources */,
 				529264901FBDA071000D98A4 /* ErrorMessage.swift in Sources */,
 			);

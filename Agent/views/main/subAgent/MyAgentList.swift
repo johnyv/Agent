@@ -13,6 +13,11 @@ class MyAgentList: UITableViewController, IndicatorInfoProvider {
 
     var pageInfo = IndicatorInfo(title: "Page")
     
+    var listData = [[String:Any]]()
+
+    let cellTitleIdentifier = "titleCell"
+    let cellDetailIdentifier = "detailCell"
+
     init(style: UITableViewStyle, pageInfo: IndicatorInfo) {
         self.pageInfo = pageInfo
         super.init(style: style)
@@ -30,6 +35,13 @@ class MyAgentList: UITableViewController, IndicatorInfoProvider {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        tableView.tableFooterView = UIView()
+        
+        tableView.register(MyAgentListTitle.self, forCellReuseIdentifier: cellTitleIdentifier)
+        let xib = UINib(nibName: "MyAgentListTitle", bundle: nil)
+        tableView.register(xib, forCellReuseIdentifier: cellTitleIdentifier)
+
+        tt()
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,24 +53,46 @@ class MyAgentList: UITableViewController, IndicatorInfoProvider {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return listData.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "titleCell", for: indexPath) as! MyAgentListTitle
 
         // Configure the cell...
-
+        let cellData = listData[indexPath.row]
+        
+        cell.backgroundColor = UIColor(hex: "dddddd")
+        cell.selectionStyle = .none
+        cell.lblAgentType.text = cellData["agentType"] as! String?
+        cell.lblAgentCard.text = cellData["agentCard"] as! String?
+        cell.lblLastBuyTime.text = cellData["lastBuyTime"] as! String?
         return cell
     }
-    */
-
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.row {
+        case 0:
+            return 25
+        default:
+            return 44
+        }
+    }
+    
+    func tt(){
+        let title = ["agentType":"普通",
+                     "agentCard":"库存",
+                     "lastBuyTime":"最后购卡时间"]
+        
+        listData.append(title)
+        tableView.reloadData()
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
