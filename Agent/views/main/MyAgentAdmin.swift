@@ -20,8 +20,7 @@ class AgentViewPageController: ButtonBarPagerTabStripViewController {
         settings.style.selectedBarHeight = 2
         settings.style.selectedBarBackgroundColor = .orange
         settings.style.buttonBarItemsShouldFillAvailableWidth = true
-        super.viewDidLoad()
-        self.containerView.isScrollEnabled = false
+        super.viewDidLoad()        
     }
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
@@ -36,12 +35,6 @@ class AgentViewPageController: ButtonBarPagerTabStripViewController {
         
         let childViews = [page1, page2, page3]
         return childViews
-    }
-    
-    override func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        super.scrollViewDidEndScrollingAnimation(scrollView)
-        let idx = currentIndex
-        print(idx)
     }
     
     override func reloadPagerTabStripView() {
@@ -65,16 +58,13 @@ class MyAgentAdmin: UIViewController {
 
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
-        addBackButtonToNavBar()
-        navigationItem.title = "我的代理"
+        self.title = "我的代理"
         let btnOpen = Construct.createButton(title: "立即开通", action: #selector(toOpen(_:)), sender: self)
 //        create(type: .button, title: [], action: #selector(toOpen(_:)), sender: self)
 //        btnOpen.addTarget(self, action: #selector(toOpen(_:)), for: .touchUpInside)
 //        request(.myagent(agentType: segSort.selectedSegmentIndex, page: 1, pageSize: 0), success: handleData)
-        
+
         let agentViewPage = AgentViewPageController()
-        
-        //agentViewPage.view.frame.origin.y = 0
         addChildViewController(agentViewPage)
         view.addSubview(agentViewPage.view)
         
@@ -100,8 +90,7 @@ class MyAgentAdmin: UIViewController {
     
     func toOpen(_ button:UIButton){
         let vc = MyAgentToOpen()
-        let naviVC = UINavigationController(rootViewController: vc)
-        present(naviVC, animated: true, completion: nil)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     func handleData(json:JSON)->(){

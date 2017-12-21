@@ -87,7 +87,6 @@ class MainViewController: UIViewController {
         request(.noticeScroll, success: handleNotice)
         request(.banner, success: handleBanner)
 
-        tabBarController?.hidesBottomBarWhenPushed = true
         autoFit()
     }
 
@@ -101,13 +100,14 @@ class MainViewController: UIViewController {
 //        appdelegate.mainNavi?.pushSalesView()
         
         let vc = loadVCfromMain(identifier: "salesView") as? SalesView
-        present(vc!, animated: true, completion: nil)
+        self.navigationController?.pushViewController(vc!, animated: true)
     }
     
     @IBAction func startPurshase(_ sender: UIButton) {
 //        let vc = loadVCfromMain(identifier: "purchaseView") as? PurchaseView
         let vc = PurchaseView()
-        present(vc, animated: true, completion: nil)
+        vc.hidesBottomBarWhenPushed = true;
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func startClub(_ sender: UIButton) {
@@ -115,12 +115,10 @@ class MainViewController: UIViewController {
     }
     
     func showNotice(_ recognizer:UITapGestureRecognizer){
-        let vc = NoticeDetailView()
+        let vc = loadVCfromMain(identifier: "noticeDetailView") as! NoticeDetailView
         let id = notice["id"] as! Int
         vc.noticeId = id
-//        let naviVC = UINavigationController(rootViewController: vc)
-//        present(naviVC, animated: true, completion: nil)
-        navigationController?.pushViewController(vc, animated: true)
+        present(vc, animated: true, completion: nil)
     }
     
     func handleNotice(json:JSON)->(){
@@ -211,8 +209,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             //let vc = loadVCfromMain(identifier: "myAgentAdmin") as! MyAgentAdmin
             //let aCoder = NSCoder()
             let vc = MyAgentAdmin()
-            let naviVC = UINavigationController(rootViewController: vc)
-            present(naviVC, animated: true, completion: nil)
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
         case "ico_notice_list":
             //let vc = loadVCfromMain(identifier: "noticeListView") as! NoticeListView
             let vc = NoticeListView()

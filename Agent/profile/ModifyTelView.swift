@@ -26,6 +26,7 @@ class ModifyTelView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.title = "修改安全手机"
         // Do any additional setup after loading the view.
         btnSMSold.addTarget(self, action: #selector(sms(_:)), for: .touchUpInside)
         btnVoiceSMSold.addTarget(self, action: #selector(sms(_:)), for: .touchUpInside)

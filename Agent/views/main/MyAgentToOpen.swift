@@ -50,8 +50,8 @@ class MyAgentToOpen: UIViewController {
 
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
-        addBackButtonToNavBar()
-        navigationItem.title = "我的代理"
+        //addBackButtonToNavBar()
+        self.title = "我的代理"
         let rcBg = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 25)
         let bg = UIView(frame: rcBg)
         bg.backgroundColor = UIColor(hex: "cccccc")

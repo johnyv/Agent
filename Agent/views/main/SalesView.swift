@@ -24,6 +24,7 @@ class SalesView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.title = "售卡"
         // Do any additional setup after loading the view.
         segSort.selectedSegmentIndex = 0
         segSort.addTarget(self, action: #selector(self.segDidchange(_:)), for: .valueChanged)
@@ -153,7 +154,7 @@ class SalesView: UIViewController {
             
             let vc = loadVCfromMain(identifier: "salesConfirmView") as! SalesConfirmView
             vc.buyer = cellData
-            present(vc, animated: true, completion: nil)
+            self.navigationController?.pushViewController(vc, animated: true)
             
         } else {
             toastMSG(result: result)
@@ -207,6 +208,6 @@ extension SalesView: UITableViewDelegate, UITableViewDataSource{
         let cellData = sourceData[indexPath.row]
         let vc = loadVCfromMain(identifier: "salesConfirmView") as! SalesConfirmView
         vc.buyer = cellData
-        present(vc, animated: true, completion: nil)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

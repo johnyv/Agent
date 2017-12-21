@@ -22,6 +22,7 @@ class SalesConfirmView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.title = "售卡"
         // Do any additional setup after loading the view.
         lblNickName.text = buyer?["nick"] as! String
         lblUserId.text = String.init(format: "ID:%d", buyer?["id"] as! Int)

@@ -26,10 +26,9 @@ class DoPayView: UIViewController, WKUIDelegate, WKNavigationDelegate{
         let payWay = UserDefaults.standard.integer(forKey: "PAYWAY")
         if payWay == 1 {
             token = center.addObserver(forName: NSNotification.Name(rawValue: "receiveWeixinSuccess"), object: nil, queue: mainQueue) { (note) in
-                print("receiveWeixinSuccess!")
+                UIApplication.shared.windows[0].makeToast("支付成功", duration: 2, position: .center)
                 self.dismiss(animated: true, completion: nil)
                 center.removeObserver(token!)
-                self.view.makeToast("支付成功", duration: 2, position: .center)
             }
         }
         let str = UserDefaults.standard.string(forKey: "payURL")

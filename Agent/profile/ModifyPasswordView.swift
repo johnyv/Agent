@@ -23,12 +23,12 @@ class ModifyPasswordView: UIViewController {
         let btnModify = addButton(title: "修改密码", action: #selector(self.doModify(_:)))
         let lblDesc = addLabel(title: "请为当前帐号重设6-16位密码，需含大、小写字母及数字")
         lblDesc.font = UIFont.systemFont(ofSize: 13)
-        lblDesc.frame.origin.y = 75
+        lblDesc.frame.origin.y = 25
         lblDesc.frame.size.width = UIScreen.main.bounds.width - lblDesc.frame.origin.x
         
         tfNewPwd = addTextField(placeholder: "请输入密码")
         tfNewPwd.isSecureTextEntry = true
-        tfNewPwd.frame.origin.y = lblDesc.frame.origin.y + lblDesc.frame.height + 50
+        tfNewPwd.frame.origin.y = lblDesc.frame.origin.y + lblDesc.frame.height + 40
         alignUIView(v: tfNewPwd, position: .center)
         let line1 = addUnderLine(v: tfNewPwd)
         
@@ -38,7 +38,7 @@ class ModifyPasswordView: UIViewController {
         alignUIView(v: tfReNewPwd, position: .center)
         let line2 = addUnderLine(v: tfReNewPwd)
         
-        btnModify.frame.origin.y = line2.frame.origin.y + 100
+        btnModify.frame.origin.y = line2.frame.origin.y + 60
         btnModify.setBorder(type: 0)
     }
 
@@ -60,7 +60,8 @@ class ModifyPasswordView: UIViewController {
         } else if code == 11600 {
             toastMSG(result : result)
         } else {
-            alertResult(code: code)
+            toastMSG(result : result)
+//            alertResult(code: code)
         }
     }
 
