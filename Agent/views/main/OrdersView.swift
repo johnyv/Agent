@@ -275,26 +275,17 @@ class OrdersView: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 print(result)
                 let code = result["code"].intValue
                 if code == 200 {
-                    let vc = loadVCfromMain(identifier: "doPayView") as! DoPayView
-                //            let vc = WKWebViewController()
                     let dataStr = result["data"].stringValue
                     UserDefaults.standard.set(dataStr, forKey: "payURL")
-                print(dataStr)
-                //let urlStr = str?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-                //            vc.addReferer("https://gatewaytest.xianlaigame.com")
-                //
-                //            vc.postWebURLSring(str, postData: nil)
-                
-                //vc.loadWebURLSring(urlStr)
-                
-                //            payVC.urlData = data
-                    self.present(vc, animated: true, completion: nil)
+                    let vc = DoPayView()
+                    let naviVC = UINavigationController(rootViewController: vc)
+                    self.present(naviVC, animated: true, completion: nil)
                 } else {
                     self.toastMSG(result: result)
                 }
             }
             
-            payPopup.show(payContainer)
+            _ = payPopup.show(payContainer)
             payDelegate = payContainer.self
             let orderNo = cellData["orderNo"] as? String
             payDelegate?.orderToPay(orderNo: orderNo!)

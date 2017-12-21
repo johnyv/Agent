@@ -67,6 +67,7 @@ class ModifyHeadImageView: UIViewController, UIImagePickerControllerDelegate, UI
             let picker = UIImagePickerController()
             picker.delegate = self
             picker.sourceType = .photoLibrary
+            picker.allowsEditing = true
             self.present(picker, animated: true, completion: nil)
         }else{
             print("读取相册错误")
@@ -93,7 +94,7 @@ class ModifyHeadImageView: UIViewController, UIImagePickerControllerDelegate, UI
         picker.dismiss(animated: true, completion: nil)
 
         let image:UIImage!
-        image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        image = info[UIImagePickerControllerEditedImage] as! UIImage
         imgHead.image = image
         
         
@@ -128,9 +129,7 @@ class ModifyHeadImageView: UIViewController, UIImagePickerControllerDelegate, UI
         }
 
 //        DispatchQueue.main.async(execute: { () -> Void in
-        let imageData = UIImageJPEGRepresentation(image, 0.8)//UIImagePNGRepresentation(image)
-        
-            //let imageData = UIImagePNGRepresentation(image)
+            let imageData = UIImageJPEGRepresentation(image, 0.5)
             fileManager.createFile(atPath: filePath, contents: imageData, attributes: nil)
 
             if fileManager.fileExists(atPath: filePath) {

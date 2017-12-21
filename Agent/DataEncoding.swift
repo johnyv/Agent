@@ -26,10 +26,10 @@ class DataEncoding: ParameterEncoding {
         for (key,value) in requestBody.body {
             
             if key == "body" {
-//                print("body" + \(value as? String))
+                print("body------" + "\(value)")
             }
             if key == "header" {
-                
+                print("header----" + "\(value)")
             }
         }
         request.httpBody = data.gzipDeflate()
