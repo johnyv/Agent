@@ -159,7 +159,7 @@ extension UIViewController{
         return navigationBar!
     }
     
-    func addBackButtonToController(){
+    func addBackButtonToNavBar(){
         let leftButton = UIBarButtonItem(image: UIImage(named: "ico_back"), style: .plain, target: self, action: #selector(onBack(_:)))
         navigationItem.setLeftBarButton(leftButton, animated: true)
     }

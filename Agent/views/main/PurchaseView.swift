@@ -90,12 +90,12 @@ class PurchaseView: UIViewController {
         let line2 = addUnderLine(v: lblGoodsName)
         
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width/3-10, height: 90)
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width/3, height: 90)
         layout.minimumLineSpacing = 5
-        layout.minimumInteritemSpacing = 0
-        layout.sectionInset.left = 10
-        layout.sectionInset.right = 10
-        layout.sectionInset.bottom = 10
+        layout.minimumInteritemSpacing = 5
+//        layout.sectionInset.left = 10
+//        layout.sectionInset.right = 10
+//        layout.sectionInset.bottom = 10
 
         let frame = CGRect(x: 0, y: line2.frame.origin.y + 15, width: view.bounds.width, height: 350)
         collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)

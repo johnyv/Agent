@@ -213,8 +213,10 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let vc = MyAgentAdmin()
             present(vc, animated: true, completion: nil)
         case "ico_notice_list":
-            let vc = loadVCfromMain(identifier: "noticeListView") as! NoticeListView
-            present(vc, animated: true, completion: nil)
+            //let vc = loadVCfromMain(identifier: "noticeListView") as! NoticeListView
+            let vc = NoticeListView()
+            let naviVC = UINavigationController(rootViewController: vc)
+            present(naviVC, animated: true, completion: nil)
             
         default:
             alertResult(code: 99)
