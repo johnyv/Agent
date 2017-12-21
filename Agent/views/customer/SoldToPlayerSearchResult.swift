@@ -32,6 +32,7 @@ class SoldToPlayerSearchResult: UIViewController, SearchDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.title = "向玩家售卡明细"
         self.lblPeriod.text = self.desc
 
         segSort.selectedSegmentIndex = 0

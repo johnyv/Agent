@@ -254,7 +254,8 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
             switch indexPath.row {
             case 0:
                 let vc = loadVCfromMain(identifier: "aboutView") as! AboutView
-                present(vc, animated: true, completion: nil)
+                self.navigationController?.pushViewController(vc, animated: true)
+//                present(vc, animated: true, completion: nil)
                 
             default:
                 break

@@ -32,6 +32,10 @@ class MainNaviController: UINavigationController {
         self.pushViewController(vc!, animated: true)
 //        self.title = "售卡"
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     /*
     // MARK: - Navigation
 

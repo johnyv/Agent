@@ -60,10 +60,6 @@ class ModifyHeadImageView: UIViewController, UIImagePickerControllerDelegate, UI
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func backToPrev(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
-    
     func doPickfromAlbum(_ sender: UIButton) {
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
             let picker = UIImagePickerController()
@@ -109,7 +105,9 @@ class ModifyHeadImageView: UIViewController, UIImagePickerControllerDelegate, UI
             print(result)
             let code = result["code"].intValue
             if code == 200 {
+                delegateModify?.refresh()
                 dismiss(animated: true, completion: nil)
+                
             } else {
                 toastMSG(result: result)
             }

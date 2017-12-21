@@ -146,7 +146,7 @@ extension UIViewController{
         var navigationBar:UINavigationBar?
         
         let width = UIScreen.main.bounds.width
-        navigationBar = UINavigationBar(frame: CGRect(x: 0, y: 20, width: width, height: 44))
+        navigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: width, height: 64))
         
         let navigationItem = UINavigationItem()
         navigationItem.title = title
@@ -171,7 +171,7 @@ extension UIViewController{
         label.backgroundColor = UIColor.clear
         label.text = title
         label.frame = defaultFrame()
-        label.font = .systemFont(ofSize: 14)
+        label.font = .systemFont(ofSize: 15)
         view.addSubview(label)
         return label
     }
@@ -179,9 +179,10 @@ extension UIViewController{
     func addTextField(placeholder:String) -> UITextField
     {
         let textField = UITextField(frame:defaultFrame())
+        textField.frame.size.width = 155
         textField.backgroundColor = UIColor.clear
         textField.textColor = UIColor.black
-        textField.font = UIFont.systemFont(ofSize: 16)
+        textField.font = UIFont.systemFont(ofSize: 15)
         textField.placeholder = placeholder
         textField.borderStyle = .none
         textField.textAlignment = .center
@@ -191,13 +192,23 @@ extension UIViewController{
     
     func addButton(title:String, action:Selector) -> UIButton {
         let button = UIButton(frame:defaultFrame())
-        button.backgroundColor = UIColor.cyan
-        button.tintColor = UIColor.darkText
+        button.backgroundColor = UIColor.lightGray
         button.setTitle(title, for:.normal)
         button.titleLabel!.font = UIFont.systemFont(ofSize: 18)
         button.addTarget(self, action:action, for:.touchUpInside)
         view.addSubview(button)
         return button
+    }
+
+    func addSmsButton(title:String, action:Selector) -> SMSCountButton {
+        let button = SMSCountButton(frame:defaultFrame())
+        button.backgroundColor = UIColor.clear
+        button.setTitle(title, for:.normal)
+        button.titleLabel!.font = UIFont.systemFont(ofSize: 14)
+        button.setTitleColor(UIColor(hex: "008ce6"), for: .normal)
+        button.addTarget(self, action:action, for:.touchUpInside)
+        view.addSubview(button)
+        return button 
     }
 
     func addImageView() -> UIImageView {

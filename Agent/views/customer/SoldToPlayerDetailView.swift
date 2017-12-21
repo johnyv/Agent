@@ -30,6 +30,7 @@ class SoldToPlayerDetailView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.title = "向玩家售卡"
         // Do any additional setup after loading the view.
         let tapDateBegin = UITapGestureRecognizer(target: self, action: #selector(selDate(_:)))
         lblDateBegin.isUserInteractionEnabled = true
@@ -92,7 +93,7 @@ class SoldToPlayerDetailView: UIViewController {
         searchDelegate = vc.self
         searchDelegate?.setCondition(searchId: id!, startDate: self.dateBegin!, endDate: self.dateEnd!, desc:desc)
         
-        present(vc, animated: true, completion: nil)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 //    func handleData(json:JSON)->(){

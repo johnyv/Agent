@@ -179,7 +179,7 @@ class CustomerViewController: UIViewController, UITableViewDelegate, UITableView
 
     @IBAction func showDetail(_ sender: UIBarButtonItem) {
         let vc = loadVCfromMain(identifier: "soldToPlayerDetailView") as! SoldToPlayerDetailView
-        present(vc, animated: true, completion: nil)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     func segDidchange(_ segmented:UISegmentedControl){
         print(segmented.selectedSegmentIndex)

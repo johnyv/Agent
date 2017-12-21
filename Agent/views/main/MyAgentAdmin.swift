@@ -65,15 +65,16 @@ class MyAgentAdmin: UIViewController {
 
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
+        addBackButtonToNavBar()
+        navigationItem.title = "我的代理"
         let btnOpen = Construct.createButton(title: "立即开通", action: #selector(toOpen(_:)), sender: self)
 //        create(type: .button, title: [], action: #selector(toOpen(_:)), sender: self)
 //        btnOpen.addTarget(self, action: #selector(toOpen(_:)), for: .touchUpInside)
 //        request(.myagent(agentType: segSort.selectedSegmentIndex, page: 1, pageSize: 0), success: handleData)
         
-        let navi = addNavigationBar(title: "我的代理")
-
         let agentViewPage = AgentViewPageController()
-        agentViewPage.view.frame.origin.y = navi.frame.origin.y + navi.frame.height
+        
+        //agentViewPage.view.frame.origin.y = 0
         addChildViewController(agentViewPage)
         view.addSubview(agentViewPage.view)
         
