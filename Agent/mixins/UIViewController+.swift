@@ -128,7 +128,7 @@ extension UIViewController{
         let width = UIScreen.main.bounds.width * 0.9
         let x = (UIScreen.main.bounds.width - width) / 2
         let y = v.frame.origin.y + v.frame.height + 5
-        let line = UIView(frame: CGRect(x: x, y: y, width: width, height: 1))
+        let line = UIView(frame: CGRect(x: x, y: y, width: width, height: 0.5))
         line.backgroundColor = UIColor(hex: "cccccc")
         view.addSubview(line)
         return line
