@@ -146,7 +146,7 @@ extension UIViewController{
         var navigationBar:UINavigationBar?
         
         let width = UIScreen.main.bounds.width
-        navigationBar = UINavigationBar(frame: CGRect(x: 0, y: 20, width: width, height: 44))
+        navigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: width, height: 64))
         
         let navigationItem = UINavigationItem()
         navigationItem.title = title

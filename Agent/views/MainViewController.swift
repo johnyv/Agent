@@ -23,7 +23,6 @@ class MainViewController: UIViewController {
 //    ]
     let cellToolIdentifier = "toolCell"
     
-    @IBOutlet weak var navMain: UINavigationBar!
     @IBOutlet weak var btnSale: UIButton!
     @IBOutlet weak var btnPurchase: UIButton!
     @IBOutlet weak var btnClub: UIButton!
@@ -62,8 +61,6 @@ class MainViewController: UIViewController {
         clvTools.setCollectionViewLayout(layOut, animated: false)
         
         vTopBG.backgroundColor = UIColor(hex: "008ce6")//kRGBColorFromHex(rgbValue: 0x008ce6)
-        vTopBG.frame.origin.y = self.navMain.frame.height
-        vTopBG.frame.size.height = vNotice.frame.origin.y - self.navMain.frame.height
         let tapNotice = UITapGestureRecognizer(target: self, action: #selector(showNotice(_:)))
         lblNotice.isUserInteractionEnabled = true
         lblNotice.addGestureRecognizer(tapNotice)
@@ -178,7 +175,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         let w = collectionView.frame.width * 0.9
         let x = (collectionView.frame.width - w) / 2
-        let div = UIView(frame: CGRect(x: x, y: 0, width: w, height: 1))
+        let div = UIView(frame: CGRect(x: x, y: 0, width: w, height: 0.5))
         div.backgroundColor = UIColor.lightGray
         collectionView.addSubview(div)
         
@@ -192,7 +189,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         if line > 0 {
             //            let w = collectionView.frame.width * 0.8
             //            let x = (collectionView.frame.width - w) / 2
-            let div = UIView(frame: CGRect(x: x, y: CGFloat(line) * cell.frame.height, width: w, height: 1))
+            let div = UIView(frame: CGRect(x: x, y: CGFloat(line) * cell.frame.height, width: w, height: 0.5))
             div.backgroundColor = UIColor.lightGray
             collectionView.addSubview(div)
         }
