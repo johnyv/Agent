@@ -96,7 +96,7 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
             let strURL = profile["headerImgSrc"]
             if strURL != nil {
                 if strURL as! String != "" {
-                    let icoURL = URL(string: strURL as! String)
+                    let icoURL = URL(string: (strURL as! String).convertToHttps() )
                     cell.imgHeadIco.sd_setImage(with: icoURL, completed: nil)
                 }else{
                     cell.imgHeadIco.image = UIImage(named: "headsmall")

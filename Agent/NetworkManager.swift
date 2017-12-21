@@ -480,11 +480,11 @@ extension NetworkManager: AuthorizedTargetType{
         case .upload(let file):
             var data:[String:Any] = [:]
             data["file"] = file
-//            let param = ["file":"file"]
-//            let fileData = try! Data(contentsOf: file)
-//            let formData2 = MultipartFormData(provider: .data(fileData), name: "file", fileName: "headImg.png", mimeType: "image/png")
-//            return .uploadCompositeMultipart([formData2], urlParameters: param)
-            return .requestParameters(parameters: data, encoding: ImageEncoding.default)
+            let param = ["file":"file"]
+            let fileData = try! Data(file)
+            let formData2 = MultipartFormData(provider: .data(fileData), name: "file", fileName: "headImg.png", mimeType: "image/png")
+            return .uploadCompositeMultipart([formData2], urlParameters: param)
+//            return .requestParameters(parameters: data, encoding: ImageEncoding.default)
             
         default:
             let params:[String:Any] = [:]

@@ -38,7 +38,9 @@ class ModifyPasswordView: UIViewController {
         print(result)
         if code == 200 {
             dismiss(animated: true, completion: nil)
-        }else{
+        } else if code == 11600 {
+            toastMSG(result : result)
+        } else {
             alertResult(code: code)
         }
     }

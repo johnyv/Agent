@@ -142,7 +142,7 @@ extension SoldToPlayerSearchResult: UITableViewDelegate, UITableViewDataSource {
         if strURL == "" {
             cell.imgHeadIco.image = UIImage(named: "headsmall")
         } else {
-            let icoURL = URL(string: strURL)
+            let icoURL = URL(string: strURL.convertToHttps())
             cell.imgHeadIco.sd_setImage(with: icoURL, completed: nil)
         }
         cell.lblUserId.text = String.init(format: "ID:%d", cellData["id"] as! Int)

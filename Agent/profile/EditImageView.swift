@@ -8,6 +8,8 @@
 
 import UIKit
 import SwiftyJSON
+import SDWebImage
+
 
 class EditImageView: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -17,14 +19,20 @@ class EditImageView: UIViewController, UIImagePickerControllerDelegate, UINaviga
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        var profile:[String:Any]
+        profile = getProfile();
+        
         imgHead.isUserInteractionEnabled = true
+        let newHI = (profile["headerImgSrc"] as! String).convertToHttps()
+        let hiURL = URL(string: newHI!)
+        imgHead.sd_setImage(with: hiURL, completed: nil)
         
         btnChoose.addTarget(self, action: #selector(self.doPickfromAlbum(_:)), for: .touchUpInside)
         btnCamera.addTarget(self, action: #selector(self.doPickfromCamera(_:)), for: .touchUpInside)
         
         btnChoose.setBorder(type: 1)
         btnCamera.setBorder(type: 0)
+        
         
         autoFit()
     }
@@ -68,9 +76,9 @@ class EditImageView: UIViewController, UIImagePickerControllerDelegate, UINaviga
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         picker.dismiss(animated: true, completion: nil)
 
-        var image:UIImage!
+        let image:UIImage!
         image = info[UIImagePickerControllerOriginalImage] as! UIImage
-//        imgHead.image = image
+        imgHead.image = image
         
         
         let fileManager = FileManager.default
@@ -82,9 +90,12 @@ class EditImageView: UIViewController, UIImagePickerControllerDelegate, UINaviga
             let code = result["code"].intValue
             print(result)
             if code == 200 {
-                let newHI = result["data"].stringValue
-                let hiURL = URL(string: newHI)
-                imgHead.sd_setImage(with: hiURL, completed: nil)
+                let newHI = result["data"].stringValue.convertToHttps()
+                let hiURL = URL(string: newHI!)
+//                imgHead.sd_setImage(with: hiURL, completed: nil)
+                imgHead.sd_setImage(with: hiURL, completed: {(image, error, cacheType, url) in
+                    
+                })
             }else{
                 toastMSG(result: result)
                 //alertResult(code: code)

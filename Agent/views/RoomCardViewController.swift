@@ -176,7 +176,7 @@ class RoomCardViewController: UIViewController, UITableViewDelegate, UITableView
                 if sort == 0 {
                     sourceData.append(CardDetailCellModel(col1: data["sellType"].stringValue, col2: data["cardNum"].stringValue, col3: data["id"].stringValue, col4: data["sellTime"].stringValue))
                 }else{
-                    sourceData.append(CardDetailCellModel(col1: data["buyWay"].stringValue, col2: data["amount"].stringValue, col3: data["cardNum"].stringValue, col4: data["time"].stringValue))
+                    sourceData.append(CardDetailCellModel(col1: data["buyWay"].stringValue, col2: data["cardNum"].stringValue, col3: data["amount"].stringValue, col4: data["time"].stringValue))
                 }
             }
             tableView.reloadData()
@@ -265,7 +265,7 @@ class RoomCardViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @IBAction func service(_ sender: UIBarButtonItem) {
-        alertResult(code: 99)
+//        alertResult(code: 99)
     }
     /*
     // MARK: - Navigation

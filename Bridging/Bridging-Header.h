@@ -15,4 +15,5 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <HooDatePicker/HooDatePicker.h>
+#import "NSString+UrlConvert.h"
 #endif /* Bridging_Header_h */

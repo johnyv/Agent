@@ -8,6 +8,7 @@
 
 import UIKit
 import WebKit
+import Toast_Swift
 
 class DoPayView: UIViewController, WKUIDelegate, WKNavigationDelegate{
 
@@ -22,6 +23,7 @@ class DoPayView: UIViewController, WKUIDelegate, WKNavigationDelegate{
             print("receiveWeixinSuccess!")
             self.dismiss(animated: true, completion: nil)
             center.removeObserver(token!)
+            self.view.makeToast("支付成功", duration: 2, position: .center)
         }
         
         let str = UserDefaults.standard.string(forKey: "payURL")
