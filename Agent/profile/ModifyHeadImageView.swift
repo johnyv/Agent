@@ -101,6 +101,17 @@ class ModifyHeadImageView: UIViewController, UIImagePickerControllerDelegate, UI
         let rootPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
         let filePath = "\(rootPath)/HI.png"
         
+        func handleHI(json:JSON)->(){
+            let result = json["result"]
+            print(result)
+            let code = result["code"].intValue
+            if code == 200 {
+                dismiss(animated: true, completion: nil)
+            } else {
+                toastMSG(result: result)
+            }
+        }
+        
         func handleResult(json:JSON)->(){
             let result = json["result"]
             let code = result["code"].intValue
@@ -108,18 +119,18 @@ class ModifyHeadImageView: UIViewController, UIImagePickerControllerDelegate, UI
             if code == 200 {
                 let newHI = result["data"].stringValue.convertToHttps()
                 let hiURL = URL(string: newHI!)
-//                imgHead.sd_setImage(with: hiURL, completed: nil)
                 imgHead.sd_setImage(with: hiURL, completed: {(image, error, cacheType, url) in
-                    
                 })
+                request(.editHI(headerImgSrc: newHI!), success: handleHI)
             }else{
                 toastMSG(result: result)
-                //alertResult(code: code)
             }
         }
 
 //        DispatchQueue.main.async(execute: { () -> Void in
-            let imageData = UIImagePNGRepresentation(image)
+        let imageData = UIImageJPEGRepresentation(image, 0.8)//UIImagePNGRepresentation(image)
+        
+            //let imageData = UIImagePNGRepresentation(image)
             fileManager.createFile(atPath: filePath, contents: imageData, attributes: nil)
 
             if fileManager.fileExists(atPath: filePath) {

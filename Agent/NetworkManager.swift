@@ -148,6 +148,8 @@ extension NetworkManager: AuthorizedTargetType{
             return "/api/agent/core/pwd/change"
         case .myInfo:
             return "/api/agent/core/my/info"
+        case .editHI(_):
+            return "/api/agent/core/my/edit/hi"
         case .editNick(_):
             return "/api/agent/core/my/edit/nick"
         case .bindTel(_, _):
@@ -405,12 +407,8 @@ extension NetworkManager: AuthorizedTargetType{
             return .requestParameters(parameters: data, encoding: DataEncoding.default)
         case .myagent(let agentType, let page, let pageSize):
             var data:[String:Any] = [:]
-            if agentType != 0{
-                data["agentType"] = agentType
-            }
-            if page != 0 {
-                data["page"] = page
-            }
+            data["agentType"] = agentType
+            data["page"] = page
             if pageSize != 0 {
                 data["pageSize"] = pageSize
             }
@@ -435,7 +433,10 @@ extension NetworkManager: AuthorizedTargetType{
             }
             data["validityPeriod"] = validityPeriod
             return .requestParameters(parameters: data, encoding: DataEncoding.default)
-            
+        case .editHI(let headerImgSrc):
+            var data:[String:Any] = [:]
+            data["headerImgSrc"] = headerImgSrc
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
         case .editNick(let nickName):
             var data:[String:Any] = [:]
             data["nickName"] = nickName

@@ -20,7 +20,7 @@ class AgentViewPageController: ButtonBarPagerTabStripViewController {
         settings.style.selectedBarHeight = 2
         settings.style.selectedBarBackgroundColor = .orange
         settings.style.buttonBarItemsShouldFillAvailableWidth = true
-        super.viewDidLoad()
+        super.viewDidLoad()        
     }
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {

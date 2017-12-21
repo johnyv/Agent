@@ -14,7 +14,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="57"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="56.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y0i-dJ-b2C">
@@ -51,6 +51,13 @@
                     </label>
                 </subviews>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="imgHeadIco" destination="NCL-iR-IOl" id="uRT-oo-hHH"/>
+                <outlet property="lblHoldCount" destination="rbm-wF-JM9" id="YzT-pv-oFZ"/>
+                <outlet property="lblLastTime" destination="AD7-2t-DZM" id="syA-ba-42d"/>
+                <outlet property="lblNickName" destination="Y0i-dJ-b2C" id="acb-PS-jRB"/>
+                <outlet property="lblUserId" destination="a14-QT-Gf2" id="y6C-xP-eWS"/>
+            </connections>
             <point key="canvasLocation" x="34" y="141.5"/>
         </tableViewCell>
     </objects>
