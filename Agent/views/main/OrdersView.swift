@@ -92,6 +92,7 @@ class OrdersView: UIViewController, UITableViewDelegate, UITableViewDataSource {
 //        addChildViewController(ordersListPageController)
 //        view.addSubview(ordersListPageController.view)
 //        segSort.center = self.view.center
+        self.title = "我的购卡订单"
         segSort.selectedSegmentIndex = 0
         segSort.addTarget(self, action: #selector(self.segDidchange(_:)), for: .valueChanged)
         

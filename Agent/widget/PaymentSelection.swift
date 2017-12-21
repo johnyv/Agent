@@ -30,7 +30,7 @@ class PaymentSelection: UIViewController, PopupContentViewController, PaymentDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.frame.size = CGSize(width: 365,height: 375)
+        self.view.frame.size = CGSize(width: 365,height: 425)
 
         // Do any additional setup after loading the view.
         btnClose.addTarget(self, action: #selector(pay(_:)), for: .touchUpInside)
@@ -49,7 +49,7 @@ class PaymentSelection: UIViewController, PopupContentViewController, PaymentDel
     }
 
     func sizeForPopup(_ popupController: PopupController, size: CGSize, showingKeyboard: Bool) -> CGSize {
-        return CGSize(width: 365,height: 375)
+        return CGSize(width: 365,height: 425)
 
     }
     

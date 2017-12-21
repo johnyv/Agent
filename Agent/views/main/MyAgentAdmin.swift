@@ -58,15 +58,13 @@ class MyAgentAdmin: UIViewController {
 
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
+        self.title = "我的代理"
         let btnOpen = Construct.createButton(title: "立即开通", action: #selector(toOpen(_:)), sender: self)
 //        create(type: .button, title: [], action: #selector(toOpen(_:)), sender: self)
 //        btnOpen.addTarget(self, action: #selector(toOpen(_:)), for: .touchUpInside)
 //        request(.myagent(agentType: segSort.selectedSegmentIndex, page: 1, pageSize: 0), success: handleData)
-        
-        let navi = addNavigationBar(title: "我的代理")
 
         let agentViewPage = AgentViewPageController()
-        agentViewPage.view.frame.origin.y = navi.frame.origin.y + navi.frame.height
         addChildViewController(agentViewPage)
         view.addSubview(agentViewPage.view)
         
@@ -92,7 +90,7 @@ class MyAgentAdmin: UIViewController {
     
     func toOpen(_ button:UIButton){
         let payVC = loadVCfromMain(identifier: "myAgentToOpen") as! MyAgentToOpen
-        present(payVC, animated: true, completion: nil)
+        self.navigationController?.pushViewController(payVC, animated: true)
     }
 
     func handleData(json:JSON)->(){

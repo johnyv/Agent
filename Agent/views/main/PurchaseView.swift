@@ -43,13 +43,13 @@ class PurchaseView: UIViewController {
         
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
+        self.title = "房卡商城"
         
-        let navBar = addNavigationBar(title: "房卡商城")
         let rightButton = UIBarButtonItem(title: "购卡订单", style: .plain, target: self, action: #selector(ordersList(_:)))
-        navBar.topItem?.setRightBarButton(rightButton, animated: true)
+        self.navigationItem.rightBarButtonItem = rightButton
         
         let lbl1 = addLabel(title: "待充值账号")
-        lbl1.frame.origin.y = navBar.frame.height + 20
+        lbl1.frame.origin.y = 20
         
         let line1 = addUnderLine(v: lbl1)
         
@@ -130,7 +130,7 @@ class PurchaseView: UIViewController {
     
     func ordersList(_ sender: Any) {
         let vc = loadVCfromMain(identifier: "ordersView") as? OrdersView
-        present(vc!, animated: true, completion: nil)
+        self.navigationController?.pushViewController(vc!, animated: true)
     }
     
     fileprivate func handleData(json:JSON)->(){

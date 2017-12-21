@@ -239,7 +239,7 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
             case 1:
                 let vc = loadVCfromMain(identifier: "modifyTelView") as! ModifyTelView
                 vc.delegateModify = self
-                present(vc, animated: true, completion: nil)
+                self.navigationController?.pushViewController(vc, animated: true)
             case 3:
                 let vc = ModifyPasswordView()
                 let naviVC = UINavigationController(rootViewController: vc)

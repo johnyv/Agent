@@ -29,7 +29,7 @@ class MyAgentUnOpen: UIViewController {
 
     func toOpen(_ button:UIButton){
         let payVC = loadVCfromMain(identifier: "myAgentToOpen") as! MyAgentToOpen
-        present(payVC, animated: true, completion: nil)
+        self.navigationController?.pushViewController(payVC, animated: true)
     }
     /*
     // MARK: - Navigation

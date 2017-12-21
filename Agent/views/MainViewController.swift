@@ -100,13 +100,14 @@ class MainViewController: UIViewController {
 //        appdelegate.mainNavi?.pushSalesView()
         
         let vc = loadVCfromMain(identifier: "salesView") as? SalesView
-        present(vc!, animated: true, completion: nil)
+        self.navigationController?.pushViewController(vc!, animated: true)
     }
     
     @IBAction func startPurshase(_ sender: UIButton) {
 //        let vc = loadVCfromMain(identifier: "purchaseView") as? PurchaseView
         let vc = PurchaseView()
-        present(vc, animated: true, completion: nil)
+        vc.hidesBottomBarWhenPushed = true;
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func startClub(_ sender: UIButton) {
@@ -208,7 +209,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             //let vc = loadVCfromMain(identifier: "myAgentAdmin") as! MyAgentAdmin
             //let aCoder = NSCoder()
             let vc = MyAgentAdmin()
-            present(vc, animated: true, completion: nil)
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
         case "ico_notice_list":
             //let vc = loadVCfromMain(identifier: "noticeListView") as! NoticeListView
             let vc = NoticeListView()
