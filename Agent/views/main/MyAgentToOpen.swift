@@ -11,13 +11,17 @@ import SwiftyJSON
 
 class MyAgentToOpen: UIViewController {
     let sectionHeaders = ["姓名",
-                          "手机号",
                           "ID",
+                          "手机号",
                           "验证码",
                           "所属游戏",
                           "类型",
-                          ""
                           ]
+    
+    let placeHolders = ["请填写代理真实姓名",
+                        "输入开通代理手机号",
+                        "请填写代理ID",
+                        "输入验证码"]
 
     @IBOutlet weak var segSort: UISegmentedControl!
     @IBOutlet weak var lblGameName: UILabel!
@@ -25,9 +29,11 @@ class MyAgentToOpen: UIViewController {
     @IBOutlet weak var btnNew: UIButton!
     
     @IBOutlet weak var tfUSerName: UITextField!
-    @IBOutlet weak var tfTel: UITextField!
+    @IBOutlet weak var tfTel: MobilephoneField!
     @IBOutlet weak var tfUserId: UITextField!
     var roleId:Int?
+    @IBOutlet weak var tfName: UITextField!
+    @IBOutlet weak var tfID: UITextField!
     @IBOutlet weak var tfVerificationCode: UITextField!
     @IBOutlet weak var tfVipAgentOpenLimit: UITextField!
     @IBOutlet weak var tfNormalAgentOpenLimit: UITextField!
@@ -37,19 +43,58 @@ class MyAgentToOpen: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        let idx = 0
-        segSort.selectedSegmentIndex = idx
-        segSort.addTarget(self, action: #selector(self.segDidchange(_:)), for: .valueChanged)
-
-        btnNew.addTarget(self, action: #selector(self.doNew(_:)), for: .touchUpInside)
+        view.backgroundColor = .white
+        addBackButtonToNavBar()
+        navigationItem.title = "我的代理"
+        let rcBg = CGRect(x: 0, y: 64, width: UIScreen.main.bounds.width, height: 25)
+        let bg = UIView(frame: rcBg)
+        bg.backgroundColor = UIColor(hex: "cccccc")
+        view.addSubview(bg)
+        let rcTitle = CGRect(x: 10, y: 0, width: bg.frame.width - 20, height: 25)
+        let title = UILabel(frame: rcTitle)
+        title.text = "请填写您要开通的代理的基本信息"
+        bg.addSubview(title)
         
-        let agent = getAgent()
-        let gameName = agent["gameName"] as? String
-        lblGameName.text = gameName
+        let lblName = addLabel(title: sectionHeaders[0])
+        lblName.frame.origin.y = bg.frame.origin.y + bg.frame.height + 15
+        let line1 = addUnderLine(v: lblName)
+        tfName = addTextField(placeholder: placeHolders[0])
+        tfName.frame.origin.y = lblName.frame.origin.y
+        alignUIView(v: tfName, position: .right)
+        
+        let lblID = addLabel(title: sectionHeaders[1])
+        lblID.frame.origin.y = line1.frame.origin.y + line1.frame.height + 15
+        let line2 = addUnderLine(v: lblID)
+        tfID = addTextField(placeholder: placeHolders[1])
+        tfID.frame.origin.y = lblID.frame.origin.y
+        alignUIView(v: tfID, position: .right)
+        
+        let lblMobile = addLabel(title: sectionHeaders[2])
+        lblMobile.frame.origin.y = line2.frame.origin.y + line2.frame.height + 15
+        let line3 = addUnderLine(v: lblMobile)
+        //tfTel = MobilephoneField(frame: <#T##CGRect#>)
+        
+        let lblSms = addLabel(title: sectionHeaders[3])
+        lblSms.frame.origin.y = line3.frame.origin.y + line3.frame.height + 15
+        
+        let div = addDivLine(y: lblSms.frame.origin.y + lblSms.frame.height + 50)
+        let lblGame = addLabel(title: sectionHeaders[4])
+        lblGame.frame.origin.y = div.frame.origin.y + div.frame.height + 5
+        let line5 = addUnderLine(v: lblGame)
+        
+        let lblType = addLabel(title: sectionHeaders[5])
+        lblType.frame.origin.y = line5.frame.origin.y + line5.frame.height + 5
+//        segSort.selectedSegmentIndex = idx
+//        segSort.addTarget(self, action: #selector(self.segDidchange(_:)), for: .valueChanged)
+//
+//        btnNew.addTarget(self, action: #selector(self.doNew(_:)), for: .touchUpInside)
+//        
+//        let agent = getAgent()
+//        let gameName = agent["gameName"] as? String
+//        lblGameName.text = gameName
         
 //        showVip(idx: idx)
-        setRoleId(idx: idx)
-        autoFit()
+//        setRoleId(idx: idx)
     }
     
     override func didReceiveMemoryWarning() {
@@ -57,10 +102,6 @@ class MyAgentToOpen: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func backToPrev(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
-
     func doNew(_ sender:UIButton) {
         let timeInterVal = Int(Date().timeIntervalSince1970*1000)
 

@@ -20,7 +20,8 @@ class AgentViewPageController: ButtonBarPagerTabStripViewController {
         settings.style.selectedBarHeight = 2
         settings.style.selectedBarBackgroundColor = .orange
         settings.style.buttonBarItemsShouldFillAvailableWidth = true
-        super.viewDidLoad()        
+        super.viewDidLoad()
+        self.containerView.isScrollEnabled = false
     }
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
@@ -35,6 +36,12 @@ class AgentViewPageController: ButtonBarPagerTabStripViewController {
         
         let childViews = [page1, page2, page3]
         return childViews
+    }
+    
+    override func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        super.scrollViewDidEndScrollingAnimation(scrollView)
+        let idx = currentIndex
+        print(idx)
     }
     
     override func reloadPagerTabStripView() {
@@ -91,8 +98,9 @@ class MyAgentAdmin: UIViewController {
 //    }
     
     func toOpen(_ button:UIButton){
-        let payVC = loadVCfromMain(identifier: "myAgentToOpen") as! MyAgentToOpen
-        present(payVC, animated: true, completion: nil)
+        let vc = MyAgentToOpen()
+        let naviVC = UINavigationController(rootViewController: vc)
+        present(naviVC, animated: true, completion: nil)
     }
 
     func handleData(json:JSON)->(){

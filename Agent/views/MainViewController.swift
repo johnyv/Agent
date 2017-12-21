@@ -90,6 +90,7 @@ class MainViewController: UIViewController {
         request(.noticeScroll, success: handleNotice)
         request(.banner, success: handleBanner)
 
+        tabBarController?.hidesBottomBarWhenPushed = true
         autoFit()
     }
 
@@ -117,10 +118,12 @@ class MainViewController: UIViewController {
     }
     
     func showNotice(_ recognizer:UITapGestureRecognizer){
-        let vc = loadVCfromMain(identifier: "noticeDetailView") as! NoticeDetailView
+        let vc = NoticeDetailView()
         let id = notice["id"] as! Int
         vc.noticeId = id
-        present(vc, animated: true, completion: nil)
+//        let naviVC = UINavigationController(rootViewController: vc)
+//        present(naviVC, animated: true, completion: nil)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func handleNotice(json:JSON)->(){

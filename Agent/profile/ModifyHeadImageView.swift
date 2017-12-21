@@ -13,6 +13,8 @@ import SDWebImage
 
 class ModifyHeadImageView: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    var delegateModify:ModifyProfileDelegage?
+
     @IBOutlet weak var imgHead: UIImageView!
     @IBOutlet weak var btnChoose: UIButton!
     @IBOutlet weak var btnCamera: UIButton!

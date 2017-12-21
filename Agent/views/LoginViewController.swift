@@ -28,6 +28,7 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view.
         let appdelegate = UIApplication.shared.delegate as! AppDelegate
         appdelegate.window?.rootViewController = self
+
 //        imgLogo.snp.makeConstraints({(make) -> Void in
 //            make.top.equalTo(60)
 //            make.centerX.equalTo(self.view)})

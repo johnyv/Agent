@@ -70,5 +70,10 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
+}
+
+extension UINavigationController{
+    override open var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 }

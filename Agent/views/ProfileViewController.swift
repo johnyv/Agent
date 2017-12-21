@@ -96,7 +96,7 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
             let strURL = profile["headerImgSrc"]
             if strURL != nil {
                 if strURL as! String != "" {
-                    let icoURL = URL(string: (strURL as! String).convertToHttps() )
+                    let icoURL = URL(string: (strURL as! String).convertToHttps())
                     cell.imgHeadIco.sd_setImage(with: icoURL, completed: nil)
                 }else{
                     cell.imgHeadIco.image = UIImage(named: "headsmall")
@@ -222,6 +222,7 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
             switch indexPath.row {
             case 0:
                 let vc = ModifyHeadImageView()
+                vc.delegateModify = self
                 let naviVC = UINavigationController(rootViewController: vc)
                 present(naviVC, animated: true, completion: nil)
                 
@@ -278,6 +279,7 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
         print(result)
         let code = result["code"].intValue
         if code == 200 {
+            profile = [:]
             let data = result["data"]
             profile = getProfileFromJSON(data: data)
             setProfile(data: data)
