@@ -11,30 +11,45 @@ import WebKit
 
 class DoPayView: UIViewController, WKUIDelegate, WKNavigationDelegate{
 
-//    @IBOutlet weak var webView: UIWebView!
+    var webView: WKWebView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        // Do any additional setup after loading the view.
+        addBackButtonToNavBar()
+        
         let center = NotificationCenter.default
         let mainQueue = OperationQueue.main
         var token: NSObjectProtocol?
-        token = center.addObserver(forName: NSNotification.Name(rawValue: "receiveWeixinSuccess"), object: nil, queue: mainQueue) { (note) in
-            print("receiveWeixinSuccess!")
-            self.dismiss(animated: true, completion: nil)
-            center.removeObserver(token!)
-        }
         
+        let payWay = UserDefaults.standard.integer(forKey: "PAYWAY")
+        if payWay == 1 {
+            token = center.addObserver(forName: NSNotification.Name(rawValue: "receiveWeixinSuccess"), object: nil, queue: mainQueue) { (note) in
+                print("receiveWeixinSuccess!")
+                self.dismiss(animated: true, completion: nil)
+                center.removeObserver(token!)
+            }
+        }
         let str = UserDefaults.standard.string(forKey: "payURL")
         
         let urlStr = str?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         let url = URL(string: urlStr!)
         var request = URLRequest(url: url!, cachePolicy: .reloadIgnoringCacheData, timeoutInterval: 10)
+        
+        let cfg = WKWebViewConfiguration()
+        cfg.preferences = WKPreferences()
+        cfg.preferences.javaScriptEnabled = true
+        cfg.preferences.javaScriptCanOpenWindowsAutomatically = true
+        
+        webView = WKWebView( frame: view.frame, configuration: cfg)
+        webView.uiDelegate = self
+        webView.navigationDelegate = self
         view.addSubview(webView)
         
-        request.setValue("gatewaytest.xianlaigame.com://", forHTTPHeaderField: "Referer")
-        webView.load(request)
-        
-        autoFit()
+        if payWay == 1 {
+            request.setValue("gatewaytest.xianlaigame.com://", forHTTPHeaderField: "Referer")
+        }
+        webView.load(request)        
     }
 
     override func didReceiveMemoryWarning() {
@@ -71,23 +86,6 @@ class DoPayView: UIViewController, WKUIDelegate, WKNavigationDelegate{
         print("加载内容失败-->",error)
     }
     
-    @IBAction func backToPrev(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    lazy var webView : WKWebView = {
-        let cfg = WKWebViewConfiguration()
-        cfg.preferences = WKPreferences()
-        cfg.preferences.javaScriptEnabled = true
-        cfg.preferences.javaScriptCanOpenWindowsAutomatically = true
-        let web = WKWebView( frame: CGRect(x:0, y:64,
-                                           width:UIScreen.main.bounds.size.width,
-                                           height:UIScreen.main.bounds.size.height), configuration: cfg)
-        web.uiDelegate = self
-        web.navigationDelegate = self
-        return web
-    }()
-
     /*
     // MARK: - Navigation
 

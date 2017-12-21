@@ -61,7 +61,7 @@ class MainViewController: UIViewController {
         layOut.minimumInteritemSpacing = 0
         clvTools.setCollectionViewLayout(layOut, animated: false)
         
-        vTopBG.backgroundColor = kRGBColorFromHex(rgbValue: 0x008ce6)
+        vTopBG.backgroundColor = UIColor(hex: "008ce6")//kRGBColorFromHex(rgbValue: 0x008ce6)
         vTopBG.frame.origin.y = self.navMain.frame.height
         vTopBG.frame.size.height = vNotice.frame.origin.y - self.navMain.frame.height
         let tapNotice = UITapGestureRecognizer(target: self, action: #selector(showNotice(_:)))

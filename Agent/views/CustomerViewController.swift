@@ -83,7 +83,7 @@ class CustomerViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        vTopBg.backgroundColor = kRGBColorFromHex(rgbValue: 0x008ce6)
+        vTopBg.backgroundColor = UIColor(hex: "008ce6")//kRGBColorFromHex(rgbValue: 0x008ce6)
 //        let options = CustomerPageOptions()
 //        let customerPageController = PagingMenuController(options: options)
 //        customerPageController.view.frame.origin.y += 200

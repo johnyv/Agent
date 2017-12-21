@@ -9,28 +9,28 @@
 import Foundation
 import SwiftyJSON
 
-func kRGBColorFromHex(rgbValue: Int) -> (UIColor) {
-    return UIColor(red: ((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255.0,
-                   green: ((CGFloat)((rgbValue & 0xFF00) >> 8)) / 255.0,
-                   blue: ((CGFloat)(rgbValue & 0xFF)) / 255.0,
-                   alpha: 1.0)
-}
-
-func decodeJWT(tokenstr:String)->(String){
-    let arr = tokenstr.components(separatedBy: ".")
-    
-    var base64Str = arr[1] as String
-    if base64Str.characters.count % 4 != 0 {
-        let padlen = 4 - base64Str.characters.count % 4
-        base64Str += String(repeating: "=", count: padlen)
-    }
-    
-    if let data = Data(base64Encoded: base64Str, options: []),
-        let str = String(data: data, encoding: String.Encoding.utf8) {
-        return str
-    }
-    return ""
-}
+//func kRGBColorFromHex(rgbValue: Int) -> (UIColor) {
+//    return UIColor(red: ((CGFloat)((rgbValue & 0xFF0000) >> 16)) / 255.0,
+//                   green: ((CGFloat)((rgbValue & 0xFF00) >> 8)) / 255.0,
+//                   blue: ((CGFloat)(rgbValue & 0xFF)) / 255.0,
+//                   alpha: 1.0)
+//}
+//
+//func decodeJWT(tokenstr:String)->(String){
+//    let arr = tokenstr.components(separatedBy: ".")
+//    
+//    var base64Str = arr[1] as String
+//    if base64Str.characters.count % 4 != 0 {
+//        let padlen = 4 - base64Str.characters.count % 4
+//        base64Str += String(repeating: "=", count: padlen)
+//    }
+//    
+//    if let data = Data(base64Encoded: base64Str, options: []),
+//        let str = String(data: data, encoding: String.Encoding.utf8) {
+//        return str
+//    }
+//    return ""
+//}
 
 func setAgent(data:JSON)->(){
     var agent:[String:Any] = [:]

@@ -221,9 +221,9 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
         case 0:
             switch indexPath.row {
             case 0:
-                let vc = loadVCfromMain(identifier: "editImageView") as! EditImageView
-//                navigationController?.pushViewController(vc, animated: true)
-                present(vc, animated: true, completion: nil)
+                let vc = EditImageView()
+                let naviVC = UINavigationController(rootViewController: vc)
+                present(naviVC, animated: true, completion: nil)
                 
             case 1:
                 let vc = loadVCfromMain(identifier: "modifyNickView") as! ModifyNickView
