@@ -23,6 +23,15 @@ class DataEncoding: ParameterEncoding {
             request.setValue("application/octet-stream", forHTTPHeaderField: "Content-Type")
         }
         
+        for (key,value) in requestBody.body {
+            
+            if key == "body" {
+//                print("body" + \(value as? String))
+            }
+            if key == "header" {
+                
+            }
+        }
         request.httpBody = data.gzipDeflate()
         
         return request
