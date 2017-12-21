@@ -221,14 +221,15 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
         case 0:
             switch indexPath.row {
             case 0:
-                let vc = loadVCfromMain(identifier: "editImageView") as! EditImageView
-//                navigationController?.pushViewController(vc, animated: true)
-                present(vc, animated: true, completion: nil)
+                let vc = ModifyHeadImageView()
+                let naviVC = UINavigationController(rootViewController: vc)
+                present(naviVC, animated: true, completion: nil)
                 
             case 1:
-                let vc = loadVCfromMain(identifier: "modifyNickView") as! ModifyNickView
+                let vc = ModifyNickView()
                 vc.delegateModify = self
-                present(vc, animated: true, completion: nil)
+                let naviVC = UINavigationController(rootViewController: vc)
+                present(naviVC, animated: true, completion: nil)
                 
             default:
                 break
@@ -240,8 +241,9 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
                 vc.delegateModify = self
                 present(vc, animated: true, completion: nil)
             case 3:
-                let vc = loadVCfromMain(identifier: "modifyPasswordView") as! ModifyPasswordView
-                present(vc, animated: true, completion: nil)
+                let vc = ModifyPasswordView()
+                let naviVC = UINavigationController(rootViewController: vc)
+                present(naviVC, animated: true, completion: nil)
                 
             default:
                 break

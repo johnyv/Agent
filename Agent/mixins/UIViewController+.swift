@@ -159,7 +159,7 @@ extension UIViewController{
         return navigationBar!
     }
     
-    func addBackButtonToController(){
+    func addBackButtonToNavBar(){
         let leftButton = UIBarButtonItem(image: UIImage(named: "ico_back"), style: .plain, target: self, action: #selector(onBack(_:)))
         navigationItem.setLeftBarButton(leftButton, animated: true)
     }
@@ -205,6 +205,19 @@ extension UIViewController{
         let imageView = UIImageView(frame: frame)
         view.addSubview(imageView)
         return imageView
+    }
+    
+    func alignUIView(v:UIView, position:UIViewContentMode){
+        let screenW = UIScreen.main.bounds.width
+        let viewWidth = v.frame.width
+        switch position {
+        case .center:
+            v.frame.origin.x = (screenW - viewWidth)/2
+        case .right:
+            v.frame.origin.x = screenW - viewWidth - screenW * 0.1
+        default:
+            break
+        }
     }
     
     func onBack(_ sender:Any){

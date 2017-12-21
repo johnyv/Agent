@@ -61,7 +61,7 @@ class MainViewController: UIViewController {
         layOut.minimumInteritemSpacing = 0
         clvTools.setCollectionViewLayout(layOut, animated: false)
         
-        vTopBG.backgroundColor = kRGBColorFromHex(rgbValue: 0x008ce6)
+        vTopBG.backgroundColor = UIColor(hex: "008ce6")//kRGBColorFromHex(rgbValue: 0x008ce6)
         vTopBG.frame.origin.y = self.navMain.frame.height
         vTopBG.frame.size.height = vNotice.frame.origin.y - self.navMain.frame.height
         let tapNotice = UITapGestureRecognizer(target: self, action: #selector(showNotice(_:)))
@@ -213,8 +213,10 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let vc = MyAgentAdmin()
             present(vc, animated: true, completion: nil)
         case "ico_notice_list":
-            let vc = loadVCfromMain(identifier: "noticeListView") as! NoticeListView
-            present(vc, animated: true, completion: nil)
+            //let vc = loadVCfromMain(identifier: "noticeListView") as! NoticeListView
+            let vc = NoticeListView()
+            let naviVC = UINavigationController(rootViewController: vc)
+            present(naviVC, animated: true, completion: nil)
             
         default:
             alertResult(code: 99)

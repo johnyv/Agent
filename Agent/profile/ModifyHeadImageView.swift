@@ -11,7 +11,7 @@ import SwiftyJSON
 import SDWebImage
 
 
-class EditImageView: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ModifyHeadImageView: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var imgHead: UIImageView!
     @IBOutlet weak var btnChoose: UIButton!
@@ -19,22 +19,38 @@ class EditImageView: UIViewController, UIImagePickerControllerDelegate, UINaviga
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        var profile:[String:Any]
-        profile = getProfile();
+        // Do any additional setup after loading the view.
+        view.backgroundColor = .white
+
+        addBackButtonToNavBar()
+        navigationItem.title = "编辑头像"
         
-        imgHead.isUserInteractionEnabled = true
-        let newHI = (profile["headerImgSrc"] as! String).convertToHttps()
-        let hiURL = URL(string: newHI!)
-        imgHead.sd_setImage(with: hiURL, completed: nil)
+        imgHead = addImageView()
+
+        let profile = getProfile()
+        let strURL = profile["headerImgSrc"] as? String
+        if strURL != "" {
+            let imgURL = URL(string: strURL!)
+            imgHead.sd_setImage(with: imgURL, completed: nil)
+        } else {
+            imgHead.image = UIImage(named: "headbig")
+        }
         
-        btnChoose.addTarget(self, action: #selector(self.doPickfromAlbum(_:)), for: .touchUpInside)
-        btnCamera.addTarget(self, action: #selector(self.doPickfromCamera(_:)), for: .touchUpInside)
+        let size:CGFloat = 235
+        let rcImgHead = CGRect(x: (UIScreen.main.bounds.width - size) / 2 , y: 105, width: size, height: size)
+        imgHead.frame = rcImgHead
         
-        btnChoose.setBorder(type: 1)
-        btnCamera.setBorder(type: 0)
+        btnChoose = addButton(title: "从相册选一张", action: #selector(self.doPickfromAlbum(_:)))
+        let buttonWidth:CGFloat = 325
+        let buttonCenter:CGFloat = (UIScreen.main.bounds.width - buttonWidth) / 2
         
+        btnChoose.frame = CGRect(x: buttonCenter, y: imgHead.frame.origin.y + imgHead.frame.height + 50, width: buttonWidth, height: 41)
+
+        btnCamera = addButton(title: "拍一张照片", action: #selector(self.doPickfromCamera(_:)))
+        btnCamera.frame = CGRect(x: buttonCenter, y: btnChoose.frame.origin.y + btnChoose.frame.height + 30, width: buttonWidth, height: 41)
         
-        autoFit()
+        btnChoose.setBorder(type: 0)
+        btnCamera.setBorder(type: 1)
     }
 
     override func didReceiveMemoryWarning() {

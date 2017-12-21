@@ -13,18 +13,39 @@ class NoticeDetailView: UIViewController {
 
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblTime: UILabel!
-    @IBOutlet weak var webView: UIWebView!
+    var webView: UIWebView!
+    
     var noticeId:Int?
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        view.backgroundColor = .white
+        
+        navigationItem.title = "公告详情"
+        lblTitle = addLabel(title: "")
         lblTitle.numberOfLines = 0
         lblTitle.lineBreakMode = .byTruncatingTail
+        lblTitle.frame.origin.y = 75
+        lblTitle.frame.size.width = UIScreen.main.bounds.width - 20
+        lblTitle.frame.size.height = 40
+        lblTitle.font = UIFont.systemFont(ofSize: 16)
+        lblTitle.textColor = UIColor.black
+        
+        lblTime = addLabel(title: "")
+        lblTime.frame.origin.y = lblTitle.frame.origin.y + lblTitle.frame.height + 5
+        lblTime.frame.size.width = UIScreen.main.bounds.width - 20
+        lblTime.font = UIFont.systemFont(ofSize: 10)
+        lblTime.textColor = UIColor(hex: "828282")
+        
         request(.noticeDetail(noticeId: noticeId!), success: handleNotice)
         
+        let y = lblTime.frame.origin.y + lblTime.frame.height + 20
+        let rcWeb = CGRect(x: 0, y: y, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - y)
+        webView = UIWebView.init(frame: rcWeb)
+        view.addSubview(webView)
+        
         webView.scrollView.bounces = false
-        autoFit()
     }
 
     override func didReceiveMemoryWarning() {

@@ -65,10 +65,12 @@ class PaymentSelection: UIViewController, PopupContentViewController, PaymentDel
         switch sender {
         case btnWeixin:
             request(.buycardGood(payTypeInchannel: 4, channel: 2, paySource: 4, goodId: goodsId, activityId: activityId), success: handlePay)
+            UserDefaults.standard.set(1, forKey: "PAYWAY")
             closeHandler!()
             
         case btnAlipay:
-            request(.buycardGood(payTypeInchannel: 1, channel: 2, paySource: 9, goodId: goodsId, activityId: activityId), success: handlePay)
+            request(.buycardGood(payTypeInchannel: 1, channel: 1, paySource: 9, goodId: goodsId, activityId: activityId), success: handlePay)
+            UserDefaults.standard.set(2, forKey: "PAYWAY")
             closeHandler!()
             
         case btnClose:

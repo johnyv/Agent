@@ -13,14 +13,33 @@ class ModifyPasswordView: UIViewController {
 
     @IBOutlet weak var tfNewPwd: UITextField!
     @IBOutlet weak var tfReNewPwd: UITextField!
-    @IBOutlet weak var btnModify: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        btnModify.addTarget(self, action: #selector(self.doModify(_:)), for: .touchUpInside)
+        view.backgroundColor = .white
+        navigationItem.title = "修改密码"
+        addBackButtonToNavBar()
+        let btnModify = addButton(title: "修改密码", action: #selector(self.doModify(_:)))
+        let lblDesc = addLabel(title: "请为当前帐号重设6-16位密码，需含大、小写字母及数字")
+        lblDesc.font = UIFont.systemFont(ofSize: 13)
+        lblDesc.frame.origin.y = 75
+        lblDesc.frame.size.width = UIScreen.main.bounds.width - lblDesc.frame.origin.x
         
-        autoFit()
+        tfNewPwd = addTextField(placeholder: "请输入密码")
+        tfNewPwd.isSecureTextEntry = true
+        tfNewPwd.frame.origin.y = lblDesc.frame.origin.y + lblDesc.frame.height + 50
+        alignUIView(v: tfNewPwd, position: .center)
+        let line1 = addUnderLine(v: tfNewPwd)
+        
+        tfReNewPwd = addTextField(placeholder: "再次输入密码")
+        tfReNewPwd.isSecureTextEntry = true
+        tfReNewPwd.frame.origin.y = line1.frame.origin.y + 35
+        alignUIView(v: tfReNewPwd, position: .center)
+        let line2 = addUnderLine(v: tfReNewPwd)
+        
+        btnModify.frame.origin.y = line2.frame.origin.y + 100
+        btnModify.setBorder(type: 0)
     }
 
     override func didReceiveMemoryWarning() {

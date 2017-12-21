@@ -90,12 +90,12 @@ class PurchaseView: UIViewController {
         let line2 = addUnderLine(v: lblGoodsName)
         
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width/3-10, height: 90)
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width/3 - 10, height: 90)
         layout.minimumLineSpacing = 5
-        layout.minimumInteritemSpacing = 0
+        layout.minimumInteritemSpacing = 5
         layout.sectionInset.left = 10
         layout.sectionInset.right = 10
-        layout.sectionInset.bottom = 10
+//        layout.sectionInset.bottom = 10
 
         let frame = CGRect(x: 0, y: line2.frame.origin.y + 15, width: view.bounds.width, height: 350)
         collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
@@ -120,7 +120,7 @@ class PurchaseView: UIViewController {
 //
 //
 
-        autoFit()
+        //autoFit()
     }
 
     override func didReceiveMemoryWarning() {
@@ -252,24 +252,16 @@ extension PurchaseView: UICollectionViewDelegate, UICollectionViewDataSource {
             if code == 200 {
                 let dataStr = result["data"].stringValue
                 UserDefaults.standard.set(dataStr, forKey: "payURL")
-                let payVC = loadVCfromMain(identifier: "doPayView") as! DoPayView
-                //            let vc = WKWebViewController()
-                let str = UserDefaults.standard.string(forKey: "payURL")
-                print(str)
-                //let urlStr = str?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-                //            vc.addReferer("https://gatewaytest.xianlaigame.com")
-                //
-                //            vc.postWebURLSring(str, postData: nil)
-                
-                //vc.loadWebURLSring(urlStr)
-                
-                //            payVC.urlData = data
-                self.present(payVC, animated: true, completion: nil)
+                let vc = DoPayView()
+                let naviVC = UINavigationController(rootViewController: vc)
+//                let str = UserDefaults.standard.string(forKey: "payURL")
+//                print(str)
+                self.present(naviVC, animated: true, completion: nil)
             }else{
                 self.toastMSG(result: result)
             }
         }
-        payPopup.show(payContainer)
+        _ = payPopup.show(payContainer)
         payDelegate = payContainer.self
         payDelegate?.dataForPay(data: data)
         

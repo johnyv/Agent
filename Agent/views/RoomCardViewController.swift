@@ -71,7 +71,7 @@ class RoomCardViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        vTopBg.backgroundColor = kRGBColorFromHex(rgbValue: 0x008ce6)
+        vTopBg.backgroundColor = UIColor(hex: "008ce6")//kRGBColorFromHex(rgbValue: 0x008ce6)
 //        let options = RoomCardPageOptions()
 //        let roomCardPageController = PagingMenuController(options: options)
 //        roomCardPageController.view.frame.origin.y += 200
