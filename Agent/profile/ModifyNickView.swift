@@ -18,7 +18,27 @@ class ModifyNickView: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        autoFit()
+        view.backgroundColor = .white
+        
+        addBackButtonToNavBar()
+        navigationItem.title = "修改昵称"
+        let rightButton = UIBarButtonItem(title: "保存　", style: .plain, target: self, action: #selector(doModify(_:)))
+        navigationItem.setRightBarButton(rightButton, animated: true)
+        
+        let lblNick = addLabel(title: "昵称：")
+        lblNick.frame.origin.y = 70
+        lblNick.frame.size.width = 45
+        lblNick.font = UIFont.systemFont(ofSize: 14)
+        
+        tfNick = addTextField(placeholder: "请输入昵称")
+        tfNick.frame.origin.x = lblNick.frame.origin.x + lblNick.frame.width
+        tfNick.frame.origin.y = lblNick.frame.origin.y
+        tfNick.frame.size.width = UIScreen.main.bounds.width - (lblNick.frame.width + 25)
+        tfNick.textAlignment = .left
+        tfNick.clearButtonMode = .whileEditing
+        tfNick.font = UIFont.systemFont(ofSize: 15)
+        
+        _ = addUnderLine(v: tfNick)
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,11 +46,7 @@ class ModifyNickView: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func backToPrev(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
-
-    @IBAction func doModify(_ sender: UIBarButtonItem) {
+    func doModify(_ sender: Any) {
         request(.editNick(nickName: tfNick.text!), success: handleResult)
     }
     

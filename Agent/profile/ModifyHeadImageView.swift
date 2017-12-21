@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyJSON
 
-class EditImageView: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ModifyHeadImageView: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var imgHead: UIImageView!
     @IBOutlet weak var btnChoose: UIButton!
@@ -18,8 +18,11 @@ class EditImageView: UIViewController, UIImagePickerControllerDelegate, UINaviga
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        addBackButtonToNavBar()
         view.backgroundColor = .white
+
+        addBackButtonToNavBar()
+        navigationItem.title = "编辑头像"
+
         
         imgHead = addImageView()
 

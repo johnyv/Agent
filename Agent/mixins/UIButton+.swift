@@ -49,6 +49,10 @@ extension UIButton{
     @objc func setBorder(type:Int){
         let clr = UIColor(hex: "008ce6")
         self.layer.cornerRadius = 5
+        frame.size.width = 325
+        frame.size.height = 41
+        frame.origin.x = (UIScreen.main.bounds.width - 325) / 2
+        
         switch type {
         case 0:
             self.backgroundColor = clr

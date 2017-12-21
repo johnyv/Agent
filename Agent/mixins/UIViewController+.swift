@@ -207,6 +207,19 @@ extension UIViewController{
         return imageView
     }
     
+    func alignUIView(v:UIView, position:UIViewContentMode){
+        let screenW = UIScreen.main.bounds.width
+        let viewWidth = v.frame.width
+        switch position {
+        case .center:
+            v.frame.origin.x = (screenW - viewWidth)/2
+        case .right:
+            v.frame.origin.x = screenW - viewWidth - screenW * 0.1
+        default:
+            break
+        }
+    }
+    
     func onBack(_ sender:Any){
         dismiss(animated: true, completion: nil)
     }
