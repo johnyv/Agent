@@ -11,6 +11,9 @@ import SwiftyJSON
 import XLPagerTabStrip
 class AgentViewPageController: ButtonBarPagerTabStripViewController {
     var isReload = false
+    
+    var childViews = [MyAgentList]()
+    
     override func viewDidLoad() {
         settings.style.buttonBarItemFont = .systemFont(ofSize: 15)
         settings.style.buttonBarItemTitleColor = UIColor.darkGray
@@ -33,8 +36,20 @@ class AgentViewPageController: ButtonBarPagerTabStripViewController {
             return [page1, page2, page3]
         }
         
-        let childViews = [page1, page2, page3]
+//        childViews = [page1, page2, page3]
+        childViews.append(page1)
+        childViews.append(page2)
+        childViews.append(page3)
         return childViews
+    }
+    
+    override func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        super.scrollViewDidEndScrollingAnimation(scrollView)
+        print(currentIndex)
+        
+        let childView = viewControllers[currentIndex] as! MyAgentList
+        childView.delegate = childView.self
+        childView.reNew(type: currentIndex)
     }
     
     override func reloadPagerTabStripView() {

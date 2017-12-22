@@ -22,7 +22,7 @@ class NoticeDetailView: UIViewController {
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
         
-        navigationItem.title = "公告详情"
+        self.title = "公告详情"
         lblTitle = addLabel(title: "")
         lblTitle.numberOfLines = 0
         lblTitle.lineBreakMode = .byTruncatingTail

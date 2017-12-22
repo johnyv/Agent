@@ -134,13 +134,13 @@ class MobilephoneField: UITextField {
         //遍历每一个字符
         for i in 0  ..< string.characters.count  {
             //如果当前到了第4个、第8个数字，则先添加个分隔符
-            if i == 3 || i == 7 {
-                result.append("-")
-                //如果添加分隔符位置在光标前面，光标则需向后移动一位
-                if i < originalCursorPosition {
-                    cursorPosition = cursorPosition + 1
-                }
-            }
+//            if i == 3 || i == 7 {
+//                result.append("-")
+//                //如果添加分隔符位置在光标前面，光标则需向后移动一位
+//                if i < originalCursorPosition {
+//                    cursorPosition = cursorPosition + 1
+//                }
+//            }
             result.append(string[i])
         }
         
@@ -175,5 +175,9 @@ extension String
                 }
             }
         }
+    }
+    
+    func trim() -> String{
+        return replacingOccurrences(of: "-", with: "")
     }
 }

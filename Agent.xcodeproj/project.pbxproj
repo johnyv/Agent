@@ -49,6 +49,9 @@
 		523F7BDA1FECADC2003C136A /* MyAgentInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523F7BD81FECADC2003C136A /* MyAgentInfoCell.swift */; };
 		523F7BDB1FECADC2003C136A /* MyAgentInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 523F7BD91FECADC2003C136A /* MyAgentInfoCell.xib */; };
 		523F7BDD1FECD16E003C136A /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523F7BDC1FECD16E003C136A /* AboutView.swift */; };
+		523F7BDF1FECDAE8003C136A /* agreement.html in Resources */ = {isa = PBXBuildFile; fileRef = 523F7BDE1FECDAE8003C136A /* agreement.html */; };
+		523F7BE11FECDB51003C136A /* agreement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523F7BE01FECDB51003C136A /* agreement.swift */; };
+		523F7BE31FED0470003C136A /* MyAgentDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523F7BE21FED0470003C136A /* MyAgentDetail.swift */; };
 		5249488F1FE3C5C10081A447 /* PaymentOpt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5249488E1FE3C5C10081A447 /* PaymentOpt.swift */; };
 		524948911FE3C5D80081A447 /* PaymentOpt.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 524948901FE3C5D80081A447 /* PaymentOpt.storyboard */; };
 		5251424E1FC57CFB000046DF /* RoomCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5251424D1FC57CFB000046DF /* RoomCardViewController.swift */; };
@@ -176,6 +179,9 @@
 		523F7BD81FECADC2003C136A /* MyAgentInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAgentInfoCell.swift; sourceTree = "<group>"; };
 		523F7BD91FECADC2003C136A /* MyAgentInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyAgentInfoCell.xib; sourceTree = "<group>"; };
 		523F7BDC1FECD16E003C136A /* AboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		523F7BDE1FECDAE8003C136A /* agreement.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = agreement.html; sourceTree = "<group>"; };
+		523F7BE01FECDB51003C136A /* agreement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = agreement.swift; sourceTree = "<group>"; };
+		523F7BE21FED0470003C136A /* MyAgentDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAgentDetail.swift; sourceTree = "<group>"; };
 		5249488E1FE3C5C10081A447 /* PaymentOpt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentOpt.swift; sourceTree = "<group>"; };
 		524948901FE3C5D80081A447 /* PaymentOpt.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PaymentOpt.storyboard; sourceTree = "<group>"; };
 		5251424D1FC57CFB000046DF /* RoomCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RoomCardViewController.swift; path = views/RoomCardViewController.swift; sourceTree = "<group>"; };
@@ -362,13 +368,15 @@
 		523C23B21FDA7F33006FD555 /* profile */ = {
 			isa = PBXGroup;
 			children = (
-				523C23B31FDA7F7A006FD555 /* ModifyHeadImageView.swift */,
-				52AD19081FDFC1C800B99DDD /* ModifyPasswordView.swift */,
+				523F7BDC1FECD16E003C136A /* AboutView.swift */,
+				523F7BDE1FECDAE8003C136A /* agreement.html */,
+				523F7BE01FECDB51003C136A /* agreement.swift */,
 				52AD190A1FDFDE7F00B99DDD /* BindTelView.swift */,
+				523C23B31FDA7F7A006FD555 /* ModifyHeadImageView.swift */,
 				52AD190C1FE0063A00B99DDD /* ModifyNickView.swift */,
+				52AD19081FDFC1C800B99DDD /* ModifyPasswordView.swift */,
 				522DDCCD1FE0D37A00F4B296 /* ModifyTelView.swift */,
 				523F7BD61FECAD0B003C136A /* MyAgentInfoView.swift */,
-				523F7BDC1FECD16E003C136A /* AboutView.swift */,
 			);
 			path = profile;
 			sourceTree = "<group>";
@@ -560,6 +568,7 @@
 			isa = PBXGroup;
 			children = (
 				52DA9CFA1FE90DDF007D15B1 /* MyAgentList.swift */,
+				523F7BE21FED0470003C136A /* MyAgentDetail.swift */,
 			);
 			path = subAgent;
 			sourceTree = "<group>";
@@ -699,6 +708,7 @@
 				5288D6531F7A4EE900406C9B /* Assets.xcassets in Resources */,
 				5232C64F1FE1309D0004CF72 /* WKJSPOST.html in Resources */,
 				5232C6371FE1045E0004CF72 /* OrderListCell.xib in Resources */,
+				523F7BDF1FECDAE8003C136A /* agreement.html in Resources */,
 				5232C6331FE1045E0004CF72 /* CustomerTableCell.xib in Resources */,
 				5254531D1FC7B432001FD475 /* AppView.storyboard in Resources */,
 				5232C63A1FE1045E0004CF72 /* ProfileHeadCell.xib in Resources */,
@@ -836,6 +846,7 @@
 				52FD52091FD7D868007E023A /* CardSellListModel.swift in Sources */,
 				523C23B11FDA68D0006FD555 /* Authority.swift in Sources */,
 				5266DA901FD8ED760025F23A /* UIViewController+.swift in Sources */,
+				523F7BE31FED0470003C136A /* MyAgentDetail.swift in Sources */,
 				5292648E1FBD6EC6000D98A4 /* NetworkManager.swift in Sources */,
 				52AD19091FDFC1C800B99DDD /* ModifyPasswordView.swift in Sources */,
 				525348591FBA98D50067D5FA /* CustomerViewController.swift in Sources */,
@@ -903,6 +914,7 @@
 				5288D64C1F7A4EE900406C9B /* AppDelegate.swift in Sources */,
 				52AD190B1FDFDE7F00B99DDD /* BindTelView.swift in Sources */,
 				523B91591FEA857D0045523A /* NoticeListView.swift in Sources */,
+				523F7BE11FECDB51003C136A /* agreement.swift in Sources */,
 				5232C6411FE1045E0004CF72 /* ToolViewCell.swift in Sources */,
 				5221C54A1FDF7847003B0F6F /* SMSCountButton.swift in Sources */,
 				52DA9CFE1FE93D66007D15B1 /* MyAgentListCell.swift in Sources */,

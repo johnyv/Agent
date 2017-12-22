@@ -10,7 +10,11 @@ import UIKit
 import XLPagerTabStrip
 import SwiftyJSON
 
-class MyAgentList: UITableViewController, IndicatorInfoProvider {
+protocol MyAgentListDelegate {
+    func reNew(type:Int)
+}
+
+class MyAgentList: UITableViewController, MyAgentListDelegate, IndicatorInfoProvider {
 
     var pageInfo = IndicatorInfo(title: "Page")
     
@@ -19,6 +23,8 @@ class MyAgentList: UITableViewController, IndicatorInfoProvider {
     let cellTitleIdentifier = "titleCell"
     let cellDetailIdentifier = "detailCell"
 
+    var delegate:MyAgentListDelegate?
+    
     init(style: UITableViewStyle, pageInfo: IndicatorInfo) {
         self.pageInfo = pageInfo
         super.init(style: style)
@@ -84,12 +90,17 @@ class MyAgentList: UITableViewController, IndicatorInfoProvider {
             let cell = tableView.dequeueReusableCell(withIdentifier: cellDetailIdentifier, for: indexPath) as! MyAgentListCell
             let cellData = listData[indexPath.row]
             
-            //cell.backgroundColor = UIColor(hex: "dddddd")
             cell.selectionStyle = .none
             cell.lblNickName.text = cellData["nickName"] as? String
             let id = cellData["agentId"] as! Int
             cell.lblUserId.text = String.init(format: "ID:%d", id)
             let strURL = cellData["headerImgSrc"] as! String
+            if strURL == "" {
+                cell.imgHeadIco.image = UIImage(named: "headsmall")
+            } else {
+                let icoURL = URL(string: strURL.convertToHttps())
+                cell.imgHeadIco.sd_setImage(with: icoURL, completed: nil)
+            }
             let hold = cellData["agentCard"] as! Int
             cell.lblHoldCount.text = String.init(format: "%d", hold)
             cell.lblLastTime.text = cellData["lastBuyTime"] as? String
@@ -103,10 +114,15 @@ class MyAgentList: UITableViewController, IndicatorInfoProvider {
         case 0:
             return 25
         default:
-            return 44
+            return 64
         }
     }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = MyAgentDetail()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func handleResult(json:JSON)->(){
         let result = json["result"]
         print(result)
@@ -136,14 +152,9 @@ class MyAgentList: UITableViewController, IndicatorInfoProvider {
         }
     }
 
-//    func tt(){
-//        let title = ["agentType":"代理",
-//                     "agentCard":"库存",
-//                     "lastBuyTime":"最后购卡时间"]
-//        
-//        listData.append(title)
-//        tableView.reloadData()
-//    }
+    func reNew(type: Int) {
+        request(.myagent(agentType: type, page: 1, pageSize: 0), success: handleResult)
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
