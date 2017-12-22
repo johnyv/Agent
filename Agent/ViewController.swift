@@ -77,3 +77,9 @@ extension UINavigationController{
         return .lightContent
     }
 }
+
+extension UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        
+    }
+}

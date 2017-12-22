@@ -106,7 +106,7 @@ class MainViewController: UIViewController {
     @IBAction func startPurshase(_ sender: UIButton) {
 //        let vc = loadVCfromMain(identifier: "purchaseView") as? PurchaseView
         let vc = PurchaseView()
-        vc.hidesBottomBarWhenPushed = true;
+//        vc.hidesBottomBarWhenPushed = true;
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
