@@ -18,12 +18,11 @@ class ModifyPasswordView: UIViewController {
 
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
-        navigationItem.title = "修改密码"
-        addBackButtonToNavBar()
+        self.title = "修改密码"
         let btnModify = addButton(title: "修改密码", action: #selector(self.doModify(_:)))
         let lblDesc = addLabel(title: "请为当前帐号重设6-16位密码，需含大、小写字母及数字")
         lblDesc.font = UIFont.systemFont(ofSize: 13)
-        lblDesc.frame.origin.y = 25
+        lblDesc.frame.origin.y = 15
         lblDesc.frame.size.width = UIScreen.main.bounds.width - lblDesc.frame.origin.x
         
         tfNewPwd = addTextField(placeholder: "请输入密码")

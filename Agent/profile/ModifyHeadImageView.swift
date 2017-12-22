@@ -24,8 +24,7 @@ class ModifyHeadImageView: UIViewController, UIImagePickerControllerDelegate, UI
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
 
-        addBackButtonToNavBar()
-        navigationItem.title = "编辑头像"
+        self.title = "编辑头像"
         
         imgHead = addImageView()
 
@@ -39,7 +38,7 @@ class ModifyHeadImageView: UIViewController, UIImagePickerControllerDelegate, UI
         }
         
         let size:CGFloat = 235
-        let rcImgHead = CGRect(x: (UIScreen.main.bounds.width - size) / 2 , y: 105, width: size, height: size)
+        let rcImgHead = CGRect(x: (UIScreen.main.bounds.width - size) / 2 , y: 65, width: size, height: size)
         imgHead.frame = rcImgHead
         
         btnChoose = addButton(title: "从相册选一张", action: #selector(self.doPickfromAlbum(_:)))

@@ -20,13 +20,12 @@ class ModifyNickView: UIViewController {
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
         
-        addBackButtonToNavBar()
-        navigationItem.title = "修改昵称"
+        self.title = "修改昵称"
         let rightButton = UIBarButtonItem(title: "保存　", style: .plain, target: self, action: #selector(doModify(_:)))
         navigationItem.setRightBarButton(rightButton, animated: true)
         
         let lblNick = addLabel(title: "昵称：")
-        lblNick.frame.origin.y = 70
+        lblNick.frame.origin.y = 5
         lblNick.frame.size.width = 45
         lblNick.font = UIFont.systemFont(ofSize: 14)
         

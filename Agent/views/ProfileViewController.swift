@@ -224,14 +224,12 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
             case 0:
                 let vc = ModifyHeadImageView()
                 vc.delegateModify = self
-                let naviVC = UINavigationController(rootViewController: vc)
-                present(naviVC, animated: true, completion: nil)
+                navigationController?.pushViewController(vc, animated: true)
                 
             case 1:
                 let vc = ModifyNickView()
                 vc.delegateModify = self
-                let naviVC = UINavigationController(rootViewController: vc)
-                present(naviVC, animated: true, completion: nil)
+                navigationController?.pushViewController(vc, animated: true)
                 
             default:
                 break
@@ -244,8 +242,7 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
                 self.navigationController?.pushViewController(vc, animated: true)
             case 3:
                 let vc = ModifyPasswordView()
-                let naviVC = UINavigationController(rootViewController: vc)
-                present(naviVC, animated: true, completion: nil)
+                navigationController?.pushViewController(vc, animated: true)
                 
             default:
                 break
@@ -253,16 +250,16 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
         case 2:
             switch indexPath.row {
             case 3:
-                request(.typeInfo, success: handleTypeInfo)
+                let vc = MyAgentInfoView()
+                navigationController?.pushViewController(vc, animated: true)
             default:
                 break
             }
         case 3:
             switch indexPath.row {
             case 0:
-                let vc = loadVCfromMain(identifier: "aboutView") as! AboutView
-                self.navigationController?.pushViewController(vc, animated: true)
-//                present(vc, animated: true, completion: nil)
+                let vc = AboutView()
+                navigationController?.pushViewController(vc, animated: true)
                 
             default:
                 break
@@ -270,15 +267,6 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
             
         default:
             break
-        }
-    }
-    
-
-    func handleTypeInfo(json:JSON)->(){
-        let result = json["result"]
-        print(result)
-        let code = result["code"].intValue
-        if code == 200 {
         }
     }
     

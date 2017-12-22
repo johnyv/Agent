@@ -45,10 +45,10 @@
 		523B91591FEA857D0045523A /* NoticeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523B91581FEA857D0045523A /* NoticeListView.swift */; };
 		523C23B11FDA68D0006FD555 /* Authority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523C23B01FDA68D0006FD555 /* Authority.swift */; };
 		523C23B41FDA7F7A006FD555 /* ModifyHeadImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523C23B31FDA7F7A006FD555 /* ModifyHeadImageView.swift */; };
-		523C23B61FDA824B006FD555 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523C23B51FDA824B006FD555 /* AboutView.swift */; };
 		523F7BD71FECAD0B003C136A /* MyAgentInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523F7BD61FECAD0B003C136A /* MyAgentInfoView.swift */; };
 		523F7BDA1FECADC2003C136A /* MyAgentInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523F7BD81FECADC2003C136A /* MyAgentInfoCell.swift */; };
 		523F7BDB1FECADC2003C136A /* MyAgentInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 523F7BD91FECADC2003C136A /* MyAgentInfoCell.xib */; };
+		523F7BDD1FECD16E003C136A /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523F7BDC1FECD16E003C136A /* AboutView.swift */; };
 		5249488F1FE3C5C10081A447 /* PaymentOpt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5249488E1FE3C5C10081A447 /* PaymentOpt.swift */; };
 		524948911FE3C5D80081A447 /* PaymentOpt.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 524948901FE3C5D80081A447 /* PaymentOpt.storyboard */; };
 		5251424E1FC57CFB000046DF /* RoomCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5251424D1FC57CFB000046DF /* RoomCardViewController.swift */; };
@@ -170,10 +170,10 @@
 		523B91581FEA857D0045523A /* NoticeListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeListView.swift; sourceTree = "<group>"; };
 		523C23B01FDA68D0006FD555 /* Authority.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Authority.swift; path = model/Authority.swift; sourceTree = "<group>"; };
 		523C23B31FDA7F7A006FD555 /* ModifyHeadImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifyHeadImageView.swift; sourceTree = "<group>"; };
-		523C23B51FDA824B006FD555 /* AboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		523F7BD61FECAD0B003C136A /* MyAgentInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAgentInfoView.swift; sourceTree = "<group>"; };
 		523F7BD81FECADC2003C136A /* MyAgentInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAgentInfoCell.swift; sourceTree = "<group>"; };
 		523F7BD91FECADC2003C136A /* MyAgentInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyAgentInfoCell.xib; sourceTree = "<group>"; };
+		523F7BDC1FECD16E003C136A /* AboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		5249488E1FE3C5C10081A447 /* PaymentOpt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentOpt.swift; sourceTree = "<group>"; };
 		524948901FE3C5D80081A447 /* PaymentOpt.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PaymentOpt.storyboard; sourceTree = "<group>"; };
 		5251424D1FC57CFB000046DF /* RoomCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RoomCardViewController.swift; path = views/RoomCardViewController.swift; sourceTree = "<group>"; };
@@ -357,12 +357,12 @@
 			isa = PBXGroup;
 			children = (
 				523C23B31FDA7F7A006FD555 /* ModifyHeadImageView.swift */,
-				523C23B51FDA824B006FD555 /* AboutView.swift */,
 				52AD19081FDFC1C800B99DDD /* ModifyPasswordView.swift */,
 				52AD190A1FDFDE7F00B99DDD /* BindTelView.swift */,
 				52AD190C1FE0063A00B99DDD /* ModifyNickView.swift */,
 				522DDCCD1FE0D37A00F4B296 /* ModifyTelView.swift */,
 				523F7BD61FECAD0B003C136A /* MyAgentInfoView.swift */,
+				523F7BDC1FECD16E003C136A /* AboutView.swift */,
 			);
 			path = profile;
 			sourceTree = "<group>";
@@ -850,7 +850,6 @@
 				5254531F1FC7F13E001FD475 /* DataEncoding.swift in Sources */,
 				52396BFC1FDE993900CEC050 /* MyAgentCellModel.swift in Sources */,
 				52FD520D1FD7DD84007E023A /* CardDetailCellModel.swift in Sources */,
-				523C23B61FDA824B006FD555 /* AboutView.swift in Sources */,
 				52DA9CFB1FE90DDF007D15B1 /* MyAgentList.swift in Sources */,
 				5232C63B1FE1045E0004CF72 /* ProfileInfoCell.swift in Sources */,
 				52324E051FE76F5900E2EEE1 /* SoldToPlayerSearchResult.swift in Sources */,
@@ -881,6 +880,7 @@
 				5232C6341FE1045E0004CF72 /* GoodsViewCell.swift in Sources */,
 				527651181FD645B7004F32EC /* OrderListCellModel.swift in Sources */,
 				52DA9CF01FE90D66007D15B1 /* MyAgentAdmin.swift in Sources */,
+				523F7BDD1FECD16E003C136A /* AboutView.swift in Sources */,
 				52F8C5151FE93F5500C57134 /* MyAgentListTitle.swift in Sources */,
 				52DA9CF51FE90D66007D15B1 /* OrdersListView.swift in Sources */,
 				5232C6391FE1045E0004CF72 /* ProfileHeadCell.swift in Sources */,
