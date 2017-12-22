@@ -66,12 +66,12 @@ class MainViewController: UIViewController {
         lblNotice.addGestureRecognizer(tapNotice)
 
         let div1 = UIView(frame: CGRect(x: 0, y: banner.frame.origin.y, width: UIScreen.main.bounds.width, height: 5))
-        div1.backgroundColor = UIColor.lightGray
+        div1.backgroundColor = UIColor.init(red: 224/255.0, green: 224/255.0, blue: 224/255.0, alpha: 1)
         view.addSubview(div1)
         banner.frame.origin.y += 5
         
         let div2 = UIView(frame: CGRect(x: 0, y: banner.frame.origin.y + banner.frame.height, width: UIScreen.main.bounds.width, height: 5))
-        div2.backgroundColor = UIColor.lightGray
+        div2.backgroundColor = div1.backgroundColor
         view.addSubview(div2)
 
 //        vTopBG.snp.makeConstraints({(make) -> Void in

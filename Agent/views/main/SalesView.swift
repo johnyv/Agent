@@ -52,6 +52,7 @@ class SalesView: UIViewController {
     
     func segDidchange(_ segmented:UISegmentedControl){
         print(segmented.selectedSegmentIndex)
+        tfSearch.text = ""
         requestData(sort: segmented.selectedSegmentIndex)
     }
 
