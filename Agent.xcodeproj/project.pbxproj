@@ -110,6 +110,8 @@
 		52FD520B1FD7D883007E023A /* CardBuyListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD520A1FD7D883007E023A /* CardBuyListModel.swift */; };
 		52FD520D1FD7DD84007E023A /* CardDetailCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD520C1FD7DD84007E023A /* CardDetailCellModel.swift */; };
 		84F757A51FEB5E76008ED6AA /* NSString+UrlConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F757A41FEB5E76008ED6AA /* NSString+UrlConvert.m */; };
+		84F757A81FECA6D6008ED6AA /* UINavigationController+Tracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F757A71FECA6D6008ED6AA /* UINavigationController+Tracking.m */; };
+		84F757AB1FECADA7008ED6AA /* UIViewController+Tracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F757AA1FECADA7008ED6AA /* UIViewController+Tracking.m */; };
 		DB6F216607A6283FC03854C8 /* Pods_Agent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7ADCB9F5510FBAAB5DECF96 /* Pods_Agent.framework */; };
 /* End PBXBuildFile section */
 
@@ -244,6 +246,10 @@
 		52FD520C1FD7DD84007E023A /* CardDetailCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardDetailCellModel.swift; path = model/CardDetailCellModel.swift; sourceTree = "<group>"; };
 		84F757A31FEB5E76008ED6AA /* NSString+UrlConvert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSString+UrlConvert.h"; path = "mixins/NSString+UrlConvert.h"; sourceTree = "<group>"; };
 		84F757A41FEB5E76008ED6AA /* NSString+UrlConvert.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSString+UrlConvert.m"; path = "mixins/NSString+UrlConvert.m"; sourceTree = "<group>"; };
+		84F757A61FECA6D6008ED6AA /* UINavigationController+Tracking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+Tracking.h"; sourceTree = "<group>"; };
+		84F757A71FECA6D6008ED6AA /* UINavigationController+Tracking.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+Tracking.m"; sourceTree = "<group>"; };
+		84F757A91FECADA7008ED6AA /* UIViewController+Tracking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Tracking.h"; sourceTree = "<group>"; };
+		84F757AA1FECADA7008ED6AA /* UIViewController+Tracking.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Tracking.m"; sourceTree = "<group>"; };
 		8C0FFD966F7EB019D310CF95 /* Pods_AgentUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AgentUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF6BFE71300EEAFDA348E605 /* Pods_AgentTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AgentTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D40BFC9BA92B27687221036F /* Pods-Agent.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Agent.release.xcconfig"; path = "Pods/Target Support Files/Pods-Agent/Pods-Agent.release.xcconfig"; sourceTree = "<group>"; };
@@ -426,6 +432,10 @@
 				5232C6471FE1309D0004CF72 /* WkwebView */,
 				5271B1181FCD320700A8450C /* NSData+Compression.h */,
 				5271B1191FCD320700A8450C /* NSData+Compression.m */,
+				84F757A61FECA6D6008ED6AA /* UINavigationController+Tracking.h */,
+				84F757A71FECA6D6008ED6AA /* UINavigationController+Tracking.m */,
+				84F757A91FECADA7008ED6AA /* UIViewController+Tracking.h */,
+				84F757AA1FECADA7008ED6AA /* UIViewController+Tracking.m */,
 			);
 			path = external;
 			sourceTree = "<group>";
@@ -819,6 +829,7 @@
 				52DA9CF21FE90D66007D15B1 /* MyAgentUnOpen.swift in Sources */,
 				5232C6361FE1045E0004CF72 /* OrderListCell.swift in Sources */,
 				523B91561FEA84C00045523A /* NoticeDetailView.swift in Sources */,
+				84F757AB1FECADA7008ED6AA /* UIViewController+Tracking.m in Sources */,
 				52DA9CF81FE90D66007D15B1 /* SalesConfirmView.swift in Sources */,
 				52DA9CF91FE90D66007D15B1 /* SalesView.swift in Sources */,
 				5232C6461FE104A00004CF72 /* PaymentSelection.swift in Sources */,
@@ -882,6 +893,7 @@
 				52DA9CF01FE90D66007D15B1 /* MyAgentAdmin.swift in Sources */,
 				523F7BDD1FECD16E003C136A /* AboutView.swift in Sources */,
 				52F8C5151FE93F5500C57134 /* MyAgentListTitle.swift in Sources */,
+				84F757A81FECA6D6008ED6AA /* UINavigationController+Tracking.m in Sources */,
 				52DA9CF51FE90D66007D15B1 /* OrdersListView.swift in Sources */,
 				5232C6391FE1045E0004CF72 /* ProfileHeadCell.swift in Sources */,
 				5232C6321FE1045E0004CF72 /* CustomerTableCell.swift in Sources */,

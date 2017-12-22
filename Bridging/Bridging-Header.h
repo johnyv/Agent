@@ -16,4 +16,5 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <HooDatePicker/HooDatePicker.h>
 #import "NSString+UrlConvert.h"
+#import "UINavigationController+Tracking.h"
 #endif /* Bridging_Header_h */
