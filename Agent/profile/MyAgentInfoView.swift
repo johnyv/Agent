@@ -12,10 +12,16 @@ import SwiftyJSON
 class MyAgentInfoView: UITableViewController {
     let cellInfoIdentifier = "infoCell"
 
-    var agentInfo:[String:Any] = [:]
+    let infoTitles = [
+        "特权类型", "有效期", "开通代理", "向玩家售卡", "向代理售卡", "开通数量", "购卡折扣"
+    ]
+
+    var agentInfo = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.title = "代理特权"
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -24,6 +30,7 @@ class MyAgentInfoView: UITableViewController {
         tableView.register(MyAgentInfoCell.self, forCellReuseIdentifier: cellInfoIdentifier)
         let xibInfo = UINib(nibName: "MyAgentInfoCell", bundle: nil)
         tableView.register(xibInfo, forCellReuseIdentifier: cellInfoIdentifier)
+        tableView.tableFooterView = UIView()
 
         request(.typeInfo, success: handleTypeInfo)
     }
@@ -37,19 +44,22 @@ class MyAgentInfoView: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return infoTitles.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellInfoIdentifier, for: indexPath) as! MyAgentInfoCell
 
         // Configure the cell...
-
+        cell.lblTitle.text = infoTitles[indexPath.row]
+        if agentInfo.count > indexPath.row {
+            cell.lblContent.text = agentInfo[indexPath.row]
+        }
         return cell
     }
 
@@ -58,6 +68,18 @@ class MyAgentInfoView: UITableViewController {
         print(result)
         let code = result["code"].intValue
         if code == 200 {
+            agentInfo.removeAll()
+            
+            let data = result["data"]
+            agentInfo.append(data["type"].stringValue)
+            agentInfo.append(data["validityPeriod"].stringValue)
+            agentInfo.append(data["createAgent"].stringValue)
+            agentInfo.append(data["buyOnline"].stringValue)
+            agentInfo.append(data["sellObject"].stringValue)
+            agentInfo.append(data["subordinateNum"].stringValue)
+            agentInfo.append(data["discount"].stringValue)
+            
+            tableView.reloadData()
         }
     }
 

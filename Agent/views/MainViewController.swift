@@ -206,16 +206,12 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let itemName = tools[indexPath.item][0]
         switch itemName {
         case "ico_agent_manager":
-            //let vc = loadVCfromMain(identifier: "myAgentAdmin") as! MyAgentAdmin
-            //let aCoder = NSCoder()
             let vc = MyAgentAdmin()
-            vc.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(vc, animated: true)
+            //vc.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(vc, animated: true)
         case "ico_notice_list":
-            //let vc = loadVCfromMain(identifier: "noticeListView") as! NoticeListView
             let vc = NoticeListView()
-            let naviVC = UINavigationController(rootViewController: vc)
-            present(naviVC, animated: true, completion: nil)
+            navigationController?.pushViewController(vc, animated: true)
             
         default:
             alertResult(code: 99)
