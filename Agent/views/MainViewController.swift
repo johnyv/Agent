@@ -115,10 +115,10 @@ class MainViewController: UIViewController {
     }
     
     func showNotice(_ recognizer:UITapGestureRecognizer){
-        let vc = loadVCfromMain(identifier: "noticeDetailView") as! NoticeDetailView
+        let vc = NoticeDetailView()
         let id = notice["id"] as! Int
         vc.noticeId = id
-        present(vc, animated: true, completion: nil)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func handleNotice(json:JSON)->(){

@@ -27,8 +27,6 @@ class MyAgentToOpen: UIViewController {
     @IBOutlet weak var lblGameName: UILabel!
     @IBOutlet weak var vVip: UIView!
     
-    @IBOutlet weak var btnNew: UIButton!
-    @IBOutlet weak var btnCancel: UIButton!
     
     @IBOutlet weak var tfUSerName: UITextField!
     @IBOutlet weak var tfUserId: UITextField!
@@ -40,6 +38,9 @@ class MyAgentToOpen: UIViewController {
 
     @IBOutlet weak var btnSms: SMSCountButton!
     @IBOutlet weak var btnVoice: SMSCountButton!
+
+    @IBOutlet weak var btnNew: UIButton!
+    @IBOutlet weak var btnCancel: UIButton!
 
     @IBOutlet weak var tfVipAgentOpenLimit: UITextField!
     @IBOutlet weak var tfNormalAgentOpenLimit: UITextField!
@@ -168,24 +169,24 @@ class MyAgentToOpen: UIViewController {
         }
     }
     
-    func segDidchange(_ segmented:UISegmentedControl){
-        let idx = segmented.selectedSegmentIndex
-//        showVip(idx: idx)
-        setRoleId(idx: idx)
-    }
-    
-    func setRoleId(idx:Int){
-        switch idx {
-        case 0:
-            roleId = 1001
-        case 1:
-            roleId = 1004
-        case 2:
-            roleId = 1003
-        default:
-            break
-        }
-    }
+//    func segDidchange(_ segmented:UISegmentedControl){
+//        let idx = segmented.selectedSegmentIndex
+////        showVip(idx: idx)
+//        setRoleId(idx: idx)
+//    }
+//    
+//    func setRoleId(idx:Int){
+//        switch idx {
+//        case 0:
+//            roleId = 1001
+//        case 1:
+//            roleId = 1004
+//        case 2:
+//            roleId = 1003
+//        default:
+//            break
+//        }
+//    }
     
 //    func showVip(idx:Int){
 //        if idx < 2 {

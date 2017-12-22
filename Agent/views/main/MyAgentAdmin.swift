@@ -59,7 +59,7 @@ class MyAgentAdmin: UIViewController {
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
         self.title = "我的代理"
-        let btnOpen = Construct.createButton(title: "立即开通", action: #selector(toOpen(_:)), sender: self)
+        let btnOpen = addButton(title: "立即开通", action: #selector(toOpen(_:)))
 //        create(type: .button, title: [], action: #selector(toOpen(_:)), sender: self)
 //        btnOpen.addTarget(self, action: #selector(toOpen(_:)), for: .touchUpInside)
 //        request(.myagent(agentType: segSort.selectedSegmentIndex, page: 1, pageSize: 0), success: handleData)

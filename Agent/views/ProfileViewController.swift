@@ -192,6 +192,7 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
                     cell.lblContent.text = profile["createTime"] as? String
                 case 3:
                     cell.lblContent.text = profile["agentType"] as? String
+                    cell.accessoryType = .disclosureIndicator
                 default:
                     break
                 }
@@ -249,7 +250,13 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
             default:
                 break
             }
-            
+        case 2:
+            switch indexPath.row {
+            case 3:
+                request(.typeInfo, success: handleTypeInfo)
+            default:
+                break
+            }
         case 3:
             switch indexPath.row {
             case 0:
@@ -266,14 +273,14 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
         }
     }
     
-//    func requestInfo(){
-//        let source = TokenSource()
-//        source.token = getSavedToken()
-//        let provider = MoyaProvider<NetworkManager>(plugins:[
-//            AuthPlugin(tokenClosure: {return source.token})])
-//        
-//        Network.request(.myInfo, success: handleInfo, provider: provider)
-//    }
+
+    func handleTypeInfo(json:JSON)->(){
+        let result = json["result"]
+        print(result)
+        let code = result["code"].intValue
+        if code == 200 {
+        }
+    }
     
     func handleInfo(json:JSON)->(){
         let result = json["result"]
