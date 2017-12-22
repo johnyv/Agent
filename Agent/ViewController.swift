@@ -77,3 +77,7 @@ extension UINavigationController{
         return .lightContent
     }
 }
+
+extension UINavigationControllerDelegate{
+    
+}

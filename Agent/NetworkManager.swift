@@ -35,7 +35,7 @@ enum NetworkManager{
     case myInfo //13查询当前代理信息
     case editHI(headerImgSrc:String) //14修改头像
     case editNick(nickName:String) //15修改昵称
-    case typeInfo //查询特权信息
+    case typeInfo //16查询特权信息
     case bindTel(tel:String, verificationCode:String) //17绑定安全手机
     case updateBind(oldVerificationCode:String, tel:String, newVerificationCode:String) //18修改安全手机
     case bindSMS(tel:String, smsType:Int) //22获取绑定安全手机验证码
@@ -152,6 +152,8 @@ extension NetworkManager: AuthorizedTargetType{
             return "/api/agent/core/my/edit/hi"
         case .editNick(_):
             return "/api/agent/core/my/edit/nick"
+        case .typeInfo:
+            return "/api/agent/core/my/typeinfo"
         case .bindTel(_, _):
             return "/api/agent/core/tel/bind"
         case .bindSMS(_, _):
