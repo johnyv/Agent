@@ -71,6 +71,7 @@ func getAgent() -> Dictionary<String, Any> {
 func setProfile(data:JSON) -> () {
     let profile = getProfileFromJSON(data: data)
     UserDefaults.standard.set(profile, forKey: "PROFILE")
+    UserDefaults.standard.synchronize()
 }
 
 func getProfileFromJSON(data:JSON) -> Dictionary<String, Any>{

@@ -56,21 +56,23 @@ class PurchaseView: UIViewController {
         let imgHeadIco = addImageView()
         imgHeadIco.frame.origin.y = line1.frame.origin.y + line1.frame.height + 5
         
-        let agent = getAgent()
+        let profile = getProfile()
         
-        let strURL = agent["headImg"] as? String
+        let strURL = profile["headerImgSrc"] as? String
         let icoURL = URL(string: strURL!)
         imgHeadIco.sd_setImage(with: icoURL, completed: nil)
         
         let lblNickName = addLabel(title: "")
         lblNickName.frame.origin.x = imgHeadIco.frame.origin.x + imgHeadIco.frame.width + 5
         lblNickName.frame.origin.y = imgHeadIco.frame.origin.y
-        let nickName = agent["nickName"] as? String
+        let nickName = profile["nickName"] as? String
         lblNickName.text = nickName
         
         let lblAccountID = addLabel(title: "")
         lblAccountID.frame.origin.x = imgHeadIco.frame.origin.x + imgHeadIco.frame.width + 5
         lblAccountID.frame.origin.y = lblNickName.frame.origin.y + lblNickName.frame.height
+        
+        let agent = getAgent()
         
         let accountID = agent["agentId"] as? Int
         lblAccountID.text = String.init(format: "ID:%d", accountID!)
@@ -222,7 +224,7 @@ extension PurchaseView: UICollectionViewDelegate, UICollectionViewDataSource {
         
         let aStr = NSMutableAttributedString(string: oldStr)
         let propertys:[String:Any] = [NSForegroundColorAttributeName:UIColor.red,NSStrikethroughStyleAttributeName: NSNumber.init(value:Int32(NSUnderlineStyle.styleSingle.rawValue)),NSBaselineOffsetAttributeName:Int(0)]
-        aStr.addAttributes(propertys, range: NSMakeRange(0, oldStr.characters.count))
+        aStr.addAttributes(propertys, range: NSMakeRange(0, oldStr.count))
         
         cell.lblDiscount.attributedText = aStr
         cell.lblSuperscript.text = cellData["superscript"] as? String

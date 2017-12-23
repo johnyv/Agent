@@ -25,7 +25,7 @@ class AccountViewController: UIViewController {
 
         let textWidth:CGFloat = 225
         let textCenter:CGFloat =  (UIScreen.main.bounds.width - textWidth) / 2
-        let rcAccount = CGRect(x: textCenter, y: 160, width: textWidth, height: 25)
+        let rcAccount = CGRect(x: textCenter, y: 110, width: textWidth, height: 25)
         tfAccount = MobilephoneField(frame: rcAccount)
         view.addSubview(tfAccount!)
         let line1 = addUnderLine(v: tfAccount!)
@@ -42,7 +42,7 @@ class AccountViewController: UIViewController {
         let buttonWidth:CGFloat = 325
         let buttonCenter:CGFloat = (UIScreen.main.bounds.width - buttonWidth) / 2
         
-        btnLogin.frame = CGRect(x: buttonCenter, y: UIScreen.main.bounds.height / 2, width: buttonWidth, height: 41)
+        btnLogin.frame = CGRect(x: buttonCenter, y: UIScreen.main.bounds.height / 2 - 50, width: buttonWidth, height: 41)
         btnLogin.setBorder(type: 0)
         
         let btnSwitchBack = addButton(title: "切换手机验证码登录", action: #selector(switchBack(_:)))
@@ -56,6 +56,11 @@ class AccountViewController: UIViewController {
         btnLoss.frame = CGRect(x: btnSwitchBack.frame.origin.x + btnSwitchBack.frame.width - 70, y: btnSwitchBack.frame.origin.y+btnSwitchBack.frame.height+45, width: 70, height: 15)
     }
 
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        tfAccount.resignFirstResponder()
+        tfPassword.resignFirstResponder()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

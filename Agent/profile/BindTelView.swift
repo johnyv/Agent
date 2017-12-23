@@ -22,21 +22,16 @@ class BindTelView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.title = "绑定安全手机"
+        btnSMS.addTarget(self, action: #selector(sms(_:)), for: .touchUpInside)
+        btnVoiceSMS.addTarget(self, action: #selector(sms(_:)), for: .touchUpInside)
+        btnBind.addTarget(self, action: #selector(bind(_:)), for: .touchUpInside)
+        
         autoFit()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-        btnSMS.addTarget(self, action: #selector(sms(_:)), for: .touchUpInside)
-        btnVoiceSMS.addTarget(self, action: #selector(sms(_:)), for: .touchUpInside)
-        btnBind.addTarget(self, action: #selector(bind(_:)), for: .touchUpInside)
-
-    }
-    
-    func backToPrev(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func sms(_ sender: SMSCountButton) {
@@ -75,6 +70,8 @@ class BindTelView: UIViewController {
 //            let data = result["data"]
 //            let title = data["title"].stringValue
 //            lblNotice.text = title
+        } else {
+            toastMSG(result: result)
         }
     }
 

@@ -55,9 +55,13 @@ class ModifyNickView: UIViewController {
         print(result)
         if code == 200 {
             self.delegateModify?.refresh()
-            dismiss(animated: true, completion: nil)
+            var profile = getProfile()
+            profile["nickName"] = tfNick.text
+            UserDefaults.standard.set(profile, forKey: "PROFILE")
+            navigationController?.popViewController(animated: true)
         }else{
-            alertResult(code: code)
+//            alertResult(code: code)
+            toastMSG(result: result)
         }
     }
     /*

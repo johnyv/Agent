@@ -55,7 +55,9 @@ class ModifyPasswordView: UIViewController {
         let code = result["code"].intValue
         print(result)
         if code == 200 {
-            dismiss(animated: true, completion: nil)
+            toastMSG(result : result)
+            UIApplication.shared.windows.first?.makeToast("修改成功", duration: 2, position: .center)
+            navigationController?.popViewController(animated: true)
         } else if code == 11600 {
             toastMSG(result : result)
         } else {

@@ -25,6 +25,10 @@ extension UIViewController{
         let msg = result["message"].stringValue
         self.view.makeToast(msg, duration: 2, position: .center)
     }
+    
+    func showToast(string:String) -> Void {
+        UIApplication.shared.windows.first?.makeToast(string, duration: 2, position: .center)
+    }
 
     func request(_ target:NetworkManager,
                                        success successCallback: @escaping(JSON) -> Void
@@ -120,7 +124,7 @@ extension UIViewController{
     {
         let width = UIScreen.main.bounds.width * 0.9
         let x = (UIScreen.main.bounds.width - width) / 2
-        let defaultFrame = CGRect(x: x, y: 0, width: 100, height: 25)
+        let defaultFrame = CGRect(x: x, y: 0, width: 150, height: 25)
         return defaultFrame
     }
 
