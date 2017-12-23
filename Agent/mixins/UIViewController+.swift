@@ -137,7 +137,7 @@ extension UIViewController{
     func addDivLine(y:CGFloat) -> UIView{
         let width = UIScreen.main.bounds.width
         let line = UIView(frame: CGRect(x: 0, y: y, width: width, height: 5))
-        line.backgroundColor = UIColor(hex: "cccccc")
+        line.backgroundColor = UIColor.init(red: 224/255.0, green: 224/255.0, blue: 224/255.0, alpha: 1)
         view.addSubview(line)
         return line
     }
