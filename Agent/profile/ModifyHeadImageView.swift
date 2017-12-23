@@ -105,8 +105,7 @@ class ModifyHeadImageView: UIViewController, UIImagePickerControllerDelegate, UI
             let code = result["code"].intValue
             if code == 200 {
                 delegateModify?.refresh()
-                dismiss(animated: true, completion: nil)
-                
+                self.navigationController?.popViewController(animated: true)
             } else {
                 toastMSG(result: result)
             }

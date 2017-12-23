@@ -1,5 +1,5 @@
 //
-//  MyAgentInfoView.swift
+//  MyAgentDetail.swift
 //  Agent
 //
 //  Created by 于劲 on 2017/12/22.
@@ -7,21 +7,19 @@
 //
 
 import UIKit
-import SwiftyJSON
 
-class MyAgentInfoView: UITableViewController {
+class MyAgentDetail: UITableViewController {
     let cellInfoIdentifier = "infoCell"
 
     let infoTitles = [
-        "特权类型", "有效期", "开通代理", "向玩家售卡", "向代理售卡", "开通数量", "购卡折扣"
+        "代理ID", "所属游戏", "类型", "激活时间", "安全手机", "登录账号", "备注"
     ]
-
-    var agentInfo = [String]()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = "代理特权"
+        self.title = "代理信息"
+        let rightButton = UIBarButtonItem(title: "购卡详情", style: .plain, target: self, action: #selector(cardsDetail(_:)))
+        self.navigationItem.rightBarButtonItem = rightButton
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -31,8 +29,10 @@ class MyAgentInfoView: UITableViewController {
         let xibInfo = UINib(nibName: "MyAgentInfoCell", bundle: nil)
         tableView.register(xibInfo, forCellReuseIdentifier: cellInfoIdentifier)
         tableView.tableFooterView = UIView()
-
-        request(.typeInfo, success: handleResult)
+        
+        let btnSwitch = addButton(title: "禁用该代理", action: #selector(switchAgent(_:)))
+        btnSwitch.frame.origin.y = UIScreen.main.bounds.height/2
+        btnSwitch.setBorder(type: 0)
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,39 +52,23 @@ class MyAgentInfoView: UITableViewController {
         return infoTitles.count
     }
 
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellInfoIdentifier, for: indexPath) as! MyAgentInfoCell
 
         // Configure the cell...
-        cell.selectionStyle = .none
         cell.lblTitle.text = infoTitles[indexPath.row]
-        if agentInfo.count > indexPath.row {
-            cell.lblContent.text = agentInfo[indexPath.row]
-        }
         return cell
     }
-
-    func handleResult(json:JSON)->(){
-        let result = json["result"]
-        print(result)
-        let code = result["code"].intValue
-        if code == 200 {
-            agentInfo.removeAll()
-            
-            let data = result["data"]
-            agentInfo.append(data["type"].stringValue)
-            agentInfo.append(data["validityPeriod"].stringValue)
-            agentInfo.append(data["createAgent"].stringValue)
-            agentInfo.append(data["buyOnline"].stringValue)
-            agentInfo.append(data["sellObject"].stringValue)
-            agentInfo.append(data["subordinateNum"].stringValue)
-            agentInfo.append(data["discount"].stringValue)
-            
-            tableView.reloadData()
-        }
+    
+    func cardsDetail(_ sender:Any){
+        
     }
 
-    /*
+    func switchAgent(_ sender:Any){
+        
+    }
+/*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.

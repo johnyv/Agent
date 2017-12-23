@@ -11,41 +11,48 @@ import SwiftyJSON
 
 class MyAgentToOpen: UIViewController {
     let sectionHeaders = ["姓名",
-                          "ID",
+                          "游戏ID",
                           "手机号",
                           "验证码",
                           "所属游戏",
                           "类型",
+                          "二级数量",
+                          "有效期",
                           ]
     
     let placeHolders = ["请填写代理真实姓名",
-                        "请填写代理ID",
+                        "请填写玩家ID",
                         "输入开通代理手机号",
                         "输入验证码"]
-
-    @IBOutlet weak var segSort: UISegmentedControl!
-    @IBOutlet weak var lblGameName: UILabel!
-    @IBOutlet weak var vVip: UIView!
     
-    
-    @IBOutlet weak var tfUSerName: UITextField!
-    @IBOutlet weak var tfUserId: UITextField!
+//    @IBOutlet weak var tfUSerName: UITextField!
+//    @IBOutlet weak var tfUserId: UITextField!
     var roleId:Int?
+    var date:Date?
     @IBOutlet weak var tfName: UITextField!
     @IBOutlet weak var tfID: UITextField!
-    @IBOutlet weak var tfTel: MobilephoneField!
-    @IBOutlet weak var tfVerificationCode: UITextField!
+    var tfTel: MobilephoneField!
+    var tfVerificationCode: UITextField!
 
     @IBOutlet weak var btnSms: SMSCountButton!
     @IBOutlet weak var btnVoice: SMSCountButton!
 
+    var segType: UISegmentedControl!
+
+    var lblSubCount:UILabel!
+    var line7:UIView!
+    var lblValidityPeriod:UILabel!
+    var line8:UIView!
+    @IBOutlet weak var tfSubCount: UITextField!
+    @IBOutlet weak var lblPeriod: UILabel!
+    
     @IBOutlet weak var btnNew: UIButton!
     @IBOutlet weak var btnCancel: UIButton!
 
-    @IBOutlet weak var tfVipAgentOpenLimit: UITextField!
-    @IBOutlet weak var tfNormalAgentOpenLimit: UITextField!
-    @IBOutlet weak var tfSubAgentOpenLimit: UITextField!
-    @IBOutlet weak var tfValidityPeriod: UITextField!
+//    @IBOutlet weak var tfVipAgentOpenLimit: UITextField!
+//    @IBOutlet weak var tfNormalAgentOpenLimit: UITextField!
+//    @IBOutlet weak var tfSubAgentOpenLimit: UITextField!
+//    @IBOutlet weak var tfValidityPeriod: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -60,6 +67,7 @@ class MyAgentToOpen: UIViewController {
         let rcTitle = CGRect(x: 10, y: 0, width: bg.frame.width - 20, height: 25)
         let title = UILabel(frame: rcTitle)
         title.text = "请填写您要开通的代理的基本信息"
+        title.font = UIFont.systemFont(ofSize: 14)
         bg.addSubview(title)
         
         let lblName = addLabel(title: sectionHeaders[0])
@@ -109,33 +117,66 @@ class MyAgentToOpen: UIViewController {
         let div = addDivLine(y: lblSms.frame.origin.y + lblSms.frame.height + 50)
         let lblGame = addLabel(title: sectionHeaders[4])
         lblGame.frame.origin.y = div.frame.origin.y + div.frame.height + 5
+        
+        let agent = getAgent()
+        let gameName = agent["gameName"] as? String
+        let lblGameName = addLabel(title: gameName!)
+        lblGameName.frame.origin.y = lblGame.frame.origin.y
+        lblGameName.textAlignment = .right
+        alignUIView(v: lblGameName, position: .right)
         let line5 = addUnderLine(v: lblGame)
         
         let lblType = addLabel(title: sectionHeaders[5])
-        lblType.frame.origin.y = line5.frame.origin.y + line5.frame.height + 5
+        lblType.frame.origin.y = line5.frame.origin.y + line5.frame.height + 10
+        let items = ["县市普通代理", "二级代理", "VIP代理"]
+        segType = UISegmentedControl(items: items)
+        segType.frame = CGRect(x: 0, y: 0, width: 240, height: 25)
+        //segType.setContentOffset(CGSize(width: 100, height: 25), forSegmentAt: 0)
+        segType.setWidth(100, forSegmentAt: 0)
+        segType.frame.origin.y = lblType.frame.origin.y
+        segType.isMomentary = false
+        view.addSubview(segType)
+        alignUIView(v: segType, position: .right)
         let line6 = addUnderLine(v: lblType)
-        line6.frame.size.height = 2
+        line6.frame.origin.y += 5
+        
+        // Vip项
+        lblSubCount = addLabel(title: sectionHeaders[6])
+        lblSubCount.frame.origin.y = line6.frame.origin.y + line6.frame.height + 5
+        tfSubCount = addTextField(placeholder: "请填写数量")
+        tfSubCount.frame.origin.y = lblSubCount.frame.origin.y
+        tfSubCount.textAlignment = .right
+        alignUIView(v: tfSubCount, position: .right)
+        line7 = addUnderLine(v: lblSubCount)
+        
+        lblValidityPeriod = addLabel(title: sectionHeaders[7])
+        lblValidityPeriod.frame.origin.y = line7.frame.origin.y + line7.frame.height + 5
+        lblPeriod = addLabel(title: "小于等于您当前有效期")
+        lblPeriod.frame.origin.y = lblValidityPeriod.frame.origin.y
+        lblPeriod.frame.size.width = 200
+        lblPeriod.textAlignment = .right
+        alignUIView(v: lblPeriod, position: .right)
+        line8 = addUnderLine(v: lblValidityPeriod)
+        // ----
         
         btnNew = addButton(title: "立即开通", action: #selector(new(_:)))
         btnCancel = addButton(title: "取消", action: #selector(new(_:)))
-        btnCancel.frame.origin.y = UIScreen.main.bounds.height * 0.7
+        
+        
+        btnNew.frame.origin.y = line8.frame.origin.y + 25
+        btnCancel.frame.origin.y = btnNew.frame.origin.y + btnNew.frame.height + 25
+
+        alignUIView(v: btnNew, position: .center)
+        btnNew.setBorder(type: 0)
         alignUIView(v: btnCancel, position: .center)
         btnCancel.setBorder(type: 1)
         
-        btnNew.frame.origin.y = btnCancel.frame.origin.y - btnNew.frame.height - 25
-        alignUIView(v: btnNew, position: .center)
-        btnNew.setBorder(type: 0)
-//        segSort.selectedSegmentIndex = idx
-//        segSort.addTarget(self, action: #selector(self.segDidchange(_:)), for: .valueChanged)
-//
-//        btnNew.addTarget(self, action: #selector(self.doNew(_:)), for: .touchUpInside)
-//        
-//        let agent = getAgent()
-//        let gameName = agent["gameName"] as? String
-//        lblGameName.text = gameName
+        date = Date()
+        let idx = segType.selectedSegmentIndex
+        segType.addTarget(self, action: #selector(self.type(_:)), for: .valueChanged)
         
-//        showVip(idx: idx)
-//        setRoleId(idx: idx)
+        showVip(idx: idx)
+        setRoleId(idx: idx)
     }
     
     override func didReceiveMemoryWarning() {
@@ -144,9 +185,36 @@ class MyAgentToOpen: UIViewController {
     }
     
     func new(_ sender:UIButton) {
-        let timeInterVal = Int(Date().timeIntervalSince1970*1000)
+        switch sender {
+        case btnNew:
+            let timeInterVal = Int((date?.timeIntervalSince1970)!*1000)
+            
+            if tfName.text == "" {
+                view.makeToast(placeHolders[0])
+                return
+            }
+            
+            if tfID.text == "" {
+                view.makeToast(placeHolders[1])
+                return
+            }
 
-        request(.myagentNew(name: tfUSerName.text!, userId: Int(tfUserId.text!)!, tel: tfTel.text!, roleId: roleId!, verificationCode: tfVerificationCode.text!, vipAgentOpenLimit: 0, normalAgentOpenLimit: 0, subAgentOpenLimit: 0, validityPeriod: String(timeInterVal)), success: handleResult)
+            if tfTel.text == "" {
+                view.makeToast(placeHolders[2])
+                return
+            }
+
+            if tfVerificationCode.text == "" {
+                view.makeToast(placeHolders[3])
+                return
+            }
+            let tel = tfTel.text?.trim()
+            request(.myagentNew(name: tfName.text!, userId: Int(tfID.text!)!, tel: tel!, roleId: roleId!, verificationCode: tfVerificationCode.text!, vipAgentOpenLimit: 0, normalAgentOpenLimit: 0, subAgentOpenLimit: 0, validityPeriod: String(timeInterVal)), success: handleResult)
+        case btnCancel:
+            navigationController?.popViewController(animated: true)
+        default:
+            break
+        }
     }
     
     func handleSMS(json:JSON)->(){
@@ -169,33 +237,55 @@ class MyAgentToOpen: UIViewController {
         }
     }
     
-//    func segDidchange(_ segmented:UISegmentedControl){
-//        let idx = segmented.selectedSegmentIndex
-////        showVip(idx: idx)
-//        setRoleId(idx: idx)
-//    }
-//    
-//    func setRoleId(idx:Int){
-//        switch idx {
-//        case 0:
-//            roleId = 1001
-//        case 1:
-//            roleId = 1004
-//        case 2:
-//            roleId = 1003
-//        default:
-//            break
-//        }
-//    }
+    func type(_ segmented:UISegmentedControl){
+        let idx = segmented.selectedSegmentIndex
+        setRoleId(idx: idx)
+        showVip(idx: idx)
+    }
     
-//    func showVip(idx:Int){
-//        if idx < 2 {
-//            vVip.isHidden = true
-//        }else{
-//            vVip.isHidden = false
-//        }
-//    }
+    func setRoleId(idx:Int){
+        switch idx {
+        case 0:
+            roleId = 1001
+        case 1:
+            roleId = 1004
+        case 2:
+            roleId = 1003
+            
+            let agent = getAgent()
+            let myRoleId = agent["roleId"] as! Int
+            request(.permission(roleId: myRoleId), success: handlePermission)
+        default:
+            break
+        }
+    }
     
+    func showVip(idx:Int){
+        if idx < 2 {
+            lblSubCount.isHidden = true
+            line7.isHidden = true
+            lblValidityPeriod.isHidden = true
+            line8.isHidden = true
+            tfSubCount.isHidden = true
+            lblPeriod.isHidden = true
+        }else{
+            lblSubCount.isHidden = false
+            line7.isHidden = false
+            lblValidityPeriod.isHidden = false
+            line8.isHidden = false
+            tfSubCount.isHidden = false
+            lblPeriod.isHidden = false
+        }
+    }
+    
+    func handlePermission(json:JSON)->(){
+        let result = json["result"]
+        print(result)
+        let code = result["code"].intValue
+        if code == 200 {
+        }
+    }
+
     func handleResult(json:JSON)->(){
         let result = json["result"]
         print(result)

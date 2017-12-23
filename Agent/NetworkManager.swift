@@ -42,6 +42,8 @@ enum NetworkManager{
     case verificationCode(smsType:Int) //23修改安全手机验证码
     case agentSMS(tel:String, smsType:Int) //24开通代理手机验证码
     case upload(file:Data)//25头像上传
+    case permission(roleId:Int)//26根据roleId查询权限列表
+    
     //编辑安全手机
     case inviteGet //邀请玩家
     case inviteList(page:Int, pageSize:Int) //查询邀请玩家列表
@@ -166,6 +168,8 @@ extension NetworkManager: AuthorizedTargetType{
             return "/api/agent/core/verificationCode/register"
         case .upload(_):
             return "/api/agent/core/common/upload"
+        case .permission(_):
+            return "/api/agent/core/role/permission"
             
         //------------------
         //购卡服务
@@ -487,6 +491,11 @@ extension NetworkManager: AuthorizedTargetType{
             let fileData = try! Data(file)
             let formData2 = MultipartFormData(provider: .data(fileData), name: "file", fileName: "headImg.png", mimeType: "image/jpeg")
             return .uploadCompositeMultipart([formData2], urlParameters: param)
+            
+        case .permission(let roleId):
+            var data:[String:Any] = [:]
+            data["roleId"] = roleId
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
             
         default:
             let params:[String:Any] = [:]

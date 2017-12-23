@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class AboutView: UITableViewController {
 
@@ -49,6 +50,14 @@ class AboutView: UITableViewController {
         return infoTitles.count
     }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 1:
+            request(.agreement, success: handleResult)
+        default:
+            break
+        }
+    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellInfoIdentifier, for: indexPath) as! MyAgentInfoCell
@@ -67,7 +76,15 @@ class AboutView: UITableViewController {
         return cell
     }
     
-
+    func handleResult(json:JSON)->(){
+        let result = json["result"]
+        print(result)
+        let code = result["code"].intValue
+        if code == 200 {
+            let vc = agreement()
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
