@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Alamofire
 import Moya
 import SwiftyJSON
 
@@ -27,8 +28,7 @@ enum NetworkManager{
     case noticeList(page:Int, pageSize:Int) //查询公告列表
     case noticeDetail(noticeId:Int) //查询公告详情
     case myagent(agentType:Int, page:Int, pageSize:Int) //查询我的代理列表
-    case myagentInfo(subAgentId:Int) //查询我的代理详情
-    case updateRemark(subAgentId:Int, remark:String) //修改我的代理备注
+    case myagentInfo(subAgentId:Int) //8查询我的代理详情
     case myagentNew(name:String, userId:Int, tel:String, roleId:Int, verificationCode:String, vipAgentOpenLimit:Int, normalAgentOpenLimit:Int, subAgentOpenLimit:Int, validityPeriod:String) //开通代理
     case agentSwitch(agentId:Int, enable:String) //启用，禁用代理
     case pwdChange(pwd:String, rpwd:String) //修改密码
@@ -38,6 +38,7 @@ enum NetworkManager{
     case typeInfo //16查询特权信息
     case bindTel(tel:String, verificationCode:String) //17绑定安全手机
     case updateBind(oldVerificationCode:String, tel:String, newVerificationCode:String) //18修改安全手机
+    case updateRemark(subAgentId:Int, remark:String) //21修改我的代理备注
     case bindSMS(tel:String, smsType:Int) //22获取绑定安全手机验证码
     case verificationCode(smsType:Int) //23修改安全手机验证码
     case agentSMS(tel:String, smsType:Int) //24开通代理手机验证码
@@ -144,8 +145,12 @@ extension NetworkManager: AuthorizedTargetType{
             return "/api/agent/core/notice/detail"
         case .myagent(_, _, _):
             return "/api/agent/core/myagent/list"
+        case .myagentInfo(_):
+            return "/api/agent/core/myagent/info"
         case .myagentNew(_, _, _, _, _, _, _, _, _):
             return "/api/agent/core/myagent/new"
+        case .agentSwitch(_, _):
+            return "/api/agent/core/myagent/switch"
         case .pwdChange(_, _):
             return "/api/agent/core/pwd/change"
         case .myInfo:
@@ -162,6 +167,8 @@ extension NetworkManager: AuthorizedTargetType{
             return "/api/agent/core/verificationCode/bindtel"
         case .updateBind(_, _, _):
             return "/api/agent/core/tel/bind/update"
+        case .updateRemark(_, _):
+            return "/api/agent/core/myagent/updateRemark"
         case .verificationCode(_):
             return "/api/agent/core/verificationCode"
         case .agentSMS(_, _):
@@ -419,6 +426,10 @@ extension NetworkManager: AuthorizedTargetType{
                 data["pageSize"] = pageSize
             }
             return .requestParameters(parameters: data, encoding: DataEncoding.default)
+        case .myagentInfo(let subAgentId):
+            var data:[String:Any] = [:]
+            data["subAgentId"] = subAgentId
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
             
         case .myagentNew(let name, let userId, let tel, let roleId, let verificationCode, let vipAgentOpenLimit, let normalAgentOpenLimit, let subAgentOpenLimit, let validityPeriod):
             var data:[String:Any] = [:]
@@ -439,6 +450,13 @@ extension NetworkManager: AuthorizedTargetType{
             }
             data["validityPeriod"] = validityPeriod
             return .requestParameters(parameters: data, encoding: DataEncoding.default)
+            
+        case .agentSwitch(let agentId, let enable):
+            var data:[String:Any] = [:]
+            data["agentId"] = agentId
+            data["enable"] = enable
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
+
         case .editHI(let headerImgSrc):
             var data:[String:Any] = [:]
             data["headerImgSrc"] = headerImgSrc
@@ -466,6 +484,13 @@ extension NetworkManager: AuthorizedTargetType{
             data["tel"] = tel
             data["newVerificationCode"] = newVerificationCode
             return .requestParameters(parameters: data, encoding: DataEncoding.default)
+            
+        case .updateRemark(let subAgentId, let remark):
+            var data:[String:Any] = [:]
+            data["subAgentId"] = subAgentId
+            data["remark"] = remark
+            return .requestParameters(parameters: data, encoding: DataEncoding.default)
+            
             
         case .verificationCode(let smsType):
             var data:[String:Any] = [:]
@@ -510,12 +535,7 @@ extension NetworkManager: AuthorizedTargetType{
     }
     
     public var headers:[String:String]?{
-//        switch self{
-//        case .login, .refresh:
-            return ["Content-Type" : "application/json"]
-//        default:
-//            return ["Content-Type" : "application/octet-stream"]
-//        }
+        return ["Content-Type" : "application/json"]
     }
     
     public var needsAuth: Bool {
@@ -528,6 +548,11 @@ extension NetworkManager: AuthorizedTargetType{
     }
 }
 
+//let manager = Alamofire.SessionManager.default
+//
+//manager.delegate.sessionDidReceiveChallenge = { session, challenge in
+//    
+//}
 //func handleError(statusCode: Int) -> () {
 //    //服务器报错等问题
 //    print("请求错误！错误码：\(statusCode)")

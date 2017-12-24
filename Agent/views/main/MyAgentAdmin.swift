@@ -10,9 +10,8 @@ import UIKit
 import SwiftyJSON
 import XLPagerTabStrip
 class AgentViewPageController: ButtonBarPagerTabStripViewController {
-    var isReload = false
     
-    var childViews = [MyAgentList]()
+    var isReload = false
     
     override func viewDidLoad() {
         settings.style.buttonBarItemFont = .systemFont(ofSize: 15)
@@ -36,10 +35,7 @@ class AgentViewPageController: ButtonBarPagerTabStripViewController {
             return [page1, page2, page3]
         }
         
-//        childViews = [page1, page2, page3]
-        childViews.append(page1)
-        childViews.append(page2)
-        childViews.append(page3)
+        let childViews = [page1, page2, page3]
         return childViews
     }
     
@@ -59,7 +55,7 @@ class AgentViewPageController: ButtonBarPagerTabStripViewController {
 
 class MyAgentAdmin: UIViewController {
 
-//    @IBOutlet weak var btnOpen: UIButton!
+    @IBOutlet weak var btnNew: UIButton!
 //    @IBOutlet weak var tableView: UITableView!
 //    
 //    @IBOutlet weak var imgNoData: UIImageView!
@@ -74,18 +70,14 @@ class MyAgentAdmin: UIViewController {
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
         self.title = "我的代理"
-        let btnOpen = addButton(title: "立即开通", action: #selector(toOpen(_:)))
-//        create(type: .button, title: [], action: #selector(toOpen(_:)), sender: self)
-//        btnOpen.addTarget(self, action: #selector(toOpen(_:)), for: .touchUpInside)
-//        request(.myagent(agentType: segSort.selectedSegmentIndex, page: 1, pageSize: 0), success: handleData)
 
         let agentViewPage = AgentViewPageController()
         addChildViewController(agentViewPage)
         view.addSubview(agentViewPage.view)
-        
-        btnOpen.frame = CGRect(x: 80, y: 200, width: 325, height: 41)
-        btnOpen.setBorder(type: 0)
-        view.addSubview(btnOpen)
+
+        btnNew = addButton(title: "立即开通", action: #selector(toOpen(_:)))
+        btnNew.frame.origin.y = UIScreen.main.bounds.height - btnNew.frame.height - 100
+        btnNew.setBorder(type: 0)
 //        autoFit()
     }
 
@@ -104,7 +96,7 @@ class MyAgentAdmin: UIViewController {
 //    }
     
     func toOpen(_ button:UIButton){
-        let vc = MyAgentToOpen()
+        let vc = MyAgentNew()
         self.navigationController?.pushViewController(vc, animated: true)
     }
 

@@ -7,13 +7,27 @@
 //
 
 import UIKit
+import SwiftyJSON
 
-class MyAgentDetail: UITableViewController {
-    let cellInfoIdentifier = "infoCell"
+protocol MyAgentDetailDelegate {
+    func subAgent(id:Int)
+    func reLoad()
+}
 
+class MyAgentDetail: UITableViewController, MyAgentDetailDelegate {
+    let cellRemarkIdentifier = "remarkCell"
+
+    var subAgentId:Int?
+    var isEnabled:Bool?
+    var delegate:MyAgentDetailDelegate?
+    @IBOutlet weak var tfRemark:UITextField?
+    @IBOutlet weak var btnSwitch:UIButton?
     let infoTitles = [
         "代理ID", "所属游戏", "类型", "激活时间", "安全手机", "登录账号", "备注"
     ]
+
+    var agentInfo = [Any]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,14 +39,18 @@ class MyAgentDetail: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        tableView.register(MyAgentInfoCell.self, forCellReuseIdentifier: cellInfoIdentifier)
-        let xibInfo = UINib(nibName: "MyAgentInfoCell", bundle: nil)
-        tableView.register(xibInfo, forCellReuseIdentifier: cellInfoIdentifier)
+
+        tableView.register(MyAgentRemarkCell.self, forCellReuseIdentifier: cellRemarkIdentifier)
+        let xibRemark = UINib(nibName: "MyAgentRemarkCell", bundle: nil)
+        tableView.register(xibRemark, forCellReuseIdentifier: cellRemarkIdentifier)
+
         tableView.tableFooterView = UIView()
         
-        let btnSwitch = addButton(title: "禁用该代理", action: #selector(switchAgent(_:)))
-        btnSwitch.frame.origin.y = UIScreen.main.bounds.height/2
-        btnSwitch.setBorder(type: 0)
+        btnSwitch = addButton(title: "禁用该代理", action: #selector(agentSwitch(_:)))
+        btnSwitch?.frame.origin.y = UIScreen.main.bounds.height/2 + 25
+        btnSwitch?.setBorder(type: 0)
+        
+        request(.myagentInfo(subAgentId: self.subAgentId!), success: handleResult)
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,19 +72,128 @@ class MyAgentDetail: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellInfoIdentifier, for: indexPath) as! MyAgentInfoCell
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellRemarkIdentifier, for: indexPath) as! MyAgentRemarkCell
+        cell.selectionStyle = .none
+        cell.tfRemark.isHidden = true
+        cell.btnSave.isHidden = true
+        
         // Configure the cell...
         cell.lblTitle.text = infoTitles[indexPath.row]
+        
+        if agentInfo.count > 0 {
+            let cellData = agentInfo[indexPath.row]
+            switch indexPath.row {
+            case 0:
+                let agentId = cellData as! Int
+                cell.lblContent.text = String.init(format: "%d", agentId)
+
+            case 4:
+                let isBind = cellData as! Bool
+                if isBind {
+                    cell.lblContent.text = "已绑定"
+                } else {
+                    cell.lblContent.text = "未绑定"
+                }
+            case 6:
+                let remark = cellData as! String
+                cell.tfRemark.text = remark
+//                if remark == "" {
+                    cell.lblContent.isHidden = true
+                    cell.tfRemark.isHidden = false
+                    tfRemark = cell.tfRemark
+                    cell.btnSave.isHidden = false
+                    cell.btnSave.addTarget(self, action: #selector(remark(_:)), for: .touchUpInside)
+//                } else {
+//                    cell.lblContent.isHidden = false
+//                    cell.lblContent.text = remark
+//                    cell.tfRemark.isHidden = true
+//                    cell.btnSave.isHidden = true
+//                }
+                
+            default:
+                cell.lblContent.text = cellData as? String
+            }
+        }
         return cell
     }
     
     func cardsDetail(_ sender:Any){
-        
+        let vc = MyAgentRecords()
+        navigationController?.pushViewController(vc, animated: true)
     }
 
-    func switchAgent(_ sender:Any){
+    func agentSwitch(_ sender:Any){
+        var enable:String?
         
+        if self.isEnabled! {
+            enable = "N"
+        } else {
+            enable = "Y"
+        }
+        request(.agentSwitch(agentId: self.subAgentId!, enable: enable!), success: handleSwitch)
+    }
+    
+    func handleSwitch(json:JSON)->(){
+        let result = json["result"]
+        print(result)
+        let code = result["code"].intValue
+        if code == 200 {
+            super.view.makeToast("保存成功")
+            delegate?.reLoad()
+        }
+    }
+    
+    func handleResult(json:JSON)->(){
+        let result = json["result"]
+        print(result)
+        let code = result["code"].intValue
+        if code == 200 {
+            agentInfo.removeAll()
+            
+            let data = result["data"]
+            agentInfo.append(data["agentId"].intValue)
+            agentInfo.append(data["gameName"].stringValue)
+            agentInfo.append(data["agentType"].stringValue)
+            agentInfo.append(data["enableTime"].stringValue)
+            agentInfo.append(data["isbindTel"].boolValue)
+            agentInfo.append(data["account"].stringValue)
+            agentInfo.append(data["remark"].stringValue)
+            let enable = data["enable"].stringValue
+            agentInfo.append(enable)
+            
+            if enable == "PY" || enable == "Y" {
+                isEnabled = true
+                btnSwitch?.setTitle("禁用该代理", for: .normal)
+                btnSwitch?.backgroundColor = .orange
+            } else {
+                isEnabled = false
+                btnSwitch?.setTitle("启用该代理", for: .normal)
+                btnSwitch?.backgroundColor = UIColor(hex: "008ce6")
+            }
+            tableView.reloadData()
+        }
+    }
+    
+    func remark(_ sender:UIButton){
+        let remark = tfRemark?.text
+        request(.updateRemark(subAgentId: self.subAgentId!, remark: remark!), success: handleRemark)
+    }
+    
+    func handleRemark(json:JSON)->(){
+        let result = json["result"]
+        print(result)
+        let code = result["code"].intValue
+        if code == 200 {
+            super.view.makeToast("保存成功")
+        }
+    }
+    
+    func subAgent(id: Int) {
+        self.subAgentId = id
+    }
+    
+    func reLoad() {
+        request(.myagentInfo(subAgentId: self.subAgentId!), success: handleResult)
     }
 /*
     // Override to support conditional editing of the table view.

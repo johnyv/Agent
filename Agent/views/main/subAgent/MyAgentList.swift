@@ -119,7 +119,14 @@ class MyAgentList: UITableViewController, MyAgentListDelegate, IndicatorInfoProv
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 0{
+            return
+        }
         let vc = MyAgentDetail()
+        let cellData = listData[indexPath.row]
+        let subAgentId = cellData["agentId"] as! Int
+        vc.delegate = vc.self
+        vc.subAgent(id: subAgentId)
         navigationController?.pushViewController(vc, animated: true)
     }
     

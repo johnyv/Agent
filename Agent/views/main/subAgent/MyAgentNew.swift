@@ -8,8 +8,9 @@
 
 import UIKit
 import SwiftyJSON
+import HooDatePicker
 
-class MyAgentToOpen: UIViewController {
+class MyAgentNew: UIViewController {
     let sectionHeaders = ["姓名",
                           "游戏ID",
                           "手机号",
@@ -157,6 +158,10 @@ class MyAgentToOpen: UIViewController {
         lblPeriod.textAlignment = .right
         alignUIView(v: lblPeriod, position: .right)
         line8 = addUnderLine(v: lblValidityPeriod)
+        let tapDate = UITapGestureRecognizer(target: self, action: #selector(selectDate(_:)))
+        lblPeriod.isUserInteractionEnabled = true
+        lblPeriod.addGestureRecognizer(tapDate)
+
         // ----
         
         btnNew = addButton(title: "立即开通", action: #selector(new(_:)))
@@ -184,6 +189,15 @@ class MyAgentToOpen: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func selectDate(_ recognizer:UITapGestureRecognizer){
+        
+        let datePicker = HooDatePicker(superView: self.view)
+        datePicker?.delegate = self
+        datePicker?.locale = Locale(identifier: "zh_CN")
+        datePicker?.datePickerMode = HooDatePickerMode.date
+        datePicker?.show()
+    }
+
     func new(_ sender:UIButton) {
         switch sender {
         case btnNew:
@@ -307,4 +321,10 @@ class MyAgentToOpen: UIViewController {
     }
     */
 
+}
+
+extension MyAgentNew: HooDatePickerDelegate{
+    func datePicker(_ dataPicker: HooDatePicker!, didSelectedDate date: Date!) {
+        self.date = date
+    }
 }
