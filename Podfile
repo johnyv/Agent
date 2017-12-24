@@ -12,7 +12,6 @@ target 'Agent' do
 	pod 'SwiftyJSON'
 	pod 'ObjectMapper', '~>2.2'
 	pod 'SnapKit', '~> 3.0.0'
-	pod 'PagingMenuController'
 	pod 'XLPagerTabStrip', '~> 8.0'
 	pod 'IQKeyboardManagerSwift'
 	pod 'PopupController'

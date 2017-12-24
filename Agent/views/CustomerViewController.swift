@@ -9,7 +9,6 @@
 import UIKit
 import SwiftyJSON
 import Moya
-import PagingMenuController
 
 //private struct CustomerPageOptions: PagingMenuControllerCustomizable {
 ////    private let tableRecentlyView = RecentlyView()

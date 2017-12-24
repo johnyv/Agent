@@ -33,13 +33,11 @@ class ViewController: UIViewController {
 
                 //进入主页
                 let vc = loadVCfromMain(identifier: "mainMenu") as? MenuViewController
-//                present(vc!, animated: true, completion: nil)
                 delegate.window?.rootViewController = vc
                 
             }else{
                 //token失败，重新登录
                 let vc = loadVCfromLogin(identifier: "loginMain") as? LoginViewController
-//                present(vc!, animated: true, completion: nil)
                 delegate.window?.rootViewController = vc
             }
         }

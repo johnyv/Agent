@@ -23,21 +23,20 @@ class AccountViewController: UIViewController {
         let leftButton = UIBarButtonItem(image: UIImage(named: "ico_back"), style: .plain, target: self, action: #selector(switchBack(_:)))
         navigationItem.setLeftBarButton(leftButton, animated: true)
 
-        let textWidth:CGFloat = 225
-        let textCenter:CGFloat =  (UIScreen.main.bounds.width - textWidth) / 2
-        let rcAccount = CGRect(x: textCenter, y: 110, width: textWidth, height: 25)
+        let rcAccount = CGRect(x: 0, y: 110, width: 225, height: 25)
         tfAccount = MobilephoneField(frame: rcAccount)
         view.addSubview(tfAccount!)
+        alignUIView(v: tfAccount, position: .center)
         let line1 = addUnderLine(v: tfAccount!)
         
         tfPassword = addTextField(placeholder: "请输入密码")
-        let rcPass = CGRect(x: textCenter, y: line1.frame.origin.y + line1.frame.height + 25, width: textWidth, height: 25)
-        tfPassword.frame = rcPass
+        tfPassword.frame.origin.y = line1.frame.origin.y + line1.frame.height + 25
+        tfPassword.frame.size.width = 225
         tfPassword.isSecureTextEntry = true
-        
+        alignUIView(v: tfPassword, position: .center)
         _ = addUnderLine(v: tfPassword!)
         
-        let btnLogin = addButton(title: "登录", action: #selector(accountLogin(_:)))
+        let btnLogin = addButton(title: "登录", action: #selector(login(_:)))
         
         let buttonWidth:CGFloat = 325
         let buttonCenter:CGFloat = (UIScreen.main.bounds.width - buttonWidth) / 2
@@ -66,42 +65,45 @@ class AccountViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func accountLogin(_ sender: UIButton) {
-        let app = UIApplication.shared.delegate as! AppDelegate
-        func handleLogin(json:JSON)->(){
-            let code = json["code"].intValue
-            print(json)
-            if code == 0 {
-                return
-            }
-            if code == 200 {
-                let token = json["token"].stringValue
-                UserDefaults.standard.set(token, forKey: "agentToken")
-                let agent = json["agent"]
-                setAgent(data: agent)
-                setAuthority(agent: agent)
-                
-                app.enterApp()
-            }else{
-                alertResult(code: code)
-
-            }
-        }
+    func login(_ sender: UIButton) {
         
         let usr = tfAccount.text?.replacingOccurrences(of: "-", with: "")
         let pwd = tfPassword.text
         let identifier = UIDevice.current.identifierForVendor
         request(.login(usr!, pwd!), success: handleLogin)
     }
+    
     func loss(_ sender: UIButton) {
         alertResult(code: 99)
     }
     
     func switchBack(_ sender: Any) {
         let app = UIApplication.shared.delegate as! AppDelegate
-        let vcLogin = loadVCfromLogin(identifier: "loginMain") as? LoginViewController
-        app.window?.rootViewController = vcLogin
+        let vc = LoginViewController ()
+        app.window?.rootViewController = vc
     }
+    
+    func handleLogin(json:JSON)->(){
+        let code = json["code"].intValue
+        print(json)
+        if code == 0 {
+            return
+        }
+        if code == 200 {
+            let token = json["token"].stringValue
+            UserDefaults.standard.set(token, forKey: "agentToken")
+            let agent = json["agent"]
+            setAgent(data: agent)
+            setAuthority(agent: agent)
+            
+            let app = UIApplication.shared.delegate as! AppDelegate
+            app.enterApp()
+        }else{
+            alertResult(code: code)
+            
+        }
+    }
+
     /*
     // MARK: - Navigation
 

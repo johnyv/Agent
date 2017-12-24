@@ -33,45 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         nav.titleTextAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 18.0),NSForegroundColorAttributeName: UIColor.white]
         nav.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         nav.shadowImage = UIImage()
-        
-//        self.reLogin()
-        
-//        let source = TokenSource()
-//        source.token = getSavedToken()
-//        let provider = MoyaProvider<NetworkManager>(plugins:[
-//            AuthPlugin(tokenClosure: {return source.token})])
-//
-//        func handleResult(json:JSON)->(){
-//            print(json)
-//            let code = json["code"].intValue
-//            if (code == 200){
-//                let token = json["token"].stringValue
-//                UserDefaults.standard.set(token, forKey: "agentToken")
-//                let agent = json["agent"]
-////                AgentInfo.instance.account = agent["account"].stringValue
-////                AgentInfo.instance.agentId = agent["agentId"].stringValue
-////                AgentInfo.instance.roleId = agent["roleId"].stringValue
-////                AgentInfo.instance.name = agent["name"].stringValue
-////                AgentInfo.instance.nickName = agent["nickName"].stringValue
-////                let gameName:String = agent["gameName"].stringValue
-////                AgentInfo.instance.gameName = agent["gameName"].stringValue
-////                UserDefaults.standard.set(gameName, forKey: "gameName")
-////                AgentInfo.instance.serverCode = agent["serverCode"].stringValue
-////                AgentInfo.instance.headImg = agent["headImg"].stringValue
-////                AgentInfo.instance.lastBuyTime = agent["lastBuyTime"].stringValue
-////                //UserDefaults.standard.set(authority as! [String], forKey: "Array")
-//                setAgent(data: agent)
-//                let authority = agent["authorityList"]
-//                setAuthority(agent:agent)
-////                UserDefaults.standard.set(authority, forKey: "authority")
-////                print(AgentInfo.instance.nickName)
-//                
-//                self.login()
-//            }else{
-//                self.reLogin()
-//            }
-//        }
-//        Network.request(.refresh, success: handleResult, provider: provider)
 
         return true
     }
@@ -107,25 +68,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
         
     func reLogin() -> () {
- 
-        var topViewController:UIViewController?
-        topViewController = (UIApplication.shared.keyWindow?.rootViewController)!
-        while ((topViewController?.presentedViewController) != nil) {
-            topViewController = topViewController?.presentedViewController!
-        }
-        topViewController?.dismiss(animated: false, completion: nil)
+// 
+//        var topViewController:UIViewController?
+//        topViewController = (UIApplication.shared.keyWindow?.rootViewController)!
+//        while ((topViewController?.presentedViewController) != nil) {
+//            topViewController = topViewController?.presentedViewController!
+//        }
+//        topViewController?.dismiss(animated: false, completion: nil)
         
-        let rootVc = loadVCfromLogin(identifier: "loginMain") as? LoginViewController
+        let rootVc = LoginViewController()
         window?.rootViewController = rootVc
     }
 
     func enterApp() -> () {
-        var topViewController:UIViewController?
-        topViewController = (UIApplication.shared.keyWindow?.rootViewController)!
-        while ((topViewController?.presentedViewController) != nil) {
-            topViewController = topViewController?.presentedViewController!
-        }
-        topViewController?.dismiss(animated: false, completion: nil)
+//        var topViewController:UIViewController?
+//        topViewController = (UIApplication.shared.keyWindow?.rootViewController)!
+//        while ((topViewController?.presentedViewController) != nil) {
+//            topViewController = topViewController?.presentedViewController!
+//        }
+//        topViewController?.dismiss(animated: false, completion: nil)
         
         let rootVc = loadVCfromMain(identifier: "mainMenu") as? MenuViewController
         window?.rootViewController = rootVc

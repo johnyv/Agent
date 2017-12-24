@@ -218,13 +218,18 @@ extension PurchaseView: UICollectionViewDelegate, UICollectionViewDataSource {
             cell.frColor = crDefault
         }
         
-        cell.lblCardNum.text = String.init(format: "%d张",(cellData["cardNum"] as! Int) + (cellData["extraNum"] as! Int) + (cellData["activityExtraNum"] as! Int))
+        let cardNum:Int = cellData["cardNum"] as! Int
+        let extraNum:Int = cellData["extraNum"] as! Int
+        let activityExtraNum:Int = cellData["activityExtraNum"] as! Int
+        let count = cardNum + extraNum + activityExtraNum
+        
+        cell.lblCardNum.text = String.init(format: "%d张", count)
         cell.lblPrice.text = String.init(format: "¥%.2f", cellData["discountFee"] as! Double)
         let oldStr:String = String.init(format: "¥%.2f", cellData["price"] as! Float)
         
         let aStr = NSMutableAttributedString(string: oldStr)
         let propertys:[String:Any] = [NSForegroundColorAttributeName:UIColor.red,NSStrikethroughStyleAttributeName: NSNumber.init(value:Int32(NSUnderlineStyle.styleSingle.rawValue)),NSBaselineOffsetAttributeName:Int(0)]
-        aStr.addAttributes(propertys, range: NSMakeRange(0, oldStr.count))
+        aStr.addAttributes(propertys, range: NSMakeRange(0, oldStr.characters.count))
         
         cell.lblDiscount.attributedText = aStr
         cell.lblSuperscript.text = cellData["superscript"] as? String

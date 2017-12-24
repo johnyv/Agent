@@ -13,7 +13,7 @@ import UIKit
     
     var remainingSeconds: Int = 0 {
         willSet {
-            setTitle("(\(newValue))重新获取", for: .normal)
+            setTitle("(\(newValue))", for: .normal)
             
             if newValue <= 0 {
                 setTitle("重新获取", for: .normal)
@@ -27,7 +27,7 @@ import UIKit
             if newValue {
                 countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTime(_:)), userInfo: nil, repeats: true)
                 
-                remainingSeconds = 5
+                remainingSeconds = 120
                 
                 //self.backgroundColor = UIColor.gray
             } else {

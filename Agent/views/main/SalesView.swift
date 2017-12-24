@@ -148,13 +148,20 @@ class SalesView: UIViewController {
 //            cellData["sellTime"] =  data["sellTime"].stringValue
 //            cellData["sellCount"] = data["sellCount"].intValue
             } else {
-                cellData["id"] =  data["playerId"].intValue
+                cellData["id"] =  data["id"].intValue
                 cellData["header_img_src"] =  data["header_img_src"].stringValue
                 cellData["customerType"] =  "A"
             }
             
             let vc = loadVCfromMain(identifier: "salesConfirmView") as! SalesConfirmView
-            vc.buyer = cellData
+            vc.delegate = vc.self
+            let nick = cellData["nick"] as! String
+            let headIco = cellData["header_img_src"] as! String
+            let id = cellData["id"] as! Int
+            let type = cellData["customerType"] as! String
+
+            vc.delegate?.confirmInfo(nick: nick, headIco: headIco, id: id, type: type)
+            
             self.navigationController?.pushViewController(vc, animated: true)
             
         } else {
@@ -208,7 +215,14 @@ extension SalesView: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cellData = sourceData[indexPath.row]
         let vc = loadVCfromMain(identifier: "salesConfirmView") as! SalesConfirmView
-        vc.buyer = cellData
+        vc.delegate = vc.self
+
+        let nick = cellData["nick"] as! String
+        let headIco = cellData["header_img_src"] as! String
+        let id = cellData["id"] as! Int
+        let type = cellData["customerType"] as! String
+        
+        vc.delegate?.confirmInfo(nick: nick, headIco: headIco, id: id, type: type)
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

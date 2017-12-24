@@ -10,29 +10,42 @@ import UIKit
 import Moya
 import SwiftyJSON
 
-class SalesConfirmView: UIViewController {
+protocol ConfirmDelegate {
+    func confirmInfo(nick:String,
+                     headIco:String,
+                     id:Int,
+                     type:String)
+}
 
-    var buyer:[String:Any]?
+class SalesConfirmView: UIViewController {
+    
+    var nick:String?
+    var headIco:String?
+    var id:Int?
+    var type:String?
     
     @IBOutlet weak var imgHeadIco: UIImageView!
     @IBOutlet weak var lblNickName: UILabel!
     @IBOutlet weak var lblUserId: UILabel!
     @IBOutlet weak var btnConfirm: UIButton!
     @IBOutlet weak var tfCount: UITextField!
+    
+    var delegate:ConfirmDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.title = "售卡"
         // Do any additional setup after loading the view.
-        lblNickName.text = buyer?["nick"] as! String
-        lblUserId.text = String.init(format: "ID:%d", buyer?["id"] as! Int)
+        lblNickName.text = nick
+        lblUserId.text = String.init(format: "ID:%d", id!)
 //        let icoURL = URL(string: (buyer?.header_img_src)!)
 //        imgHeadIco.sd_setImage(with: icoURL, completed: nil)
-        let strURL = buyer?["header_img_src"] as! String
+        let strURL = headIco
         if strURL == "" {
             imgHeadIco.image = UIImage(named: "headsmall")
         } else {
-            let icoURL = URL(string: strURL)
+            let icoURL = URL(string: strURL!)
             imgHeadIco.sd_setImage(with: icoURL, completed: nil)
         }
 
@@ -51,8 +64,7 @@ class SalesConfirmView: UIViewController {
     }
 
     func onConfirm(_ button:UIButton) {
-        let type = buyer?["customerType"]
-        requestSell(type: type as! String)
+        requestSell(type:type!)
     }
     
     func requestSell(type:String){
@@ -64,15 +76,14 @@ class SalesConfirmView: UIViewController {
             showToast(string: "请输入张数")
             return;
         }
-        let id = buyer?["id"]
         let num = Int(tfCount.text!)
         if type == "A" {
-            request(.sellcardToAgent(agentID: id as! Int, number: num!), success: handleSell)
+            request(.sellcardToAgent(agentID: id!, number: num!), success: handleSell)
 //            Network.request(.sellcardToAgent(agentID: id!, number: num!), success: handleSell, provider: provider)
             
         }else
         {
-            request(.sellcardToPlayer(playerID: id as! Int, number: num!), success: handleSell)
+            request(.sellcardToPlayer(playerID: id!, number: num!), success: handleSell)
 //            Network.request(.sellcardToPlayer(playerID: id!, number: num!), success: handleSell, provider: provider)
         }
     }
@@ -98,4 +109,13 @@ class SalesConfirmView: UIViewController {
     }
     */
 
+}
+
+extension SalesConfirmView: ConfirmDelegate {
+    func confirmInfo(nick: String, headIco: String, id: Int, type: String) {
+        self.nick = nick
+        self.headIco = headIco
+        self.id = id
+        self.type = type
+    }
 }

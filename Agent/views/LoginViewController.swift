@@ -12,38 +12,121 @@ import SwiftyJSON
 import Moya
 
 class LoginViewController: UIViewController {
-    @IBOutlet weak var btnLogin: UIButton!
-    @IBOutlet weak var tfSMS: UITextField!
-    @IBOutlet weak var tfMobile: UITextField!
+    @IBOutlet weak var tfMobile: MobilephoneField!
+    @IBOutlet weak var tfSms: UITextField!
 
+    @IBOutlet weak var btnSms: SMSCountButton!
+    @IBOutlet weak var btnVoice: SMSCountButton!
+
+    @IBOutlet weak var btnLogin: UIButton!
     @IBOutlet weak var btnWeixin: UIButton!
     @IBOutlet weak var btnAccount: UIButton!
+    
     @IBOutlet weak var imgLogo: UIImageView!
-    @IBOutlet weak var dividing1: UIView!
-    @IBOutlet weak var dividing2: UIView!
-    @IBOutlet weak var dividing3: UIView!
+    
+    @IBOutlet weak var lblAreaCode: UILabel!
+    
+    @IBOutlet weak var dpArea: ComboBox!
+    let area = ["中国大陆", "台湾", "香港", "澳门"]
+    let areaCode = ["86", "886", "852", "853"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        let appdelegate = UIApplication.shared.delegate as! AppDelegate
-        appdelegate.window?.rootViewController = self
+        view.backgroundColor = .white
+        
+        imgLogo = addImageView()
+        imgLogo.frame.size = CGSize(width: 115, height: 94)
+        imgLogo.frame.origin.y = 60
+        imgLogo.image = UIImage(named: "logo")
+        alignUIView(v: imgLogo, position: .center)
+        
 
-//        imgLogo.snp.makeConstraints({(make) -> Void in
-//            make.top.equalTo(60)
-//            make.centerX.equalTo(self.view)})
-        btnLogin.layer.cornerRadius = 5
-        btnLogin.layer.masksToBounds = true
-//        btnLogin.snp.makeConstraints({(make) -> Void in
-//            make.top.equalTo(450)
-//            make.width.equalTo(dividing1)
-//            make.centerX.equalTo(self.view)})
+//        dpArea.datasource = self
+//        dpArea.delegate = self
+//        dpArea.backgroundColor = .clear
+//        dpArea.cellBgColor = .clear
+//        dpArea.cellSelectionColor = .clear
+        
+        
+        let lblArea = addLabel(title: "国家/地区")
+        lblArea.frame.origin.y = imgLogo.frame.origin.y + imgLogo.frame.height + 80
+        let line1 = addUnderLine(v: lblArea)
 
+        lblAreaCode = addLabel(title: "+86")
+        lblAreaCode.frame.origin.y = line1.frame.origin.y + line1.frame.height + 15
+        let line2 = addUnderLine(v: lblAreaCode)
+        
+        let rcMobile = CGRect(x: 0, y: 0, width: 225, height: 25)
+        tfMobile = MobilephoneField(frame: rcMobile)
+        tfMobile.placeholder = "请输入手机号"
+        tfMobile.frame.origin.y = lblAreaCode.frame.origin.y
+        view.addSubview(tfMobile)
+        alignUIView(v: tfMobile, position: .center)
+        
+        tfSms = addTextField(placeholder: "请输入验证码")
+        tfSms.frame.origin.y = line2.frame.origin.y + line2.frame.height + 15
+        alignUIView(v: tfSms, position: .center)
+        _ = addUnderLine(v: tfSms)
+        
+        btnSms = addSmsButton(title: "获取验证码", action: #selector(sms(_:)))
+        btnSms.frame.origin.y = tfSms.frame.origin.y
+        btnSms.frame.size.width = 80
+        btnSms.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        alignUIView(v: btnSms, position: .right)
+        
+        btnVoice = addSmsButton(title: "语音验证码", action: #selector(sms(_:)))
+        btnVoice.frame.origin.y = btnSms.frame.origin.y + btnSms.frame.height + 15
+        btnVoice.frame.size.width = 65
+        btnVoice.setTitleColor(UIColor(hex: "565656"), for: .normal)
+        btnVoice.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        alignUIView(v: btnVoice, position: .right)
+
+        btnLogin = addButton(title: "登录", action: #selector(login(_:)))
+        btnLogin.frame.origin.y = btnVoice.frame.origin.y + btnVoice.frame.height + 25
+        alignUIView(v: btnLogin, position: .center)
+        btnLogin.setBorder(type: 0)
+        
+        let line3 = addUnderLine(v: btnLogin)
+        line3.frame.origin.y += 35
+        let lblOther = addLabel(title: "其他方式登录")
+        lblOther.backgroundColor = .white
+        lblOther.frame.origin.y = line3.frame.origin.y - 13
+        lblOther.frame.size.width = 80
+        lblOther.textAlignment = .center
+        lblOther.font = UIFont.systemFont(ofSize: 11)
+        alignUIView(v: lblOther, position: .center)
+
+        let center = UIScreen.main.bounds.width / 2
+        btnWeixin = addButton(title: "微信登录", action: #selector(login(_:)))
+        btnWeixin.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        btnWeixin.frame.origin.x = center - btnWeixin.frame.width + 15
+        btnWeixin.frame.origin.y =  lblOther.frame.origin.y + lblOther.frame.height + 10
+        btnWeixin.setTitleColor(UIColor(hex: "565656"), for: .normal)
+        btnWeixin.frame.size = CGSize(width: 65, height: 100)
+        btnWeixin.backgroundColor = .clear
+        btnWeixin.setImage(UIImage(named:"wx"), for: .normal)
         btnWeixin.setTitleAlign(position: .bottom)
-        btnWeixin.addTarget(self, action: #selector(self.wxLogin(_:)), for: .touchUpInside)
+        
+        btnAccount = addButton(title: "密码登录", action: #selector(login(_:)))
+        btnAccount.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        btnAccount.frame.origin.x = center + btnAccount.frame.width / 2
+        btnAccount.frame.origin.y =  btnWeixin.frame.origin.y
+        btnAccount.setTitleColor(UIColor(hex: "565656"), for: .normal)
+        btnAccount.frame.size = CGSize(width: 65, height: 100)
+        btnAccount.backgroundColor = .clear
+        btnAccount.setImage(UIImage(named:"pwd"), for: .normal)
         btnAccount.setTitleAlign(position: .bottom)
         
-        autoFit()
+        dpArea =  ComboBox(frame: CGRect(x: 0, y: lblArea.frame.origin.y, width: 160, height: 25))
+        dpArea.delegate = self
+        let count:CGFloat = CGFloat(area.count)
+        dpArea.setComboBox(CGSize(width: 120, height: 44 * count))
+        dpArea.setComboBoxData(area)
+        view.addSubview(dpArea)
+        dpArea.setComboBoxTitle(area[0])
+        alignUIView(v: dpArea, position: .center)
 }
 
     override func didReceiveMemoryWarning() {
@@ -60,95 +143,63 @@ class LoginViewController: UIViewController {
         }
     }
 
-    @IBAction func sms(_ sender: SMSCountButton) {
+    func sms(_ sender: SMSCountButton) {
         sender.isCounting = true
-        
         let mobileNo = tfMobile.text!
-        
-        request(.sms(phoneNo: mobileNo, areaCode: "86", msgType: 2), success: handleSMS)
-//        Network.request(.login(usr!, pwd!), success: handleLogin, provider: provider)
-    }
-    
-    @IBAction func smsVoice(_ sender: SMSCountButton) {
-        sender.isCounting = true
-        
-        let mobileNo = tfMobile.text!
-        
-        request(.sms(phoneNo: mobileNo, areaCode: "86", msgType: 1), success: handleSMS)
-    }
-    @IBAction func startLogin(sender:UIButton){
-//        let provider = MoyaProvider<NetworkManager>()
-
-        let appdelegate = UIApplication.shared.delegate as! AppDelegate
-        func handleLogin(json:JSON)->(){
-            let code = json["code"].intValue
-            print(json)
-            if code == 200 {
-                let token = json["token"].stringValue
-                UserDefaults.standard.set(token, forKey: "agentToken")
-                let agent = json["agent"]
-//                AgentInfo.instance.account = agent["account"].stringValue
-//                AgentInfo.instance.agentId = agent["agentId"].stringValue
-//                AgentInfo.instance.roleId = agent["roleId"].stringValue
-//                AgentInfo.instance.name = agent["name"].stringValue
-//                AgentInfo.instance.nickName = agent["nickName"].stringValue
-//                AgentInfo.instance.gameName = agent["gameName"].stringValue
-//                AgentInfo.instance.serverCode = agent["serverCode"].stringValue
-//                AgentInfo.instance.headImg = agent["headImg"].stringValue
-//                AgentInfo.instance.lastBuyTime = agent["lastBuyTime"].stringValue
-                print(AgentInfo.instance.nickName)
-//                let authority = agent["authorityList"].array
-//                print(authority)
-                //UserDefaults.standard.set(authority, forKey: "Array")
-                appdelegate.enterApp()
-            }else{
-                alertResult(code: code)
-//                let alertController = UIAlertController(title: "系统提示",
-//                                                        message: errMsg.desc(key: code), preferredStyle: .alert)
-//                //                    let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-//                let okAction = UIAlertAction(title: "好的", style: .default, handler: {
-//                    action in
-//                    print("点击了确定")
-//                })
-//                //                    alertController.addAction(cancelAction)
-//                alertController.addAction(okAction)
-//                self.present(alertController, animated: true, completion: nil)
-            }
+        let code = lblAreaCode.text?.replacingOccurrences(of: "+", with: "")
+        if code != "86" {
+            view.makeToast("暂不支持此区域")
+            return
         }
-        
-        let usr = tfMobile.text
-        let pwd = tfSMS.text
-        let identifier = UIDevice.current.identifierForVendor
-        
-        //Network.request(.login(usr!, pwd!), success: handleLogin, provider: provider)
-        request(.login(usr!, pwd!), success: handleLogin)
-        //SVProgressHUD.showInfo(withStatus: "loading...")
-//        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainMenu") as! MenuViewController
-//        self.present(vc, animated: true, completion: nil)
+        switch sender {
+        case btnSms:
+            request(.sms(phoneNo: mobileNo, areaCode: code!, msgType: 2), success: handleSMS)
+        case btnVoice:
+            request(.sms(phoneNo: mobileNo, areaCode: code!, msgType: 1), success: handleSMS)
+        default:
+            break
+        }
     }
     
-//    func alertResult(code:Int, vc:ViewController) -> Void {
-//        let alertController = UIAlertController(title: "系统提示",message: errMsg.desc(key: code), preferredStyle: .alert)
-//        let okAction = UIAlertAction(title: "好的", style: .default, handler: {
-//            action in
-//        })
-//        alertController.addAction(okAction)
-//        vc.present(alertController, animated: true, completion: nil)
-//    }
+    func login(_ sender:UIButton){
+        switch sender {
+        case btnLogin:
+            let usr = tfMobile.text
+            let pwd = tfSms.text
+            let identifier = UIDevice.current.identifierForVendor
+            request(.login(usr!, pwd!), success: handleLogin)
+            
+        case btnAccount:
+            let vc = AccountViewController()
+            let navAccount = UINavigationController(rootViewController: vc)
+            present(navAccount, animated: true, completion: nil)
+            
+        case btnWeixin:
+            alertResult(code: 99)
+        default:
+            break
+        }
+
+    }
     
-    func wxLogin(_ sender: UIButton) {
-        alertResult(code: 99)
+    func handleLogin(json:JSON)->(){
+        let code = json["code"].intValue
+        print(json)
+        if code == 200 {
+            let token = json["token"].stringValue
+            UserDefaults.standard.set(token, forKey: "agentToken")
+            
+            let agent = json["agent"]
+            setAgent(data: agent)
+            setAuthority(agent: agent)
+
+            let app = UIApplication.shared.delegate as! AppDelegate
+            app.enterApp()
+        }else{
+            alertResult(code: code)
+        }
     }
 
-    @IBAction func accountLogin(_ sender: UIButton) {
-//        let vcAccount = loadVCfromLogin(identifier: "accountController") as! AccountController
-        let vc = AccountViewController()
-        let navAccount = UINavigationController(rootViewController: vc)
-        present(navAccount, animated: true, completion: nil)
-//        let appdelegate = UIApplication.shared.delegate as! AppDelegate
-//        appdelegate.window?.rootViewController = navAccount
-    }
-    
     /*
     // MARK: - Navigation
 
@@ -159,4 +210,12 @@ class LoginViewController: UIViewController {
     }
     */
 
+}
+
+extension LoginViewController: ComBoxDelegate {
+    func comboBox(_ comboBox: ComboBox!, didSelectRowAt indexPath: IndexPath!) {
+        print(indexPath.item)
+        comboBox.setComboBoxTitle(area[indexPath.item])
+        lblAreaCode.text = "+" + areaCode[indexPath.item]
+    }
 }
