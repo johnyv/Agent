@@ -279,7 +279,9 @@ extension NetworkManager: AuthorizedTargetType{
             data["channel"] = channel
             data["paySource"] = paySource
             data["goodId"] = goodId
-            data["activityId"] = activityId
+            if activityId != 0 {
+                data["activityId"] = activityId
+            }
             
             return .requestParameters(parameters: data, encoding: DataEncoding.default)
 

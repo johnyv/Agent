@@ -25,6 +25,10 @@ extension UIViewController{
         let msg = result["message"].stringValue
         self.view.makeToast(msg, duration: 2, position: .center)
     }
+    
+    func showToast(string:String) -> Void {
+        UIApplication.shared.windows.first?.makeToast(string, duration: 2, position: .center)
+    }
 
     func request(_ target:NetworkManager,
                                        success successCallback: @escaping(JSON) -> Void
@@ -120,7 +124,7 @@ extension UIViewController{
     {
         let width = UIScreen.main.bounds.width * 0.9
         let x = (UIScreen.main.bounds.width - width) / 2
-        let defaultFrame = CGRect(x: x, y: 0, width: 100, height: 25)
+        let defaultFrame = CGRect(x: x, y: 0, width: 150, height: 25)
         return defaultFrame
     }
 
@@ -137,7 +141,7 @@ extension UIViewController{
     func addDivLine(y:CGFloat) -> UIView{
         let width = UIScreen.main.bounds.width
         let line = UIView(frame: CGRect(x: 0, y: y, width: width, height: 5))
-        line.backgroundColor = UIColor(hex: "cccccc")
+        line.backgroundColor = UIColor.init(red: 224/255.0, green: 224/255.0, blue: 224/255.0, alpha: 1)
         view.addSubview(line)
         return line
     }

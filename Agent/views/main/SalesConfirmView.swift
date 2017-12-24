@@ -60,6 +60,10 @@ class SalesConfirmView: UIViewController {
 //        source.token = getSavedToken()
 //        let provider = MoyaProvider<NetworkManager>(plugins:[
 //            AuthPlugin(tokenClosure: {return source.token})])
+        if (tfCount.text?.isEmpty)! {
+            showToast(string: "请输入张数")
+            return;
+        }
         let id = buyer?["id"]
         let num = Int(tfCount.text!)
         if type == "A" {
@@ -77,7 +81,8 @@ class SalesConfirmView: UIViewController {
         let result = json["result"]
         let code = result["code"].intValue
         if code == 200 {
-            dismiss(animated: true, completion: nil)
+            showToast(string: "售卡成功")
+            navigationController?.popViewController(animated: true)
         } else {
             toastMSG(result: result)
         }

@@ -54,6 +54,7 @@
     if (self.navigationController.viewControllers.count > 1) {
         UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ico_back"] style:UIBarButtonItemStylePlain target:self action:@selector(actionBack)];
         self.navigationItem.leftBarButtonItem = backItem;
+        self.navigationController.interactivePopGestureRecognizer.delegate = self;
     }
 }
 

@@ -31,7 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         nav.tintColor = UIColor.white
 //        nav.backgroundColor = UIColor(hex: "008ce6")
         nav.titleTextAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 18.0),NSForegroundColorAttributeName: UIColor.white]
-        nav.backItem?.title = nil;
         nav.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         nav.shadowImage = UIImage()
         

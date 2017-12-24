@@ -237,9 +237,12 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
         case 1:
             switch indexPath.row {
             case 1:
-                let vc = loadVCfromMain(identifier: "modifyTelView") as! ModifyTelView
-                vc.delegateModify = self
-                self.navigationController?.pushViewController(vc, animated: true)
+                let tel = profile["bindTel"] as! String
+                if !tel.isEmpty {
+                    let vc = loadVCfromMain(identifier: "modifyTelView") as! ModifyTelView
+                    vc.delegateModify = self
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
             case 3:
                 let vc = ModifyPasswordView()
                 navigationController?.pushViewController(vc, animated: true)
@@ -311,7 +314,7 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
 
     func doBind(_ sender:UIButton){
         let vc = loadVCfromMain(identifier: "bindTelView") as! BindTelView
-        present(vc, animated: true, completion: nil)
+        navigationController?.pushViewController(vc, animated: true)
     }
 
     func doWeixinAuth(_ sender:UIButton){

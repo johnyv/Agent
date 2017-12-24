@@ -65,7 +65,8 @@ class AboutView: UITableViewController {
         // Configure the cell...
         cell.lblTitle.text = infoTitles[indexPath.row]
         if indexPath.row == 0{
-            cell.lblContent.text = "V1.0.0"
+            let currentVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+            cell.lblContent.text = "V" + currentVersion
             cell.accessoryType = .none
             cell.selectionStyle = .none
         } else {
