@@ -131,6 +131,8 @@ class OrdersView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func selectDate(_ sender: UIButton){
         let datePicker = HooDatePicker(superView: self.view)
         datePicker?.delegate = self
+        datePicker?.setTintColor(UIColor(hex: "565656"))
+        datePicker?.setHighlight(UIColor(hex: "008ce6"))
         datePicker?.locale = Locale(identifier: "zh_CN")
         datePicker?.datePickerMode = HooDatePickerMode.yearAndMonth
         datePicker?.show()

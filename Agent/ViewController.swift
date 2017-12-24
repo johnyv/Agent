@@ -37,7 +37,7 @@ class ViewController: UIViewController {
                 
             }else{
                 //token失败，重新登录
-                let vc = loadVCfromLogin(identifier: "loginMain") as? LoginViewController
+                let vc = LoginViewController()
                 delegate.window?.rootViewController = vc
             }
         }

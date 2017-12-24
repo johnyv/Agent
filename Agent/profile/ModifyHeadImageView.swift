@@ -13,7 +13,7 @@ import SDWebImage
 
 class ModifyHeadImageView: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    var delegateModify:ModifyProfileDelegage?
+    var delegate:ModifyProfileDelegage?
 
     @IBOutlet weak var imgHead: UIImageView!
     @IBOutlet weak var btnChoose: UIButton!
@@ -104,8 +104,8 @@ class ModifyHeadImageView: UIViewController, UIImagePickerControllerDelegate, UI
             print(result)
             let code = result["code"].intValue
             if code == 200 {
-                delegateModify?.refresh()
-                self.navigationController?.popViewController(animated: true)
+                delegate?.refresh()
+                _ = navigationController?.popViewController(animated: true)
             } else {
                 toastMSG(result: result)
             }

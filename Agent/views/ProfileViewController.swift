@@ -64,7 +64,7 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
 
         request(.myInfo, success: handleInfo)
 
-        autoFit()
+//        autoFit()
     }
 
     override func didReceiveMemoryWarning() {
@@ -223,12 +223,12 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
             switch indexPath.row {
             case 0:
                 let vc = ModifyHeadImageView()
-                vc.delegateModify = self
+                vc.delegate = self
                 navigationController?.pushViewController(vc, animated: true)
                 
             case 1:
                 let vc = ModifyNickView()
-                vc.delegateModify = self
+                vc.delegate = self
                 navigationController?.pushViewController(vc, animated: true)
                 
             default:
@@ -238,11 +238,11 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
             switch indexPath.row {
             case 1:
                 let tel = profile["bindTel"] as! String
-                if !tel.isEmpty {
-                    let vc = loadVCfromMain(identifier: "modifyTelView") as! ModifyTelView
-                    vc.delegateModify = self
-                    self.navigationController?.pushViewController(vc, animated: true)
-                }
+//                if !tel.isEmpty {
+                    let vc = ModifyTelView()
+                    vc.delegate = self
+                    navigationController?.pushViewController(vc, animated: true)
+//                }
             case 3:
                 let vc = ModifyPasswordView()
                 navigationController?.pushViewController(vc, animated: true)
@@ -313,7 +313,8 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
     }
 
     func doBind(_ sender:UIButton){
-        let vc = loadVCfromMain(identifier: "bindTelView") as! BindTelView
+        let vc = BindTelView()
+        vc.delegate = self
         navigationController?.pushViewController(vc, animated: true)
     }
 

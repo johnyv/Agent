@@ -28,14 +28,18 @@ class PaymentSelection: UIViewController, PopupContentViewController, PaymentDel
     @IBOutlet weak var btnWeixin: UIButton!
     @IBOutlet weak var btnAlipay: UIButton!
     
+    let width:CGFloat = UIScreen.main.bounds.width * 0.95
+    let height:CGFloat = 425
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.frame.size = CGSize(width: 365,height: 425)
+        self.view.frame.size = CGSize(width: width,height: height)
 
         // Do any additional setup after loading the view.
         btnClose.addTarget(self, action: #selector(pay(_:)), for: .touchUpInside)
         btnWeixin.addTarget(self, action: #selector(pay(_:)), for: .touchUpInside)
+        btnWeixin.layer.cornerRadius = 5
         btnAlipay.addTarget(self, action: #selector(pay(_:)), for: .touchUpInside)
+        btnAlipay.layer.cornerRadius = 5
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,7 +53,7 @@ class PaymentSelection: UIViewController, PopupContentViewController, PaymentDel
     }
 
     func sizeForPopup(_ popupController: PopupController, size: CGSize, showingKeyboard: Bool) -> CGSize {
-        return CGSize(width: 365,height: 425)
+        return CGSize(width: width,height: height)
 
     }
     

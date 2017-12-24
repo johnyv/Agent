@@ -214,7 +214,6 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController: ComBoxDelegate {
     func comboBox(_ comboBox: ComboBox!, didSelectRowAt indexPath: IndexPath!) {
-        print(indexPath.item)
         comboBox.setComboBoxTitle(area[indexPath.item])
         lblAreaCode.text = "+" + areaCode[indexPath.item]
     }

@@ -11,7 +11,7 @@ import SwiftyJSON
 
 class ModifyNickView: UIViewController {
 
-    var delegateModify:ModifyProfileDelegage?
+    var delegate:ModifyProfileDelegage?
     
     @IBOutlet weak var tfNick: UITextField!
     override func viewDidLoad() {
@@ -54,7 +54,7 @@ class ModifyNickView: UIViewController {
         let code = result["code"].intValue
         print(result)
         if code == 200 {
-            self.delegateModify?.refresh()
+            self.delegate?.refresh()
             var profile = getProfile()
             profile["nickName"] = tfNick.text
             UserDefaults.standard.set(profile, forKey: "PROFILE")

@@ -25,9 +25,11 @@ class PaymentOpt: UIViewController, PopupContentViewController, PayOrderDelegate
     
     var orderNo:String?
     
+    let width:CGFloat = UIScreen.main.bounds.width * 0.8
+    let height:CGFloat = 185
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.frame.size = CGSize(width: 365,height: 215)
+        self.view.frame.size = CGSize(width: width,height: height)
 
         // Do any additional setup after loading the view.
         btnCancel.addTarget(self, action: #selector(opt(_:)), for: .touchUpInside)
@@ -45,7 +47,7 @@ class PaymentOpt: UIViewController, PopupContentViewController, PayOrderDelegate
     }
     
     func sizeForPopup(_ popupController: PopupController, size: CGSize, showingKeyboard: Bool) -> CGSize {
-        return CGSize(width: 365,height: 215)
+        return CGSize(width: width,height: height)
         
     }
 
