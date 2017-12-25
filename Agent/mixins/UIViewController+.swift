@@ -238,19 +238,4 @@ extension UIViewController{
     func onBack(_ sender:Any){
         dismiss(animated: true, completion: nil)
     }
-//    func setAgent(data:JSON)->(){
-//        var agent:[String:Any] = [:]
-//
-//        agent["account"] = data["account"].stringValue
-//        agent["agentId"] = data["agentId"].intValue
-//        agent["roleId"] = data["roleId"].intValue
-//        agent["name"] = data["name"].stringValue
-//        agent["nickName"] = data["nickName"].stringValue
-//        agent["gameName"] = data["gameName"].stringValue
-//        agent["serverCode"] = data["serverCode"].stringValue
-//        agent["headImg"] = data["headImg"].stringValue
-//        agent["lastBuyTime"] = data["lastBuyTime"].stringValue
-//        
-//        UserDefaults.standard.set(agent, forKey: "AGENT")
-//    }
 }

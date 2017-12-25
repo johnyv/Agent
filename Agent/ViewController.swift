@@ -25,12 +25,14 @@ class ViewController: UIViewController {
             let code = json["code"].intValue
             if (code == 200){
                 //保存登录数据
+                
                 let token = json["token"].stringValue
                 UserDefaults.standard.set(token, forKey: "agentToken")
+                UserDefaults.standard.synchronize()
                 let agent = json["agent"]
-                setAgent(data: agent)
-                setAuthority(agent:agent)
-
+                let agentModel = AgentInfo.init(dic:agent.dictionaryObject!)
+                AgentSession.shared.agentModel = agentModel;
+                
                 //进入主页
                 let vc = loadVCfromMain(identifier: "mainMenu") as? MenuViewController
                 delegate.window?.rootViewController = vc
@@ -41,7 +43,12 @@ class ViewController: UIViewController {
                 delegate.window?.rootViewController = vc
             }
         }
-        request(.refresh, success: handleResult)
+        if AgentSession.shared.isLogin() {
+            request(.refresh, success: handleResult)
+        } else {
+            let vc = LoginViewController()
+            delegate.window?.rootViewController = vc
+        }
     }
     
     //播放启动画面动画

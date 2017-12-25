@@ -119,8 +119,8 @@ class MyAgentNew: UIViewController {
         let lblGame = addLabel(title: sectionHeaders[4])
         lblGame.frame.origin.y = div.frame.origin.y + div.frame.height + 5
         
-        let agent = getAgent()
-        let gameName = agent["gameName"] as? String
+        let agent = AgentSession.shared.agentModel
+        let gameName = agent?.gameName
         let lblGameName = addLabel(title: gameName!)
         lblGameName.frame.origin.y = lblGame.frame.origin.y
         lblGameName.textAlignment = .right
@@ -266,9 +266,9 @@ class MyAgentNew: UIViewController {
         case 2:
             roleId = 1003
             
-            let agent = getAgent()
-            let myRoleId = agent["roleId"] as! Int
-            request(.permission(roleId: myRoleId), success: handlePermission)
+            let agent = AgentSession.shared.agentModel
+            let myRoleId = agent?.roleId
+            request(.permission(roleId: myRoleId!), success: handlePermission)
         default:
             break
         }

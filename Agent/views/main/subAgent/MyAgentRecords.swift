@@ -21,23 +21,23 @@ class MyAgentRecords: UIViewController {
         let imgHeadIco = addImageView()
         imgHeadIco.frame.origin.y = 5
         
-        let agent = getAgent()
+        let agent = AgentSession.shared.agentModel
         
-        let strURL = agent["headImg"] as? String
+        let strURL = agent?.headImg
         let icoURL = URL(string: strURL!)
         imgHeadIco.sd_setImage(with: icoURL, completed: nil)
         
         let lblNickName = addLabel(title: "")
         lblNickName.frame.origin.x = imgHeadIco.frame.origin.x + imgHeadIco.frame.width + 5
         lblNickName.frame.origin.y = imgHeadIco.frame.origin.y
-        let nickName = agent["nickName"] as? String
+        let nickName = agent?.nickName
         lblNickName.text = nickName
         
         let lblAgentID = addLabel(title: "")
         lblAgentID.frame.origin.x = imgHeadIco.frame.origin.x + imgHeadIco.frame.width + 5
         lblAgentID.frame.origin.y = lblNickName.frame.origin.y + lblNickName.frame.height
         
-        let agentID = agent["agentId"] as? Int
+        let agentID = agent?.agentId
         lblAgentID.text = String.init(format: "ID:%d", agentID!)
         
         lblTimes = addLabel(title: "购卡次数")

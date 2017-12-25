@@ -39,8 +39,8 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        let agent = getAgent()
-        let gameName = agent["gameName"] as? String
+        let agent = AgentSession.shared.agentModel
+        let gameName = agent?.gameName
 
 //        let gameName = UserDefaults.standard.string(forKey: "gameName")
         self.navigationItem.title = gameName
@@ -104,9 +104,7 @@ class MainViewController: UIViewController {
     }
     
     @IBAction func startPurshase(_ sender: UIButton) {
-//        let vc = loadVCfromMain(identifier: "purchaseView") as? PurchaseView
         let vc = PurchaseView()
-//        vc.hidesBottomBarWhenPushed = true;
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -177,7 +175,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let w = collectionView.frame.width * 0.9
         let x = (collectionView.frame.width - w) / 2
         let div = UIView(frame: CGRect(x: x, y: 0, width: w, height: 0.5))
-        div.backgroundColor = UIColor.lightGray
+        div.backgroundColor = UIColor.init(red: 224/255.0, green: 224/255.0, blue: 224/255.0, alpha: 1)
         collectionView.addSubview(div)
         
         let idx = indexPath.item % 2
@@ -191,9 +189,10 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             //            let w = collectionView.frame.width * 0.8
             //            let x = (collectionView.frame.width - w) / 2
             let div = UIView(frame: CGRect(x: x, y: CGFloat(line) * cell.frame.height, width: w, height: 0.5))
-            div.backgroundColor = UIColor.lightGray
+            div.backgroundColor = UIColor.init(red: 224/255.0, green: 224/255.0, blue: 224/255.0, alpha: 1)
             collectionView.addSubview(div)
         }
+        cell.div.backgroundColor = UIColor.init(red: 224/255.0, green: 224/255.0, blue: 224/255.0, alpha: 1)
         cell.imgIco.image = UIImage(named: tools[indexPath.item][0])
         cell.lblTitle.text = tools[indexPath.item][1]
         cell.lblDesc.text = tools[indexPath.item][2]

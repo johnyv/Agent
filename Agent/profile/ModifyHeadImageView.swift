@@ -28,8 +28,8 @@ class ModifyHeadImageView: UIViewController, UIImagePickerControllerDelegate, UI
         
         imgHead = addImageView()
 
-        let profile = getProfile()
-        let strURL = profile["headerImgSrc"] as? String
+        let profile = AgentSession.shared.profileModel
+        let strURL = profile?.headerImgSrc
         if strURL != "" {
             let imgURL = URL(string: strURL!)
             imgHead.sd_setImage(with: imgURL, completed: nil)

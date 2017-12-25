@@ -87,11 +87,11 @@ class PaymentSelection: UIViewController, PopupContentViewController, PaymentDel
     
     func dataForPay(data: [String:Any]) {
         self.payData = data
-        let agent = getAgent()
-        let goodsName = agent["gameName"] as! String
+        let agent = AgentSession.shared.agentModel
+        let goodsName = agent?.gameName
         let goodsId = String.init(format: "ID:%d ", data["goodsId"] as! Int)
         let cardNum = String.init(format: "%d张", data["cardNum"] as! Int)
-        lblOrderNo.text = goodsId + goodsName + cardNum
+        lblOrderNo.text = goodsId + goodsName! + cardNum
         lblAmount.text = String.init(format: "¥%.2f", data["price"] as! Float)
     }
     /*

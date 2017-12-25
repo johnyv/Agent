@@ -55,9 +55,8 @@ class ModifyNickView: UIViewController {
         print(result)
         if code == 200 {
             self.delegate?.refresh()
-            var profile = getProfile()
-            profile["nickName"] = tfNick.text
-            UserDefaults.standard.set(profile, forKey: "PROFILE")
+            let profile = AgentSession.shared.agentModel
+            profile?.nickName = tfNick.text
             navigationController?.popViewController(animated: true)
         }else{
 //            alertResult(code: code)
