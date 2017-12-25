@@ -28,7 +28,8 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
     ]
     
     let titleBtns = ["立即认证","立即绑定","立即授权"]
-    var profile:[String:Any] = [:]
+    
+    var profileModel = AgentSession.shared.profileModel
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,7 +94,7 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
         if indexPath.section == 0 && indexPath.row == 0{
             let cell = tableView.dequeueReusableCell(withIdentifier: cellHeadIdentifier) as! ProfileHeadCell
             cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
-            let strURL = profile["headerImgSrc"]
+            let strURL = profileModel?.headerImgSrc
             if strURL != nil {
                 if strURL as! String != "" {
                     let icoURL = URL(string: (strURL as! String).convertToHttps())
@@ -119,21 +120,26 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
             case 0:
                 switch indexPath.row{
                 case 1:
-                    cell.lblContent.text = profile["nickName"] as? String
+                    cell.lblContent.text = profileModel?.nickName
                     cell.accessoryType = .disclosureIndicator
                     cell.selectionStyle = .default
                 case 2:
-                    cell.lblContent.text = profile["account"] as? String
+                    cell.lblContent.text = profileModel?.account
                 case 3:
-                    cell.lblContent.text = profile["agentId"] as? String
+                    let agentId = self.profileModel?.agentId
+                    if agentId != nil {
+                        cell.lblContent.text = "\(agentId!)"
+                    }
+                    
+                    break
                 default:
                     break
                 }
             case 1:
                 switch indexPath.row {
                 case 0:
-                    if profile["proofName"] != nil{
-                        let proofName = profile["proofName"] as! String
+                    if profileModel?.proofName != nil{
+                        let proofName = profileModel?.proofName
                         if proofName != "" {
                             cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
                             cell.lblContent.text = proofName
@@ -147,8 +153,8 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
                         }
                     }
                 case 1:
-                    if profile["bindTel"] != nil{
-                        let bindTel = profile["bindTel"] as! String
+                    let bindTel = profileModel?.bindTel
+                    if bindTel != nil {
                         if bindTel != "" {
                             cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
                             cell.lblContent.isHidden = false
@@ -164,20 +170,18 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
                         }
                     }
                 case 2:
-                    if profile["weChatLogin"] != nil{
-                        let weChatLogin = profile["weChatLogin"] as! Bool
-                        if weChatLogin == true {
-                            cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
-                            cell.lblContent.text = "已授权"
-                            cell.selectionStyle = .none
-                        }else{
-                            cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
-                            cell.btnOpt.isHidden = false
-                            cell.btnOpt.addTarget(self, action: #selector(self.doWeixinAuth(_:)), for: .touchUpInside)
-                            cell.lblContent.isHidden = true
-                            cell.btnOpt.setTitle(titleBtns[indexPath.row], for: .normal)
-                            cell.accessoryType = .disclosureIndicator
-                        }
+                    let weChatLogin = profileModel?.weChatLogin
+                    if weChatLogin == true {
+                        cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
+                        cell.lblContent.text = "已授权"
+                        cell.selectionStyle = .none
+                    }else{
+                        cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
+                        cell.btnOpt.isHidden = false
+                        cell.btnOpt.addTarget(self, action: #selector(self.doWeixinAuth(_:)), for: .touchUpInside)
+                        cell.lblContent.isHidden = true
+                        cell.btnOpt.setTitle(titleBtns[indexPath.row], for: .normal)
+                        cell.accessoryType = .disclosureIndicator
                     }
                 default:
                     break
@@ -186,13 +190,16 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
             case 2:
                 switch indexPath.row{
                 case 0:
-                    cell.lblContent.text = profile["gameName"] as? String
+                    cell.lblContent.text = profileModel?.gameName
                 case 1:
-                    cell.lblContent.text = profile["serverCity"] as? String
+                    cell.lblContent.text = profileModel?.serverCity
                 case 2:
-                    cell.lblContent.text = profile["createTime"] as? String
+                    cell.lblContent.text = profileModel?.createTime
                 case 3:
-                    cell.lblContent.text = profile["agentType"] as? String
+                    let agentType = self.profileModel?.agentType
+                    if agentType != nil {
+                        cell.lblContent.text = "\(agentType!)"
+                    }
                     cell.accessoryType = .disclosureIndicator
                 default:
                     break
@@ -238,12 +245,12 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
         case 1:
             switch indexPath.row {
             case 1:
-                let tel = profile["bindTel"] as! String
-//                if !tel.isEmpty {
+                let tel = profileModel?.bindTel
+                if !(tel?.isEmpty)! {
                     let vc = ModifyTelView()
                     vc.delegate = self
                     navigationController?.pushViewController(vc, animated: true)
-//                }
+                }
             case 3:
                 let vc = ModifyPasswordView()
                 navigationController?.pushViewController(vc, animated: true)
@@ -279,28 +286,17 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
         print(result)
         let code = result["code"].intValue
         if code == 200 {
-            profile = [:]
             let data = result["data"]
-            profile = getProfileFromJSON(data: data)
-            setProfile(data: data)
-//            profile["headerImgSrc"] = data["headerImgSrc"].stringValue
-//            profile["nickName"] = data["nickName"].stringValue
-//            profile["account"] = data["account"].stringValue
-//            profile["agentId"] = data["agentId"].stringValue
-//            profile["proofName"] = data["proofName"].stringValue
-//            profile["bindTel"] = data["bindTel"].stringValue
-//            profile["weChatLogin"] = data["weChatLogin"].boolValue
-//            profile["gameName"] = data["gameName"].stringValue
-//            profile["serverCity"] = data["serverCity"].stringValue
-//            profile["createTime"] = data["createTime"].stringValue
-//            profile["cardCount"] = data["cardCount"].intValue
-//            profile["agentType"] = data["agentType"].stringValue
-            
+            profileModel = ProfileModel.init(dic:data.dictionaryObject!)
+            AgentSession.shared.profileModel = profileModel
             tableView.reloadData()
         }
     }
     
     @IBAction func logOut(_ sender: UIBarButtonItem) {
+        UserDefaults.standard.removeObject(forKey: "uid")
+        UserDefaults.standard.removeObject(forKey: "agentToken")
+        UserDefaults.standard.synchronize()
         let appdelegate = UIApplication.shared.delegate as! AppDelegate
         appdelegate.reLogin()
     }

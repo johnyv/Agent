@@ -56,25 +56,23 @@ class PurchaseView: UIViewController {
         let imgHeadIco = addImageView()
         imgHeadIco.frame.origin.y = line1.frame.origin.y + line1.frame.height + 5
         
-        let profile = getProfile()
+        let agent = AgentSession.shared.agentModel
         
-        let strURL = profile["headerImgSrc"] as? String
+        let strURL = agent?.headImg
         let icoURL = URL(string: strURL!)
         imgHeadIco.sd_setImage(with: icoURL, completed: nil)
         
         let lblNickName = addLabel(title: "")
         lblNickName.frame.origin.x = imgHeadIco.frame.origin.x + imgHeadIco.frame.width + 5
         lblNickName.frame.origin.y = imgHeadIco.frame.origin.y
-        let nickName = profile["nickName"] as? String
+        let nickName = agent?.nickName
         lblNickName.text = nickName
         
         let lblAccountID = addLabel(title: "")
         lblAccountID.frame.origin.x = imgHeadIco.frame.origin.x + imgHeadIco.frame.width + 5
         lblAccountID.frame.origin.y = lblNickName.frame.origin.y + lblNickName.frame.height
         
-        let agent = getAgent()
-        
-        let accountID = agent["agentId"] as? Int
+        let accountID = agent?.agentId
         lblAccountID.text = String.init(format: "ID:%d", accountID!)
 
         let div1 = addDivLine(y: imgHeadIco.frame.origin.y + imgHeadIco.frame.height + 5)
@@ -82,7 +80,7 @@ class PurchaseView: UIViewController {
         let lblGoodsName = addLabel(title: "")
         lblGoodsName.frame.size.width = line1.frame.width
         lblGoodsName.frame.origin.y = div1.frame.origin.y + div1.frame.height
-        let gameName = agent["gameName"] as? String
+        let gameName = agent?.gameName
         let goodsName = NSMutableAttributedString(string: gameName! + ",请选择充值张数：")
         let range = gameName?.characters.count
         

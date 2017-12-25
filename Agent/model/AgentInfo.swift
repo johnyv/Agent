@@ -7,38 +7,23 @@
 //
 
 import UIKit
-//import ObjectMapper
 
-class AgentInfo: NSObject {
-    static let instance = AgentInfo()
+@objcMembers class AgentInfo: NSObject {
     
     var account: String?
-    var agentId: String?
-//    var authorityList: [AnyObject]?
+    var agentId: Int = 0
+    var roleId: Int = 0
     var name: String?
-    var headImg:String?
     var nickName: String?
-    var roleId: String?
-    var serverCode: String?
+    var headImg: String?
     var gameName: String?
+    var serverCode: String?
     var lastBuyTime:String?
+    var authorityList: [String]?
     
-//    private init(){
-//    }
-//    
-//    required init?(map: Map) {
-//    }
-//    
-//    func mapping(map: Map) {
-//        account <- map["account"]
-//        agentId <- map["agentId"]
-//        authorityList <- map["arr"]
-//        name <- map["name"]
-//        headImg <- map["headImg"]
-//        nickName <- map["nickName"]
-//        roleId <- map["roleId"]
-//        serverCode <- map["serverCode"]
-//        gameName <- map["gameName"]
-//        lastBuyTime <- map["lastBuyTime"]
-//    }
+    init(dic:[String: Any]) {
+        super.init()
+        setValuesForKeys(dic)
+    }
+    
 }

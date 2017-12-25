@@ -17,4 +17,5 @@
 #import "NSString+UrlConvert.h"
 #import "UINavigationController+Tracking.h"
 #import "ComboBox.h"
+#import "HandleCrash.h"
 #endif /* Bridging_Header_h */

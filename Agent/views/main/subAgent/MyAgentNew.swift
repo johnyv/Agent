@@ -120,8 +120,8 @@ class MyAgentNew: UIViewController {
         let lblGame = addLabel(title: sectionHeaders[4])
         lblGame.frame.origin.y = div.frame.origin.y + div.frame.height + 5
         
-        let agent = getAgent()
-        let gameName = agent["gameName"] as? String
+        let agent = AgentSession.shared.agentModel
+        let gameName = agent?.gameName
         let lblGameName = addLabel(title: gameName!)
         lblGameName.frame.origin.y = lblGame.frame.origin.y
         lblGameName.textAlignment = .right
@@ -178,9 +178,8 @@ class MyAgentNew: UIViewController {
         
         date = Date()
         
-        //let agent = getAgent()
-        let myRoleId = agent["roleId"] as! Int
-        request(.permission(roleId: myRoleId), success: handlePermission)
+        let roleId = AgentSession.shared.agentModel?.roleId
+        request(.permission(roleId: roleId!), success: handlePermission)
     }
     
     override func didReceiveMemoryWarning() {

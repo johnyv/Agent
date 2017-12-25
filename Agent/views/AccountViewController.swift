@@ -93,11 +93,16 @@ class AccountViewController: UIViewController {
             let token = json["token"].stringValue
             UserDefaults.standard.set(token, forKey: "agentToken")
             let agent = json["agent"]
-            setAgent(data: agent)
-            setAuthority(agent: agent)
+            let agentModel = AgentInfo.init(dic:agent.dictionaryObject!)
+            AgentSession.shared.agentModel = agentModel;
+//            setAgent(data: agent)
+//            setAuthority(agent: agent)
             
             let app = UIApplication.shared.delegate as! AppDelegate
             app.enterApp()
+            
+            tfAccount.resignFirstResponder()
+            tfPassword.resignFirstResponder()
         }else{
             alertResult(code: code)
             

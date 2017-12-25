@@ -113,6 +113,11 @@
 		52FD52091FD7D868007E023A /* CardSellListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD52081FD7D868007E023A /* CardSellListModel.swift */; };
 		52FD520B1FD7D883007E023A /* CardBuyListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD520A1FD7D883007E023A /* CardBuyListModel.swift */; };
 		52FD520D1FD7DD84007E023A /* CardDetailCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD520C1FD7DD84007E023A /* CardDetailCellModel.swift */; };
+		842E6AFF1FF0A9930064263A /* HandleCrash.m in Sources */ = {isa = PBXBuildFile; fileRef = 842E6AFE1FF0A9930064263A /* HandleCrash.m */; };
+		842E6B011FF0A9FA0064263A /* CatchCrash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842E6B001FF0A9FA0064263A /* CatchCrash.swift */; };
+		842E6B071FF0D8140064263A /* AgentSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842E6B061FF0D8140064263A /* AgentSession.swift */; };
+		842E6B091FF0DBFF0064263A /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842E6B081FF0DBFF0064263A /* ProfileModel.swift */; };
+		842E6B0B1FF129B00064263A /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842E6B0A1FF129B00064263A /* Constant.swift */; };
 		84F757A81FECA6D6008ED6AA /* UINavigationController+Tracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F757A71FECA6D6008ED6AA /* UINavigationController+Tracking.m */; };
 		84F757AB1FECADA7008ED6AA /* UIViewController+Tracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F757AA1FECADA7008ED6AA /* UIViewController+Tracking.m */; };
 		DB6F216607A6283FC03854C8 /* Pods_Agent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7ADCB9F5510FBAAB5DECF96 /* Pods_Agent.framework */; };
@@ -253,6 +258,12 @@
 		52FD52081FD7D868007E023A /* CardSellListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardSellListModel.swift; path = model/CardSellListModel.swift; sourceTree = "<group>"; };
 		52FD520A1FD7D883007E023A /* CardBuyListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardBuyListModel.swift; path = model/CardBuyListModel.swift; sourceTree = "<group>"; };
 		52FD520C1FD7DD84007E023A /* CardDetailCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardDetailCellModel.swift; path = model/CardDetailCellModel.swift; sourceTree = "<group>"; };
+		842E6AFD1FF0A9930064263A /* HandleCrash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HandleCrash.h; sourceTree = "<group>"; };
+		842E6AFE1FF0A9930064263A /* HandleCrash.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HandleCrash.m; sourceTree = "<group>"; };
+		842E6B001FF0A9FA0064263A /* CatchCrash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchCrash.swift; sourceTree = "<group>"; };
+		842E6B061FF0D8140064263A /* AgentSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentSession.swift; sourceTree = "<group>"; };
+		842E6B081FF0DBFF0064263A /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
+		842E6B0A1FF129B00064263A /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		84F757A61FECA6D6008ED6AA /* UINavigationController+Tracking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+Tracking.h"; sourceTree = "<group>"; };
 		84F757A71FECA6D6008ED6AA /* UINavigationController+Tracking.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+Tracking.m"; sourceTree = "<group>"; };
 		84F757A91FECADA7008ED6AA /* UIViewController+Tracking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Tracking.h"; sourceTree = "<group>"; };
@@ -376,6 +387,7 @@
 				5271B1121FCD309C00A8450C /* ProfileCellModel.swift */,
 				5292648F1FBDA071000D98A4 /* ErrorMessage.swift */,
 				529B2A521FC2CDBA001B15F2 /* AgentInfo.swift */,
+				842E6B081FF0DBFF0064263A /* ProfileModel.swift */,
 				52582B861FC3C904003B871F /* AuthHeader.swift */,
 				5251424F1FC58621000046DF /* RequestBody.swift */,
 				522DD39F1FCEA59800AE9D62 /* CustomerTableCellModel.swift */,
@@ -474,6 +486,8 @@
 				5292648D1FBD6EC6000D98A4 /* NetworkManager.swift */,
 				5288D64D1F7A4EE900406C9B /* ViewController.swift */,
 				5288D6521F7A4EE900406C9B /* Assets.xcassets */,
+				842E6AFC1FF0A9710064263A /* tool */,
+				842E6AF91FF0A1430064263A /* vendor */,
 				5271B1171FCD320700A8450C /* external */,
 				5288D6541F7A4EE900406C9B /* LaunchScreen.storyboard */,
 				52F955E21FEFAFBA008C9AE0 /* mixins */,
@@ -573,6 +587,25 @@
 				52F956061FEFB3D0008C9AE0 /* ComboBoxCell.xib */,
 			);
 			path = ComboBox;
+			sourceTree = "<group>";
+		};
+		842E6AF91FF0A1430064263A /* vendor */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = vendor;
+			sourceTree = "<group>";
+		};
+		842E6AFC1FF0A9710064263A /* tool */ = {
+			isa = PBXGroup;
+			children = (
+				842E6AFD1FF0A9930064263A /* HandleCrash.h */,
+				842E6AFE1FF0A9930064263A /* HandleCrash.m */,
+				842E6B001FF0A9FA0064263A /* CatchCrash.swift */,
+				842E6B061FF0D8140064263A /* AgentSession.swift */,
+				842E6B0A1FF129B00064263A /* Constant.swift */,
+			);
+			path = tool;
 			sourceTree = "<group>";
 		};
 		BE6934126BC25E54D11E8C23 /* Frameworks */ = {
@@ -856,6 +889,7 @@
 				5251424E1FC57CFB000046DF /* RoomCardViewController.swift in Sources */,
 				5288D64E1F7A4EE900406C9B /* ViewController.swift in Sources */,
 				52AB5B021FE26297006F4BE9 /* SoldToPlayerDetailView.swift in Sources */,
+				842E6B011FF0A9FA0064263A /* CatchCrash.swift in Sources */,
 				527F65281FA1F63F0004A938 /* AccountViewController.swift in Sources */,
 				527F65201FA18C110004A938 /* MainViewController.swift in Sources */,
 				52396BFA1FDE7E7400CEC050 /* NoticeListCellModel.swift in Sources */,
@@ -881,11 +915,14 @@
 				52FD520B1FD7D883007E023A /* CardBuyListModel.swift in Sources */,
 				522DDCCE1FE0D37A00F4B296 /* ModifyTelView.swift in Sources */,
 				527F65261FA1F2150004A938 /* ForgotViewController.swift in Sources */,
+				842E6B0B1FF129B00064263A /* Constant.swift in Sources */,
 				525142501FC58621000046DF /* RequestBody.swift in Sources */,
 				5271B11A1FCD320700A8450C /* NSData+Compression.m in Sources */,
 				5271B12C1FCD39F400A8450C /* TableTotalView1.swift in Sources */,
 				52F955ED1FEFAFBA008C9AE0 /* SMSCountButton.swift in Sources */,
+				842E6B071FF0D8140064263A /* AgentSession.swift in Sources */,
 				52F955F01FEFAFBA008C9AE0 /* UITextField+.swift in Sources */,
+				842E6AFF1FF0A9930064263A /* HandleCrash.m in Sources */,
 				526F73DD1FB403BD0010599C /* ProfileViewController.swift in Sources */,
 				52EE2FA41FF0ABF300B078FC /* DoPayView.swift in Sources */,
 				5232C63F1FE1045E0004CF72 /* RoomCardDetailCell.swift in Sources */,
@@ -908,6 +945,7 @@
 				5232C6391FE1045E0004CF72 /* ProfileHeadCell.swift in Sources */,
 				52F956081FEFB3D0008C9AE0 /* ComboBox.m in Sources */,
 				5232C6321FE1045E0004CF72 /* CustomerTableCell.swift in Sources */,
+				842E6B091FF0DBFF0064263A /* ProfileModel.swift in Sources */,
 				529B2A531FC2CDBA001B15F2 /* AgentInfo.swift in Sources */,
 				5271B12A1FCD38A000A8450C /* TableRecentlyView.swift in Sources */,
 				5288D64C1F7A4EE900406C9B /* AppDelegate.swift in Sources */,
@@ -1065,6 +1103,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 8XP599HH83;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Agent/vendor",
+				);
 				INFOPLIST_FILE = Agent/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1083,6 +1125,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 8XP599HH83;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Agent/vendor",
+				);
 				INFOPLIST_FILE = Agent/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -188,13 +188,19 @@ class LoginViewController: UIViewController {
         if code == 200 {
             let token = json["token"].stringValue
             UserDefaults.standard.set(token, forKey: "agentToken")
+            UserDefaults.standard.synchronize()
             
             let agent = json["agent"]
-            setAgent(data: agent)
-            setAuthority(agent: agent)
+//            setAgent(data: agent)
+//            setAuthority(agent: agent)
+            
+            let agentModel = AgentInfo.init(dic:agent.dictionaryObject!)
+            AgentSession.shared.agentModel = agentModel;
+            UserDefaults.standard.set(agentModel.agentId, forKey: "uid")
 
             let app = UIApplication.shared.delegate as! AppDelegate
             app.enterApp()
+            
         }else{
             alertResult(code: code)
         }

@@ -33,7 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         nav.titleTextAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 18.0),NSForegroundColorAttributeName: UIColor.white]
         nav.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         nav.shadowImage = UIImage()
-
+        
+//        CatchCrash.share().installUncaughtExceptionHandler()
+        
         return true
     }
 
