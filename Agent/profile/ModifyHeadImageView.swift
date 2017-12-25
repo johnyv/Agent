@@ -15,6 +15,8 @@ class ModifyHeadImageView: UIViewController, UIImagePickerControllerDelegate, UI
 
     var delegate:ModifyProfileDelegage?
 
+    var avatarUrl:String?
+    
     @IBOutlet weak var imgHead: UIImageView!
     @IBOutlet weak var btnChoose: UIButton!
     @IBOutlet weak var btnCamera: UIButton!
@@ -105,6 +107,7 @@ class ModifyHeadImageView: UIViewController, UIImagePickerControllerDelegate, UI
             let code = result["code"].intValue
             if code == 200 {
                 delegate?.refresh()
+                AgentSession.shared.agentModel?.headImg = avatarUrl
                 _ = navigationController?.popViewController(animated: true)
             } else {
                 toastMSG(result: result)
@@ -118,6 +121,7 @@ class ModifyHeadImageView: UIViewController, UIImagePickerControllerDelegate, UI
             if code == 200 {
                 let newHI = result["data"].stringValue.convertToHttps()
                 let hiURL = URL(string: newHI!)
+                avatarUrl = newHI
                 imgHead.sd_setImage(with: hiURL, completed: {(image, error, cacheType, url) in
                 })
                 request(.editHI(headerImgSrc: newHI!), success: handleHI)

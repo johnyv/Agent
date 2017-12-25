@@ -157,6 +157,7 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
                     if bindTel != nil {
                         if bindTel != "" {
                             cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
+                            cell.lblContent.isHidden = false
                             cell.lblContent.text = bindTel
                             cell.accessoryType = .disclosureIndicator
                         }else{
@@ -300,8 +301,9 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
         appdelegate.reLogin()
     }
     @IBAction func backToIndex(_ sender: UIBarButtonItem) {
-        let appdelegate = UIApplication.shared.delegate as! AppDelegate
-        appdelegate.menuTab?.selectedIndex = 0
+//        let appdelegate = UIApplication.shared.delegate as! AppDelegate
+//        appdelegate.menuTab?.selectedIndex = 0
+        tabBarController?.selectedIndex = 0
     }
     
     func doProof(_ sender:UIButton){

@@ -270,26 +270,26 @@ extension PurchaseView: UICollectionViewDelegate, UICollectionViewDataSource {
         payDelegate = payContainer.self
         payDelegate?.dataForPay(data: data)
         
-        func handlePay(json:JSON)->(){
-            let result = json["result"]
-            let code = result["code"].intValue
-            if code == 200 {
-                print(result)
-                let dataStr = result["data"].stringValue
-                let urlStr = dataStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-                let url = URL(string: urlStr!)
-                //            UIApplication.shared.openURL(url!)
-                print(url)
-                UserDefaults.standard.set(dataStr, forKey: "payURL")
-                
-                let payVC = loadVCfromMain(identifier: "doPayView") as! DoPayView
-                
-                //            payVC.urlData = data
-                present(payVC, animated: true, completion: nil)
-            }else{
-                print(result)
-                SVProgressHUD.showInfo(withStatus: errMsg.desc(key: code))
-            }
-        }
+//        func handlePay(json:JSON)->(){
+//            let result = json["result"]
+//            let code = result["code"].intValue
+//            if code == 200 {
+//                print(result)
+//                let dataStr = result["data"].stringValue
+//                let urlStr = dataStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+//                let url = URL(string: urlStr!)
+//                //            UIApplication.shared.openURL(url!)
+//                print(url)
+//                UserDefaults.standard.set(dataStr, forKey: "payURL")
+//                
+//                let payVC = loadVCfromMain(identifier: "doPayView") as! DoPayView
+//                
+//                //            payVC.urlData = data
+//                present(payVC, animated: true, completion: nil)
+//            }else{
+//                print(result)
+//                SVProgressHUD.showInfo(withStatus: errMsg.desc(key: code))
+//            }
+//        }
     }
 }

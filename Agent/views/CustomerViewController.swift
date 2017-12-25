@@ -8,8 +8,7 @@
 
 import UIKit
 import SwiftyJSON
-import Moya
-
+import XLPagerTabStrip
 //private struct CustomerPageOptions: PagingMenuControllerCustomizable {
 ////    private let tableRecentlyView = RecentlyView()
 ////    private let tableTotalView1 = TotalView1()
@@ -60,8 +59,54 @@ import Moya
 //        }
 //    }
 //}
+class CustomerDetailController: ButtonBarPagerTabStripViewController {
+    
+    var isReload = false
+    
+    override func viewDidLoad() {
+        settings.style.buttonBarItemFont = .systemFont(ofSize: 15)
+        settings.style.buttonBarItemTitleColor = UIColor.darkGray
+        settings.style.buttonBarHeight = 35
+        settings.style.buttonBarBackgroundColor = .white
+        settings.style.buttonBarItemBackgroundColor = .white
+        settings.style.selectedBarHeight = 2
+        settings.style.selectedBarBackgroundColor = .orange
+        settings.style.buttonBarItemsShouldFillAvailableWidth = true
+        super.viewDidLoad()
 
-class CustomerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+        let childView = viewControllers[currentIndex] as! CustomerDetail
+        childView.delegate = childView.self
+        childView.reNew(type: currentIndex)
+    }
+    
+    override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
+        
+        let page1 = CustomerDetail(style: .plain, pageInfo: "最近售卡")
+        let page2 = CustomerDetail(style: .plain, pageInfo: "售卡次数")
+        let page3 = CustomerDetail(style: .plain, pageInfo: "售卡张数")
+        
+        guard isReload else {
+            return [page1, page2, page3]
+        }
+        
+        let childViews = [page1, page2, page3]
+        return childViews
+    }
+    
+    override func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        super.scrollViewDidEndScrollingAnimation(scrollView)
+        
+        let childView = viewControllers[currentIndex] as! CustomerDetail
+        childView.delegate = childView.self
+        childView.reNew(type: currentIndex)
+    }
+    
+    override func reloadPagerTabStripView() {
+        super.reloadPagerTabStripView()
+    }
+}
+
+class CustomerViewController: UIViewController {
     
     @IBOutlet weak var sellPerson: UILabel!
     @IBOutlet weak var sellCount: UILabel!
@@ -89,34 +134,36 @@ class CustomerViewController: UIViewController, UITableViewDelegate, UITableView
 //        addChildViewController(customerPageController)
 //        view.addSubview(customerPageController.view)
 //        customerPageController.didMove(toParentViewController: self)
-        segSort.selectedSegmentIndex = 0
-        segSort.addTarget(self, action: #selector(self.segDidchange(_:)), for: .valueChanged)
-
-        tableView.delegate = self
-        tableView.dataSource = self
+//        segSort.selectedSegmentIndex = 0
+//        segSort.addTarget(self, action: #selector(self.segDidchange(_:)), for: .valueChanged)
+//
+//        tableView.delegate = self
+//        tableView.dataSource = self
+//        
+//        tableView.register(CustomerTableCell.self, forCellReuseIdentifier: cellTableIdentifier)
+//        let xib = UINib(nibName: "CustomerTableCell", bundle: nil)
+//        tableView.register(xib, forCellReuseIdentifier: cellTableIdentifier)
+//        tableView.rowHeight = 65
+//        tableView.tableFooterView = UIView()
         
-        tableView.register(CustomerTableCell.self, forCellReuseIdentifier: cellTableIdentifier)
-        let xib = UINib(nibName: "CustomerTableCell", bundle: nil)
-        tableView.register(xib, forCellReuseIdentifier: cellTableIdentifier)
-        tableView.rowHeight = 65
-        tableView.tableFooterView = UIView()
+        request(.customerAllNum(searchId: 0, startDate: 0, endDate: 0), success: handleAllnum)
+//        requestData(sort: segSort.selectedSegmentIndex)
+
+        let customerViewPage = CustomerDetailController()
+        customerViewPage.view.frame.origin.y = vTopBg.frame.origin.y + vTopBg.frame.height
+        addChildViewController(customerViewPage)
+        view.addSubview(customerViewPage.view)
+
         autoFit()
     }
-    override func viewDidAppear(_ animated: Bool) {
+//    override func viewDidAppear(_ animated: Bool) {
 //        let source = TokenSource()
 //        source.token = getSavedToken()
 //        let provider = MoyaProvider<NetworkManager>(plugins:[
 //            AuthPlugin(tokenClosure: {return source.token})])
 
         //Network.request(.customerAllNum(searchId: 0, startDate: 0, endDate: 0), success: handleAllnum, provider: provider)
-        request(.customerAllNum(searchId: 0, startDate: 0, endDate: 0), success: handleAllnum)
-        requestData(sort: segSort.selectedSegmentIndex)
-    }
-    
-    func didMove(toMenu menuController: UIViewController, fromMenu previousMenuController: UIViewController){
-        print("老页面：\(previousMenuController)")
-        print("新页面：\(menuController)")
-    }
+//    }
     
     func handleAllnum(json:JSON)->(){
         let result = json["result"]
@@ -142,33 +189,33 @@ class CustomerViewController: UIViewController, UITableViewDelegate, UITableView
         return sourceData.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellTableIdentifier, for: indexPath) as! CustomerTableCell
-        
-        // Configure the cell...
-        let cellData = sourceData[indexPath.row]
-//        print(cellData.id)
-//        print(cellData.nick)
-        //        cell.textLabel?.text = cellData.nick
-        cell.selectionStyle = .none
-        let strURL = cellData["header_img_src"] as! String
-        if strURL == "" {
-            cell.imgHeadIco.image = UIImage(named: "headsmall")
-        } else {
-            let icoURL = URL(string: strURL.convertToHttps())
-            cell.imgHeadIco.sd_setImage(with: icoURL, completed: nil)
-        }
-        cell.lblUserId.text = String.init(format: "ID:%d", cellData["id"] as! Int)
-        cell.lblNickName.text = cellData["nick"] as! String
-        cell.lblCount.text = String.init(format: "%d张", cellData["cardNum"] as! Int)
-        let sort = segSort.selectedSegmentIndex
-        if sort > 0 {
-            cell.lblTime.text = String.init(format: "%d次", cellData["sellCount"] as! Int)
-        } else {
-            cell.lblTime.text = cellData["sellTime"] as! String
-        }
-        return cell
-    }
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: cellTableIdentifier, for: indexPath) as! CustomerTableCell
+//        
+//        // Configure the cell...
+//        let cellData = sourceData[indexPath.row]
+////        print(cellData.id)
+////        print(cellData.nick)
+//        //        cell.textLabel?.text = cellData.nick
+//        cell.selectionStyle = .none
+//        let strURL = cellData["header_img_src"] as! String
+//        if strURL == "" {
+//            cell.imgHeadIco.image = UIImage(named: "headsmall")
+//        } else {
+//            let icoURL = URL(string: strURL.convertToHttps())
+//            cell.imgHeadIco.sd_setImage(with: icoURL, completed: nil)
+//        }
+//        cell.lblUserId.text = String.init(format: "ID:%d", cellData["id"] as! Int)
+//        cell.lblNickName.text = cellData["nick"] as! String
+//        cell.lblCount.text = String.init(format: "%d张", cellData["cardNum"] as! Int)
+//        let sort = segSort.selectedSegmentIndex
+//        if sort > 0 {
+//            cell.lblTime.text = String.init(format: "%d次", cellData["sellCount"] as! Int)
+//        } else {
+//            cell.lblTime.text = cellData["sellTime"] as! String
+//        }
+//        return cell
+//    }
     
     @IBAction func backToPrev(_ sender: UIBarButtonItem) {
 //        let appdelegate = UIApplication.shared.delegate as! AppDelegate
@@ -180,63 +227,64 @@ class CustomerViewController: UIViewController, UITableViewDelegate, UITableView
         let vc = loadVCfromMain(identifier: "soldToPlayerDetailView") as! SoldToPlayerDetailView
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    func segDidchange(_ segmented:UISegmentedControl){
-        print(segmented.selectedSegmentIndex)
-        requestData(sort: segmented.selectedSegmentIndex)
-    }
-
-    func requestData(sort:Int){
-        var type:Int = 0
-        
-        switch sort {
-        case 0:
-            request(.customerRecently(searchId: 0, startDate: 0, endDate: 0, sortType: 0, pageIndex: 0, pageNum: 0), success: handleData)
-        case 1:
-            request(.customerTotallist(searchId: 0, startDate: 0, endDate: 0, sortType: 3, pageIndex: 0, pageNum: 0), success: handleData)
-        case 2:
-            request(.customerTotallist(searchId: 0, startDate: 0, endDate: 0, sortType: 2, pageIndex: 0, pageNum: 0), success: handleData)
-        default:
-            type = 0
-        }
-    }
     
-    func handleData(json:JSON)->(){
-        let result = json["result"]
-        let code = result["code"].intValue
-        if code == 200 {
-            print(result)
-            sourceData.removeAll()
-            let data = result["data"]
-            let dataArr = data["datas"].array
-            for(_, data) in (dataArr?.enumerated())!{
-                var cellData:[String:Any] = [:]
-                cellData["id"] =  data["id"].intValue
-                cellData["nick"] =  data["nick"].stringValue
-                cellData["header_img_src"] =  data["header_img_src"].stringValue
-                cellData["customerType"] =  data["customerType"].stringValue
-                cellData["cardNum"] =  data["cardNum"].intValue
-                cellData["sellTime"] =  data["sellTime"].stringValue
-                cellData["sellCount"] = data["sellCount"].intValue
-//                sourceData.append(CustomerTableCellModel(id: data["id"].intValue, nick: data["nick"].stringValue, header_img_src: data["header_img_src"].stringValue, customerType: data["customerType"].stringValue, cardNum: data["cardNum"].intValue, sellTime: data["sellTime"].stringValue))
-                sourceData.append(cellData)
-            }
-            tableView.reloadData()
-            let count = sourceData.count
-            showNodata(dataCount: count)
-        }
-    }
+//    func segDidchange(_ segmented:UISegmentedControl){
+//        print(segmented.selectedSegmentIndex)
+//        requestData(sort: segmented.selectedSegmentIndex)
+//    }
 
-    func showNodata(dataCount:Int){
-        if dataCount > 0 {
-            imgNoData.isHidden = true
-            lblNoData.isHidden = true
-            tableView.isHidden = false
-        }else{
-            imgNoData.isHidden = false
-            lblNoData.isHidden = false
-            tableView.isHidden = true
-        }
-    }
+//    func requestData(sort:Int){
+//        var type:Int = 0
+//        
+//        switch sort {
+//        case 0:
+//            request(.customerRecently(searchId: 0, startDate: 0, endDate: 0, sortType: 0, pageIndex: 0, pageNum: 0), success: handleData)
+//        case 1:
+//            request(.customerTotallist(searchId: 0, startDate: 0, endDate: 0, sortType: 3, pageIndex: 0, pageNum: 0), success: handleData)
+//        case 2:
+//            request(.customerTotallist(searchId: 0, startDate: 0, endDate: 0, sortType: 2, pageIndex: 0, pageNum: 0), success: handleData)
+//        default:
+//            type = 0
+//        }
+//    }
+    
+//    func handleData(json:JSON)->(){
+//        let result = json["result"]
+//        let code = result["code"].intValue
+//        if code == 200 {
+//            print(result)
+//            sourceData.removeAll()
+//            let data = result["data"]
+//            let dataArr = data["datas"].array
+//            for(_, data) in (dataArr?.enumerated())!{
+//                var cellData:[String:Any] = [:]
+//                cellData["id"] =  data["id"].intValue
+//                cellData["nick"] =  data["nick"].stringValue
+//                cellData["header_img_src"] =  data["header_img_src"].stringValue
+//                cellData["customerType"] =  data["customerType"].stringValue
+//                cellData["cardNum"] =  data["cardNum"].intValue
+//                cellData["sellTime"] =  data["sellTime"].stringValue
+//                cellData["sellCount"] = data["sellCount"].intValue
+////                sourceData.append(CustomerTableCellModel(id: data["id"].intValue, nick: data["nick"].stringValue, header_img_src: data["header_img_src"].stringValue, customerType: data["customerType"].stringValue, cardNum: data["cardNum"].intValue, sellTime: data["sellTime"].stringValue))
+//                sourceData.append(cellData)
+//            }
+//            tableView.reloadData()
+//            let count = sourceData.count
+//            showNodata(dataCount: count)
+//        }
+//    }
+//
+//    func showNodata(dataCount:Int){
+//        if dataCount > 0 {
+//            imgNoData.isHidden = true
+//            lblNoData.isHidden = true
+//            tableView.isHidden = false
+//        }else{
+//            imgNoData.isHidden = false
+//            lblNoData.isHidden = false
+//            tableView.isHidden = true
+//        }
+//    }
     /*
     // MARK: - Navigation
 

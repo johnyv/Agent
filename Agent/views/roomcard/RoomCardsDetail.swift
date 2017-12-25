@@ -1,8 +1,8 @@
 //
-//  MyAgentList.swift
+//  RoomCardsDetail.swift
 //  Agent
 //
-//  Created by 于劲 on 2017/12/19.
+//  Created by 于劲 on 2017/12/25.
 //  Copyright © 2017年 xianlai. All rights reserved.
 //
 
@@ -10,20 +10,16 @@ import UIKit
 import XLPagerTabStrip
 import SwiftyJSON
 
-protocol PageListDelegate {
-    func reNew(type:Int)
-}
-
-class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvider {
+class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoProvider {
 
     var pageInfo = IndicatorInfo(title: "Page")
     
     var listData = [[String:Any]]()
-
-    let cellTitleIdentifier = "titleCell"
+    
     let cellDetailIdentifier = "detailCell"
-
+    
     var delegate:PageListDelegate?
+    var type:Int?
     
     init(style: UITableViewStyle, pageInfo: IndicatorInfo) {
         self.pageInfo = pageInfo
@@ -33,7 +29,7 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -42,17 +38,9 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        let xib = UINib(nibName: "RoomCardDetailCell", bundle: nil)
+        tableView.register(xib, forCellReuseIdentifier: cellDetailIdentifier)
         tableView.tableFooterView = UIView()
-        
-        tableView.register(MyAgentListTitle.self, forCellReuseIdentifier: cellTitleIdentifier)
-        let xibTitle = UINib(nibName: "MyAgentListTitle", bundle: nil)
-        tableView.register(xibTitle, forCellReuseIdentifier: cellTitleIdentifier)
-
-        tableView.register(MyAgentListCell.self, forCellReuseIdentifier: cellDetailIdentifier)
-        let xibCell = UINib(nibName: "MyAgentListCell", bundle: nil)
-        tableView.register(xibCell, forCellReuseIdentifier: cellDetailIdentifier)
-
-        request(.myagent(agentType: 0, page: 1, pageSize: 0), success: handleResult)
     }
 
     override func didReceiveMemoryWarning() {
@@ -72,95 +60,100 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
         return listData.count
     }
 
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        // Configure the cell...
-        if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellTitleIdentifier, for: indexPath) as! MyAgentListTitle
-            let cellData = listData[indexPath.row]
-            
-            cell.backgroundColor = UIColor(hex: "dddddd")
-            cell.selectionStyle = .none
-            cell.lblAgentType.text = cellData["agentType"] as? String
-            cell.lblAgentCard.text = cellData["agentCard"] as? String
-            cell.lblLastBuyTime.text = cellData["lastBuyTime"] as? String
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellDetailIdentifier, for: indexPath) as! MyAgentListCell
-            let cellData = listData[indexPath.row]
-            
-            cell.selectionStyle = .none
-            cell.lblNickName.text = cellData["nickName"] as? String
-            let id = cellData["agentId"] as! Int
-            cell.lblUserId.text = String.init(format: "ID:%d", id)
-            let strURL = cellData["headerImgSrc"] as! String
-            if strURL == "" {
-                cell.imgHeadIco.image = UIImage(named: "headsmall")
-            } else {
-                let icoURL = URL(string: strURL.convertToHttps())
-                cell.imgHeadIco.sd_setImage(with: icoURL, completed: nil)
-            }
-            let hold = cellData["agentCard"] as! Int
-            cell.lblHoldCount.text = String.init(format: "%d", hold)
-            cell.lblLastTime.text = cellData["lastBuyTime"] as? String
-            return cell
-
-        }
-    }
-    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
         case 0:
             return 25
         default:
-            return 64
+            return 44
         }
-    }
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 0{
-            return
-        }
-        let vc = MyAgentDetail()
-        let cellData = listData[indexPath.row]
-        let subAgentId = cellData["agentId"] as! Int
-        vc.delegate = vc.self
-        vc.subAgent(id: subAgentId)
-        navigationController?.pushViewController(vc, animated: true)
     }
     
-    func handleResult(json:JSON)->(){
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellDetailIdentifier, for: indexPath) as! RoomCardDetailCell
+
+        // Configure the cell...
+        let cellData = listData[indexPath.row]
+        cell.selectionStyle = .none
+        cell.lblCol1.textAlignment = .left
+        cell.lblCol2.textAlignment = .center
+        cell.lblCol3.textAlignment = .center
+        cell.lblCol4.textAlignment = .center
+        if indexPath.row == 0 {
+            cell.backgroundColor = UIColor(hex: "cccccc")
+            cell.lblCol1.textColor = UIColor.black
+            cell.lblCol2.textColor = UIColor.black
+            cell.lblCol3.textColor = UIColor.black
+            cell.lblCol4.textColor = UIColor.black
+        }else{
+            cell.lblCol1.textAlignment = .left
+            cell.lblCol4.textAlignment = .right
+        }
+        
+        cell.lblCol1.text = cellData["col1"] as? String
+        cell.lblCol2.text = cellData["col2"] as? String
+        cell.lblCol3.text = cellData["col3"] as? String
+        cell.lblCol4.text = cellData["col4"] as? String
+
+        return cell
+    }
+    
+    func handleData(json:JSON)->(){
         let result = json["result"]
-        print(result)
         let code = result["code"].intValue
+        print(result)
         if code == 200 {
             listData.removeAll()
-            let title = ["agentType":"代理",
-                         "agentCard":"库存",
-                         "lastBuyTime":"最后购卡时间"]
+            var title:[String:Any] = [:]
+            if self.type == 0 {
+                title = ["col1":"类型",
+                         "col2":"房卡数",
+                         "col3":"ID",
+                         "col4":"时间"]
+            } else {
+                title = ["col1":"类型",
+                         "col2":"房卡数",
+                         "col3":"金额",
+                         "col4":"时间"]
+            }
             listData.append(title)
             
             let data = result["data"]
-            let dataArr = data["myAgentList"].array
+            let dataArr = data["datas"].array
+//            let sort = segSort.selectedSegmentIndex
             for(_, element) in (dataArr?.enumerated())!{
                 var item:[String:Any] = [:]
-                item["agentId"] = element["agentId"].intValue
-                item["headerImgSrc"] = element["headerImgSrc"].stringValue
-                item["nickName"] = element["nickName"].stringValue
-                item["agentType"] = element["agentType"].stringValue
-                item["agentCard"] = element["agentCard"].intValue
-                item["lastBuyTime"] = element["lastBuyTime"].stringValue
-                
+                if type == 0 {
+                    item["col1"] = element["sellType"].stringValue
+                    item["col2"] = element["cardNum"].stringValue
+                    item["col3"] = element["id"].stringValue
+                    item["col4"] = element["sellTime"].stringValue
+                    
+//                    listData.append(CardDetailCellModel(col1: data["sellType"].stringValue, col2: data["cardNum"].stringValue, col3: data["id"].stringValue, col4: data["sellTime"].stringValue))
+                }else{
+                    item["col1"] = element["buyWay"].stringValue
+                    item["col2"] = element["cardNum"].stringValue
+                    item["col3"] = element["amount"].stringValue
+                    item["col4"] = element["time"].stringValue
+
+//                    listData.append(CardDetailCellModel(col1: data["buyWay"].stringValue, col2: data["cardNum"].stringValue, col3: data["amount"].stringValue, col4: data["time"].stringValue))
+                }
                 listData.append(item)
             }
             tableView.reloadData()
-        } else {
+//            let count = listData.count
+//            showNodata(dataCount: count)
         }
     }
 
     func reNew(type: Int) {
-        request(.myagent(agentType: type, page: 1, pageSize: 0), success: handleResult)
+        self.type = type
+        let timeInterVal = Int(Date().timeIntervalSince1970*1000)
+        if type == 0 {
+            request(.statisticList(time: String(timeInterVal), sortType: 0, pageIndex: 0, pageNum: 0), success: handleData)
+        } else {
+            request(.goodDetail(time: String(timeInterVal), page: 1), success: handleData)
+        }
     }
     /*
     // Override to support conditional editing of the table view.

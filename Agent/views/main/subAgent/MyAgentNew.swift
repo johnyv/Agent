@@ -177,11 +177,11 @@ class MyAgentNew: UIViewController {
         btnCancel.setBorder(type: 1)
         
         date = Date()
-        let idx = segType.selectedSegmentIndex
+        segType.selectedSegmentIndex = 0
         segType.addTarget(self, action: #selector(self.type(_:)), for: .valueChanged)
         
-        showVip(idx: idx)
-        setRoleId(idx: idx)
+        showVip(idx: segType.selectedSegmentIndex)
+        setRoleId(idx: segType.selectedSegmentIndex)
     }
     
     override func didReceiveMemoryWarning() {
@@ -223,6 +223,7 @@ class MyAgentNew: UIViewController {
                 return
             }
             let tel = tfTel.text?.trim()
+            print("roleId",roleId)
             request(.myagentNew(name: tfName.text!, userId: Int(tfID.text!)!, tel: tel!, roleId: roleId!, verificationCode: tfVerificationCode.text!, vipAgentOpenLimit: 0, normalAgentOpenLimit: 0, subAgentOpenLimit: 0, validityPeriod: String(timeInterVal)), success: handleResult)
         case btnCancel:
             navigationController?.popViewController(animated: true)
@@ -236,6 +237,8 @@ class MyAgentNew: UIViewController {
         print(result)
         let code = result["code"].intValue
         if code == 200 {
+        }else{
+            toastMSG(result: result)
         }
     }
 
@@ -308,6 +311,8 @@ class MyAgentNew: UIViewController {
             let data = result["data"]
 //            let title = data["title"].stringValue
 //            lblNotice.text = title
+        } else {
+            toastMSG(result: result)
         }
     }
 
