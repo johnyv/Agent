@@ -10,11 +10,11 @@ import UIKit
 import XLPagerTabStrip
 import SwiftyJSON
 
-protocol MyAgentListDelegate {
+protocol PageListDelegate {
     func reNew(type:Int)
 }
 
-class MyAgentList: UITableViewController, MyAgentListDelegate, IndicatorInfoProvider {
+class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvider {
 
     var pageInfo = IndicatorInfo(title: "Page")
     
@@ -23,7 +23,7 @@ class MyAgentList: UITableViewController, MyAgentListDelegate, IndicatorInfoProv
     let cellTitleIdentifier = "titleCell"
     let cellDetailIdentifier = "detailCell"
 
-    var delegate:MyAgentListDelegate?
+    var delegate:PageListDelegate?
     
     init(style: UITableViewStyle, pageInfo: IndicatorInfo) {
         self.pageInfo = pageInfo

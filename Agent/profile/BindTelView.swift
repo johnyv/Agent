@@ -121,7 +121,7 @@ class BindTelView: UIViewController {
         print(result)
         if code == 200 {
             self.delegate?.refresh()
-            dismiss(animated: true, completion: nil)
+            _ = navigationController?.popViewController(animated: true)
         }else{
             alertResult(code: code)
         }
@@ -132,8 +132,8 @@ class BindTelView: UIViewController {
         print(result)
         let code = result["code"].intValue
         if code == 200 {
-            delegate?.refresh()
-            _ = navigationController?.popViewController(animated: true)
+//            delegate?.refresh()
+//            _ = navigationController?.popViewController(animated: true)
         } else {
             toastMSG(result: result)
         }

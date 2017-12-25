@@ -95,6 +95,7 @@
 		52EE2FA81FF0ABF300B078FC /* SalesConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE2FA21FF0ABF300B078FC /* SalesConfirmView.swift */; };
 		52EE2FA91FF0ABF300B078FC /* SalesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE2FA31FF0ABF300B078FC /* SalesView.swift */; };
 		52EE2FAB1FF0AE6A00B078FC /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE2FAA1FF0AE6A00B078FC /* MenuViewController.swift */; };
+		52EE2FAD1FF0C9BB00B078FC /* RoomCardsDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE2FAC1FF0C9BB00B078FC /* RoomCardsDetail.swift */; };
 		52F8C5151FE93F5500C57134 /* MyAgentListTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F8C5131FE93F5500C57134 /* MyAgentListTitle.swift */; };
 		52F8C5161FE93F5500C57134 /* MyAgentListTitle.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F8C5141FE93F5500C57134 /* MyAgentListTitle.xib */; };
 		52F955EB1FEFAFBA008C9AE0 /* MobilephoneField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F955E31FEFAFBA008C9AE0 /* MobilephoneField.swift */; };
@@ -230,6 +231,7 @@
 		52EE2FA21FF0ABF300B078FC /* SalesConfirmView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SalesConfirmView.swift; sourceTree = "<group>"; };
 		52EE2FA31FF0ABF300B078FC /* SalesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SalesView.swift; sourceTree = "<group>"; };
 		52EE2FAA1FF0AE6A00B078FC /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuViewController.swift; path = views/MenuViewController.swift; sourceTree = "<group>"; };
+		52EE2FAC1FF0C9BB00B078FC /* RoomCardsDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomCardsDetail.swift; sourceTree = "<group>"; };
 		52F8C5131FE93F5500C57134 /* MyAgentListTitle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAgentListTitle.swift; sourceTree = "<group>"; };
 		52F8C5141FE93F5500C57134 /* MyAgentListTitle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyAgentListTitle.xib; sourceTree = "<group>"; };
 		52F955E31FEFAFBA008C9AE0 /* MobilephoneField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobilephoneField.swift; sourceTree = "<group>"; };
@@ -428,6 +430,7 @@
 			children = (
 				522DD3921FCE4EA200AE9D62 /* CardDepleteView.swift */,
 				522DD3941FCE4EFE00AE9D62 /* CardBuyView.swift */,
+				52EE2FAC1FF0C9BB00B078FC /* RoomCardsDetail.swift */,
 			);
 			name = roomcard;
 			path = views/roomcard;
@@ -862,6 +865,7 @@
 				52396BFC1FDE993900CEC050 /* MyAgentCellModel.swift in Sources */,
 				52FD520D1FD7DD84007E023A /* CardDetailCellModel.swift in Sources */,
 				52DA9CFB1FE90DDF007D15B1 /* MyAgentList.swift in Sources */,
+				52EE2FAD1FF0C9BB00B078FC /* RoomCardsDetail.swift in Sources */,
 				5232C63B1FE1045E0004CF72 /* ProfileInfoCell.swift in Sources */,
 				52324E051FE76F5900E2EEE1 /* SoldToPlayerSearchResult.swift in Sources */,
 				523549341FEE081E00C07710 /* MyAgentRemarkCell.swift in Sources */,

@@ -151,6 +151,7 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
                         let bindTel = profile["bindTel"] as! String
                         if bindTel != "" {
                             cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
+                            cell.lblContent.isHidden = false
                             cell.lblContent.text = bindTel
                             cell.accessoryType = .disclosureIndicator
                         }else{
