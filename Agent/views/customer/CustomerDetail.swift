@@ -127,6 +127,20 @@ class CustomerDetail: UITableViewController, PageListDelegate, IndicatorInfoProv
             break
         }
     }
+    
+    func reNewByID(type:Int, searchId:Int, startDate: Int, endDate:Int) {
+        self.type = type
+        switch type {
+        case 0:
+            request(.customerRecently(searchId: searchId, startDate: startDate, endDate: endDate, sortType: 0, pageIndex: 0, pageNum: 0), success: handleResult)
+        case 1:
+            request(.customerTotallist(searchId: searchId, startDate: startDate, endDate: endDate, sortType: 3, pageIndex: 0, pageNum: 0), success: handleResult)
+        case 2:
+            request(.customerTotallist(searchId: searchId, startDate: startDate, endDate: endDate, sortType: 2, pageIndex: 0, pageNum: 0), success: handleResult)
+        default:
+            break
+        }
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

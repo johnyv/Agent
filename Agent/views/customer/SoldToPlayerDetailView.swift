@@ -89,7 +89,7 @@ class SoldToPlayerDetailView: UIViewController {
         
         let desc = lblDateBegin.text!+"至"+lblDateEnd.text!
         print(desc)
-        let vc = loadVCfromMain(identifier: "soldToPlayerSearchResult") as! SoldToPlayerSearchResult
+        let vc = SoldToPlayerSearchResult()
         searchDelegate = vc.self
         searchDelegate?.setCondition(searchId: id!, startDate: self.dateBegin!, endDate: self.dateEnd!, desc:desc)
         

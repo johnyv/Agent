@@ -155,6 +155,14 @@ class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoPro
             request(.goodDetail(time: String(timeInterVal), page: 1), success: handleData)
         }
     }
+    
+    public func refreshDate(time:Int) -> Void {
+        if self.type == 0 {
+            request(.statisticList(time: String(time), sortType: 0, pageIndex: 0, pageNum: 0), success: handleData)
+        } else {
+            request(.goodDetail(time: String(time), page: 1), success: handleData)
+        }
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
