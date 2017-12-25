@@ -38,6 +38,7 @@ class MyAgentNew: UIViewController {
     @IBOutlet weak var btnSms: SMSCountButton!
     @IBOutlet weak var btnVoice: SMSCountButton!
 
+    var agentPermission = [[String:Any]]()
     var segType: UISegmentedControl!
 
     var lblSubCount:UILabel!
@@ -130,14 +131,13 @@ class MyAgentNew: UIViewController {
         let lblType = addLabel(title: sectionHeaders[5])
         lblType.frame.origin.y = line5.frame.origin.y + line5.frame.height + 10
         let items = ["县市普通代理", "二级代理", "VIP代理"]
-        segType = UISegmentedControl(items: items)
-        segType.frame = CGRect(x: 0, y: 0, width: 240, height: 25)
+        segType = UISegmentedControl()//UISegmentedControl(items: items)
+        segType.frame = CGRect(x: 0, y: 0, width: 100, height: 25)
         //segType.setContentOffset(CGSize(width: 100, height: 25), forSegmentAt: 0)
-        segType.setWidth(100, forSegmentAt: 0)
+        //segType.setWidth(100, forSegmentAt: 0)
         segType.frame.origin.y = lblType.frame.origin.y
         segType.isMomentary = false
         view.addSubview(segType)
-        alignUIView(v: segType, position: .right)
         let line6 = addUnderLine(v: lblType)
         line6.frame.origin.y += 5
         
@@ -177,11 +177,10 @@ class MyAgentNew: UIViewController {
         btnCancel.setBorder(type: 1)
         
         date = Date()
-        segType.selectedSegmentIndex = 0
-        segType.addTarget(self, action: #selector(self.type(_:)), for: .valueChanged)
         
-        showVip(idx: segType.selectedSegmentIndex)
-        setRoleId(idx: segType.selectedSegmentIndex)
+        //let agent = getAgent()
+        let myRoleId = agent["roleId"] as! Int
+        request(.permission(roleId: myRoleId), success: handlePermission)
     }
     
     override func didReceiveMemoryWarning() {
@@ -268,30 +267,30 @@ class MyAgentNew: UIViewController {
             roleId = 1004
         case 2:
             roleId = 1003
-            
-            let agent = getAgent()
-            let myRoleId = agent["roleId"] as! Int
-            request(.permission(roleId: myRoleId), success: handlePermission)
         default:
             break
         }
     }
     
     func showVip(idx:Int){
-        if idx < 2 {
+        let roleId:Int = agentPermission[idx]["roleId"] as! Int
+        switch roleId {
+        case 1001, 1004:
             lblSubCount.isHidden = true
             line7.isHidden = true
             lblValidityPeriod.isHidden = true
             line8.isHidden = true
             tfSubCount.isHidden = true
             lblPeriod.isHidden = true
-        }else{
+        case 1003:
             lblSubCount.isHidden = false
             line7.isHidden = false
             lblValidityPeriod.isHidden = false
             line8.isHidden = false
             tfSubCount.isHidden = false
             lblPeriod.isHidden = false
+        default:
+            break
         }
     }
     
@@ -300,6 +299,42 @@ class MyAgentNew: UIViewController {
         print(result)
         let code = result["code"].intValue
         if code == 200 {
+            let dataArr = result["data"].array
+            for(_, data) in (dataArr?.enumerated())!{
+                let dataStr = data.stringValue
+                var data = [String:Any]()
+                switch dataStr {
+                case "create_normalagent":
+                    data["title"] = "普通代理"
+                    data["roleId"] = 1001
+                    agentPermission.append(data)
+                case "create_subagent":
+                    data["title"] = "二级代理"
+                    data["roleId"] = 1004
+                    agentPermission.append(data)
+                case "create_vipagent":
+                    data["title"] = "VIP代理"
+                    data["roleId"] = 1003
+                    agentPermission.append(data)
+                default:
+                    break
+                }
+            }
+            
+            print(agentPermission)
+
+            for(i, data) in agentPermission.enumerated(){
+                segType.insertSegment(withTitle: data["title"] as? String, at: i, animated: false)
+            }
+            
+            segType.selectedSegmentIndex = 0
+            segType.addTarget(self, action: #selector(self.type(_:)), for: .valueChanged)
+            let count = agentPermission.count
+            segType.frame.size.width = 80 * CGFloat(count)
+            alignUIView(v: segType, position: .right)
+
+            showVip(idx: segType.selectedSegmentIndex)
+            setRoleId(idx: segType.selectedSegmentIndex)
         }
     }
 
