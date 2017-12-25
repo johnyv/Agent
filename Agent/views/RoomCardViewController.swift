@@ -82,9 +82,9 @@ class CardsDetailPageController: ButtonBarPagerTabStripViewController {
         return childViews
     }
     
-    override func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        super.scrollViewDidEndScrollingAnimation(scrollView)
-        
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        super.scrollViewDidScroll(scrollView)
+
         let childView = viewControllers[currentIndex] as! RoomCardsDetail
         childView.delegate = childView.self
         childView.reNew(type: currentIndex)

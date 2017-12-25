@@ -93,8 +93,8 @@ class CustomerDetailController: ButtonBarPagerTabStripViewController {
         return childViews
     }
     
-    override func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        super.scrollViewDidEndScrollingAnimation(scrollView)
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        super.scrollViewDidScroll(scrollView)
         
         let childView = viewControllers[currentIndex] as! CustomerDetail
         childView.delegate = childView.self
