@@ -259,8 +259,9 @@ class RoomCardViewController: UIViewController, UITableViewDelegate, UITableView
 
     }
     @IBAction func backToIndex(_ sender: UIBarButtonItem) {
-        let appdelegate = UIApplication.shared.delegate as! AppDelegate
-        appdelegate.menuTab?.selectedIndex = 0
+//        let appdelegate = UIApplication.shared.delegate as! AppDelegate
+//        appdelegate.menuTab?.selectedIndex = 0
+        tabBarController?.selectedIndex = 0
     }
     
     @IBAction func service(_ sender: UIBarButtonItem) {
