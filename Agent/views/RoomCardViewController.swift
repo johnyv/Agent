@@ -108,6 +108,9 @@ class RoomCardViewController: UIViewController {
     
     @IBOutlet weak var imgNoData: UIImageView!
     @IBOutlet weak var lblNoData: UILabel!
+    
+    var lblMonth:UILabel!
+    
     let cellTableIdentifier = "roomCardDetailCell"
     var sourceData = [CardDetailCellModel]()
 
@@ -135,9 +138,19 @@ class RoomCardViewController: UIViewController {
 //        
 //        tbHeader1.isHidden = true
 //        tbHeader2.isHidden = true
+        let rcBg = CGRect(x: 0, y: vTopBg.frame.origin.y + vTopBg.frame.height,
+                          width: UIScreen.main.bounds.width, height: 25)
+        let bg = UIView(frame: rcBg)
+        bg.backgroundColor = UIColor(hex: "008cc6")
+        view.addSubview(bg)
+        let rcTitle = CGRect(x: 10, y: 0, width: bg.frame.width - 20, height: 30)
+        lblMonth = UILabel(frame: rcTitle)
+        bg.addSubview(lblMonth)
+        lblMonth.text = "本月"
+        lblMonth.font = UIFont.systemFont(ofSize: 14)
         
         let cardsViewPage = CardsDetailPageController()
-        cardsViewPage.view.frame.origin.y = vTopBg.frame.origin.y + vTopBg.frame.height
+        cardsViewPage.view.frame.origin.y = bg.frame.origin.y + bg.frame.height
         addChildViewController(cardsViewPage)
         view.addSubview(cardsViewPage.view)
         

@@ -81,6 +81,10 @@ class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoPro
         cell.lblCol4.textAlignment = .center
         if indexPath.row == 0 {
             cell.backgroundColor = UIColor(hex: "cccccc")
+            cell.lblCol1.textColor = UIColor.black
+            cell.lblCol2.textColor = UIColor.black
+            cell.lblCol3.textColor = UIColor.black
+            cell.lblCol4.textColor = UIColor.black
         }else{
             cell.lblCol1.textAlignment = .left
             cell.lblCol4.textAlignment = .right
