@@ -1,5 +1,5 @@
 //
-//  RoomCardsDetail.swift
+//  CustomerDetail.swift
 //  Agent
 //
 //  Created by 于劲 on 2017/12/25.
@@ -10,7 +10,7 @@ import UIKit
 import XLPagerTabStrip
 import SwiftyJSON
 
-class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoProvider {
+class CustomerDetail: UITableViewController, PageListDelegate, IndicatorInfoProvider {
 
     var pageInfo = IndicatorInfo(title: "Page")
     
@@ -38,7 +38,7 @@ class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoPro
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        let xib = UINib(nibName: "RoomCardDetailCell", bundle: nil)
+        let xib = UINib(nibName: "CustomerTableCell", bundle: nil)
         tableView.register(xib, forCellReuseIdentifier: cellDetailIdentifier)
         tableView.tableFooterView = UIView()
     }
@@ -61,94 +61,70 @@ class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoPro
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.row {
-        case 0:
-            return 25
-        default:
-            return 44
-        }
+        return 64
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellDetailIdentifier, for: indexPath) as! RoomCardDetailCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellDetailIdentifier, for: indexPath) as! CustomerTableCell
 
         // Configure the cell...
         let cellData = listData[indexPath.row]
         cell.selectionStyle = .none
-        cell.lblCol1.textAlignment = .left
-        cell.lblCol2.textAlignment = .center
-        cell.lblCol3.textAlignment = .center
-        cell.lblCol4.textAlignment = .center
-        if indexPath.row == 0 {
-            cell.backgroundColor = UIColor(hex: "cccccc")
-        }else{
-            cell.lblCol1.textAlignment = .left
-            cell.lblCol4.textAlignment = .right
+        let strURL = cellData["header_img_src"] as! String
+        if strURL == "" {
+            cell.imgHeadIco.image = UIImage(named: "headsmall")
+        } else {
+            let icoURL = URL(string: strURL.convertToHttps())
+            cell.imgHeadIco.sd_setImage(with: icoURL, completed: nil)
+        }
+        cell.lblUserId.text = String.init(format: "ID:%d", cellData["id"] as! Int)
+        cell.lblNickName.text = cellData["nick"] as? String
+        cell.lblCount.text = String.init(format: "%d张", cellData["cardNum"] as! Int)
+
+        if self.type! > 0 {
+            cell.lblTime.text = String.init(format: "%d次", cellData["sellCount"] as! Int)
+        } else {
+            cell.lblTime.text = cellData["sellTime"] as? String
         }
         
-        cell.lblCol1.text = cellData["col1"] as? String
-        cell.lblCol2.text = cellData["col2"] as? String
-        cell.lblCol3.text = cellData["col3"] as? String
-        cell.lblCol4.text = cellData["col4"] as? String
-
         return cell
     }
-    
-    func handleData(json:JSON)->(){
+
+    func handleResult(json:JSON)->(){
         let result = json["result"]
         let code = result["code"].intValue
-        print(result)
         if code == 200 {
+            print(result)
             listData.removeAll()
-            var title:[String:Any] = [:]
-            if self.type == 0 {
-                title = ["col1":"类型",
-                         "col2":"房卡数",
-                         "col3":"ID",
-                         "col4":"时间"]
-            } else {
-                title = ["col1":"类型",
-                         "col2":"房卡数",
-                         "col3":"金额",
-                         "col4":"时间"]
-            }
-            listData.append(title)
-            
             let data = result["data"]
             let dataArr = data["datas"].array
-//            let sort = segSort.selectedSegmentIndex
-            for(_, element) in (dataArr?.enumerated())!{
-                var item:[String:Any] = [:]
-                if type == 0 {
-                    item["col1"] = element["sellType"].stringValue
-                    item["col2"] = element["cardNum"].stringValue
-                    item["col3"] = element["id"].stringValue
-                    item["col4"] = element["sellTime"].stringValue
-                    
-//                    listData.append(CardDetailCellModel(col1: data["sellType"].stringValue, col2: data["cardNum"].stringValue, col3: data["id"].stringValue, col4: data["sellTime"].stringValue))
-                }else{
-                    item["col1"] = element["buyWay"].stringValue
-                    item["col2"] = element["cardNum"].stringValue
-                    item["col3"] = element["amount"].stringValue
-                    item["col4"] = element["time"].stringValue
-
-//                    listData.append(CardDetailCellModel(col1: data["buyWay"].stringValue, col2: data["cardNum"].stringValue, col3: data["amount"].stringValue, col4: data["time"].stringValue))
-                }
-                listData.append(item)
+            for(_, data) in (dataArr?.enumerated())!{
+                var cellData:[String:Any] = [:]
+                cellData["id"] =  data["id"].intValue
+                cellData["nick"] =  data["nick"].stringValue
+                cellData["header_img_src"] =  data["header_img_src"].stringValue
+                cellData["customerType"] =  data["customerType"].stringValue
+                cellData["cardNum"] =  data["cardNum"].intValue
+                cellData["sellTime"] =  data["sellTime"].stringValue
+                cellData["sellCount"] = data["sellCount"].intValue
+                
+                listData.append(cellData)
             }
             tableView.reloadData()
-//            let count = listData.count
-//            showNodata(dataCount: count)
         }
     }
 
     func reNew(type: Int) {
         self.type = type
-        let timeInterVal = Int(Date().timeIntervalSince1970*1000)
-        if type == 0 {
-            request(.statisticList(time: String(timeInterVal), sortType: 0, pageIndex: 0, pageNum: 0), success: handleData)
-        } else {
-            request(.goodDetail(time: String(timeInterVal), page: 1), success: handleData)
+        switch type {
+        case 0:
+            request(.customerRecently(searchId: 0, startDate: 0, endDate: 0, sortType: 0, pageIndex: 0, pageNum: 0), success: handleResult)
+        case 1:
+            request(.customerTotallist(searchId: 0, startDate: 0, endDate: 0, sortType: 3, pageIndex: 0, pageNum: 0), success: handleResult)
+        case 2:
+            request(.customerTotallist(searchId: 0, startDate: 0, endDate: 0, sortType: 2, pageIndex: 0, pageNum: 0), success: handleResult)
+        default:
+            break
         }
     }
     /*

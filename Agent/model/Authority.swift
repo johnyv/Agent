@@ -44,7 +44,9 @@ class Authority: NSObject {
         tools.append(["ico_bounus","积分商城","这里是说明文案"])
         tools.append(["ico_notice_list","公告列表","这里是说明文案"])
         tools.append(["ico_data_center","数据中心","这里是说明文案"])
-        if authority.contains("create_normalagent") {
+        if authority.contains("create_normalagent") ||
+            authority.contains("create_subagent") ||
+            authority.contains("create_vipagent"){
             tools.append(["ico_agent_manager","下级代理管理","开通/禁用"])
         }
         
