@@ -27,7 +27,7 @@ import UIKit
             if newValue {
                 countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTime(_:)), userInfo: nil, repeats: true)
                 
-                remainingSeconds = 120
+                remainingSeconds = 10
                 
                 //self.backgroundColor = UIColor.gray
             } else {

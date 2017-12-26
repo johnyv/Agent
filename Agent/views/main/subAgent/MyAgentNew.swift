@@ -55,6 +55,8 @@ class MyAgentNew: UIViewController {
 //    @IBOutlet weak var tfNormalAgentOpenLimit: UITextField!
 //    @IBOutlet weak var tfSubAgentOpenLimit: UITextField!
 //    @IBOutlet weak var tfValidityPeriod: UITextField!
+    var pageDelegate:PageRefreshDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -261,7 +263,7 @@ class MyAgentNew: UIViewController {
     func setRoleId(idx:Int){
         switch idx {
         case 0:
-            roleId = 1001
+            roleId = 1006
         case 1:
             roleId = 1004
         case 2:
@@ -274,7 +276,7 @@ class MyAgentNew: UIViewController {
     func showVip(idx:Int){
         let roleId:Int = agentPermission[idx]["roleId"] as! Int
         switch roleId {
-        case 1001, 1004:
+        case 1006, 1004:
             lblSubCount.isHidden = true
             line7.isHidden = true
             lblValidityPeriod.isHidden = true
@@ -305,7 +307,7 @@ class MyAgentNew: UIViewController {
                 switch dataStr {
                 case "create_normalagent":
                     data["title"] = "普通代理"
-                    data["roleId"] = 1001
+                    data["roleId"] = 1006
                     agentPermission.append(data)
                 case "create_subagent":
                     data["title"] = "二级代理"
@@ -342,9 +344,9 @@ class MyAgentNew: UIViewController {
         print(result)
         let code = result["code"].intValue
         if code == 200 {
-            let data = result["data"]
-//            let title = data["title"].stringValue
-//            lblNotice.text = title
+            view.makeToast("开通成功", duration: 2, position: .center)
+            pageDelegate?.refresh()
+            _ = navigationController?.popViewController(animated: true)
         } else {
             toastMSG(result: result)
         }

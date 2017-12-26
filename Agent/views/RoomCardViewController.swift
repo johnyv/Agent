@@ -16,6 +16,7 @@ class CardsDetailPageController: ButtonBarPagerTabStripViewController {
     
     var isReload = false
     
+    var time:Int = 0
     override func viewDidLoad() {
         settings.style.buttonBarItemFont = .systemFont(ofSize: 15)
         settings.style.buttonBarItemTitleColor = UIColor.darkGray
@@ -48,25 +49,30 @@ class CardsDetailPageController: ButtonBarPagerTabStripViewController {
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let childView = viewControllers[currentIndex] as! RoomCardsDetail
         childView.delegate = childView.self
-        childView.reNew(type: currentIndex)
+        if time != 0 {
+            childView.refreshDate(type: currentIndex, time: time)
+        } else {
+            childView.reNew(type: currentIndex)
+        }
     }
 
     override func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         super.scrollViewDidEndScrollingAnimation(scrollView)
         let childView = viewControllers[currentIndex] as! RoomCardsDetail
         childView.delegate = childView.self
-        childView.reNew(type: currentIndex)
+        if time != 0 {
+            childView.refreshDate(type: currentIndex, time: time)
+        } else {
+            childView.reNew(type: currentIndex)
+        }
     }
-//    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        super.scrollViewDidScroll(scrollView)
-//
-//        let childView = viewControllers[currentIndex] as! RoomCardsDetail
-//        childView.delegate = childView.self
-//        childView.reNew(type: currentIndex)
-//    }
     
     override func reloadPagerTabStripView() {
         super.reloadPagerTabStripView()
+    }
+    
+    public func setTime(time:Int){
+        self.time = time
     }
 }
 
@@ -75,14 +81,14 @@ class RoomCardViewController: UIViewController {
     @IBOutlet weak var lblSalesCount: UILabel!
     @IBOutlet weak var lblBuyCount: UILabel!
     @IBOutlet weak var lblCurrent: UILabel!
-    @IBOutlet weak var segSort: UISegmentedControl!
-    @IBOutlet weak var tbHeader1: UIView!
-    @IBOutlet weak var tbHeader2: UIView!
-    @IBOutlet weak var tableView: UITableView!
+//    @IBOutlet weak var segSort: UISegmentedControl!
+//    @IBOutlet weak var tbHeader1: UIView!
+//    @IBOutlet weak var tbHeader2: UIView!
+//    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var vTopBg: UIView!
     
-    @IBOutlet weak var imgNoData: UIImageView!
-    @IBOutlet weak var lblNoData: UILabel!
+//    @IBOutlet weak var imgNoData: UIImageView!
+//    @IBOutlet weak var lblNoData: UILabel!
     
     var lblMonth:UILabel!
     var month:Int!
@@ -134,7 +140,6 @@ class RoomCardViewController: UIViewController {
         comps = calendar.dateComponents([.year, .month], from: date)
         month = comps.month
 
-        let idx:Int = segSort.selectedSegmentIndex
         let timeInterVal = Int(Date().timeIntervalSince1970*1000)
 
         request(.statisticAllNum(time: String(timeInterVal)), success: handleAllNum)
@@ -227,6 +232,7 @@ extension RoomCardViewController: HooDatePickerDelegate {
         let idx = cardsViewPage?.currentIndex
         let vc = cardsViewPage?.viewControllers[idx!] as! RoomCardsDetail
         let time = Int(date.timeIntervalSince1970*1000)
-        vc.refreshDate(time: time)
+        cardsViewPage?.setTime(time: time)
+        vc.refreshDate(type: idx!, time: time)
     }
 }

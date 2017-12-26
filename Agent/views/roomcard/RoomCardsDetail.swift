@@ -21,6 +21,9 @@ class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoPro
     var delegate:PageListDelegate?
     var type:Int?
     
+    var imageNodata:UIImageView!
+    var lblNoData:UILabel!
+
     init(style: UITableViewStyle, pageInfo: IndicatorInfo) {
         self.pageInfo = pageInfo
         super.init(style: style)
@@ -41,6 +44,20 @@ class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoPro
         let xib = UINib(nibName: "RoomCardDetailCell", bundle: nil)
         tableView.register(xib, forCellReuseIdentifier: cellDetailIdentifier)
         tableView.tableFooterView = UIView()
+        
+        imageNodata = addImageView()
+        imageNodata.image = UIImage(named: "myagency")
+        imageNodata.frame.size = CGSize(width: 185, height: 177)
+        imageNodata.frame.origin.y = 65//view.frame.height/2 - imageNodata.frame.height
+        alignUIView(v: imageNodata, position: .center)
+        
+        lblNoData = addLabel(title: "暂无数据")
+        lblNoData.frame.origin.y = imageNodata.frame.origin.y + imageNodata.frame.height + 25
+        lblNoData.font = UIFont.systemFont(ofSize: 20)
+        lblNoData.textAlignment = .center
+        alignUIView(v: lblNoData, position: .center)
+        
+        showNoData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -120,7 +137,6 @@ class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoPro
             
             let data = result["data"]
             let dataArr = data["datas"].array
-//            let sort = segSort.selectedSegmentIndex
             for(_, element) in (dataArr?.enumerated())!{
                 var item:[String:Any] = [:]
                 if type == 0 {
@@ -129,20 +145,16 @@ class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoPro
                     item["col3"] = element["id"].stringValue
                     item["col4"] = element["sellTime"].stringValue
                     
-//                    listData.append(CardDetailCellModel(col1: data["sellType"].stringValue, col2: data["cardNum"].stringValue, col3: data["id"].stringValue, col4: data["sellTime"].stringValue))
                 }else{
                     item["col1"] = element["buyWay"].stringValue
                     item["col2"] = element["cardNum"].stringValue
                     item["col3"] = element["amount"].stringValue
                     item["col4"] = element["time"].stringValue
-
-//                    listData.append(CardDetailCellModel(col1: data["buyWay"].stringValue, col2: data["cardNum"].stringValue, col3: data["amount"].stringValue, col4: data["time"].stringValue))
                 }
                 listData.append(item)
             }
             tableView.reloadData()
-//            let count = listData.count
-//            showNodata(dataCount: count)
+            showNoData()
         }
     }
 
@@ -156,11 +168,22 @@ class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoPro
         }
     }
     
-    public func refreshDate(time:Int) -> Void {
-        if self.type == 0 {
+    public func refreshDate(type:Int, time:Int) -> Void {
+        self.type = type
+        if type == 0 {
             request(.statisticList(time: String(time), sortType: 0, pageIndex: 0, pageNum: 0), success: handleData)
         } else {
             request(.goodDetail(time: String(time), page: 1), success: handleData)
+        }
+    }
+    
+    func showNoData(){
+        if listData.count > 1{
+            imageNodata.isHidden = true
+            lblNoData.isHidden = true
+        } else {
+            imageNodata.isHidden = false
+            lblNoData.isHidden = false
         }
     }
     /*

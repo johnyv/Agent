@@ -81,7 +81,7 @@ protocol SearchDelegate {
 
 class SoldToPlayerSearchResult: UIViewController, SearchDelegate {
 
-    @IBOutlet weak var lblPeriod: UILabel!
+    //@IBOutlet weak var lblPeriod: UILabel!
     @IBOutlet weak var segSort: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
     
@@ -99,13 +99,25 @@ class SoldToPlayerSearchResult: UIViewController, SearchDelegate {
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
         self.title = "向玩家售卡明细"
-        lblPeriod = addLabel(title: self.desc)
-        lblPeriod.frame.size.width = 300
+        
+        let rcBg = CGRect(x: 20, y: 10, width: 240, height: 30)
+        let bg = UIView(frame: rcBg)
+        bg.backgroundColor = UIColor(hex: "cccccc")
+        bg.layer.cornerRadius = 15
+        view.addSubview(bg)
+        
+        let lblPeriod = UILabel(frame: rcBg) //addLabel(title: self.desc)
+        bg.addSubview(lblPeriod)
+        lblPeriod.frame.origin.x = 10
+        lblPeriod.frame.origin.y = 0
+        lblPeriod.frame.size.width = 220
+        lblPeriod.text = self.desc
+        lblPeriod.font = UIFont.systemFont(ofSize: 13)
 //        self.lblPeriod.text = self.desc
         let customerViewPage = SoldToPlayerController()
         customerViewPage.setCondition(searchId: self.searchId!, startDate: self.startDate!, endDate: self.endDate!)
         
-        customerViewPage.view.frame.origin.y = lblPeriod.frame.origin.y + lblPeriod.frame.height
+        customerViewPage.view.frame.origin.y = bg.frame.origin.y + bg.frame.height + 10
         addChildViewController(customerViewPage)
         view.addSubview(customerViewPage.view)
 

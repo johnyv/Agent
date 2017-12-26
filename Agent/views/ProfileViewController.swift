@@ -96,8 +96,8 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
             cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
             let strURL = profileModel?.headerImgSrc
             if strURL != nil {
-                if strURL as! String != "" {
-                    let icoURL = URL(string: (strURL as! String).convertToHttps())
+                if strURL != "" {
+                    let icoURL = URL(string: (strURL?.convertToHttps())!)
                     cell.imgHeadIco.sd_setImage(with: icoURL, completed: nil)
                 }else{
                     cell.imgHeadIco.image = UIImage(named: "headsmall")

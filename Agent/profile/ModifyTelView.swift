@@ -159,7 +159,7 @@ class ModifyTelView: UIViewController {
         print(result)
         if code == 200 {
             self.delegate?.refresh()
-            dismiss(animated: true, completion: nil)
+            _ = navigationController?.popViewController(animated: true)
         }else{
             alertResult(code: code)
         }
@@ -170,8 +170,6 @@ class ModifyTelView: UIViewController {
         let code = result["code"].intValue
         print(result)
         if code == 200 {
-            self.delegate?.refresh()
-            _ = navigationController?.popViewController(animated: true)
         }else{
             toastMSG(result: result)
         }

@@ -12,74 +12,87 @@ import SwiftyJSON
 import SVProgressHUD
 import HooDatePicker
 import PopupController
-//import PagingMenuController
-//
-//private struct OrdersPageOptions: PagingMenuControllerCustomizable {
-//    
-//    private let allView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ordersListView") as! OrdersListView
-//    
-//    private let unpayedView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ordersListView") as! OrdersListView
-//
-//    private let payedView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ordersListView") as! OrdersListView
-//    
-//    fileprivate var componentType: ComponentType {
-//        return .all(menuOptions: MenuOptions(), pagingControllers: pagingControllers)
-//    }
-//    
-//    fileprivate var pagingControllers: [UIViewController] {
-//        return [allView, unpayedView, payedView]
-//    }
-//    
-//    fileprivate struct MenuOptions: MenuViewCustomizable {
-//        var displayMode: MenuDisplayMode {
-//            return .segmentedControl
-//        }
-//        
-//        var focusMode: MenuFocusMode{
-//            return .underline(height: 2, color: .orange, horizontalPadding: 20, verticalPadding: 0)
-//        }
-//        var itemsOptions: [MenuItemViewCustomizable] {
-//            return [MenuItem1(), MenuItem2(), MenuItem3()]
-//        }
-//    }
-//    
-//    fileprivate struct MenuItem1: MenuItemViewCustomizable {
-//        var displayMode: MenuItemDisplayMode {
-//            return .text(title: MenuItemText(text: "全部订单",
-//                                             color:.lightGray, selectedColor:.orange,
-//                                             font:UIFont.systemFont(ofSize:16)))
-//        }
-//    }
-//    
-//    fileprivate struct MenuItem2: MenuItemViewCustomizable {
-//        var displayMode: MenuItemDisplayMode {
-//            return .text(title: MenuItemText(text: "待支付", selectedColor:.orange))
-//        }
-//    }
-//    
-//    fileprivate struct MenuItem3: MenuItemViewCustomizable {
-//        var displayMode: MenuItemDisplayMode {
-//            return .text(title: MenuItemText(text: "已完成", selectedColor:.orange))
-//        }
-//    }
-//}
-//
-class OrdersView: UIViewController, UITableViewDelegate, UITableViewDataSource {
+import XLPagerTabStrip
 
-    @IBOutlet weak var tbOrderList: UITableView!
-    @IBOutlet weak var segSort: UISegmentedControl!
-    let cellTableIdentifier = "orderListCell"
-//    var orderListData = [OrderListCellModel]()
-    var orderListData = [[String:Any]]()
-
-    @IBOutlet weak var imgNoData: UIImageView!
-    @IBOutlet weak var lblNoData: UILabel!
-    @IBOutlet weak var btnSearch: UIButton!
+class OrdersPageController: ButtonBarPagerTabStripViewController {
     
-    @IBOutlet weak var lblMonth: UILabel!
+    var isReload = false
+    
+    var year:String = ""
+    var month:String = ""
+    
+    override func viewDidLoad() {
+        settings.style.buttonBarItemFont = .systemFont(ofSize: 15)
+        settings.style.buttonBarItemTitleColor = UIColor.darkGray
+        settings.style.buttonBarHeight = 35
+        settings.style.buttonBarBackgroundColor = .white
+        settings.style.buttonBarItemBackgroundColor = .white
+        settings.style.selectedBarHeight = 2
+        settings.style.selectedBarBackgroundColor = .orange
+        settings.style.buttonBarItemsShouldFillAvailableWidth = true
+        super.viewDidLoad()
+        
+        let childView = viewControllers[currentIndex] as! OrdersList
+        childView.pageDelegate = childView.self
+        childView.reNew(type: currentIndex)
+    }
+    
+    override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
+        
+        let page1 = OrdersList(style: .plain, pageInfo: "待支付")
+        let page2 = OrdersList(style: .plain, pageInfo: "已完成")
+        
+        guard isReload else {
+            return [page1, page2]
+        }
+        
+        let childViews = [page1, page2]
+        return childViews
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let childView = viewControllers[currentIndex] as! OrdersList
+        childView.pageDelegate = childView.self
+        if self.year != "" && self.month != "" {
+            childView.reNewRange(type: currentIndex, year: self.year, month: self.month)
+        } else {
+            childView.reNew(type: currentIndex)
+        }
+    }
+    
+    override func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        super.scrollViewDidEndScrollingAnimation(scrollView)
+        let childView = viewControllers[currentIndex] as! OrdersList
+        childView.pageDelegate = childView.self
+        if self.year != "" && self.month != "" {
+            childView.reNewRange(type: currentIndex, year: self.year, month: self.month)
+        } else {
+            childView.reNew(type: currentIndex)
+        }
+    }
+    
+    override func reloadPagerTabStripView() {
+        super.reloadPagerTabStripView()
+    }
+    
+    public func setTimeRange(year:String, month:String){
+        self.year = year
+        self.month = month
+    }
+}
+
+class OrdersView: UIViewController {
+
+    let cellTableIdentifier = "orderListCell"
+    var orderListData = [[String:Any]]()
+    
+    var lblMonth: UILabel!
+    var lblSearch: UILabel!
     var month:Int?
     
     var payDelegate:PayOrderDelegate?
+    
+    var ordersViewPage:OrdersPageController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,30 +106,52 @@ class OrdersView: UIViewController, UITableViewDelegate, UITableViewDataSource {
 //        view.addSubview(ordersListPageController.view)
 //        segSort.center = self.view.center
         self.title = "我的购卡订单"
-        segSort.selectedSegmentIndex = 0
-        segSort.addTarget(self, action: #selector(self.segDidchange(_:)), for: .valueChanged)
+//        segSort.selectedSegmentIndex = 0
+//        segSort.addTarget(self, action: #selector(self.segDidchange(_:)), for: .valueChanged)
+//        
+//        tbOrderList.delegate = self
+//        tbOrderList.dataSource = self
+//        tbOrderList.register(OrderListCell.self, forCellReuseIdentifier: cellTableIdentifier)
+//        let xib = UINib(nibName: "OrderListCell", bundle: nil)
+//        tbOrderList.register(xib, forCellReuseIdentifier: cellTableIdentifier)
+//        tbOrderList.rowHeight = 65
+//        
+//        btnSearch.addTarget(self, action: #selector(selectDate(_:)), for: .touchUpInside)
+//        requestData(idx: segSort.selectedSegmentIndex)
+        ordersViewPage = OrdersPageController()
         
-        tbOrderList.delegate = self
-        tbOrderList.dataSource = self
-        tbOrderList.register(OrderListCell.self, forCellReuseIdentifier: cellTableIdentifier)
-        let xib = UINib(nibName: "OrderListCell", bundle: nil)
-        tbOrderList.register(xib, forCellReuseIdentifier: cellTableIdentifier)
-        tbOrderList.rowHeight = 65
+        let rcBg = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 30)
+        let bg = UIView(frame: rcBg)
+        bg.backgroundColor = UIColor(hex: "008cc6")
+        view.addSubview(bg)
+        let rcTitle = CGRect(x: 10, y: 0, width: 60, height: 30)
+        lblMonth = UILabel(frame: rcTitle)
+        lblMonth.textColor = .white
+        bg.addSubview(lblMonth)
+        lblMonth.text = "本月"
+        lblMonth.font = UIFont.systemFont(ofSize: 14)
         
-        btnSearch.addTarget(self, action: #selector(selectDate(_:)), for: .touchUpInside)
-        requestData(idx: segSort.selectedSegmentIndex)
+        lblSearch = UILabel(frame: rcTitle)
+        lblSearch.frame.origin.x = bg.frame.width - lblSearch.frame.width - 20
+        lblSearch.textAlignment = .right
+        lblSearch.textColor = .white
+        bg.addSubview(lblSearch)
+        lblSearch.text = "搜索"
+        lblSearch.font = UIFont.systemFont(ofSize: 14)
         
+        let tapDate = UITapGestureRecognizer(target: self, action: #selector(selDate(_:)))
+        lblSearch.isUserInteractionEnabled = true
+        lblSearch.addGestureRecognizer(tapDate)
+
+        ordersViewPage?.view.frame.origin.y = bg.frame.origin.y + bg.frame.height
+        addChildViewController(ordersViewPage!)
+        view.addSubview((ordersViewPage?.view)!)
+
         let calendar: Calendar = Calendar(identifier: .gregorian)
         var comps:DateComponents = DateComponents()
         let date = Date()
         comps = calendar.dateComponents([.year, .month], from: date)
         month = comps.month
-//        lblMonth.text = String.init(format: "%d", month!)
-        autoFit()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        showNodata(dataCount: orderListData.count)
     }
     
     override func didReceiveMemoryWarning() {
@@ -124,15 +159,9 @@ class OrdersView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func backToPrev(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
-
-    func selectDate(_ sender: UIButton){
+    func selDate(_ sender: UIButton){
         let datePicker = HooDatePicker(superView: self.view)
         datePicker?.delegate = self
-        datePicker?.setTintColor(UIColor(hex: "565656"))
-        datePicker?.setHighlight(UIColor(hex: "008ce6"))
         datePicker?.locale = Locale(identifier: "zh_CN")
         datePicker?.datePickerMode = HooDatePickerMode.yearAndMonth
         datePicker?.show()
@@ -157,143 +186,143 @@ class OrdersView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         datePickerAlert.view.addSubview(datePicker)
         present(datePickerAlert, animated: true, completion: nil)
     }
-    func segDidchange(_ segmented:UISegmentedControl){
-        print(segmented.selectedSegmentIndex)
+//    func segDidchange(_ segmented:UISegmentedControl){
+//        print(segmented.selectedSegmentIndex)
+//
+////        let type = String(segmented.selectedSegmentIndex + 1)
+//        requestData(idx: segmented.selectedSegmentIndex)
+//    }
+//    
+//    func requestData(idx:Int){
+////        let source = TokenSource()
+////        source.token = getSavedToken()
+////        let provider = MoyaProvider<NetworkManager>(plugins:[
+////            AuthPlugin(tokenClosure: {return source.token})])
+//        
+//        let type = String(idx + 1)
+//        request(.orderlist(year: "2017", month: "12", page: "1", type: type), success: handleData)
+////        Network.request(.orderlist(year: "2017", month: "12", page: "1", type: type), success: handleData, provider: provider)
+//    }
 
-//        let type = String(segmented.selectedSegmentIndex + 1)
-        requestData(idx: segmented.selectedSegmentIndex)
-    }
-    
-    func requestData(idx:Int){
-//        let source = TokenSource()
-//        source.token = getSavedToken()
-//        let provider = MoyaProvider<NetworkManager>(plugins:[
-//            AuthPlugin(tokenClosure: {return source.token})])
-        
-        let type = String(idx + 1)
-        request(.orderlist(year: "2017", month: "12", page: "1", type: type), success: handleData)
-//        Network.request(.orderlist(year: "2017", month: "12", page: "1", type: type), success: handleData, provider: provider)
-    }
-
-    func handleData(json:JSON)->(){
-        let result = json["result"]
-        let code = result["code"].intValue
-        if code == 200 {
-            print(result)
-            orderListData.removeAll()
-            let data = result["data"]
-            let dataArr = data["datas"].array
-            for(_, element) in (dataArr?.enumerated())!{
-                var item:[String:Any] = [:]
-                item["id"] = element["id"].stringValue
-                item["orderNo"] = element["orderNo"].stringValue
-                item["createTime"] = element["createTime"].stringValue
-                item["cardNum"] = element["cardNum"].intValue
-                item["amount"] = element["amount"].floatValue
-                item["payWay"] = element["payWay"].stringValue
-                item["gameName"] = element["gameName"].stringValue
-                item["orderStatus"] = element["orderStatus"].stringValue
-                orderListData.append(item)
-                print(orderListData)
-//                orderListData.append(OrderListCellModel(id: element["id"].stringValue,
-//                                                        orderNo: element["orderNo"].stringValue,
-//                                                        createTime: element["createTime"].stringValue,
-//                                                        cardNum: element["cardNum"].intValue,
-//                                                        amount: element["amount"].floatValue,
-//                                                        payWay: element["payWay"].stringValue,
-//                                                        gameName: element["gameName"].stringValue,
-//                                                        orderStatus: element["orderStatus"].stringValue))
-            }
-//            DispatchQueue.main.async(execute: { () -> Void in
-                tbOrderList.reloadData()
-                showNodata(dataCount: orderListData.count)
-//            })
-        }
-    }
-
-    func showNodata(dataCount:Int){
-        if dataCount > 0 {
-            imgNoData.isHidden = true
-            lblNoData.isHidden = true
-            tbOrderList.isHidden = false
-        }else{
-            imgNoData.isHidden = false
-            lblNoData.isHidden = false
-            tbOrderList.isHidden = true
-        }
-    }
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return orderListData.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellTableIdentifier, for: indexPath) as! OrderListCell
-        let cellData = orderListData[indexPath.row]
-        let gameName = cellData["gameName"] as? String
-        let num = cellData["cardNum"] as? Int
-        cell.lblCardName.text = gameName! + String.init(format: "%d张", num!)
-        
-        cell.lblOrderNo.text = cellData["orderNo"] as? String
-        let amount = cellData["amount"] as! Float
-        cell.lblPrice.text = String.init(format: "%.2f元", amount)
-        let status = cellData["orderStatus"] as? String
-        if status == "UP" {
-            cell.lblStatus.textColor = .orange
-            cell.lblStatus.text = "待支付"
-        } else {
-            cell.lblStatus.textColor = .darkGray
-            cell.lblStatus.text = "已完成"
-        }
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cellData = orderListData[indexPath.row]
-        let type = segSort.selectedSegmentIndex
-        if type == 0 {
-            let payPopup = PopupController
-            .create(self)
-            .customize([.layout(.center)])
-            
-            let payContainer = PaymentOpt.instance()
-            payContainer.closeHandler = { _ in
-                payPopup.dismiss()
-            }
-            payContainer.cancelHandler = { result in
-                payPopup.dismiss()
-                print(result)
-                let code = result["code"].intValue
-                if code == 200 {
-                    print(result)
-                    self.view.makeToast("取消成功")
-                    self.requestData(idx: self.segSort.selectedSegmentIndex)
-                }
-            }
-            payContainer.payHandler = { result in
-                print(result)
-                let code = result["code"].intValue
-                if code == 200 {
-                    let dataStr = result["data"].stringValue
-                    UserDefaults.standard.set(dataStr, forKey: "payURL")
-                    let vc = DoPayView()
-                    let naviVC = UINavigationController(rootViewController: vc)
-                    self.present(naviVC, animated: true, completion: nil)
-                } else {
-                    self.toastMSG(result: result)
-                }
-            }
-            
-            _ = payPopup.show(payContainer)
-            payDelegate = payContainer.self
-            let orderNo = cellData["orderNo"] as? String
-            payDelegate?.orderToPay(orderNo: orderNo!)
-        }
-    }
+//    func handleData(json:JSON)->(){
+//        let result = json["result"]
+//        let code = result["code"].intValue
+//        if code == 200 {
+//            print(result)
+//            orderListData.removeAll()
+//            let data = result["data"]
+//            let dataArr = data["datas"].array
+//            for(_, element) in (dataArr?.enumerated())!{
+//                var item:[String:Any] = [:]
+//                item["id"] = element["id"].stringValue
+//                item["orderNo"] = element["orderNo"].stringValue
+//                item["createTime"] = element["createTime"].stringValue
+//                item["cardNum"] = element["cardNum"].intValue
+//                item["amount"] = element["amount"].floatValue
+//                item["payWay"] = element["payWay"].stringValue
+//                item["gameName"] = element["gameName"].stringValue
+//                item["orderStatus"] = element["orderStatus"].stringValue
+//                orderListData.append(item)
+//                print(orderListData)
+////                orderListData.append(OrderListCellModel(id: element["id"].stringValue,
+////                                                        orderNo: element["orderNo"].stringValue,
+////                                                        createTime: element["createTime"].stringValue,
+////                                                        cardNum: element["cardNum"].intValue,
+////                                                        amount: element["amount"].floatValue,
+////                                                        payWay: element["payWay"].stringValue,
+////                                                        gameName: element["gameName"].stringValue,
+////                                                        orderStatus: element["orderStatus"].stringValue))
+//            }
+////            DispatchQueue.main.async(execute: { () -> Void in
+//                tbOrderList.reloadData()
+//                showNodata(dataCount: orderListData.count)
+////            })
+//        }
+//    }
+//
+//    func showNodata(dataCount:Int){
+//        if dataCount > 0 {
+//            imgNoData.isHidden = true
+//            lblNoData.isHidden = true
+//            tbOrderList.isHidden = false
+//        }else{
+//            imgNoData.isHidden = false
+//            lblNoData.isHidden = false
+//            tbOrderList.isHidden = true
+//        }
+//    }
+//
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return 1
+//    }
+//    
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return orderListData.count
+//    }
+//    
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: cellTableIdentifier, for: indexPath) as! OrderListCell
+//        let cellData = orderListData[indexPath.row]
+//        let gameName = cellData["gameName"] as? String
+//        let num = cellData["cardNum"] as? Int
+//        cell.lblCardName.text = gameName! + String.init(format: "%d张", num!)
+//        
+//        cell.lblOrderNo.text = cellData["orderNo"] as? String
+//        let amount = cellData["amount"] as! Float
+//        cell.lblPrice.text = String.init(format: "%.2f元", amount)
+//        let status = cellData["orderStatus"] as? String
+//        if status == "UP" {
+//            cell.lblStatus.textColor = .orange
+//            cell.lblStatus.text = "待支付"
+//        } else {
+//            cell.lblStatus.textColor = .darkGray
+//            cell.lblStatus.text = "已完成"
+//        }
+//        return cell
+//    }
+//    
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let cellData = orderListData[indexPath.row]
+//        let type = segSort.selectedSegmentIndex
+//        if type == 0 {
+//            let payPopup = PopupController
+//            .create(self)
+//            .customize([.layout(.center)])
+//            
+//            let payContainer = PaymentOpt.instance()
+//            payContainer.closeHandler = { _ in
+//                payPopup.dismiss()
+//            }
+//            payContainer.cancelHandler = { result in
+//                payPopup.dismiss()
+//                print(result)
+//                let code = result["code"].intValue
+//                if code == 200 {
+//                    print(result)
+//                    self.view.makeToast("取消成功")
+//                    self.requestData(idx: self.segSort.selectedSegmentIndex)
+//                }
+//            }
+//            payContainer.payHandler = { result in
+//                print(result)
+//                let code = result["code"].intValue
+//                if code == 200 {
+//                    let dataStr = result["data"].stringValue
+//                    UserDefaults.standard.set(dataStr, forKey: "payURL")
+//                    let vc = DoPayView()
+//                    let naviVC = UINavigationController(rootViewController: vc)
+//                    self.present(naviVC, animated: true, completion: nil)
+//                } else {
+//                    self.toastMSG(result: result)
+//                }
+//            }
+//            
+//            _ = payPopup.show(payContainer)
+//            payDelegate = payContainer.self
+//            let orderNo = cellData["orderNo"] as? String
+//            payDelegate?.orderToPay(orderNo: orderNo!)
+//        }
+//    }
     /*
     // MARK: - Navigation
 
@@ -322,7 +351,12 @@ extension OrdersView : HooDatePickerDelegate{
             lblMonth.text = String.init(format: "%d月", month!)
         }
         
-        let type = segSort.selectedSegmentIndex + 1
-        request(.orderlist(year: String.init(format: "%d",year!), month: String.init(format: "%d",month!), page: "1", type: String(type)), success: handleData)
+        let strYear = String.init(format: "%d",year!)
+        let strMonth = String.init(format: "%d",month!)
+        
+        let idx = ordersViewPage?.currentIndex
+        let vc = ordersViewPage?.viewControllers[idx!] as! OrdersList
+        ordersViewPage?.setTimeRange(year: strYear, month: strMonth)
+        vc.reNewRange(type: idx!, year: strYear, month: strMonth)
     }
 }

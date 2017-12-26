@@ -69,6 +69,11 @@
 		527F65281FA1F63F0004A938 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527F65271FA1F63F0004A938 /* AccountViewController.swift */; };
 		527F652A1FA1F6660004A938 /* ResetPwdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527F65291FA1F6660004A938 /* ResetPwdViewController.swift */; };
 		527F652C1FA1F76A0004A938 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 527F652B1FA1F76A0004A938 /* Main.storyboard */; };
+		527FAA981FF1E2A600172C48 /* AgentSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527FAA931FF1E2A600172C48 /* AgentSession.swift */; };
+		527FAA991FF1E2A600172C48 /* CatchCrash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527FAA941FF1E2A600172C48 /* CatchCrash.swift */; };
+		527FAA9A1FF1E2A600172C48 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527FAA951FF1E2A600172C48 /* Constant.swift */; };
+		527FAA9B1FF1E2A600172C48 /* HandleCrash.m in Sources */ = {isa = PBXBuildFile; fileRef = 527FAA971FF1E2A600172C48 /* HandleCrash.m */; };
+		527FAA9D1FF1E3D800172C48 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527FAA9C1FF1E3D800172C48 /* ProfileModel.swift */; };
 		5283DB5F1FD1453C009759EF /* PurchaseCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5283DB5E1FD1453C009759EF /* PurchaseCellModel.swift */; };
 		5288D64C1F7A4EE900406C9B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5288D64B1F7A4EE900406C9B /* AppDelegate.swift */; };
 		5288D64E1F7A4EE900406C9B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5288D64D1F7A4EE900406C9B /* ViewController.swift */; };
@@ -89,7 +94,7 @@
 		52DA9CFF1FE93D66007D15B1 /* MyAgentListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52DA9CFD1FE93D66007D15B1 /* MyAgentListCell.xib */; };
 		52EE2F9C1FF0ABD000B078FC /* MyAgentAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE2F9B1FF0ABD000B078FC /* MyAgentAdmin.swift */; };
 		52EE2FA41FF0ABF300B078FC /* DoPayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE2F9E1FF0ABF300B078FC /* DoPayView.swift */; };
-		52EE2FA51FF0ABF300B078FC /* OrdersListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE2F9F1FF0ABF300B078FC /* OrdersListView.swift */; };
+		52EE2FA51FF0ABF300B078FC /* OrdersList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE2F9F1FF0ABF300B078FC /* OrdersList.swift */; };
 		52EE2FA61FF0ABF300B078FC /* OrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE2FA01FF0ABF300B078FC /* OrdersView.swift */; };
 		52EE2FA71FF0ABF300B078FC /* PurchaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE2FA11FF0ABF300B078FC /* PurchaseView.swift */; };
 		52EE2FA81FF0ABF300B078FC /* SalesConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE2FA21FF0ABF300B078FC /* SalesConfirmView.swift */; };
@@ -113,11 +118,6 @@
 		52FD52091FD7D868007E023A /* CardSellListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD52081FD7D868007E023A /* CardSellListModel.swift */; };
 		52FD520B1FD7D883007E023A /* CardBuyListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD520A1FD7D883007E023A /* CardBuyListModel.swift */; };
 		52FD520D1FD7DD84007E023A /* CardDetailCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD520C1FD7DD84007E023A /* CardDetailCellModel.swift */; };
-		842E6AFF1FF0A9930064263A /* HandleCrash.m in Sources */ = {isa = PBXBuildFile; fileRef = 842E6AFE1FF0A9930064263A /* HandleCrash.m */; };
-		842E6B011FF0A9FA0064263A /* CatchCrash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842E6B001FF0A9FA0064263A /* CatchCrash.swift */; };
-		842E6B071FF0D8140064263A /* AgentSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842E6B061FF0D8140064263A /* AgentSession.swift */; };
-		842E6B091FF0DBFF0064263A /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842E6B081FF0DBFF0064263A /* ProfileModel.swift */; };
-		842E6B0B1FF129B00064263A /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842E6B0A1FF129B00064263A /* Constant.swift */; };
 		84F757A81FECA6D6008ED6AA /* UINavigationController+Tracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F757A71FECA6D6008ED6AA /* UINavigationController+Tracking.m */; };
 		84F757AB1FECADA7008ED6AA /* UIViewController+Tracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F757AA1FECADA7008ED6AA /* UIViewController+Tracking.m */; };
 		DB6F216607A6283FC03854C8 /* Pods_Agent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7ADCB9F5510FBAAB5DECF96 /* Pods_Agent.framework */; };
@@ -204,6 +204,12 @@
 		527F65271FA1F63F0004A938 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountViewController.swift; path = ../AccountViewController.swift; sourceTree = "<group>"; };
 		527F65291FA1F6660004A938 /* ResetPwdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResetPwdViewController.swift; path = views/ResetPwdViewController.swift; sourceTree = "<group>"; };
 		527F652B1FA1F76A0004A938 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		527FAA931FF1E2A600172C48 /* AgentSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgentSession.swift; sourceTree = "<group>"; };
+		527FAA941FF1E2A600172C48 /* CatchCrash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatchCrash.swift; sourceTree = "<group>"; };
+		527FAA951FF1E2A600172C48 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		527FAA961FF1E2A600172C48 /* HandleCrash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HandleCrash.h; sourceTree = "<group>"; };
+		527FAA971FF1E2A600172C48 /* HandleCrash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HandleCrash.m; sourceTree = "<group>"; };
+		527FAA9C1FF1E3D800172C48 /* ProfileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		5283DB5E1FD1453C009759EF /* PurchaseCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseCellModel.swift; path = model/PurchaseCellModel.swift; sourceTree = "<group>"; };
 		5288D6481F7A4EE900406C9B /* Agent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Agent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5288D64B1F7A4EE900406C9B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -231,7 +237,7 @@
 		52DA9CFD1FE93D66007D15B1 /* MyAgentListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyAgentListCell.xib; sourceTree = "<group>"; };
 		52EE2F9B1FF0ABD000B078FC /* MyAgentAdmin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAgentAdmin.swift; sourceTree = "<group>"; };
 		52EE2F9E1FF0ABF300B078FC /* DoPayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoPayView.swift; sourceTree = "<group>"; };
-		52EE2F9F1FF0ABF300B078FC /* OrdersListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrdersListView.swift; sourceTree = "<group>"; };
+		52EE2F9F1FF0ABF300B078FC /* OrdersList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrdersList.swift; sourceTree = "<group>"; };
 		52EE2FA01FF0ABF300B078FC /* OrdersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrdersView.swift; sourceTree = "<group>"; };
 		52EE2FA11FF0ABF300B078FC /* PurchaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseView.swift; sourceTree = "<group>"; };
 		52EE2FA21FF0ABF300B078FC /* SalesConfirmView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SalesConfirmView.swift; sourceTree = "<group>"; };
@@ -258,12 +264,6 @@
 		52FD52081FD7D868007E023A /* CardSellListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardSellListModel.swift; path = model/CardSellListModel.swift; sourceTree = "<group>"; };
 		52FD520A1FD7D883007E023A /* CardBuyListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardBuyListModel.swift; path = model/CardBuyListModel.swift; sourceTree = "<group>"; };
 		52FD520C1FD7DD84007E023A /* CardDetailCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardDetailCellModel.swift; path = model/CardDetailCellModel.swift; sourceTree = "<group>"; };
-		842E6AFD1FF0A9930064263A /* HandleCrash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HandleCrash.h; sourceTree = "<group>"; };
-		842E6AFE1FF0A9930064263A /* HandleCrash.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HandleCrash.m; sourceTree = "<group>"; };
-		842E6B001FF0A9FA0064263A /* CatchCrash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchCrash.swift; sourceTree = "<group>"; };
-		842E6B061FF0D8140064263A /* AgentSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentSession.swift; sourceTree = "<group>"; };
-		842E6B081FF0DBFF0064263A /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
-		842E6B0A1FF129B00064263A /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		84F757A61FECA6D6008ED6AA /* UINavigationController+Tracking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+Tracking.h"; sourceTree = "<group>"; };
 		84F757A71FECA6D6008ED6AA /* UINavigationController+Tracking.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+Tracking.m"; sourceTree = "<group>"; };
 		84F757A91FECADA7008ED6AA /* UIViewController+Tracking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Tracking.h"; sourceTree = "<group>"; };
@@ -384,10 +384,10 @@
 		52538AC11FAB036F00FCBC26 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				527FAA9C1FF1E3D800172C48 /* ProfileModel.swift */,
 				5271B1121FCD309C00A8450C /* ProfileCellModel.swift */,
 				5292648F1FBDA071000D98A4 /* ErrorMessage.swift */,
 				529B2A521FC2CDBA001B15F2 /* AgentInfo.swift */,
-				842E6B081FF0DBFF0064263A /* ProfileModel.swift */,
 				52582B861FC3C904003B871F /* AuthHeader.swift */,
 				5251424F1FC58621000046DF /* RequestBody.swift */,
 				522DD39F1FCEA59800AE9D62 /* CustomerTableCellModel.swift */,
@@ -451,6 +451,18 @@
 			path = views/roomcard;
 			sourceTree = "<group>";
 		};
+		527FAA921FF1E2A600172C48 /* tool */ = {
+			isa = PBXGroup;
+			children = (
+				527FAA931FF1E2A600172C48 /* AgentSession.swift */,
+				527FAA941FF1E2A600172C48 /* CatchCrash.swift */,
+				527FAA951FF1E2A600172C48 /* Constant.swift */,
+				527FAA961FF1E2A600172C48 /* HandleCrash.h */,
+				527FAA971FF1E2A600172C48 /* HandleCrash.m */,
+			);
+			path = tool;
+			sourceTree = "<group>";
+		};
 		5288D63F1F7A4EE800406C9B = {
 			isa = PBXGroup;
 			children = (
@@ -477,6 +489,7 @@
 		5288D64A1F7A4EE900406C9B /* Agent */ = {
 			isa = PBXGroup;
 			children = (
+				527FAA921FF1E2A600172C48 /* tool */,
 				5288D6571F7A4EE900406C9B /* Info.plist */,
 				5254531C1FC7B432001FD475 /* AppView.storyboard */,
 				527F652B1FA1F76A0004A938 /* Main.storyboard */,
@@ -486,7 +499,6 @@
 				5292648D1FBD6EC6000D98A4 /* NetworkManager.swift */,
 				5288D64D1F7A4EE900406C9B /* ViewController.swift */,
 				5288D6521F7A4EE900406C9B /* Assets.xcassets */,
-				842E6AFC1FF0A9710064263A /* tool */,
 				842E6AF91FF0A1430064263A /* vendor */,
 				5271B1171FCD320700A8450C /* external */,
 				5288D6541F7A4EE900406C9B /* LaunchScreen.storyboard */,
@@ -551,7 +563,7 @@
 			isa = PBXGroup;
 			children = (
 				52EE2F9E1FF0ABF300B078FC /* DoPayView.swift */,
-				52EE2F9F1FF0ABF300B078FC /* OrdersListView.swift */,
+				52EE2F9F1FF0ABF300B078FC /* OrdersList.swift */,
 				52EE2FA01FF0ABF300B078FC /* OrdersView.swift */,
 				52EE2FA11FF0ABF300B078FC /* PurchaseView.swift */,
 				52EE2FA21FF0ABF300B078FC /* SalesConfirmView.swift */,
@@ -594,18 +606,6 @@
 			children = (
 			);
 			path = vendor;
-			sourceTree = "<group>";
-		};
-		842E6AFC1FF0A9710064263A /* tool */ = {
-			isa = PBXGroup;
-			children = (
-				842E6AFD1FF0A9930064263A /* HandleCrash.h */,
-				842E6AFE1FF0A9930064263A /* HandleCrash.m */,
-				842E6B001FF0A9FA0064263A /* CatchCrash.swift */,
-				842E6B061FF0D8140064263A /* AgentSession.swift */,
-				842E6B0A1FF129B00064263A /* Constant.swift */,
-			);
-			path = tool;
 			sourceTree = "<group>";
 		};
 		BE6934126BC25E54D11E8C23 /* Frameworks */ = {
@@ -872,8 +872,12 @@
 				523B91561FEA84C00045523A /* NoticeDetailView.swift in Sources */,
 				84F757AB1FECADA7008ED6AA /* UIViewController+Tracking.m in Sources */,
 				52F9560A1FEFB3D0008C9AE0 /* ComboBoxCell.m in Sources */,
+				527FAA9A1FF1E2A600172C48 /* Constant.swift in Sources */,
+				527FAA981FF1E2A600172C48 /* AgentSession.swift in Sources */,
 				5232C6461FE104A00004CF72 /* PaymentSelection.swift in Sources */,
 				52F955EC1FEFAFBA008C9AE0 /* NSString+UrlConvert.m in Sources */,
+				527FAA991FF1E2A600172C48 /* CatchCrash.swift in Sources */,
+				527FAA9B1FF1E2A600172C48 /* HandleCrash.m in Sources */,
 				52FD52091FD7D868007E023A /* CardSellListModel.swift in Sources */,
 				523C23B11FDA68D0006FD555 /* Authority.swift in Sources */,
 				523F7BE31FED0470003C136A /* MyAgentDetail.swift in Sources */,
@@ -889,7 +893,6 @@
 				5251424E1FC57CFB000046DF /* RoomCardViewController.swift in Sources */,
 				5288D64E1F7A4EE900406C9B /* ViewController.swift in Sources */,
 				52AB5B021FE26297006F4BE9 /* SoldToPlayerDetailView.swift in Sources */,
-				842E6B011FF0A9FA0064263A /* CatchCrash.swift in Sources */,
 				527F65281FA1F63F0004A938 /* AccountViewController.swift in Sources */,
 				527F65201FA18C110004A938 /* MainViewController.swift in Sources */,
 				52396BFA1FDE7E7400CEC050 /* NoticeListCellModel.swift in Sources */,
@@ -910,23 +913,21 @@
 				527F652A1FA1F6660004A938 /* ResetPwdViewController.swift in Sources */,
 				5232C6311FE1045E0004CF72 /* BannerView.swift in Sources */,
 				52EE2FAB1FF0AE6A00B078FC /* MenuViewController.swift in Sources */,
+				527FAA9D1FF1E3D800172C48 /* ProfileModel.swift in Sources */,
 				5271B12E1FCD3A0300A8450C /* TableTotalView2.swift in Sources */,
 				52AD190D1FE0063A00B99DDD /* ModifyNickView.swift in Sources */,
 				52FD520B1FD7D883007E023A /* CardBuyListModel.swift in Sources */,
 				522DDCCE1FE0D37A00F4B296 /* ModifyTelView.swift in Sources */,
 				527F65261FA1F2150004A938 /* ForgotViewController.swift in Sources */,
-				842E6B0B1FF129B00064263A /* Constant.swift in Sources */,
 				525142501FC58621000046DF /* RequestBody.swift in Sources */,
 				5271B11A1FCD320700A8450C /* NSData+Compression.m in Sources */,
 				5271B12C1FCD39F400A8450C /* TableTotalView1.swift in Sources */,
 				52F955ED1FEFAFBA008C9AE0 /* SMSCountButton.swift in Sources */,
-				842E6B071FF0D8140064263A /* AgentSession.swift in Sources */,
 				52F955F01FEFAFBA008C9AE0 /* UITextField+.swift in Sources */,
-				842E6AFF1FF0A9930064263A /* HandleCrash.m in Sources */,
 				526F73DD1FB403BD0010599C /* ProfileViewController.swift in Sources */,
 				52EE2FA41FF0ABF300B078FC /* DoPayView.swift in Sources */,
 				5232C63F1FE1045E0004CF72 /* RoomCardDetailCell.swift in Sources */,
-				52EE2FA51FF0ABF300B078FC /* OrdersListView.swift in Sources */,
+				52EE2FA51FF0ABF300B078FC /* OrdersList.swift in Sources */,
 				522DD3931FCE4EA200AE9D62 /* CardDepleteView.swift in Sources */,
 				522DD3951FCE4EFE00AE9D62 /* CardBuyView.swift in Sources */,
 				523F7BD71FECAD0B003C136A /* MyAgentInfoView.swift in Sources */,
@@ -945,7 +946,6 @@
 				5232C6391FE1045E0004CF72 /* ProfileHeadCell.swift in Sources */,
 				52F956081FEFB3D0008C9AE0 /* ComboBox.m in Sources */,
 				5232C6321FE1045E0004CF72 /* CustomerTableCell.swift in Sources */,
-				842E6B091FF0DBFF0064263A /* ProfileModel.swift in Sources */,
 				529B2A531FC2CDBA001B15F2 /* AgentInfo.swift in Sources */,
 				5271B12A1FCD38A000A8450C /* TableRecentlyView.swift in Sources */,
 				5288D64C1F7A4EE900406C9B /* AppDelegate.swift in Sources */,

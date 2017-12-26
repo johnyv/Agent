@@ -129,8 +129,8 @@ class PurchaseView: UIViewController {
     }
     
     func ordersList(_ sender: Any) {
-        let vc = loadVCfromMain(identifier: "ordersView") as? OrdersView
-        self.navigationController?.pushViewController(vc!, animated: true)
+        let vc = OrdersView()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     fileprivate func handleData(json:JSON)->(){

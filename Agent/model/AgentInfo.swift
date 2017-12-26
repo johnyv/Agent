@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objcMembers class AgentInfo: NSObject {
+@objc class AgentInfo: NSObject {
     
     var account: String?
     var agentId: Int = 0

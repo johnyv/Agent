@@ -25,6 +25,9 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
 
     var delegate:PageListDelegate?
     
+    var imageNodata:UIImageView!
+    var lblNoData:UILabel!
+
     init(style: UITableViewStyle, pageInfo: IndicatorInfo) {
         self.pageInfo = pageInfo
         super.init(style: style)
@@ -52,7 +55,21 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
         let xibCell = UINib(nibName: "MyAgentListCell", bundle: nil)
         tableView.register(xibCell, forCellReuseIdentifier: cellDetailIdentifier)
 
-        request(.myagent(agentType: 0, page: 1, pageSize: 0), success: handleResult)
+        imageNodata = addImageView()
+        imageNodata.image = UIImage(named: "myagency")
+        imageNodata.frame.size = CGSize(width: 185, height: 177)
+        imageNodata.frame.origin.y = 65//view.frame.height/3 - imageNodata.frame.height
+        alignUIView(v: imageNodata, position: .center)
+        
+        lblNoData = addLabel(title: "暂无数据")
+        lblNoData.frame.origin.y = imageNodata.frame.origin.y + imageNodata.frame.height + 25
+        lblNoData.font = UIFont.systemFont(ofSize: 20)
+        lblNoData.textAlignment = .center
+        alignUIView(v: lblNoData, position: .center)
+        
+        showNoData()
+
+        //request(.myagent(agentType: 0, page: 1, pageSize: 0), success: handleResult)
     }
 
     override func didReceiveMemoryWarning() {
@@ -155,6 +172,7 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
                 listData.append(item)
             }
             tableView.reloadData()
+            showNoData()
         } else {
         }
     }
@@ -162,6 +180,17 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
     func reNew(type: Int) {
         request(.myagent(agentType: type, page: 1, pageSize: 0), success: handleResult)
     }
+    
+    func showNoData(){
+        if listData.count > 1 {
+            imageNodata.isHidden = true
+            lblNoData.isHidden = true
+        } else {
+            imageNodata.isHidden = false
+            lblNoData.isHidden = false
+        }
+    }
+
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

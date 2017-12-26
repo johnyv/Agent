@@ -61,12 +61,12 @@ class CustomerViewController: UIViewController {
     
     @IBOutlet weak var sellPerson: UILabel!
     @IBOutlet weak var sellCount: UILabel!
-    @IBOutlet weak var segSort: UISegmentedControl!
-    @IBOutlet weak var tableView: UITableView!
+//    @IBOutlet weak var segSort: UISegmentedControl!
+//    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var vTopBg: UIView!
     
-    @IBOutlet weak var imgNoData: UIImageView!
-    @IBOutlet weak var lblNoData: UILabel!
+//    @IBOutlet weak var imgNoData: UIImageView!
+//    @IBOutlet weak var lblNoData: UILabel!
     let cellTableIdentifier = "customerTableCell"
     var sourceData = [[String:Any]]()
 
