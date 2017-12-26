@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		522DD3931FCE4EA200AE9D62 /* CardDepleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522DD3921FCE4EA200AE9D62 /* CardDepleteView.swift */; };
 		522DD3951FCE4EFE00AE9D62 /* CardBuyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522DD3941FCE4EFE00AE9D62 /* CardBuyView.swift */; };
-		522DD3A01FCEA59800AE9D62 /* CustomerTableCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522DD39F1FCEA59800AE9D62 /* CustomerTableCellModel.swift */; };
 		522DDCCE1FE0D37A00F4B296 /* ModifyTelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522DDCCD1FE0D37A00F4B296 /* ModifyTelView.swift */; };
 		52324E051FE76F5900E2EEE1 /* SoldToPlayerSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52324E041FE76F5900E2EEE1 /* SoldToPlayerSearchResult.swift */; };
 		5232C6311FE1045E0004CF72 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5232C61F1FE1045E0004CF72 /* BannerView.swift */; };
@@ -34,8 +33,6 @@
 		523549341FEE081E00C07710 /* MyAgentRemarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523549321FEE081E00C07710 /* MyAgentRemarkCell.swift */; };
 		523549351FEE081E00C07710 /* MyAgentRemarkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 523549331FEE081E00C07710 /* MyAgentRemarkCell.xib */; };
 		523549371FEE2AF600C07710 /* MyAgentRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523549361FEE2AF600C07710 /* MyAgentRecords.swift */; };
-		52396BFA1FDE7E7400CEC050 /* NoticeListCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52396BF91FDE7E7400CEC050 /* NoticeListCellModel.swift */; };
-		52396BFC1FDE993900CEC050 /* MyAgentCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52396BFB1FDE993900CEC050 /* MyAgentCellModel.swift */; };
 		523B91561FEA84C00045523A /* NoticeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523B91541FEA84C00045523A /* NoticeDetailView.swift */; };
 		523B91591FEA857D0045523A /* NoticeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523B91581FEA857D0045523A /* NoticeListView.swift */; };
 		523C23B11FDA68D0006FD555 /* Authority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523C23B01FDA68D0006FD555 /* Authority.swift */; };
@@ -55,14 +52,8 @@
 		5253485B1FBA9F390067D5FA /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5253485A1FBA9F390067D5FA /* Common.swift */; };
 		5254531D1FC7B432001FD475 /* AppView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5254531C1FC7B432001FD475 /* AppView.storyboard */; };
 		5254531F1FC7F13E001FD475 /* DataEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5254531E1FC7F13E001FD475 /* DataEncoding.swift */; };
-		52582B871FC3C904003B871F /* AuthHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52582B861FC3C904003B871F /* AuthHeader.swift */; };
 		526F73DD1FB403BD0010599C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526F73DC1FB403BD0010599C /* ProfileViewController.swift */; };
-		5271B1131FCD309C00A8450C /* ProfileCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5271B1121FCD309C00A8450C /* ProfileCellModel.swift */; };
 		5271B11A1FCD320700A8450C /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 5271B1191FCD320700A8450C /* NSData+Compression.m */; };
-		5271B12A1FCD38A000A8450C /* TableRecentlyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5271B1291FCD38A000A8450C /* TableRecentlyView.swift */; };
-		5271B12C1FCD39F400A8450C /* TableTotalView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5271B12B1FCD39F400A8450C /* TableTotalView1.swift */; };
-		5271B12E1FCD3A0300A8450C /* TableTotalView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5271B12D1FCD3A0300A8450C /* TableTotalView2.swift */; };
-		527651181FD645B7004F32EC /* OrderListCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527651171FD645B7004F32EC /* OrderListCellModel.swift */; };
 		527F65201FA18C110004A938 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527F651F1FA18C110004A938 /* MainViewController.swift */; };
 		527F65241FA1E3D70004A938 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527F65231FA1E3D70004A938 /* LoginViewController.swift */; };
 		527F65261FA1F2150004A938 /* ForgotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527F65251FA1F2150004A938 /* ForgotViewController.swift */; };
@@ -74,7 +65,8 @@
 		527FAA9A1FF1E2A600172C48 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527FAA951FF1E2A600172C48 /* Constant.swift */; };
 		527FAA9B1FF1E2A600172C48 /* HandleCrash.m in Sources */ = {isa = PBXBuildFile; fileRef = 527FAA971FF1E2A600172C48 /* HandleCrash.m */; };
 		527FAA9D1FF1E3D800172C48 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527FAA9C1FF1E3D800172C48 /* ProfileModel.swift */; };
-		5283DB5F1FD1453C009759EF /* PurchaseCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5283DB5E1FD1453C009759EF /* PurchaseCellModel.swift */; };
+		527FAA9F1FF2582600172C48 /* AgentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527FAA9E1FF2582600172C48 /* AgentInfo.swift */; };
+		527FAAA11FF25B2500172C48 /* AppMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527FAAA01FF25B2500172C48 /* AppMain.swift */; };
 		5288D64C1F7A4EE900406C9B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5288D64B1F7A4EE900406C9B /* AppDelegate.swift */; };
 		5288D64E1F7A4EE900406C9B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5288D64D1F7A4EE900406C9B /* ViewController.swift */; };
 		5288D6531F7A4EE900406C9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5288D6521F7A4EE900406C9B /* Assets.xcassets */; };
@@ -83,7 +75,6 @@
 		5288D66C1F7A4EE900406C9B /* AgentUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5288D66B1F7A4EE900406C9B /* AgentUITests.swift */; };
 		5292648E1FBD6EC6000D98A4 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5292648D1FBD6EC6000D98A4 /* NetworkManager.swift */; };
 		529264901FBDA071000D98A4 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5292648F1FBDA071000D98A4 /* ErrorMessage.swift */; };
-		529B2A531FC2CDBA001B15F2 /* AgentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529B2A521FC2CDBA001B15F2 /* AgentInfo.swift */; };
 		52AB5B021FE26297006F4BE9 /* SoldToPlayerDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AB5B011FE26297006F4BE9 /* SoldToPlayerDetailView.swift */; };
 		52AD19091FDFC1C800B99DDD /* ModifyPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AD19081FDFC1C800B99DDD /* ModifyPasswordView.swift */; };
 		52AD190B1FDFDE7F00B99DDD /* BindTelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AD190A1FDFDE7F00B99DDD /* BindTelView.swift */; };
@@ -99,7 +90,6 @@
 		52EE2FA71FF0ABF300B078FC /* PurchaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE2FA11FF0ABF300B078FC /* PurchaseView.swift */; };
 		52EE2FA81FF0ABF300B078FC /* SalesConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE2FA21FF0ABF300B078FC /* SalesConfirmView.swift */; };
 		52EE2FA91FF0ABF300B078FC /* SalesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE2FA31FF0ABF300B078FC /* SalesView.swift */; };
-		52EE2FAB1FF0AE6A00B078FC /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE2FAA1FF0AE6A00B078FC /* MenuViewController.swift */; };
 		52EE2FAD1FF0C9BB00B078FC /* RoomCardsDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE2FAC1FF0C9BB00B078FC /* RoomCardsDetail.swift */; };
 		52EE2FAF1FF0E3A700B078FC /* CustomerDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EE2FAE1FF0E3A700B078FC /* CustomerDetail.swift */; };
 		52F8C5151FE93F5500C57134 /* MyAgentListTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F8C5131FE93F5500C57134 /* MyAgentListTitle.swift */; };
@@ -115,9 +105,6 @@
 		52F956091FEFB3D0008C9AE0 /* ComboBox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F956031FEFB3D0008C9AE0 /* ComboBox.xib */; };
 		52F9560A1FEFB3D0008C9AE0 /* ComboBoxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F956051FEFB3D0008C9AE0 /* ComboBoxCell.m */; };
 		52F9560B1FEFB3D0008C9AE0 /* ComboBoxCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F956061FEFB3D0008C9AE0 /* ComboBoxCell.xib */; };
-		52FD52091FD7D868007E023A /* CardSellListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD52081FD7D868007E023A /* CardSellListModel.swift */; };
-		52FD520B1FD7D883007E023A /* CardBuyListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD520A1FD7D883007E023A /* CardBuyListModel.swift */; };
-		52FD520D1FD7DD84007E023A /* CardDetailCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD520C1FD7DD84007E023A /* CardDetailCellModel.swift */; };
 		84F757A81FECA6D6008ED6AA /* UINavigationController+Tracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F757A71FECA6D6008ED6AA /* UINavigationController+Tracking.m */; };
 		84F757AB1FECADA7008ED6AA /* UIViewController+Tracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F757AA1FECADA7008ED6AA /* UIViewController+Tracking.m */; };
 		DB6F216607A6283FC03854C8 /* Pods_Agent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7ADCB9F5510FBAAB5DECF96 /* Pods_Agent.framework */; };
@@ -143,7 +130,6 @@
 /* Begin PBXFileReference section */
 		522DD3921FCE4EA200AE9D62 /* CardDepleteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardDepleteView.swift; sourceTree = "<group>"; };
 		522DD3941FCE4EFE00AE9D62 /* CardBuyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardBuyView.swift; sourceTree = "<group>"; };
-		522DD39F1FCEA59800AE9D62 /* CustomerTableCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomerTableCellModel.swift; path = model/CustomerTableCellModel.swift; sourceTree = "<group>"; };
 		522DDCCD1FE0D37A00F4B296 /* ModifyTelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifyTelView.swift; sourceTree = "<group>"; };
 		52324E041FE76F5900E2EEE1 /* SoldToPlayerSearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoldToPlayerSearchResult.swift; sourceTree = "<group>"; };
 		5232C61F1FE1045E0004CF72 /* BannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
@@ -168,8 +154,6 @@
 		523549321FEE081E00C07710 /* MyAgentRemarkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAgentRemarkCell.swift; sourceTree = "<group>"; };
 		523549331FEE081E00C07710 /* MyAgentRemarkCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyAgentRemarkCell.xib; sourceTree = "<group>"; };
 		523549361FEE2AF600C07710 /* MyAgentRecords.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAgentRecords.swift; sourceTree = "<group>"; };
-		52396BF91FDE7E7400CEC050 /* NoticeListCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoticeListCellModel.swift; path = model/NoticeListCellModel.swift; sourceTree = "<group>"; };
-		52396BFB1FDE993900CEC050 /* MyAgentCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyAgentCellModel.swift; path = model/MyAgentCellModel.swift; sourceTree = "<group>"; };
 		523B91541FEA84C00045523A /* NoticeDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeDetailView.swift; sourceTree = "<group>"; };
 		523B91581FEA857D0045523A /* NoticeListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeListView.swift; sourceTree = "<group>"; };
 		523C23B01FDA68D0006FD555 /* Authority.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Authority.swift; path = model/Authority.swift; sourceTree = "<group>"; };
@@ -189,28 +173,23 @@
 		5253485A1FBA9F390067D5FA /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		5254531C1FC7B432001FD475 /* AppView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AppView.storyboard; sourceTree = "<group>"; };
 		5254531E1FC7F13E001FD475 /* DataEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataEncoding.swift; sourceTree = "<group>"; };
-		52582B861FC3C904003B871F /* AuthHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthHeader.swift; path = model/AuthHeader.swift; sourceTree = "<group>"; };
 		526F73DC1FB403BD0010599C /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = views/ProfileViewController.swift; sourceTree = "<group>"; };
-		5271B1121FCD309C00A8450C /* ProfileCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileCellModel.swift; path = model/ProfileCellModel.swift; sourceTree = "<group>"; };
 		5271B1181FCD320700A8450C /* NSData+Compression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Compression.h"; sourceTree = "<group>"; };
 		5271B1191FCD320700A8450C /* NSData+Compression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Compression.m"; sourceTree = "<group>"; };
-		5271B1291FCD38A000A8450C /* TableRecentlyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRecentlyView.swift; sourceTree = "<group>"; };
-		5271B12B1FCD39F400A8450C /* TableTotalView1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableTotalView1.swift; sourceTree = "<group>"; };
-		5271B12D1FCD3A0300A8450C /* TableTotalView2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableTotalView2.swift; sourceTree = "<group>"; };
-		527651171FD645B7004F32EC /* OrderListCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrderListCellModel.swift; path = model/OrderListCellModel.swift; sourceTree = "<group>"; };
 		527F651F1FA18C110004A938 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = views/MainViewController.swift; sourceTree = "<group>"; };
 		527F65231FA1E3D70004A938 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = ../LoginViewController.swift; sourceTree = "<group>"; };
-		527F65251FA1F2150004A938 /* ForgotViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ForgotViewController.swift; path = views/ForgotViewController.swift; sourceTree = "<group>"; };
-		527F65271FA1F63F0004A938 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountViewController.swift; path = ../AccountViewController.swift; sourceTree = "<group>"; };
-		527F65291FA1F6660004A938 /* ResetPwdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResetPwdViewController.swift; path = views/ResetPwdViewController.swift; sourceTree = "<group>"; };
+		527F65251FA1F2150004A938 /* ForgotViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotViewController.swift; sourceTree = "<group>"; };
+		527F65271FA1F63F0004A938 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		527F65291FA1F6660004A938 /* ResetPwdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPwdViewController.swift; sourceTree = "<group>"; };
 		527F652B1FA1F76A0004A938 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		527FAA931FF1E2A600172C48 /* AgentSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgentSession.swift; sourceTree = "<group>"; };
 		527FAA941FF1E2A600172C48 /* CatchCrash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatchCrash.swift; sourceTree = "<group>"; };
 		527FAA951FF1E2A600172C48 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		527FAA961FF1E2A600172C48 /* HandleCrash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HandleCrash.h; sourceTree = "<group>"; };
 		527FAA971FF1E2A600172C48 /* HandleCrash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HandleCrash.m; sourceTree = "<group>"; };
-		527FAA9C1FF1E3D800172C48 /* ProfileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
-		5283DB5E1FD1453C009759EF /* PurchaseCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseCellModel.swift; path = model/PurchaseCellModel.swift; sourceTree = "<group>"; };
+		527FAA9C1FF1E3D800172C48 /* ProfileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileModel.swift; path = model/ProfileModel.swift; sourceTree = "<group>"; };
+		527FAA9E1FF2582600172C48 /* AgentInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AgentInfo.swift; path = model/AgentInfo.swift; sourceTree = "<group>"; };
+		527FAAA01FF25B2500172C48 /* AppMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppMain.swift; path = views/AppMain.swift; sourceTree = "<group>"; };
 		5288D6481F7A4EE900406C9B /* Agent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Agent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5288D64B1F7A4EE900406C9B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5288D64D1F7A4EE900406C9B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -226,7 +205,6 @@
 		5288D67B1F7A55D700406C9B /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		5292648D1FBD6EC6000D98A4 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		5292648F1FBDA071000D98A4 /* ErrorMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorMessage.swift; path = model/ErrorMessage.swift; sourceTree = "<group>"; };
-		529B2A521FC2CDBA001B15F2 /* AgentInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AgentInfo.swift; path = model/AgentInfo.swift; sourceTree = "<group>"; };
 		52AB5B011FE26297006F4BE9 /* SoldToPlayerDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoldToPlayerDetailView.swift; sourceTree = "<group>"; };
 		52AD19081FDFC1C800B99DDD /* ModifyPasswordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifyPasswordView.swift; sourceTree = "<group>"; };
 		52AD190A1FDFDE7F00B99DDD /* BindTelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindTelView.swift; sourceTree = "<group>"; };
@@ -242,7 +220,6 @@
 		52EE2FA11FF0ABF300B078FC /* PurchaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseView.swift; sourceTree = "<group>"; };
 		52EE2FA21FF0ABF300B078FC /* SalesConfirmView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SalesConfirmView.swift; sourceTree = "<group>"; };
 		52EE2FA31FF0ABF300B078FC /* SalesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SalesView.swift; sourceTree = "<group>"; };
-		52EE2FAA1FF0AE6A00B078FC /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuViewController.swift; path = views/MenuViewController.swift; sourceTree = "<group>"; };
 		52EE2FAC1FF0C9BB00B078FC /* RoomCardsDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomCardsDetail.swift; sourceTree = "<group>"; };
 		52EE2FAE1FF0E3A700B078FC /* CustomerDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerDetail.swift; sourceTree = "<group>"; };
 		52F8C5131FE93F5500C57134 /* MyAgentListTitle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAgentListTitle.swift; sourceTree = "<group>"; };
@@ -261,9 +238,6 @@
 		52F956041FEFB3D0008C9AE0 /* ComboBoxCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComboBoxCell.h; sourceTree = "<group>"; };
 		52F956051FEFB3D0008C9AE0 /* ComboBoxCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComboBoxCell.m; sourceTree = "<group>"; };
 		52F956061FEFB3D0008C9AE0 /* ComboBoxCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComboBoxCell.xib; sourceTree = "<group>"; };
-		52FD52081FD7D868007E023A /* CardSellListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardSellListModel.swift; path = model/CardSellListModel.swift; sourceTree = "<group>"; };
-		52FD520A1FD7D883007E023A /* CardBuyListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardBuyListModel.swift; path = model/CardBuyListModel.swift; sourceTree = "<group>"; };
-		52FD520C1FD7DD84007E023A /* CardDetailCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardDetailCellModel.swift; path = model/CardDetailCellModel.swift; sourceTree = "<group>"; };
 		84F757A61FECA6D6008ED6AA /* UINavigationController+Tracking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+Tracking.h"; sourceTree = "<group>"; };
 		84F757A71FECA6D6008ED6AA /* UINavigationController+Tracking.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+Tracking.m"; sourceTree = "<group>"; };
 		84F757A91FECADA7008ED6AA /* UIViewController+Tracking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Tracking.h"; sourceTree = "<group>"; };
@@ -304,18 +278,16 @@
 		5216EB511FA0889B0051D35C /* views */ = {
 			isa = PBXGroup;
 			children = (
-				525348581FBA98D50067D5FA /* CustomerViewController.swift */,
-				527F65251FA1F2150004A938 /* ForgotViewController.swift */,
-				527F651F1FA18C110004A938 /* MainViewController.swift */,
-				52EE2FAA1FF0AE6A00B078FC /* MenuViewController.swift */,
-				526F73DC1FB403BD0010599C /* ProfileViewController.swift */,
-				527F65291FA1F6660004A938 /* ResetPwdViewController.swift */,
-				5251424D1FC57CFB000046DF /* RoomCardViewController.swift */,
+				527FAAA01FF25B2500172C48 /* AppMain.swift */,
 				5271B1281FCD384B00A8450C /* customer */,
+				525348581FBA98D50067D5FA /* CustomerViewController.swift */,
 				5266DA8C1FD8E3E50025F23A /* login */,
 				52DA9CE01FE90D66007D15B1 /* main */,
+				527F651F1FA18C110004A938 /* MainViewController.swift */,
 				523C23B21FDA7F33006FD555 /* profile */,
+				526F73DC1FB403BD0010599C /* ProfileViewController.swift */,
 				5271B13E1FCD8FC800A8450C /* roomcard */,
+				5251424D1FC57CFB000046DF /* RoomCardViewController.swift */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -384,21 +356,11 @@
 		52538AC11FAB036F00FCBC26 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				527FAA9E1FF2582600172C48 /* AgentInfo.swift */,
 				527FAA9C1FF1E3D800172C48 /* ProfileModel.swift */,
-				5271B1121FCD309C00A8450C /* ProfileCellModel.swift */,
 				5292648F1FBDA071000D98A4 /* ErrorMessage.swift */,
-				529B2A521FC2CDBA001B15F2 /* AgentInfo.swift */,
-				52582B861FC3C904003B871F /* AuthHeader.swift */,
 				5251424F1FC58621000046DF /* RequestBody.swift */,
-				522DD39F1FCEA59800AE9D62 /* CustomerTableCellModel.swift */,
-				5283DB5E1FD1453C009759EF /* PurchaseCellModel.swift */,
-				527651171FD645B7004F32EC /* OrderListCellModel.swift */,
-				52FD52081FD7D868007E023A /* CardSellListModel.swift */,
-				52FD520A1FD7D883007E023A /* CardBuyListModel.swift */,
-				52FD520C1FD7DD84007E023A /* CardDetailCellModel.swift */,
 				523C23B01FDA68D0006FD555 /* Authority.swift */,
-				52396BF91FDE7E7400CEC050 /* NoticeListCellModel.swift */,
-				52396BFB1FDE993900CEC050 /* MyAgentCellModel.swift */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -406,6 +368,8 @@
 		5266DA8C1FD8E3E50025F23A /* login */ = {
 			isa = PBXGroup;
 			children = (
+				527F65251FA1F2150004A938 /* ForgotViewController.swift */,
+				527F65291FA1F6660004A938 /* ResetPwdViewController.swift */,
 				527F65231FA1E3D70004A938 /* LoginViewController.swift */,
 				527F65271FA1F63F0004A938 /* AccountViewController.swift */,
 			);
@@ -429,9 +393,6 @@
 		5271B1281FCD384B00A8450C /* customer */ = {
 			isa = PBXGroup;
 			children = (
-				5271B1291FCD38A000A8450C /* TableRecentlyView.swift */,
-				5271B12B1FCD39F400A8450C /* TableTotalView1.swift */,
-				5271B12D1FCD3A0300A8450C /* TableTotalView2.swift */,
 				52AB5B011FE26297006F4BE9 /* SoldToPlayerDetailView.swift */,
 				52324E041FE76F5900E2EEE1 /* SoldToPlayerSearchResult.swift */,
 				52EE2FAE1FF0E3A700B078FC /* CustomerDetail.swift */,
@@ -878,7 +839,6 @@
 				52F955EC1FEFAFBA008C9AE0 /* NSString+UrlConvert.m in Sources */,
 				527FAA991FF1E2A600172C48 /* CatchCrash.swift in Sources */,
 				527FAA9B1FF1E2A600172C48 /* HandleCrash.m in Sources */,
-				52FD52091FD7D868007E023A /* CardSellListModel.swift in Sources */,
 				523C23B11FDA68D0006FD555 /* Authority.swift in Sources */,
 				523F7BE31FED0470003C136A /* MyAgentDetail.swift in Sources */,
 				5292648E1FBD6EC6000D98A4 /* NetworkManager.swift in Sources */,
@@ -889,39 +849,31 @@
 				527F65241FA1E3D70004A938 /* LoginViewController.swift in Sources */,
 				5253485B1FBA9F390067D5FA /* Common.swift in Sources */,
 				523F7BDA1FECADC2003C136A /* MyAgentInfoCell.swift in Sources */,
-				5271B1131FCD309C00A8450C /* ProfileCellModel.swift in Sources */,
 				5251424E1FC57CFB000046DF /* RoomCardViewController.swift in Sources */,
 				5288D64E1F7A4EE900406C9B /* ViewController.swift in Sources */,
 				52AB5B021FE26297006F4BE9 /* SoldToPlayerDetailView.swift in Sources */,
 				527F65281FA1F63F0004A938 /* AccountViewController.swift in Sources */,
 				527F65201FA18C110004A938 /* MainViewController.swift in Sources */,
-				52396BFA1FDE7E7400CEC050 /* NoticeListCellModel.swift in Sources */,
 				52EE2FA61FF0ABF300B078FC /* OrdersView.swift in Sources */,
-				522DD3A01FCEA59800AE9D62 /* CustomerTableCellModel.swift in Sources */,
-				5283DB5F1FD1453C009759EF /* PurchaseCellModel.swift in Sources */,
 				52EE2FA91FF0ABF300B078FC /* SalesView.swift in Sources */,
 				5254531F1FC7F13E001FD475 /* DataEncoding.swift in Sources */,
 				52EE2F9C1FF0ABD000B078FC /* MyAgentAdmin.swift in Sources */,
-				52396BFC1FDE993900CEC050 /* MyAgentCellModel.swift in Sources */,
-				52FD520D1FD7DD84007E023A /* CardDetailCellModel.swift in Sources */,
 				52DA9CFB1FE90DDF007D15B1 /* MyAgentList.swift in Sources */,
 				52EE2FAD1FF0C9BB00B078FC /* RoomCardsDetail.swift in Sources */,
 				5232C63B1FE1045E0004CF72 /* ProfileInfoCell.swift in Sources */,
 				52324E051FE76F5900E2EEE1 /* SoldToPlayerSearchResult.swift in Sources */,
 				523549341FEE081E00C07710 /* MyAgentRemarkCell.swift in Sources */,
+				527FAAA11FF25B2500172C48 /* AppMain.swift in Sources */,
 				52DA9CF11FE90D66007D15B1 /* MyAgentNew.swift in Sources */,
 				527F652A1FA1F6660004A938 /* ResetPwdViewController.swift in Sources */,
 				5232C6311FE1045E0004CF72 /* BannerView.swift in Sources */,
-				52EE2FAB1FF0AE6A00B078FC /* MenuViewController.swift in Sources */,
 				527FAA9D1FF1E3D800172C48 /* ProfileModel.swift in Sources */,
-				5271B12E1FCD3A0300A8450C /* TableTotalView2.swift in Sources */,
+				527FAA9F1FF2582600172C48 /* AgentInfo.swift in Sources */,
 				52AD190D1FE0063A00B99DDD /* ModifyNickView.swift in Sources */,
-				52FD520B1FD7D883007E023A /* CardBuyListModel.swift in Sources */,
 				522DDCCE1FE0D37A00F4B296 /* ModifyTelView.swift in Sources */,
 				527F65261FA1F2150004A938 /* ForgotViewController.swift in Sources */,
 				525142501FC58621000046DF /* RequestBody.swift in Sources */,
 				5271B11A1FCD320700A8450C /* NSData+Compression.m in Sources */,
-				5271B12C1FCD39F400A8450C /* TableTotalView1.swift in Sources */,
 				52F955ED1FEFAFBA008C9AE0 /* SMSCountButton.swift in Sources */,
 				52F955F01FEFAFBA008C9AE0 /* UITextField+.swift in Sources */,
 				526F73DD1FB403BD0010599C /* ProfileViewController.swift in Sources */,
@@ -934,9 +886,7 @@
 				52F955F11FEFAFBA008C9AE0 /* UIViewController+.swift in Sources */,
 				5232C63D1FE1045E0004CF72 /* ProfileOptionCell.swift in Sources */,
 				52F955EE1FEFAFBA008C9AE0 /* UIButton+.swift in Sources */,
-				52582B871FC3C904003B871F /* AuthHeader.swift in Sources */,
 				5232C6341FE1045E0004CF72 /* GoodsViewCell.swift in Sources */,
-				527651181FD645B7004F32EC /* OrderListCellModel.swift in Sources */,
 				523549371FEE2AF600C07710 /* MyAgentRecords.swift in Sources */,
 				52EE2FAF1FF0E3A700B078FC /* CustomerDetail.swift in Sources */,
 				523F7BDD1FECD16E003C136A /* AboutView.swift in Sources */,
@@ -946,8 +896,6 @@
 				5232C6391FE1045E0004CF72 /* ProfileHeadCell.swift in Sources */,
 				52F956081FEFB3D0008C9AE0 /* ComboBox.m in Sources */,
 				5232C6321FE1045E0004CF72 /* CustomerTableCell.swift in Sources */,
-				529B2A531FC2CDBA001B15F2 /* AgentInfo.swift in Sources */,
-				5271B12A1FCD38A000A8450C /* TableRecentlyView.swift in Sources */,
 				5288D64C1F7A4EE900406C9B /* AppDelegate.swift in Sources */,
 				52AD190B1FDFDE7F00B99DDD /* BindTelView.swift in Sources */,
 				523B91591FEA857D0045523A /* NoticeListView.swift in Sources */,

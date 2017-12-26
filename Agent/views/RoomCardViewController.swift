@@ -81,21 +81,13 @@ class RoomCardViewController: UIViewController {
     @IBOutlet weak var lblSalesCount: UILabel!
     @IBOutlet weak var lblBuyCount: UILabel!
     @IBOutlet weak var lblCurrent: UILabel!
-//    @IBOutlet weak var segSort: UISegmentedControl!
-//    @IBOutlet weak var tbHeader1: UIView!
-//    @IBOutlet weak var tbHeader2: UIView!
-//    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var vTopBg: UIView!
-    
-//    @IBOutlet weak var imgNoData: UIImageView!
-//    @IBOutlet weak var lblNoData: UILabel!
     
     var lblMonth:UILabel!
     var month:Int!
     var lblSearch:UILabel!
     
     let cellTableIdentifier = "roomCardDetailCell"
-    var sourceData = [CardDetailCellModel]()
 
     var cardsViewPage:CardsDetailPageController?
     

@@ -12,11 +12,11 @@ import SwiftyJSON
 
 class SoldToPlayerDetailView: UIViewController {
 
-    @IBOutlet weak var lblDateBegin: UILabel!
-    @IBOutlet weak var lblDateEnd: UILabel!
-    @IBOutlet weak var tfSearchID: UITextField!
+    var lblDateBegin: UILabel!
+    var lblDateEnd: UILabel!
+    var tfSearchID: UITextField!
     
-    @IBOutlet weak var btnSearch: UIButton!
+    var btnSearch: UIButton!
     let ft = DateFormatter()
     
     var isBegin:Bool?
@@ -32,6 +32,16 @@ class SoldToPlayerDetailView: UIViewController {
 
         self.title = "向玩家售卡"
         // Do any additional setup after loading the view.
+        view.backgroundColor = .white
+        
+        lblDateBegin = addLabel(title: "")
+        lblDateBegin.frame.origin.y = 15
+        
+        lblDateEnd = addLabel(title: "")
+        lblDateEnd.frame.origin.y = lblDateBegin.frame.origin.y
+        lblDateEnd.textAlignment = .right
+        alignUIView(v: lblDateEnd, position: .right)
+        
         let tapDateBegin = UITapGestureRecognizer(target: self, action: #selector(selDate(_:)))
         lblDateBegin.isUserInteractionEnabled = true
         lblDateBegin.addGestureRecognizer(tapDateBegin)
@@ -40,8 +50,15 @@ class SoldToPlayerDetailView: UIViewController {
         lblDateEnd.isUserInteractionEnabled = true
         lblDateEnd.addGestureRecognizer(tapDateEnd)
         
+        tfSearchID = addTextField(placeholder: "请输入玩家ID")
+        tfSearchID.frame.origin.y = lblDateEnd.frame.origin.y + lblDateEnd.frame.height + 15
+        alignUIView(v: tfSearchID, position: .center)
+        let line1 = addUnderLine(v: tfSearchID)
         tfSearchID.keyboardType = .numberPad
-        btnSearch.addTarget(self, action: #selector(doSearch(_:)), for: .touchUpInside)
+        
+        btnSearch = addButton(title: "查询", action: #selector(doSearch(_:)))
+        btnSearch.frame.origin.y = line1.frame.origin.y + line1.frame.height + 50
+        btnSearch.setBorder(type: 0)
         
         let now = Date()
         //let ft = DateFormatter()

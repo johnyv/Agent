@@ -69,10 +69,6 @@ class CustomerViewController: UIViewController {
 //    @IBOutlet weak var lblNoData: UILabel!
     let cellTableIdentifier = "customerTableCell"
     var sourceData = [[String:Any]]()
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,7 +117,7 @@ class CustomerViewController: UIViewController {
     }
 
     @IBAction func showDetail(_ sender: UIBarButtonItem) {
-        let vc = loadVCfromMain(identifier: "soldToPlayerDetailView") as! SoldToPlayerDetailView
+        let vc = SoldToPlayerDetailView()
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
