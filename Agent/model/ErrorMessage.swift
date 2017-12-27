@@ -76,7 +76,11 @@ class ErrorMessage: NSObject {
     }
     
     func desc(key:Int) -> (String) {
-        return msg[key]!
+        if (msg[key] != nil) {
+            return msg[key]!
+        } else {
+            return "未知错误"
+        }
     }
 }
 

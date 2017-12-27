@@ -13,7 +13,6 @@ import SVProgressHUD
 import PopupController
 
 class PurchaseView: UIViewController {
-//    var goodsData = [PurchaseCellModel]()
     var goodsData = [[String:Any]]()
     
     let cellGoodsIdentifier = "GoodsCell"
@@ -59,9 +58,12 @@ class PurchaseView: UIViewController {
         let agent = AgentSession.shared.agentModel
         
         let strURL = agent?.headImg
-        let icoURL = URL(string: strURL!)
-        imgHeadIco.sd_setImage(with: icoURL, completed: nil)
-        
+        if strURL != nil {
+            let icoURL = URL(string: strURL!)
+            imgHeadIco.sd_setImage(with: icoURL, completed: nil)
+        } else {
+            imgHeadIco.image = UIImage(named: "headsmall")
+        }
         let lblNickName = addLabel(title: "")
         lblNickName.frame.origin.x = imgHeadIco.frame.origin.x + imgHeadIco.frame.width + 5
         lblNickName.frame.origin.y = imgHeadIco.frame.origin.y
@@ -161,29 +163,6 @@ class PurchaseView: UIViewController {
         }
     }
 
-    
-//    func handlePay(json:JSON)->(){
-//        let result = json["result"]
-//        let code = result["code"].intValue
-//        if code == 200 {
-//            print(result)
-//            let dataStr = result["data"].stringValue
-//            let urlStr = dataStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-//            let url = URL(string: urlStr!)
-////            UIApplication.shared.openURL(url!)
-//            print(url)
-//            UserDefaults.standard.set(dataStr, forKey: "payURL")
-//
-//            let payVC = loadVCfromMain(identifier: "doPayView") as! DoPayView
-//            
-////            payVC.urlData = data
-//            present(payVC, animated: true, completion: nil)
-//        }else{
-//            print(result)
-//            SVProgressHUD.showInfo(withStatus: errMsg.desc(key: code))
-//        }
-//    }
-
     /*
     // MARK: - Navigation
 
@@ -258,10 +237,9 @@ extension PurchaseView: UICollectionViewDelegate, UICollectionViewDataSource {
                 let dataStr = result["data"].stringValue
                 UserDefaults.standard.set(dataStr, forKey: "payURL")
                 let vc = DoPayView()
-                let naviVC = UINavigationController(rootViewController: vc)
-//                let str = UserDefaults.standard.string(forKey: "payURL")
-//                print(str)
-                self.present(naviVC, animated: true, completion: nil)
+                self.navigationController?.pushViewController(vc, animated: true)
+//                let naviVC = UINavigationController(rootViewController: vc)
+//                self.present(naviVC, animated: true, completion: nil)
             }else{
                 self.toastMSG(result: result)
             }
@@ -269,27 +247,5 @@ extension PurchaseView: UICollectionViewDelegate, UICollectionViewDataSource {
         _ = payPopup.show(payContainer)
         payDelegate = payContainer.self
         payDelegate?.dataForPay(data: data)
-        
-//        func handlePay(json:JSON)->(){
-//            let result = json["result"]
-//            let code = result["code"].intValue
-//            if code == 200 {
-//                print(result)
-//                let dataStr = result["data"].stringValue
-//                let urlStr = dataStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-//                let url = URL(string: urlStr!)
-//                //            UIApplication.shared.openURL(url!)
-//                print(url)
-//                UserDefaults.standard.set(dataStr, forKey: "payURL")
-//                
-//                let payVC = loadVCfromMain(identifier: "doPayView") as! DoPayView
-//                
-//                //            payVC.urlData = data
-//                present(payVC, animated: true, completion: nil)
-//            }else{
-//                print(result)
-//                SVProgressHUD.showInfo(withStatus: errMsg.desc(key: code))
-//            }
-//        }
     }
 }

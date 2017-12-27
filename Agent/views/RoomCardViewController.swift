@@ -132,24 +132,28 @@ class RoomCardViewController: UIViewController {
         comps = calendar.dateComponents([.year, .month], from: date)
         month = comps.month
 
-        let timeInterVal = Int(Date().timeIntervalSince1970*1000)
-
-        request(.statisticAllNum(time: String(timeInterVal)), success: handleAllNum)
-        requestBuyCount(time: String(timeInterVal))
+        reCount()
         
-        func handleInfo(json:JSON)->(){
-            let result = json["result"]
-            print(result)
-            let code = result["code"].intValue
-            if code == 200 {
-                let data = result["data"]
-                let cardCount:Int = data["cardCount"].intValue
-                lblCurrent.text = String.init(format: "%d", cardCount)
+        let center = NotificationCenter.default
+        let mainQueue = OperationQueue.main
+        var token: NSObjectProtocol?
+        
+        let payWay = UserDefaults.standard.integer(forKey: "PAYWAY")
+        if payWay == 1 {
+            token = center.addObserver(forName: NSNotification.Name(rawValue: "receiveWeixinSuccess"), object: nil, queue: mainQueue) { (note) in
+                self.reCount()
+                center.removeObserver(token!)
             }
         }
-        request(.myInfo, success: handleInfo)
 
-        autoFit()
+        
+//        let timeInterVal = Int(Date().timeIntervalSince1970*1000)
+//
+//        request(.statisticAllNum(time: String(timeInterVal)), success: handleAllNum)
+//        request(.goodDetailCollect(time: String(timeInterVal)), success: handleBuyCount)
+//        request(.myInfo, success: handleInfo)
+
+        //autoFit()
     }
 
     override func didReceiveMemoryWarning() {
@@ -165,9 +169,9 @@ class RoomCardViewController: UIViewController {
         datePicker?.show()
     }
     
-    func requestBuyCount(time:String){
-        request(.goodDetailCollect(time: time), success: handleBuyCount)
-    }
+//    func requestBuyCount(time:String){
+//        request(.goodDetailCollect(time: time), success: handleBuyCount)
+//    }
     
     func handleBuyCount(json:JSON)->(){
         let result = json["result"]
@@ -188,6 +192,25 @@ class RoomCardViewController: UIViewController {
         }
     }
 
+    func handleInfo(json:JSON)->(){
+        let result = json["result"]
+        print(result)
+        let code = result["code"].intValue
+        if code == 200 {
+            let data = result["data"]
+            let cardCount:Int = data["cardCount"].intValue
+            lblCurrent.text = String.init(format: "%d", cardCount)
+        }
+    }
+
+    func reCount() {
+        let timeInterVal = Int(Date().timeIntervalSince1970*1000)
+
+        request(.statisticAllNum(time: String(timeInterVal)), success: handleAllNum)
+        request(.goodDetailCollect(time: String(timeInterVal)), success: handleBuyCount)
+        request(.myInfo, success: handleInfo)
+    }
+    
     @IBAction func backToIndex(_ sender: UIBarButtonItem) {
 //        let appdelegate = UIApplication.shared.delegate as! AppDelegate
 //        appdelegate.menuTab?.selectedIndex = 0

@@ -39,7 +39,7 @@ class NoticeDetailView: UIViewController {
         
         request(.noticeDetail(noticeId: noticeId!), success: handleNotice)
         
-        let y = lblTime.frame.origin.y + lblTime.frame.height + 20
+        let y = lblTime.frame.origin.y + lblTime.frame.height + 10
         let rcWeb = CGRect(x: 0, y: y, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - y)
         webView = UIWebView.init(frame: rcWeb)
         view.addSubview(webView)

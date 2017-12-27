@@ -87,7 +87,10 @@ class MainViewController: UIViewController {
         request(.noticeScroll, success: handleNotice)
         request(.banner, success: handleBanner)
 
-        autoFit()
+        request(.isAffirm, success: handleAgreement)
+        //request(.affirm, success: handleAgreement)
+        //request(.agreement, success: handleAgreement)
+        //autoFit()
     }
 
     override func didReceiveMemoryWarning() {
@@ -121,7 +124,6 @@ class MainViewController: UIViewController {
     
     func handleNotice(json:JSON)->(){
         let result = json["result"]
-        print(result)
         let code = result["code"].intValue
         if code == 200 {
             let data = result["data"]
@@ -137,7 +139,6 @@ class MainViewController: UIViewController {
     
     func handleBanner(json:JSON)->(){
         let result = json["result"]
-        print(result)
         let code = result["code"].intValue
         if code == 200 {
             let dataArr = result["data"].array
@@ -148,6 +149,17 @@ class MainViewController: UIViewController {
                 imgURLs.append(data["imageUrl"].stringValue as AnyObject)
             }
             banner.imageURLs = imgURLs
+        }
+    }
+    
+    func handleAgreement(json:JSON)->(){
+        let result = json["result"]
+        print(result)
+        let affirm = result["data"].intValue
+        if affirm != 1 {
+            let vc = agreement()
+            vc.needAffirm = true
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
     /*

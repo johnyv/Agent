@@ -44,9 +44,15 @@ class CustomerDetailController: ButtonBarPagerTabStripViewController {
         return childViews
     }
     
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        super.scrollViewDidScroll(scrollView)
+    override func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        super.scrollViewDidEndScrollingAnimation(scrollView)
         
+        let childView = viewControllers[currentIndex] as! CustomerDetail
+        childView.delegate = childView.self
+        childView.reNew(type: currentIndex)
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let childView = viewControllers[currentIndex] as! CustomerDetail
         childView.delegate = childView.self
         childView.reNew(type: currentIndex)
@@ -84,7 +90,7 @@ class CustomerViewController: UIViewController {
         addChildViewController(customerViewPage)
         view.addSubview(customerViewPage.view)
 
-        autoFit()
+        //autoFit()
     }
     
     func handleAllnum(json:JSON)->(){

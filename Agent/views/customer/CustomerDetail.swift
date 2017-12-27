@@ -147,6 +147,8 @@ class CustomerDetail: UITableViewController, PageListDelegate, IndicatorInfoProv
     }
     
     func reNewByID(type:Int, searchId:Int, startDate: Int, endDate:Int) {
+        print(startDate)
+        print(endDate)
         self.type = type
         switch type {
         case 0:

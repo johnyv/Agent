@@ -294,15 +294,22 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
     }
     
     @IBAction func logOut(_ sender: UIBarButtonItem) {
-        UserDefaults.standard.removeObject(forKey: "uid")
-        UserDefaults.standard.removeObject(forKey: "agentToken")
-        UserDefaults.standard.synchronize()
-        let appdelegate = UIApplication.shared.delegate as! AppDelegate
-        appdelegate.reLogin()
+        let alert = UIAlertController(title: "系统提示", message: "确定要退出当前账号？", preferredStyle: .alert)
+        let cancal = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        let ok = UIAlertAction(title: "确定", style: .default, handler: {
+            action in
+            UserDefaults.standard.removeObject(forKey: "uid")
+            UserDefaults.standard.removeObject(forKey: "agentToken")
+            UserDefaults.standard.synchronize()
+            let app = UIApplication.shared.delegate as! AppDelegate
+            app.reLogin()
+        })
+        alert.addAction(cancal)
+        alert.addAction(ok)
+        present(alert, animated: true, completion: nil)
     }
+    
     @IBAction func backToIndex(_ sender: UIBarButtonItem) {
-//        let appdelegate = UIApplication.shared.delegate as! AppDelegate
-//        appdelegate.menuTab?.selectedIndex = 0
         tabBarController?.selectedIndex = 0
     }
     

@@ -45,15 +45,15 @@ class ModifyTelView: UIViewController {
         
         btnSmsOld = addSmsButton(title: "获取验证码", action: #selector(sms(_:)))
         btnSmsOld.frame.origin.y = tfSmsOld.frame.origin.y
-        btnSmsOld.frame.size.width = 80
-        btnSmsOld.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        btnSmsOld.frame.size.width = 70
+        btnSmsOld.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         alignUIView(v: btnSmsOld, position: .right)
         
         btnVoiceOld = addSmsButton(title: "语音验证码", action: #selector(sms(_:)))
         btnVoiceOld.frame.origin.y = btnSmsOld.frame.origin.y + btnSmsOld.frame.height + 15
-        btnVoiceOld.frame.size.width = 65
+        btnVoiceOld.frame.size.width = 55
         btnVoiceOld.setTitleColor(UIColor(hex: "565656"), for: .normal)
-        btnVoiceOld.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        btnVoiceOld.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         alignUIView(v: btnVoiceOld, position: .right)
         
         let div = addDivLine(y: btnVoiceOld.frame.origin.y + btnVoiceOld.frame.height + 15)
@@ -80,15 +80,15 @@ class ModifyTelView: UIViewController {
         
         btnSms = addSmsButton(title: "获取验证码", action: #selector(smsNew(_:)))
         btnSms.frame.origin.y = tfSms.frame.origin.y
-        btnSms.frame.size.width = 80
-        btnSms.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        btnSms.frame.size.width = 70
+        btnSms.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         alignUIView(v: btnSms, position: .right)
         
         btnVoice = addSmsButton(title: "语音验证码", action: #selector(smsNew(_:)))
         btnVoice.frame.origin.y = btnSms.frame.origin.y + btnSms.frame.height + 15
-        btnVoice.frame.size.width = 65
+        btnVoice.frame.size.width = 55
         btnVoice.setTitleColor(UIColor(hex: "565656"), for: .normal)
-        btnVoice.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        btnVoice.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         alignUIView(v: btnVoice, position: .right)
         
         btnBind = addButton(title: "立即绑定", action: #selector(bind(_:)))
@@ -150,7 +150,21 @@ class ModifyTelView: UIViewController {
     }
     
     func bind(_ sender:UIButton){
-        request(.bindTel(tel: tfMobile.text!, verificationCode: tfSms.text!), success: handleResult)
+        if(tfSmsOld.text == ""){
+            view.makeToast("请输入原验证码", duration: 2, position: .center)
+            return
+        }
+        
+        if(tfMobile.text == ""){
+            view.makeToast("手机号不能为空", duration: 2, position: .center)
+            return
+        }
+        if(tfSms.text == ""){
+            view.makeToast("请输入验证码", duration: 2, position: .center)
+            return
+        }
+
+        request(.updateBind(oldVerificationCode: tfSmsOld.text!, tel: tfMobile.text!, newVerificationCode: tfSms.text!), success: handleResult)
     }
     
     func handleResult(json:JSON)->(){
@@ -161,7 +175,7 @@ class ModifyTelView: UIViewController {
             self.delegate?.refresh()
             _ = navigationController?.popViewController(animated: true)
         }else{
-            alertResult(code: code)
+            toastMSG(result: result)
         }
     }
 

@@ -54,15 +54,15 @@ class BindTelView: UIViewController {
         
         btnSms = addSmsButton(title: "获取验证码", action: #selector(sms(_:)))
         btnSms.frame.origin.y = tfSms.frame.origin.y
-        btnSms.frame.size.width = 80
-        btnSms.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        btnSms.frame.size.width = 70
+        btnSms.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         alignUIView(v: btnSms, position: .right)
         
         btnVoice = addSmsButton(title: "语音验证码", action: #selector(sms(_:)))
         btnVoice.frame.origin.y = btnSms.frame.origin.y + btnSms.frame.height + 15
-        btnVoice.frame.size.width = 65
+        btnVoice.frame.size.width = 55
         btnVoice.setTitleColor(UIColor(hex: "565656"), for: .normal)
-        btnVoice.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        btnVoice.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         alignUIView(v: btnVoice, position: .right)
         
         btnBind = addButton(title: "立即绑定", action: #selector(bind(_:)))
@@ -112,6 +112,14 @@ class BindTelView: UIViewController {
     }
 
     func bind(_ sender:UIButton){
+        if(tfTel.text == ""){
+            view.makeToast("手机号不能为空", duration: 2, position: .center)
+            return
+        }
+        if(tfSms.text == ""){
+            view.makeToast("请输入验证码", duration: 2, position: .center)
+            return
+        }
         request(.bindTel(tel: tfTel.text!, verificationCode: tfSms.text!), success: handleResult)
     }
     

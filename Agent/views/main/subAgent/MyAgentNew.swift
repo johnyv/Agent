@@ -29,7 +29,7 @@ class MyAgentNew: UIViewController {
 //    @IBOutlet weak var tfUSerName: UITextField!
 //    @IBOutlet weak var tfUserId: UITextField!
     var roleId:Int?
-    var date:Date?
+    var period:String?
     @IBOutlet weak var tfName: UITextField!
     @IBOutlet weak var tfID: UITextField!
     var tfTel: MobilephoneField!
@@ -107,15 +107,15 @@ class MyAgentNew: UIViewController {
         
         btnSms = addSmsButton(title: "获取验证码", action: #selector(sms(_:)))
         btnSms.frame.origin.y = lblSms.frame.origin.y
-        btnSms.frame.size.width = 80
-        btnSms.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        btnSms.frame.size.width = 70
+        btnSms.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         alignUIView(v: btnSms, position: .right)
         
         btnVoice = addSmsButton(title: "语音验证", action: #selector(sms(_:)))
         btnVoice.frame.origin.y = btnSms.frame.origin.y + btnSms.frame.height + 15
         btnVoice.frame.size.width = 55
         btnVoice.setTitleColor(UIColor(hex: "565656"), for: .normal)
-        btnVoice.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        btnVoice.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         alignUIView(v: btnVoice, position: .right)
         
         let div = addDivLine(y: lblSms.frame.origin.y + lblSms.frame.height + 50)
@@ -132,7 +132,7 @@ class MyAgentNew: UIViewController {
         
         let lblType = addLabel(title: sectionHeaders[5])
         lblType.frame.origin.y = line5.frame.origin.y + line5.frame.height + 10
-        let items = ["县市普通代理", "二级代理", "VIP代理"]
+        //let items = ["县市普通代理", "二级代理", "VIP代理"]
         segType = UISegmentedControl()//UISegmentedControl(items: items)
         segType.frame = CGRect(x: 0, y: 0, width: 100, height: 25)
         //segType.setContentOffset(CGSize(width: 100, height: 25), forSegmentAt: 0)
@@ -149,6 +149,7 @@ class MyAgentNew: UIViewController {
         tfSubCount = addTextField(placeholder: "请填写数量")
         tfSubCount.frame.origin.y = lblSubCount.frame.origin.y
         tfSubCount.textAlignment = .right
+        tfSubCount.keyboardType = .numberPad
         alignUIView(v: tfSubCount, position: .right)
         line7 = addUnderLine(v: lblSubCount)
         
@@ -178,7 +179,7 @@ class MyAgentNew: UIViewController {
         alignUIView(v: btnCancel, position: .center)
         btnCancel.setBorder(type: 1)
         
-        date = Date()
+        period = ""
         
         let roleId = AgentSession.shared.agentModel?.roleId
         request(.permission(roleId: roleId!), success: handlePermission)
@@ -194,6 +195,13 @@ class MyAgentNew: UIViewController {
         let datePicker = HooDatePicker(superView: self.view)
         datePicker?.delegate = self
         datePicker?.locale = Locale(identifier: "zh_CN")
+        
+        let ft = DateFormatter()
+        ft.dateFormat = "dd-MM-yyyy HH:mm:ss"
+        let minDate = ft.date(from: "01-01-2015 00:00:00")
+        let maxDate = ft.date(from: "01-01-2025 00:00:00")
+        datePicker?.minimumDate = minDate
+        datePicker?.maximumDate = maxDate
         datePicker?.datePickerMode = HooDatePickerMode.date
         datePicker?.show()
     }
@@ -201,8 +209,6 @@ class MyAgentNew: UIViewController {
     func new(_ sender:UIButton) {
         switch sender {
         case btnNew:
-            let timeInterVal = Int((date?.timeIntervalSince1970)!*1000)
-            
             if tfName.text == "" {
                 view.makeToast(placeHolders[0])
                 return
@@ -223,10 +229,18 @@ class MyAgentNew: UIViewController {
                 return
             }
             let tel = tfTel.text?.trim()
-            print("roleId",roleId)
-            request(.myagentNew(name: tfName.text!, userId: Int(tfID.text!)!, tel: tel!, roleId: roleId!, verificationCode: tfVerificationCode.text!, vipAgentOpenLimit: 0, normalAgentOpenLimit: 0, subAgentOpenLimit: 0, validityPeriod: String(timeInterVal)), success: handleResult)
+            var count:Int = 0
+            
+            let strCount = tfSubCount.text
+            print(strCount)
+            if (strCount != "") {
+                count = Int(tfSubCount.text!)!
+            }
+            
+            print(count)
+            request(.myagentNew(name: tfName.text!, userId: Int(tfID.text!)!, tel: tel!, roleId: roleId!, verificationCode: tfVerificationCode.text!, vipAgentOpenLimit: 0, normalAgentOpenLimit: 0, subAgentOpenLimit: count, validityPeriod: self.period!), success: handleResult)
         case btnCancel:
-            navigationController?.popViewController(animated: true)
+            _ = navigationController?.popViewController(animated: true)
         default:
             break
         }
@@ -237,6 +251,7 @@ class MyAgentNew: UIViewController {
         print(result)
         let code = result["code"].intValue
         if code == 200 {
+            view.makeToast("发送成功", duration: 2, position: .center)
         }else{
             toastMSG(result: result)
         }
@@ -261,16 +276,7 @@ class MyAgentNew: UIViewController {
     }
     
     func setRoleId(idx:Int){
-        switch idx {
-        case 0:
-            roleId = 1006
-        case 1:
-            roleId = 1004
-        case 2:
-            roleId = 1003
-        default:
-            break
-        }
+        roleId = agentPermission[idx]["roleId"] as? Int
     }
     
     func showVip(idx:Int){
@@ -306,16 +312,19 @@ class MyAgentNew: UIViewController {
                 var data = [String:Any]()
                 switch dataStr {
                 case "create_normalagent":
-                    data["title"] = "普通代理"
+                    data["title"] = "县市普通代理"
                     data["roleId"] = 1006
+                    data["width"] = 100
                     agentPermission.append(data)
                 case "create_subagent":
                     data["title"] = "二级代理"
                     data["roleId"] = 1004
+                    data["width"] = 60
                     agentPermission.append(data)
                 case "create_vipagent":
                     data["title"] = "VIP代理"
                     data["roleId"] = 1003
+                    data["width"] = 60
                     agentPermission.append(data)
                 default:
                     break
@@ -324,14 +333,19 @@ class MyAgentNew: UIViewController {
             
             print(agentPermission)
 
+            var width:CGFloat = 0
             for(i, data) in agentPermission.enumerated(){
                 segType.insertSegment(withTitle: data["title"] as? String, at: i, animated: false)
+                let iw = data["width"] as! Int
+                let w = CGFloat(iw)
+                segType.setWidth(w, forSegmentAt: i)
+                width += w
             }
             
             segType.selectedSegmentIndex = 0
             segType.addTarget(self, action: #selector(self.type(_:)), for: .valueChanged)
-            let count = agentPermission.count
-            segType.frame.size.width = 80 * CGFloat(count)
+            //let count = agentPermission.count
+            segType.frame.size.width = width
             alignUIView(v: segType, position: .right)
 
             showVip(idx: segType.selectedSegmentIndex)
@@ -366,6 +380,12 @@ class MyAgentNew: UIViewController {
 
 extension MyAgentNew: HooDatePickerDelegate{
     func datePicker(_ dataPicker: HooDatePicker!, didSelectedDate date: Date!) {
-        self.date = date
+        
+        let ft = DateFormatter()
+        ft.dateFormat = "yyyy年MM月dd日"
+        lblPeriod.text = ft.string(from: date)
+        
+        ft.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        self.period = ft.string(from: date)
     }
 }

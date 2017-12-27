@@ -97,7 +97,7 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
             let cell = tableView.dequeueReusableCell(withIdentifier: cellTitleIdentifier, for: indexPath) as! MyAgentListTitle
             let cellData = listData[indexPath.row]
             
-            cell.backgroundColor = UIColor(hex: "dddddd")
+            cell.backgroundColor = UIColor(hex: "cccccc")
             cell.selectionStyle = .none
             cell.lblAgentType.text = cellData["agentType"] as? String
             cell.lblAgentCard.text = cellData["agentCard"] as? String
@@ -120,7 +120,8 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
             }
             let hold = cellData["agentCard"] as! Int
             cell.lblHoldCount.text = String.init(format: "%d", hold)
-            cell.lblLastTime.text = cellData["lastBuyTime"] as? String
+            let time = cellData["lastBuyTime"] as! String
+            cell.lblLastTime.text = time.characters.count > 0 ? time : "----"
             return cell
 
         }
@@ -178,7 +179,19 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
     }
 
     func reNew(type: Int) {
-        request(.myagent(agentType: type, page: 1, pageSize: 0), success: handleResult)
+        var agentType:Int = 0
+        
+        switch type {
+        case 0:
+            agentType = 0
+        case 1:
+            agentType = 2
+        case 2:
+            agentType = 1
+        default:
+            break
+        }
+        request(.myagent(agentType: agentType, page: 1, pageSize: 0), success: handleResult)
     }
     
     func showNoData(){

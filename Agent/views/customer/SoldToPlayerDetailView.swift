@@ -66,7 +66,9 @@ class SoldToPlayerDetailView: UIViewController {
         lblDateBegin.text = ft.string(from: now)
         lblDateEnd.text = ft.string(from:now)
         
-        dateBegin = Int(now.timeIntervalSince1970*1000)
+        let zeroTime:Date = getZeroTime(date: now)
+
+        dateBegin = Int(zeroTime.timeIntervalSince1970*1000)
         dateEnd = Int(now.timeIntervalSince1970*1000)
         
         autoFit()
@@ -152,8 +154,9 @@ class SoldToPlayerDetailView: UIViewController {
 extension SoldToPlayerDetailView: HooDatePickerDelegate {
     func datePicker(_ dataPicker: HooDatePicker!, didSelectedDate date: Date!) {
         if isBegin! {
-            lblDateBegin.text = ft.string(from: date)
-            dateBegin = Int(date.timeIntervalSince1970*1000)
+            let zeroTime = getZeroTime(date: date)
+            lblDateBegin.text = ft.string(from: zeroTime)
+            dateBegin = Int(zeroTime.timeIntervalSince1970*1000)
         } else {
             lblDateEnd.text = ft.string(from: date)
             dateEnd = Int(date.timeIntervalSince1970*1000)
