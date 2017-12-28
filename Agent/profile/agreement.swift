@@ -20,7 +20,7 @@ class agreement: UIViewController {
 
         // Do any additional setup after loading the view.
         self.title = "代理协议"
-        webView = UIWebView.init(frame: CGRect(x:0,y:0,width:view.bounds.width,height:view.bounds.height))
+        webView = UIWebView.init(frame: CGRect(x:0,y:0,width:view.bounds.width,height:view.bounds.height - 64))
         view.addSubview(webView)
         let path = Bundle.main.path(forResource: "agreement", ofType: "html")
         let pathURL = URL(fileURLWithPath: path!)
