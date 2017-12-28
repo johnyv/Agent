@@ -101,9 +101,12 @@ class OrdersList: UITableViewController, PageListDelegate, IndicatorInfoProvider
         if status == "UP" {
             cell.lblStatus.textColor = .orange
             cell.lblStatus.text = "待支付"
-        } else {
+        } else if status == "C"{
             cell.lblStatus.textColor = .darkGray
             cell.lblStatus.text = "已完成"
+        } else if status == "CC" {
+            cell.lblStatus.textColor = .darkGray
+            cell.lblStatus.text = "已取消"
         }
         return cell
     }
@@ -136,8 +139,7 @@ class OrdersList: UITableViewController, PageListDelegate, IndicatorInfoProvider
                     let dataStr = result["data"].stringValue
                     UserDefaults.standard.set(dataStr, forKey: "payURL")
                     let vc = DoPayView()
-                    let naviVC = UINavigationController(rootViewController: vc)
-                    self.present(naviVC, animated: true, completion: nil)
+                    self.navigationController?.pushViewController(vc, animated: true)
                 } else {
                     self.toastMSG(result: result)
                 }

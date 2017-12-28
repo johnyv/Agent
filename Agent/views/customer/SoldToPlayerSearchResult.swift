@@ -102,7 +102,7 @@ class SoldToPlayerSearchResult: UIViewController, SearchDelegate {
         
         let rcBg = CGRect(x: 20, y: 10, width: 240, height: 30)
         let bg = UIView(frame: rcBg)
-        bg.backgroundColor = UIColor(hex: "cccccc")
+        bg.backgroundColor = UIColor(hex: "f8f8f8")
         bg.layer.cornerRadius = 15
         view.addSubview(bg)
         

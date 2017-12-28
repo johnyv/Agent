@@ -17,7 +17,6 @@ class DoPayView: UIViewController, WKUIDelegate, WKNavigationDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        addBackButtonToNavBar()
         
         let center = NotificationCenter.default
         let mainQueue = OperationQueue.main

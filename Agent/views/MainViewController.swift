@@ -102,13 +102,18 @@ class MainViewController: UIViewController {
 //        let appdelegate = UIApplication.shared.delegate as! AppDelegate
 //        appdelegate.mainNavi?.pushSalesView()
         
-        let vc = loadVCfromMain(identifier: "salesView") as? SalesView
-        self.navigationController?.pushViewController(vc!, animated: true)
+        let vc = SalesView()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func startPurshase(_ sender: UIButton) {
-        let vc = PurchaseView()
-        self.navigationController?.pushViewController(vc, animated: true)
+        let authority = AgentSession.shared.agentModel?.authorityList
+        if (authority?.contains("buy_online"))! {
+            let vc = PurchaseView()
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            view.makeToast("当前用户未开放", duration: 2, position: .center)
+        }
     }
     
     @IBAction func startClub(_ sender: UIButton) {

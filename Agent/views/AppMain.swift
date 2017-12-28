@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AppMain: UITabBarController {
+class AppMain: UITabBarController, UITabBarControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +20,7 @@ class AppMain: UITabBarController {
         viewCustomer.title = "客户"
         let viewRoomCard = loadVCfromMain(identifier: "roomCard") as! RoomCardViewController
         viewRoomCard.title = "房卡"
-        let viewProfile = loadVCfromMain(identifier: "profile") as! ProfileViewController
+        let viewProfile = ProfileViewController()
         viewProfile.title = "我的"
         
         let main = UINavigationController(rootViewController: viewMain)
@@ -42,7 +42,15 @@ class AppMain: UITabBarController {
         self.viewControllers = [main, customer, roomcard, profile]
         self.selectedIndex = 0
     }
-
+    
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        print(self.selectedIndex)
+    }
+    
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

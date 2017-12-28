@@ -87,6 +87,8 @@ class CustomerDetail: UITableViewController, PageListDelegate, IndicatorInfoProv
         // Configure the cell...
         let cellData = listData[indexPath.row]
         cell.selectionStyle = .none
+        cell.accessoryType = .disclosureIndicator
+        
         let strURL = cellData["header_img_src"] as! String
         if strURL == "" {
             cell.imgHeadIco.image = UIImage(named: "headsmall")
@@ -106,12 +108,19 @@ class CustomerDetail: UITableViewController, PageListDelegate, IndicatorInfoProv
         
         return cell
     }
-
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cellData = listData[indexPath.row]
+        let id = cellData["id"] as! Int
+        let vc = DealRecords()
+        vc.subAgentId = id
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func handleResult(json:JSON)->(){
         let result = json["result"]
         let code = result["code"].intValue
         if code == 200 {
-            print(result)
             listData.removeAll()
             let data = result["data"]
             let dataArr = data["datas"].array

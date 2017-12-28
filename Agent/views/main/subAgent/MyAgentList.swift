@@ -89,21 +89,38 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
         return listData.count
     }
 
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellTitleIdentifier) as! MyAgentListTitle
+
+        let title = ["代理","库存","最后购卡时间"]
+        
+        cell.backgroundColor = UIColor(hex: "f2f2f2")
+        cell.selectionStyle = .none
+        cell.lblAgentType.text = title[0]
+        cell.lblAgentCard.text = title[1]
+        cell.lblLastBuyTime.text = title[2]
+        
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
+    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         // Configure the cell...
-        if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellTitleIdentifier, for: indexPath) as! MyAgentListTitle
-            let cellData = listData[indexPath.row]
-            
-            cell.backgroundColor = UIColor(hex: "cccccc")
-            cell.selectionStyle = .none
-            cell.lblAgentType.text = cellData["agentType"] as? String
-            cell.lblAgentCard.text = cellData["agentCard"] as? String
-            cell.lblLastBuyTime.text = cellData["lastBuyTime"] as? String
-            return cell
-        } else {
+//        if indexPath.row == 0 {
+//            let cell = tableView.dequeueReusableCell(withIdentifier: cellTitleIdentifier, for: indexPath) as! MyAgentListTitle
+//            let cellData = listData[indexPath.row]
+//            
+//            cell.backgroundColor = UIColor(hex: "cccccc")
+//            cell.selectionStyle = .none
+//            cell.lblAgentType.text = cellData["agentType"] as? String
+//            cell.lblAgentCard.text = cellData["agentCard"] as? String
+//            cell.lblLastBuyTime.text = cellData["lastBuyTime"] as? String
+//            return cell
+//        } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: cellDetailIdentifier, for: indexPath) as! MyAgentListCell
             let cellData = listData[indexPath.row]
             
@@ -123,23 +140,17 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
             let time = cellData["lastBuyTime"] as! String
             cell.lblLastTime.text = time.characters.count > 0 ? time : "----"
             return cell
-
-        }
+//        }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.row {
-        case 0:
-            return 25
-        default:
-            return 64
-        }
+        return 64
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 0{
-            return
-        }
+//        if indexPath.row == 0{
+//            return
+//        }
         let vc = MyAgentDetail()
         let cellData = listData[indexPath.row]
         let subAgentId = cellData["agentId"] as! Int
@@ -154,10 +165,10 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
         let code = result["code"].intValue
         if code == 200 {
             listData.removeAll()
-            let title = ["agentType":"代理",
-                         "agentCard":"库存",
-                         "lastBuyTime":"最后购卡时间"]
-            listData.append(title)
+//            let title = ["agentType":"代理",
+//                         "agentCard":"库存",
+//                         "lastBuyTime":"最后购卡时间"]
+//            listData.append(title)
             
             let data = result["data"]
             let dataArr = data["myAgentList"].array
@@ -195,7 +206,7 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
     }
     
     func showNoData(){
-        if listData.count > 1 {
+        if listData.count > 0 {
             imageNodata.isHidden = true
             lblNoData.isHidden = true
         } else {

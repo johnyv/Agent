@@ -63,14 +63,15 @@ class MyAgentNew: UIViewController {
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
         //addBackButtonToNavBar()
-        self.title = "我的代理"
+        self.title = "开通代理"
         let rcBg = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 25)
         let bg = UIView(frame: rcBg)
-        bg.backgroundColor = UIColor(hex: "cccccc")
+        bg.backgroundColor = UIColor(hex: "f2f2f2")
         view.addSubview(bg)
         let rcTitle = CGRect(x: 10, y: 0, width: bg.frame.width - 20, height: 25)
         let title = UILabel(frame: rcTitle)
         title.text = "请填写您要开通的代理的基本信息"
+        title.textColor = UIColor(hex: "565656")
         title.font = UIFont.systemFont(ofSize: 14)
         bg.addSubview(title)
         
@@ -113,7 +114,7 @@ class MyAgentNew: UIViewController {
         
         btnVoice = addSmsButton(title: "语音验证", action: #selector(sms(_:)))
         btnVoice.frame.origin.y = btnSms.frame.origin.y + btnSms.frame.height + 15
-        btnVoice.frame.size.width = 55
+        btnVoice.frame.size.width = 45
         btnVoice.setTitleColor(UIColor(hex: "565656"), for: .normal)
         btnVoice.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         alignUIView(v: btnVoice, position: .right)
@@ -196,12 +197,15 @@ class MyAgentNew: UIViewController {
         datePicker?.delegate = self
         datePicker?.locale = Locale(identifier: "zh_CN")
         
+        datePicker?.setHighlight(UIColor(hex: "1898e8"))
+        
         let ft = DateFormatter()
         ft.dateFormat = "dd-MM-yyyy HH:mm:ss"
         let minDate = ft.date(from: "01-01-2015 00:00:00")
         let maxDate = ft.date(from: "01-01-2025 00:00:00")
         datePicker?.minimumDate = minDate
         datePicker?.maximumDate = maxDate
+
         datePicker?.datePickerMode = HooDatePickerMode.date
         datePicker?.show()
     }

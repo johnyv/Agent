@@ -13,7 +13,7 @@ class MyAgentInfoView: UITableViewController {
     let cellInfoIdentifier = "infoCell"
 
     let infoTitles = [
-        "特权类型", "有效期", "开通代理", "向玩家售卡", "向代理售卡", "开通数量", "购卡折扣"
+        "特权类型", "有效期", /*"开通代理",*/ "向玩家售卡", "向代理售卡", "开通数量", "购卡折扣"
     ]
 
     var agentInfo = [String]()
@@ -74,9 +74,9 @@ class MyAgentInfoView: UITableViewController {
             let data = result["data"]
             agentInfo.append(data["type"].stringValue)
             agentInfo.append(data["validityPeriod"].stringValue)
-            agentInfo.append(data["createAgent"].stringValue)
+//            agentInfo.append(data["createAgent"].stringValue)
             agentInfo.append(data["buyOnline"].stringValue)
-            agentInfo.append(data["sellObject"].stringValue)
+            agentInfo.append(data["createAgent"].stringValue)
             agentInfo.append(data["subordinateNum"].stringValue)
             agentInfo.append(data["discount"].stringValue)
             

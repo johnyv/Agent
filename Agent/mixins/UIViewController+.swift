@@ -229,7 +229,7 @@ extension UIViewController{
         case .center:
             v.frame.origin.x = (screenW - viewWidth)/2
         case .right:
-            v.frame.origin.x = screenW - viewWidth - screenW * 0.1
+            v.frame.origin.x = screenW * 0.9 - viewWidth
         default:
             break
         }

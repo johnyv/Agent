@@ -22,8 +22,6 @@
 		5232C63A1FE1045E0004CF72 /* ProfileHeadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5232C6281FE1045E0004CF72 /* ProfileHeadCell.xib */; };
 		5232C63B1FE1045E0004CF72 /* ProfileInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5232C6291FE1045E0004CF72 /* ProfileInfoCell.swift */; };
 		5232C63C1FE1045E0004CF72 /* ProfileInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5232C62A1FE1045E0004CF72 /* ProfileInfoCell.xib */; };
-		5232C63D1FE1045E0004CF72 /* ProfileOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5232C62B1FE1045E0004CF72 /* ProfileOptionCell.swift */; };
-		5232C63E1FE1045E0004CF72 /* ProfileOptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5232C62C1FE1045E0004CF72 /* ProfileOptionCell.xib */; };
 		5232C63F1FE1045E0004CF72 /* RoomCardDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5232C62D1FE1045E0004CF72 /* RoomCardDetailCell.swift */; };
 		5232C6401FE1045E0004CF72 /* RoomCardDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5232C62E1FE1045E0004CF72 /* RoomCardDetailCell.xib */; };
 		5232C6411FE1045E0004CF72 /* ToolViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5232C62F1FE1045E0004CF72 /* ToolViewCell.swift */; };
@@ -32,7 +30,6 @@
 		5232C6461FE104A00004CF72 /* PaymentSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5232C6451FE104A00004CF72 /* PaymentSelection.swift */; };
 		523549341FEE081E00C07710 /* MyAgentRemarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523549321FEE081E00C07710 /* MyAgentRemarkCell.swift */; };
 		523549351FEE081E00C07710 /* MyAgentRemarkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 523549331FEE081E00C07710 /* MyAgentRemarkCell.xib */; };
-		523549371FEE2AF600C07710 /* MyAgentRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523549361FEE2AF600C07710 /* MyAgentRecords.swift */; };
 		523B91561FEA84C00045523A /* NoticeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523B91541FEA84C00045523A /* NoticeDetailView.swift */; };
 		523B91591FEA857D0045523A /* NoticeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523B91581FEA857D0045523A /* NoticeListView.swift */; };
 		523C23B11FDA68D0006FD555 /* Authority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523C23B01FDA68D0006FD555 /* Authority.swift */; };
@@ -52,6 +49,7 @@
 		5253485B1FBA9F390067D5FA /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5253485A1FBA9F390067D5FA /* Common.swift */; };
 		5254531D1FC7B432001FD475 /* AppView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5254531C1FC7B432001FD475 /* AppView.storyboard */; };
 		5254531F1FC7F13E001FD475 /* DataEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5254531E1FC7F13E001FD475 /* DataEncoding.swift */; };
+		525FF86F1FF4A6A7001DE497 /* DealRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525FF86E1FF4A6A7001DE497 /* DealRecords.swift */; };
 		526F73DD1FB403BD0010599C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526F73DC1FB403BD0010599C /* ProfileViewController.swift */; };
 		5271B11A1FCD320700A8450C /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 5271B1191FCD320700A8450C /* NSData+Compression.m */; };
 		527F65201FA18C110004A938 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527F651F1FA18C110004A938 /* MainViewController.swift */; };
@@ -143,8 +141,6 @@
 		5232C6281FE1045E0004CF72 /* ProfileHeadCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileHeadCell.xib; sourceTree = "<group>"; };
 		5232C6291FE1045E0004CF72 /* ProfileInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileInfoCell.swift; sourceTree = "<group>"; };
 		5232C62A1FE1045E0004CF72 /* ProfileInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileInfoCell.xib; sourceTree = "<group>"; };
-		5232C62B1FE1045E0004CF72 /* ProfileOptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileOptionCell.swift; sourceTree = "<group>"; };
-		5232C62C1FE1045E0004CF72 /* ProfileOptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileOptionCell.xib; sourceTree = "<group>"; };
 		5232C62D1FE1045E0004CF72 /* RoomCardDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomCardDetailCell.swift; sourceTree = "<group>"; };
 		5232C62E1FE1045E0004CF72 /* RoomCardDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RoomCardDetailCell.xib; sourceTree = "<group>"; };
 		5232C62F1FE1045E0004CF72 /* ToolViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolViewCell.swift; sourceTree = "<group>"; };
@@ -153,7 +149,6 @@
 		5232C6451FE104A00004CF72 /* PaymentSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentSelection.swift; sourceTree = "<group>"; };
 		523549321FEE081E00C07710 /* MyAgentRemarkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAgentRemarkCell.swift; sourceTree = "<group>"; };
 		523549331FEE081E00C07710 /* MyAgentRemarkCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyAgentRemarkCell.xib; sourceTree = "<group>"; };
-		523549361FEE2AF600C07710 /* MyAgentRecords.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAgentRecords.swift; sourceTree = "<group>"; };
 		523B91541FEA84C00045523A /* NoticeDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeDetailView.swift; sourceTree = "<group>"; };
 		523B91581FEA857D0045523A /* NoticeListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeListView.swift; sourceTree = "<group>"; };
 		523C23B01FDA68D0006FD555 /* Authority.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Authority.swift; path = model/Authority.swift; sourceTree = "<group>"; };
@@ -173,6 +168,7 @@
 		5253485A1FBA9F390067D5FA /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		5254531C1FC7B432001FD475 /* AppView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AppView.storyboard; sourceTree = "<group>"; };
 		5254531E1FC7F13E001FD475 /* DataEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataEncoding.swift; sourceTree = "<group>"; };
+		525FF86E1FF4A6A7001DE497 /* DealRecords.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealRecords.swift; sourceTree = "<group>"; };
 		526F73DC1FB403BD0010599C /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = views/ProfileViewController.swift; sourceTree = "<group>"; };
 		5271B1181FCD320700A8450C /* NSData+Compression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Compression.h"; sourceTree = "<group>"; };
 		5271B1191FCD320700A8450C /* NSData+Compression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Compression.m"; sourceTree = "<group>"; };
@@ -318,8 +314,6 @@
 				5232C6281FE1045E0004CF72 /* ProfileHeadCell.xib */,
 				5232C6291FE1045E0004CF72 /* ProfileInfoCell.swift */,
 				5232C62A1FE1045E0004CF72 /* ProfileInfoCell.xib */,
-				5232C62B1FE1045E0004CF72 /* ProfileOptionCell.swift */,
-				5232C62C1FE1045E0004CF72 /* ProfileOptionCell.xib */,
 				5232C62D1FE1045E0004CF72 /* RoomCardDetailCell.swift */,
 				5232C62E1FE1045E0004CF72 /* RoomCardDetailCell.xib */,
 				5232C62F1FE1045E0004CF72 /* ToolViewCell.swift */,
@@ -393,6 +387,7 @@
 		5271B1281FCD384B00A8450C /* customer */ = {
 			isa = PBXGroup;
 			children = (
+				525FF86E1FF4A6A7001DE497 /* DealRecords.swift */,
 				52AB5B011FE26297006F4BE9 /* SoldToPlayerDetailView.swift */,
 				52324E041FE76F5900E2EEE1 /* SoldToPlayerSearchResult.swift */,
 				52EE2FAE1FF0E3A700B078FC /* CustomerDetail.swift */,
@@ -515,7 +510,6 @@
 				52DA9CE41FE90D66007D15B1 /* MyAgentNew.swift */,
 				52DA9CFA1FE90DDF007D15B1 /* MyAgentList.swift */,
 				523F7BE21FED0470003C136A /* MyAgentDetail.swift */,
-				523549361FEE2AF600C07710 /* MyAgentRecords.swift */,
 			);
 			path = subAgent;
 			sourceTree = "<group>";
@@ -711,7 +705,6 @@
 				5232C63A1FE1045E0004CF72 /* ProfileHeadCell.xib in Resources */,
 				52F8C5161FE93F5500C57134 /* MyAgentListTitle.xib in Resources */,
 				52F956091FEFB3D0008C9AE0 /* ComboBox.xib in Resources */,
-				5232C63E1FE1045E0004CF72 /* ProfileOptionCell.xib in Resources */,
 				5232C6441FE104830004CF72 /* PaymentSelection.storyboard in Resources */,
 				52DA9CFF1FE93D66007D15B1 /* MyAgentListCell.xib in Resources */,
 				524948911FE3C5D80081A447 /* PaymentOpt.storyboard in Resources */,
@@ -852,6 +845,7 @@
 				5251424E1FC57CFB000046DF /* RoomCardViewController.swift in Sources */,
 				5288D64E1F7A4EE900406C9B /* ViewController.swift in Sources */,
 				52AB5B021FE26297006F4BE9 /* SoldToPlayerDetailView.swift in Sources */,
+				525FF86F1FF4A6A7001DE497 /* DealRecords.swift in Sources */,
 				527F65281FA1F63F0004A938 /* AccountViewController.swift in Sources */,
 				527F65201FA18C110004A938 /* MainViewController.swift in Sources */,
 				52EE2FA61FF0ABF300B078FC /* OrdersView.swift in Sources */,
@@ -884,10 +878,8 @@
 				522DD3951FCE4EFE00AE9D62 /* CardBuyView.swift in Sources */,
 				523F7BD71FECAD0B003C136A /* MyAgentInfoView.swift in Sources */,
 				52F955F11FEFAFBA008C9AE0 /* UIViewController+.swift in Sources */,
-				5232C63D1FE1045E0004CF72 /* ProfileOptionCell.swift in Sources */,
 				52F955EE1FEFAFBA008C9AE0 /* UIButton+.swift in Sources */,
 				5232C6341FE1045E0004CF72 /* GoodsViewCell.swift in Sources */,
-				523549371FEE2AF600C07710 /* MyAgentRecords.swift in Sources */,
 				52EE2FAF1FF0E3A700B078FC /* CustomerDetail.swift in Sources */,
 				523F7BDD1FECD16E003C136A /* AboutView.swift in Sources */,
 				52F8C5151FE93F5500C57134 /* MyAgentListTitle.swift in Sources */,

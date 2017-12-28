@@ -80,10 +80,53 @@ class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoPro
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
         case 0:
-            return 25
+            return 30
         default:
             return 44
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellDetailIdentifier) as! RoomCardDetailCell
+        var title:[String:Any] = [:]
+        if self.type == 0 {
+            title = ["col1":"类型",
+                     "col2":"房卡数",
+                     "col3":"ID",
+                     "col4":"时间"]
+        } else {
+            title = ["col1":"类型",
+                     "col2":"房卡数",
+                     "col3":"金额",
+                     "col4":"时间"]
+        }
+
+        switch section {
+        case 0:
+//            if listData.count > 0 {
+//            let cellData = listData[0]
+            cell.lblCol1.textAlignment = .left
+            cell.lblCol2.textAlignment = .center
+            cell.lblCol3.textAlignment = .center
+            cell.lblCol4.textAlignment = .center
+            cell.backgroundColor = UIColor(hex: "f2f2f2")
+            cell.lblCol1.text = title["col1"] as? String
+            cell.lblCol2.text = title["col2"] as? String
+            cell.lblCol3.text = title["col3"] as? String
+            cell.lblCol4.text = title["col4"] as? String
+            cell.lblCol1.textColor = UIColor.black
+            cell.lblCol2.textColor = UIColor.black
+            cell.lblCol3.textColor = UIColor.black
+            cell.lblCol4.textColor = UIColor.black
+//            }
+        default:
+            break
+        }
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -96,16 +139,16 @@ class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoPro
         cell.lblCol2.textAlignment = .center
         cell.lblCol3.textAlignment = .center
         cell.lblCol4.textAlignment = .center
-        if indexPath.row == 0 {
-            cell.backgroundColor = UIColor(hex: "cccccc")
-            cell.lblCol1.textColor = UIColor.black
-            cell.lblCol2.textColor = UIColor.black
-            cell.lblCol3.textColor = UIColor.black
-            cell.lblCol4.textColor = UIColor.black
-        }else{
+//        if indexPath.row == 0 {
+//            cell.backgroundColor = UIColor(hex: "f2f2f2")
+//            cell.lblCol1.textColor = UIColor.black
+//            cell.lblCol2.textColor = UIColor.black
+//            cell.lblCol3.textColor = UIColor.black
+//            cell.lblCol4.textColor = UIColor.black
+//        }else{
             cell.lblCol1.textAlignment = .left
             cell.lblCol4.textAlignment = .right
-        }
+//        }
         
         cell.lblCol1.text = cellData["col1"] as? String
         cell.lblCol2.text = cellData["col2"] as? String
@@ -121,19 +164,19 @@ class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoPro
         print(result)
         if code == 200 {
             listData.removeAll()
-            var title:[String:Any] = [:]
-            if self.type == 0 {
-                title = ["col1":"类型",
-                         "col2":"房卡数",
-                         "col3":"ID",
-                         "col4":"时间"]
-            } else {
-                title = ["col1":"类型",
-                         "col2":"房卡数",
-                         "col3":"金额",
-                         "col4":"时间"]
-            }
-            listData.append(title)
+//            var title:[String:Any] = [:]
+//            if self.type == 0 {
+//                title = ["col1":"类型",
+//                         "col2":"房卡数",
+//                         "col3":"ID",
+//                         "col4":"时间"]
+//            } else {
+//                title = ["col1":"类型",
+//                         "col2":"房卡数",
+//                         "col3":"金额",
+//                         "col4":"时间"]
+//            }
+//            listData.append(title)
             
             let data = result["data"]
             let dataArr = data["datas"].array
@@ -178,7 +221,7 @@ class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoPro
     }
     
     func showNoData(){
-        if listData.count > 1{
+        if listData.count > 0{
             imageNodata.isHidden = true
             lblNoData.isHidden = true
         } else {

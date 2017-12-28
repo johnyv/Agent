@@ -95,14 +95,16 @@ class RoomCardViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+//        self.title = "房卡明细"
+        navigationItem.title = "房卡明细"
         vTopBg.backgroundColor = UIColor(hex: "008ce6")
 
         let rcBg = CGRect(x: 0, y: vTopBg.frame.origin.y + vTopBg.frame.height,
                           width: UIScreen.main.bounds.width, height: 30)
         let bg = UIView(frame: rcBg)
-        bg.backgroundColor = UIColor(hex: "008cc6")
+        bg.backgroundColor = UIColor(hex: "1898e8")
         view.addSubview(bg)
-        let rcTitle = CGRect(x: 10, y: 0, width: 60, height: 30)
+        let rcTitle = CGRect(x: 10, y: 0, width: 160, height: 30)
         lblMonth = UILabel(frame: rcTitle)
         lblMonth.textColor = .white
         bg.addSubview(lblMonth)
@@ -165,6 +167,16 @@ class RoomCardViewController: UIViewController {
         let datePicker = HooDatePicker(superView: self.view)
         datePicker?.delegate = self
         datePicker?.locale = Locale(identifier: "zh_CN")
+
+        datePicker?.setHighlight(UIColor(hex: "1898e8"))
+        
+        let ft = DateFormatter()
+        ft.dateFormat = "dd-MM-yyyy HH:mm:ss"
+        let minDate = ft.date(from: "01-01-2015 00:00:00")
+        let maxDate = ft.date(from: "01-01-2025 00:00:00")
+        datePicker?.minimumDate = minDate
+        datePicker?.maximumDate = maxDate
+
         datePicker?.datePickerMode = HooDatePickerMode.yearAndMonth
         datePicker?.show()
     }

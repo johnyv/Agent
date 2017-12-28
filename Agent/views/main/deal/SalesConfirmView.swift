@@ -93,6 +93,8 @@ class SalesConfirmView: UIViewController {
         let code = result["code"].intValue
         if code == 200 {
             showToast(string: "售卡成功")
+            let center = NotificationCenter.default
+            center.post(name: notifyRefrsh, object: nil)
             navigationController?.popViewController(animated: true)
         } else {
             toastMSG(result: result)

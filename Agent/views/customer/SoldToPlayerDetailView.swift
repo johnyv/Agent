@@ -94,6 +94,16 @@ class SoldToPlayerDetailView: UIViewController {
         let datePicker = HooDatePicker(superView: self.view)
         datePicker?.delegate = self
         datePicker?.locale = Locale(identifier: "zh_CN")
+
+        datePicker?.setHighlight(UIColor(hex: "1898e8"))
+        
+        let ft = DateFormatter()
+        ft.dateFormat = "dd-MM-yyyy HH:mm:ss"
+        let minDate = ft.date(from: "01-01-2015 00:00:00")
+        let maxDate = ft.date(from: "01-01-2025 00:00:00")
+        datePicker?.minimumDate = minDate
+        datePicker?.maximumDate = maxDate
+
         datePicker?.datePickerMode = HooDatePickerMode.date
         datePicker?.show()
     }

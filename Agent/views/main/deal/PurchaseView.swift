@@ -99,7 +99,7 @@ class PurchaseView: UIViewController {
         layout.sectionInset.right = 10
 //        layout.sectionInset.bottom = 10
 
-        let frame = CGRect(x: 0, y: line2.frame.origin.y + 15, width: view.bounds.width, height: 350)
+        let frame = CGRect(x: 0, y: line2.frame.origin.y + 15, width: view.bounds.width, height: view.bounds.height - line2.frame.origin.y - 16)
         collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
         collectionView.delegate = self
@@ -209,7 +209,20 @@ extension PurchaseView: UICollectionViewDelegate, UICollectionViewDataSource {
         aStr.addAttributes(propertys, range: NSMakeRange(0, oldStr.characters.count))
         
         cell.lblDiscount.attributedText = aStr
-        cell.lblSuperscript.text = cellData["superscript"] as? String
+        
+        let script = cellData["userGoodSuperscript"] as! Int
+        
+        if script == 1{
+            cell.lblSuperscript.isHidden = false
+            cell.lblSuperscript.text = "新手专属"
+            cell.lblSuperscript.textColor = UIColor(hex: "1aad19")
+        } else if script == 2{
+            cell.lblSuperscript.isHidden = false
+            cell.lblSuperscript.text = String.init(format: "VIP享%.1f折", cellData["discount"] as! Double)
+            cell.lblSuperscript.textColor = UIColor(hex: "ff532a")
+        } else {
+            cell.lblSuperscript.isHidden = true
+        }
         
         if tag != nil {
             let imgTag = UIImageView(image: tag!)

@@ -122,16 +122,16 @@ class OrdersView: UIViewController {
         
         let rcBg = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 30)
         let bg = UIView(frame: rcBg)
-        bg.backgroundColor = UIColor(hex: "008cc6")
+        bg.backgroundColor = UIColor(hex: "1898e8")
         view.addSubview(bg)
-        let rcTitle = CGRect(x: 10, y: 0, width: 60, height: 30)
-        lblMonth = UILabel(frame: rcTitle)
+        let rcLable = CGRect(x: 10, y: 0, width: 150, height: 30)
+        lblMonth = UILabel(frame: rcLable)
         lblMonth.textColor = .white
         bg.addSubview(lblMonth)
         lblMonth.text = "本月"
         lblMonth.font = UIFont.systemFont(ofSize: 14)
         
-        lblSearch = UILabel(frame: rcTitle)
+        lblSearch = UILabel(frame: rcLable)
         lblSearch.frame.origin.x = bg.frame.width - lblSearch.frame.width - 20
         lblSearch.textAlignment = .right
         lblSearch.textColor = .white
@@ -163,6 +163,16 @@ class OrdersView: UIViewController {
         let datePicker = HooDatePicker(superView: self.view)
         datePicker?.delegate = self
         datePicker?.locale = Locale(identifier: "zh_CN")
+
+        datePicker?.setHighlight(UIColor(hex: "1898e8"))
+        
+        let ft = DateFormatter()
+        ft.dateFormat = "dd-MM-yyyy HH:mm:ss"
+        let minDate = ft.date(from: "01-01-2015 00:00:00")
+        let maxDate = ft.date(from: "01-01-2025 00:00:00")
+        datePicker?.minimumDate = minDate
+        datePicker?.maximumDate = maxDate
+
         datePicker?.datePickerMode = HooDatePickerMode.yearAndMonth
         datePicker?.show()
     }

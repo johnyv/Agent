@@ -68,13 +68,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
         
     func reLogin() -> () {
-// 
-//        var topViewController:UIViewController?
-//        topViewController = (UIApplication.shared.keyWindow?.rootViewController)!
-//        while ((topViewController?.presentedViewController) != nil) {
-//            topViewController = topViewController?.presentedViewController!
-//        }
-//        topViewController?.dismiss(animated: false, completion: nil)
         
         let rootVc = LoginViewController()
         window?.rootViewController = rootVc

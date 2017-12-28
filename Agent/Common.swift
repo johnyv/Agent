@@ -37,3 +37,5 @@ func getZeroTime(date:Date) ->(Date) {
     let zeroTime:Date = calender.date(from: comps)!
     return zeroTime
 }
+
+let notifyRefrsh = NSNotification.Name(rawValue: "notifyRefrsh")

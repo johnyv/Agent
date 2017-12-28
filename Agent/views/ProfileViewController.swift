@@ -31,31 +31,32 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
     
     var profileModel = AgentSession.shared.profileModel
     
+    var leftButton:UIBarButtonItem!
+    var rightButton:UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationItem.title = "我的信息"
+        
+        leftButton = UIBarButtonItem(image: UIImage(named: "ico_back"), style: .plain, target: self, action: #selector(onNaviItem(_:)))
+        
+        rightButton = UIBarButtonItem(title: "退出", style: .plain, target: self, action: #selector(onNaviItem(_:)))
+
+        navigationItem.setLeftBarButton(leftButton, animated: false)
+        navigationItem.setRightBarButton(rightButton, animated: false)
         // Uncomment the following line to preserve selection between presentations
         self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         self.tableView.tableFooterView = UIView()
-//        UILabel.appearance(whenContainedInInstancesOf: [UITableViewHeaderFooterView.self])
-//            .textColor = UIColor.gray
-//        UILabel.appearance(whenContainedInInstancesOf: [UITableViewHeaderFooterView.self])
-//            .font = UIFont.systemFont(ofSize: 13.0, weight: UIFontWeightMedium)
-        //self.tableView.style = .grouped
-//        tableView.estimatedRowHeight = 44
-//        tableView.rowHeight = UITableViewAutomaticDimension
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellNormalIdentifier)
         tableView.register(ProfileHeadCell.self, forCellReuseIdentifier: cellHeadIdentifier)
         let xibHead = UINib(nibName: "ProfileHeadCell", bundle: nil)
         tableView.register(xibHead, forCellReuseIdentifier: cellHeadIdentifier)
 
-//        tableView.register(ProfileInfoCell.self, forCellReuseIdentifier: cellOptionIdentifier)
-//        let xibOpt = UINib(nibName: "ProfileOptionCell", bundle: nil)
-//        tableView.register(xibOpt, forCellReuseIdentifier: cellOptionIdentifier)
 
         tableView.register(ProfileInfoCell.self, forCellReuseIdentifier: cellInfoIdentifier)
         let xibInfo = UINib(nibName: "ProfileInfoCell", bundle: nil)
@@ -64,8 +65,6 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
         tableView.bounces = false
 
         request(.myInfo, success: handleInfo)
-
-//        autoFit()
     }
 
     override func didReceiveMemoryWarning() {
@@ -109,6 +108,7 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
         }else{
             let cell = tableView.dequeueReusableCell(withIdentifier: cellInfoIdentifier) as! ProfileInfoCell
             cell.lblCaption.text = profileCaps[indexPath.section][indexPath.row]
+            cell.lblContent.textColor = UIColor(hex: "808080")
             cell.btnOpt.isHidden = true
             cell.selectionStyle = .none
             if (indexPath.section == 1 && indexPath.row == 3) || (indexPath.section == 3 && indexPath.row == 0){
@@ -149,7 +149,7 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
                             cell.btnOpt.addTarget(self, action: #selector(self.doProof(_:)), for: .touchUpInside)
                             cell.lblContent.isHidden = true
                             cell.btnOpt.setTitle(titleBtns[indexPath.row], for: .normal)
-                            cell.accessoryType = .disclosureIndicator
+                            cell.accessoryType = .none
                         }
                     }
                 case 1:
@@ -166,7 +166,7 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
                             cell.btnOpt.addTarget(self, action: #selector(self.doBind(_:)), for: .touchUpInside)
                             cell.lblContent.isHidden = true
                             cell.btnOpt.setTitle(titleBtns[indexPath.row], for: .normal)
-                            cell.accessoryType = .disclosureIndicator
+                            cell.accessoryType = .none
                         }
                     }
                 case 2:
@@ -181,7 +181,7 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
                         cell.btnOpt.addTarget(self, action: #selector(self.doWeixinAuth(_:)), for: .touchUpInside)
                         cell.lblContent.isHidden = true
                         cell.btnOpt.setTitle(titleBtns[indexPath.row], for: .normal)
-                        cell.accessoryType = .disclosureIndicator
+                        cell.accessoryType = .none
                     }
                 default:
                     break
@@ -200,7 +200,12 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
                     if agentType != nil {
                         cell.lblContent.text = "\(agentType!)"
                     }
-                    cell.accessoryType = .disclosureIndicator
+                    let authority = AgentSession.shared.agentModel?.authorityList
+                    if (authority?.contains("other"))! {
+                        cell.accessoryType = .disclosureIndicator
+                    } else {
+                        cell.accessoryType = .none
+                    }
                 default:
                     break
                 }
@@ -261,8 +266,11 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
         case 2:
             switch indexPath.row {
             case 3:
-                let vc = MyAgentInfoView()
-                navigationController?.pushViewController(vc, animated: true)
+                let authority = AgentSession.shared.agentModel?.authorityList
+                if (authority?.contains("other"))! {
+                    let vc = MyAgentInfoView()
+                    navigationController?.pushViewController(vc, animated: true)
+                }
             default:
                 break
             }
@@ -293,24 +301,27 @@ class ProfileViewController: UITableViewController, ModifyProfileDelegage {
         }
     }
     
-    @IBAction func logOut(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: "系统提示", message: "确定要退出当前账号？", preferredStyle: .alert)
-        let cancal = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-        let ok = UIAlertAction(title: "确定", style: .default, handler: {
-            action in
-            UserDefaults.standard.removeObject(forKey: "uid")
-            UserDefaults.standard.removeObject(forKey: "agentToken")
-            UserDefaults.standard.synchronize()
-            let app = UIApplication.shared.delegate as! AppDelegate
-            app.reLogin()
-        })
-        alert.addAction(cancal)
-        alert.addAction(ok)
-        present(alert, animated: true, completion: nil)
-    }
-    
-    @IBAction func backToIndex(_ sender: UIBarButtonItem) {
-        tabBarController?.selectedIndex = 0
+    func onNaviItem(_ sender: UIBarButtonItem) {
+        switch sender {
+        case leftButton:
+            tabBarController?.selectedIndex = 0
+        case rightButton:
+            let alert = UIAlertController(title: "系统提示", message: "确定要退出当前账号？", preferredStyle: .alert)
+            let cancal = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+            let ok = UIAlertAction(title: "确定", style: .default, handler: {
+                action in
+                UserDefaults.standard.removeObject(forKey: "uid")
+                UserDefaults.standard.removeObject(forKey: "agentToken")
+                UserDefaults.standard.synchronize()
+                let app = UIApplication.shared.delegate as! AppDelegate
+                app.reLogin()
+            })
+            alert.addAction(cancal)
+            alert.addAction(ok)
+            present(alert, animated: true, completion: nil)
+        default:
+            break
+        }
     }
     
     func doProof(_ sender:UIButton){

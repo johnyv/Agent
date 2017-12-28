@@ -91,10 +91,13 @@ class CustomerViewController: UIViewController {
         view.addSubview(customerViewPage.view)
 
         //autoFit()
+        let center = NotificationCenter.default
+        center.addObserver(self, selector: #selector(doRefresh(notifiction:)), name: notifyRefrsh, object: nil)
     }
     
     func handleAllnum(json:JSON)->(){
         let result = json["result"]
+        print(result)
         let code = result["code"].intValue
         if code == 200 {
             print(result)
@@ -109,14 +112,9 @@ class CustomerViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+    func doRefresh(notifiction:NSNotification){
+        request(.customerAllNum(searchId: 0, startDate: 0, endDate: 0), success: handleAllnum)
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sourceData.count
-    }
-    
     
     @IBAction func backToPrev(_ sender: UIBarButtonItem) {
         self.tabBarController?.selectedIndex = 0
