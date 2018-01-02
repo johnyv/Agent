@@ -44,6 +44,7 @@ class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoPro
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         let xib = UINib(nibName: "RoomCardDetailCell", bundle: nil)
         tableView.register(xib, forCellReuseIdentifier: cellDetailIdentifier)
+        tableView.contentSize = CGSize(width: view.bounds.width, height: 200)
         tableView.tableFooterView = UIView()
         
         imageNodata = addImageView()

@@ -159,6 +159,10 @@ class RoomCardViewController: UIViewController {
 //        request(.myInfo, success: handleInfo)
 
         //autoFit()
+        self.automaticallyAdjustsScrollViewInsets = false
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.tabBarController?.tabBar.isTranslucent = false
+
     }
 
     override func didReceiveMemoryWarning() {

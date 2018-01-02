@@ -207,7 +207,7 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
         default:
             break
         }
-        request(.myagent(agentType: agentType, page: 0, pageSize: self.page!), success: handleResult)
+        request(.myagent(agentType: agentType, page: self.page!, pageSize: 0), success: handleResult)
     }
     
     func showNoData(){

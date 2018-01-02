@@ -36,7 +36,7 @@ class NoticeListView: UITableViewController {
         mjRefresh.setRefreshingTarget(self, refreshingAction: #selector(self.doMJRefresh))
         tableView.mj_header = mjRefresh
 
-        request(.noticeList(page: 0, pageSize: self.page!), success: handleData)
+        request(.noticeList(page: self.page!, pageSize: 0), success: handleData)
     }
 
     override func didReceiveMemoryWarning() {
@@ -111,7 +111,7 @@ class NoticeListView: UITableViewController {
     
     func doMJRefresh(){
         self.page = self.page! + 1
-        request(.noticeList(page: 0, pageSize: self.page!), success: handleData)
+        request(.noticeList(page: self.page!, pageSize: 0), success: handleData)
     }
 
     /*

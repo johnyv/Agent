@@ -24,6 +24,7 @@ class AppMain: UITabBarController, UITabBarControllerDelegate {
         viewProfile.title = "我的"
         
         let main = UINavigationController(rootViewController: viewMain)
+        
         main.tabBarItem.image = UIImage(named: "homepage_n")
         main.tabBarItem.selectedImage = UIImage(named: "homepage_s")
         
