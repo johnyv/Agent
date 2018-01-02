@@ -12,10 +12,12 @@
 #import "WXApi.h"
 #import "NSData+Compression.h"
 #import <SVProgressHUD/SVProgressHUD.h>
+#import <MJRefresh/MJRefresh.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <HooDatePicker/HooDatePicker.h>
 #import "NSString+UrlConvert.h"
 #import "UINavigationController+Tracking.h"
 #import "ComboBox.h"
+#import <TXScrollLabelView/TXScrollLabelView.h>
 #import "HandleCrash.h"
 #endif /* Bridging_Header_h */

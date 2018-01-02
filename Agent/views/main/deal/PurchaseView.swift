@@ -9,11 +9,12 @@
 import UIKit
 import SwiftyJSON
 import Moya
-import SVProgressHUD
 import PopupController
+import TXScrollLabelView
 
 class PurchaseView: UIViewController {
     var goodsData = [[String:Any]]()
+    var descArr = [String]()
     
     let cellGoodsIdentifier = "GoodsCell"
 
@@ -37,6 +38,8 @@ class PurchaseView: UIViewController {
     
     var payDelegate:PaymentDelegate?
     
+    var scrollLabel:TXScrollLabelView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,81 +50,8 @@ class PurchaseView: UIViewController {
         let rightButton = UIBarButtonItem(title: "购卡订单", style: .plain, target: self, action: #selector(ordersList(_:)))
         self.navigationItem.rightBarButtonItem = rightButton
         
-        let lbl1 = addLabel(title: "待充值账号")
-        lbl1.frame.origin.y = 20
-        
-        let line1 = addUnderLine(v: lbl1)
-        
-        let imgHeadIco = addImageView()
-        imgHeadIco.frame.origin.y = line1.frame.origin.y + line1.frame.height + 5
-        
-        let agent = AgentSession.shared.agentModel
-        
-        let strURL = agent?.headImg
-        if strURL != nil {
-            let icoURL = URL(string: strURL!)
-            imgHeadIco.sd_setImage(with: icoURL, completed: nil)
-        } else {
-            imgHeadIco.image = UIImage(named: "headsmall")
-        }
-        let lblNickName = addLabel(title: "")
-        lblNickName.frame.origin.x = imgHeadIco.frame.origin.x + imgHeadIco.frame.width + 5
-        lblNickName.frame.origin.y = imgHeadIco.frame.origin.y
-        let nickName = agent?.nickName
-        lblNickName.text = nickName
-        
-        let lblAccountID = addLabel(title: "")
-        lblAccountID.frame.origin.x = imgHeadIco.frame.origin.x + imgHeadIco.frame.width + 5
-        lblAccountID.frame.origin.y = lblNickName.frame.origin.y + lblNickName.frame.height
-        
-        let accountID = agent?.agentId
-        lblAccountID.text = String.init(format: "ID:%d", accountID!)
-
-        let div1 = addDivLine(y: imgHeadIco.frame.origin.y + imgHeadIco.frame.height + 5)
-        
-        let lblGoodsName = addLabel(title: "")
-        lblGoodsName.frame.size.width = line1.frame.width
-        lblGoodsName.frame.origin.y = div1.frame.origin.y + div1.frame.height
-        let gameName = agent?.gameName
-        let goodsName = NSMutableAttributedString(string: gameName! + ",请选择充值张数：")
-        let range = gameName?.characters.count
-        
-        goodsName.addAttribute(NSForegroundColorAttributeName, value: UIColor(hex: "008ce6"), range: NSMakeRange(0, range!))
-        lblGoodsName.attributedText = goodsName
-
-        let line2 = addUnderLine(v: lblGoodsName)
-        
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width/3 - 10, height: 90)
-        layout.minimumLineSpacing = 5
-        layout.minimumInteritemSpacing = 5
-        layout.sectionInset.left = 10
-        layout.sectionInset.right = 10
-//        layout.sectionInset.bottom = 10
-
-        let frame = CGRect(x: 0, y: line2.frame.origin.y + 15, width: view.bounds.width, height: view.bounds.height - line2.frame.origin.y - 16)
-        collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
-        collectionView.backgroundColor = .white
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        view.addSubview(collectionView)
-        
-        let xib = UINib(nibName: "GoodsViewCell", bundle: nil)
-        collectionView.register(xib, forCellWithReuseIdentifier: cellGoodsIdentifier)
-        
-//        collectionView.setCollectionViewLayout(layout, animated: false)
-//        let source = TokenSource()
-//        source.token = getSavedToken()
-//        let provider = MoyaProvider<NetworkManager>(plugins:[
-//            AuthPlugin(tokenClosure: {return source.token})])
-//        
-//        Network.request(.goodList, success: handleData, provider: provider)
         request(.goodList, success: handleData)
         
-//
-//
-//
-
         //autoFit()
     }
 
@@ -157,12 +87,106 @@ class PurchaseView: UIViewController {
                 item["createTime"] = element["createTime"].stringValue
                 
                 goodsData.append(item)
-//                goodsData.append(PurchaseCellModel(goodsId: data["goodsId"].intValue, activityId: data["activityId"].intValue, cardNum: data["cardNum"].intValue, extraNum: data["extraNum"].intValue, activityExtraNum: data["activityExtraNum"].intValue, price: data["price"].floatValue, superscript: data["superscript"].stringValue, desc: data["desc"].stringValue, discount: data["discount"].doubleValue, discountFee: data["discountFee"].doubleValue, userGoodSuperscript: data["userGoodSuperscript"].intValue,createTime: data["createTime"].stringValue))
             }
+            
+            for(_, data) in goodsData.enumerated(){
+                let desc = data["description"] as? String
+                if desc != "" {
+                    descArr.append(desc!)
+                }
+            }
+            
+            arrangeUI()
+            
             collectionView.reloadData()
         }
     }
 
+    func arrangeUI(){
+        let lbl1 = addLabel(title: "待充值账号")
+        lbl1.frame.origin.y = 5
+        
+        let line1 = addUnderLine(v: lbl1)
+        
+        let imgHeadIco = addImageView()
+        imgHeadIco.frame.origin.y = line1.frame.origin.y + line1.frame.height + 5
+        
+        let agent = AgentSession.shared.agentModel
+        
+        let strURL = agent?.headImg
+        if strURL != nil {
+            let icoURL = URL(string: strURL!)
+            imgHeadIco.sd_setImage(with: icoURL, completed: nil)
+        } else {
+            imgHeadIco.image = UIImage(named: "headsmall")
+        }
+        let lblNickName = addLabel(title: "")
+        lblNickName.frame.origin.x = imgHeadIco.frame.origin.x + imgHeadIco.frame.width + 5
+        lblNickName.frame.origin.y = imgHeadIco.frame.origin.y
+        let nickName = agent?.nickName
+        lblNickName.text = nickName
+        
+        let lblAccountID = addLabel(title: "")
+        lblAccountID.frame.origin.x = imgHeadIco.frame.origin.x + imgHeadIco.frame.width + 5
+        lblAccountID.frame.origin.y = lblNickName.frame.origin.y + lblNickName.frame.height
+        
+        let accountID = agent?.agentId
+        lblAccountID.text = String.init(format: "ID:%d", accountID!)
+        
+        let div1 = addDivLine(y: imgHeadIco.frame.origin.y + imgHeadIco.frame.height + 5)
+        
+        let lblGoodsName = addLabel(title: "")
+
+        if descArr.count > 0 {
+            let lbl2 = addLabel(title: "促销")
+            lbl2.textColor = UIColor(hex: "008ce6")
+            lbl2.frame.size = CGSize(width: 35, height: 35)
+            lbl2.frame.origin.y =  div1.frame.origin.y + 10
+            
+            let img1 = addImageView()
+            img1.frame.size = CGSize(width: 15, height: 35)
+            img1.frame.origin.y =  lbl2.frame.origin.y
+            img1.frame.origin.x = lbl2.frame.origin.x + lbl2.frame.width
+            img1.image = UIImage(named: "ico_notice")
+            img1.contentMode = .center
+            scrollLabel = TXScrollLabelView(textArray: descArr, type: .flipNoRepeat, velocity: 2, options: .curveEaseInOut, inset: .zero)
+            scrollLabel.frame = CGRect(x: img1.frame.origin.x + img1.frame.width + 5, y: div1.frame.origin.y + 10, width: 100, height: 35)
+            scrollLabel.backgroundColor = .white
+            scrollLabel.textAlignment = .left
+            view.addSubview(scrollLabel)
+            scrollLabel.beginScrolling()
+            let div2 = addDivLine(y: scrollLabel.frame.origin.y + scrollLabel.frame.height)
+            lblGoodsName.frame.origin.y = div2.frame.origin.y + div2.frame.height + 5
+        } else {
+            lblGoodsName.frame.origin.y = div1.frame.origin.y + div1.frame.height + 5
+        }
+        
+        lblGoodsName.frame.size.width = line1.frame.width
+        let gameName = agent?.gameName
+        let goodsName = NSMutableAttributedString(string: gameName! + ",请选择充值张数：")
+        let range = gameName?.characters.count
+        
+        goodsName.addAttribute(NSForegroundColorAttributeName, value: UIColor(hex: "008ce6"), range: NSMakeRange(0, range!))
+        lblGoodsName.attributedText = goodsName
+        
+        let line2 = addUnderLine(v: lblGoodsName)
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width/3 - 10, height: 90)
+        layout.minimumLineSpacing = 5
+        layout.minimumInteritemSpacing = 5
+        layout.sectionInset.left = 10
+        layout.sectionInset.right = 10
+        
+        let frame = CGRect(x: 0, y: line2.frame.origin.y + 15, width: view.bounds.width, height: view.bounds.height - line2.frame.origin.y - 16)
+        collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
+        collectionView.backgroundColor = .white
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        view.addSubview(collectionView)
+        let xib = UINib(nibName: "GoodsViewCell", bundle: nil)
+        collectionView.register(xib, forCellWithReuseIdentifier: cellGoodsIdentifier)
+    }
     /*
     // MARK: - Navigation
 
@@ -251,8 +275,6 @@ extension PurchaseView: UICollectionViewDelegate, UICollectionViewDataSource {
                 UserDefaults.standard.set(dataStr, forKey: "payURL")
                 let vc = DoPayView()
                 self.navigationController?.pushViewController(vc, animated: true)
-//                let naviVC = UINavigationController(rootViewController: vc)
-//                self.present(naviVC, animated: true, completion: nil)
             }else{
                 self.toastMSG(result: result)
             }

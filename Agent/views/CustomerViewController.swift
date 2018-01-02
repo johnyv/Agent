@@ -10,7 +10,7 @@ import UIKit
 import SwiftyJSON
 import XLPagerTabStrip
 
-class CustomerDetailController: ButtonBarPagerTabStripViewController {
+class CustomerPageController: ButtonBarPagerTabStripViewController {
     
     var isReload = false
     
@@ -48,12 +48,14 @@ class CustomerDetailController: ButtonBarPagerTabStripViewController {
         super.scrollViewDidEndScrollingAnimation(scrollView)
         
         let childView = viewControllers[currentIndex] as! CustomerDetail
+        childView.page = 0
         childView.delegate = childView.self
         childView.reNew(type: currentIndex)
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let childView = viewControllers[currentIndex] as! CustomerDetail
+        childView.page = 0
         childView.delegate = childView.self
         childView.reNew(type: currentIndex)
     }
@@ -67,12 +69,9 @@ class CustomerViewController: UIViewController {
     
     @IBOutlet weak var sellPerson: UILabel!
     @IBOutlet weak var sellCount: UILabel!
-//    @IBOutlet weak var segSort: UISegmentedControl!
-//    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var vTopBg: UIView!
     
-//    @IBOutlet weak var imgNoData: UIImageView!
-//    @IBOutlet weak var lblNoData: UILabel!
+    var customerViewPage:CustomerPageController!
     let cellTableIdentifier = "customerTableCell"
     var sourceData = [[String:Any]]()
     
@@ -85,8 +84,9 @@ class CustomerViewController: UIViewController {
         request(.customerAllNum(searchId: 0, startDate: 0, endDate: 0), success: handleAllnum)
 //        requestData(sort: segSort.selectedSegmentIndex)
 
-        let customerViewPage = CustomerDetailController()
+        customerViewPage = CustomerPageController()
         customerViewPage.view.frame.origin.y = vTopBg.frame.origin.y + vTopBg.frame.height
+        customerViewPage.view.frame.size.height = view.bounds.height - vTopBg.frame.origin.y + vTopBg.frame.height - 164
         addChildViewController(customerViewPage)
         view.addSubview(customerViewPage.view)
 
@@ -113,7 +113,14 @@ class CustomerViewController: UIViewController {
     }
     
     func doRefresh(notifiction:NSNotification){
+        
+        let idx = customerViewPage?.currentIndex
+        let childView = customerViewPage?.viewControllers[idx!] as! CustomerDetail
+        childView.delegate = childView.self
+        childView.reNew(type: idx!)
+
         request(.customerAllNum(searchId: 0, startDate: 0, endDate: 0), success: handleAllnum)
+        
     }
     
     @IBAction func backToPrev(_ sender: UIBarButtonItem) {

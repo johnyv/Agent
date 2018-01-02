@@ -9,6 +9,7 @@
 import UIKit
 import XLPagerTabStrip
 import SwiftyJSON
+import MJRefresh
 
 class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoProvider {
 
@@ -20,7 +21,7 @@ class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoPro
     
     var delegate:PageListDelegate?
     var type:Int?
-    
+    var page:Int?
     var imageNodata:UIImageView!
     var lblNoData:UILabel!
 
@@ -57,6 +58,11 @@ class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoPro
         lblNoData.textAlignment = .center
         alignUIView(v: lblNoData, position: .center)
         
+        self.page = 0
+        let mjRefresh = MJRefreshNormalHeader()
+        mjRefresh.setRefreshingTarget(self, refreshingAction: #selector(self.doMJRefresh))
+        tableView.mj_header = mjRefresh
+
         showNoData()
     }
 
@@ -197,15 +203,21 @@ class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoPro
                 listData.append(item)
             }
             tableView.reloadData()
+            tableView.mj_header.endRefreshing()
             showNoData()
         }
+    }
+
+    func doMJRefresh(){
+        self.page = self.page! + 1
+        reNew(type: self.type!)
     }
 
     func reNew(type: Int) {
         self.type = type
         let timeInterVal = Int(Date().timeIntervalSince1970*1000)
         if type == 0 {
-            request(.statisticList(time: String(timeInterVal), sortType: 0, pageIndex: 0, pageNum: 0), success: handleData)
+            request(.statisticList(time: String(timeInterVal), sortType: 0, pageIndex: 0, pageNum: self.page!), success: handleData)
         } else {
             request(.goodDetail(time: String(timeInterVal), page: 1), success: handleData)
         }
@@ -214,7 +226,7 @@ class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoPro
     public func refreshDate(type:Int, time:Int) -> Void {
         self.type = type
         if type == 0 {
-            request(.statisticList(time: String(time), sortType: 0, pageIndex: 0, pageNum: 0), success: handleData)
+            request(.statisticList(time: String(time), sortType: 0, pageIndex: 0, pageNum: self.page!), success: handleData)
         } else {
             request(.goodDetail(time: String(time), page: 1), success: handleData)
         }

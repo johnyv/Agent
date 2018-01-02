@@ -9,7 +9,6 @@
 import UIKit
 import Moya
 import SwiftyJSON
-import SVProgressHUD
 import HooDatePicker
 import PopupController
 import XLPagerTabStrip

@@ -50,14 +50,16 @@ class AgentViewPageController: ButtonBarPagerTabStripViewController {
     
     override func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         super.scrollViewDidEndScrollingAnimation(scrollView)
-
+        
         let childView = viewControllers[currentIndex] as! MyAgentList
+        childView.page = 0
         childView.delegate = childView.self
         childView.reNew(type: currentIndex)
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let childView = viewControllers[currentIndex] as! MyAgentList
+        childView.page = 0
         childView.delegate = childView.self
         childView.reNew(type: currentIndex)
     }
@@ -77,16 +79,7 @@ extension AgentViewPageController: PageRefreshDelegate {
 
 class MyAgentAdmin: UIViewController {
 
-    @IBOutlet weak var btnNew: UIButton!
-//    @IBOutlet weak var tableView: UITableView!
-//    
-//    @IBOutlet weak var imgNoData: UIImageView!
-//    @IBOutlet weak var lblNoData: UILabel!
-//
-//    @IBOutlet weak var segSort: UISegmentedControl!
-//    
-//    var sourceData = [MyAgentCellModel]()
-    var agentViewPage:AgentViewPageController?
+    var agentViewPage:AgentViewPageController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,18 +89,15 @@ class MyAgentAdmin: UIViewController {
         self.title = "我的代理"
 
         agentViewPage = AgentViewPageController()
-        addChildViewController(agentViewPage!)
-        view.addSubview((agentViewPage?.view)!)
+        addChildViewController(agentViewPage)
+        view.addSubview(agentViewPage.view)
 
-        btnNew = addButton(title: "立即开通", action: #selector(toOpen(_:)))
-        btnNew.frame.origin.y = UIScreen.main.bounds.height - btnNew.frame.height - 100
-        btnNew.setBorder(type: 0)
-//        autoFit()
-    }
+        let rightButton = UIBarButtonItem(title: "开通代理", style: .plain, target: self, action: #selector(newAgent(_:)))
+        self.navigationItem.rightBarButtonItem = rightButton
 
-    override func viewDidAppear(_ animated: Bool) {
-//        let count = sourceData.count
-//        showNodata(dataCount: count)
+//        btnNew = addButton(title: "立即开通", action: #selector(newAgent(_:)))
+//        btnNew.frame.origin.y = UIScreen.main.bounds.height - btnNew.frame.height - 100
+//        btnNew.setBorder(type: 0)
     }
     
     override func didReceiveMemoryWarning() {
@@ -115,52 +105,12 @@ class MyAgentAdmin: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-//    @IBAction func backToPrev(_ sender: UIBarButtonItem) {
-//        dismiss(animated: true, completion: nil)
-//    }
     
-    func toOpen(_ button:UIButton){
+    func newAgent(_ button:Any){
         let vc = MyAgentNew()
         vc.pageDelegate = agentViewPage.self
         self.navigationController?.pushViewController(vc, animated: true)
     }
-
-    func handleData(json:JSON)->(){
-//        let result = json["result"]
-//        let code = result["code"].intValue
-//        if code == 200 {
-//            //            sourceData.removeAll()
-//            print(result)
-//            let data = result["data"]
-//            let dataArr = data["myAgentList"].array
-//            for(_, data) in (dataArr?.enumerated())!{
-//                //data["id"].intValue,data["createTime"].stringValue,data["title"].stringValue
-////                sourceData.append([NoticeListCellModel(id: data["id"].intValue, title: data["title"].stringValue, createTime: data["createTime"].stringValue)])
-//            }
-//            tableView.reloadData()
-//            let count = sourceData.count
-//            showNodata(dataCount: count)
-//        }
-    }
-    
-//    func segDidchange(_ segmented:UISegmentedControl){
-//        print(segmented.selectedSegmentIndex)
-//        request(.myagent(agentType: segSort.selectedSegmentIndex, page: 1, pageSize: 0), success: handleData)
-//    }
-
-//    func showNodata(dataCount:Int){
-//        if dataCount > 0 {
-//            imgNoData.isHidden = true
-//            lblNoData.isHidden = true
-//            btnOpen.isHidden = true
-//            tableView.isHidden = false
-//        }else{
-//            imgNoData.isHidden = false
-//            lblNoData.isHidden = false
-//            btnOpen.isHidden = false
-//            tableView.isHidden = true
-//        }
-//    }
 
     /*
     // MARK: - Navigation

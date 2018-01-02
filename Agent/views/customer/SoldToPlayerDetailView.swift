@@ -70,8 +70,6 @@ class SoldToPlayerDetailView: UIViewController {
 
         dateBegin = Int(zeroTime.timeIntervalSince1970*1000)
         dateEnd = Int(now.timeIntervalSince1970*1000)
-        
-        autoFit()
     }
 
     override func didReceiveMemoryWarning() {

@@ -9,6 +9,7 @@
 import UIKit
 import XLPagerTabStrip
 import SwiftyJSON
+import MJRefresh
 
 protocol PageListDelegate {
     func reNew(type:Int)
@@ -27,6 +28,9 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
     
     var imageNodata:UIImageView!
     var lblNoData:UILabel!
+
+    var type:Int?
+    var page:Int?
 
     init(style: UITableViewStyle, pageInfo: IndicatorInfo) {
         self.pageInfo = pageInfo
@@ -67,6 +71,11 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
         lblNoData.textAlignment = .center
         alignUIView(v: lblNoData, position: .center)
         
+        self.page = 0
+        let mjRefresh = MJRefreshNormalHeader()
+        mjRefresh.setRefreshingTarget(self, refreshingAction: #selector(self.doMJRefresh))
+        tableView.mj_header = mjRefresh
+
         showNoData()
 
         //request(.myagent(agentType: 0, page: 1, pageSize: 0), success: handleResult)
@@ -110,37 +119,26 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         // Configure the cell...
-//        if indexPath.row == 0 {
-//            let cell = tableView.dequeueReusableCell(withIdentifier: cellTitleIdentifier, for: indexPath) as! MyAgentListTitle
-//            let cellData = listData[indexPath.row]
-//            
-//            cell.backgroundColor = UIColor(hex: "cccccc")
-//            cell.selectionStyle = .none
-//            cell.lblAgentType.text = cellData["agentType"] as? String
-//            cell.lblAgentCard.text = cellData["agentCard"] as? String
-//            cell.lblLastBuyTime.text = cellData["lastBuyTime"] as? String
-//            return cell
-//        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellDetailIdentifier, for: indexPath) as! MyAgentListCell
-            let cellData = listData[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellDetailIdentifier, for: indexPath) as! MyAgentListCell
+        let cellData = listData[indexPath.row]
             
-            cell.selectionStyle = .none
-            cell.lblNickName.text = cellData["nickName"] as? String
-            let id = cellData["agentId"] as! Int
-            cell.lblUserId.text = String.init(format: "ID:%d", id)
-            let strURL = cellData["headerImgSrc"] as! String
-            if strURL == "" {
-                cell.imgHeadIco.image = UIImage(named: "headsmall")
-            } else {
-                let icoURL = URL(string: strURL.convertToHttps())
-                cell.imgHeadIco.sd_setImage(with: icoURL, completed: nil)
-            }
-            let hold = cellData["agentCard"] as! Int
-            cell.lblHoldCount.text = String.init(format: "%d", hold)
-            let time = cellData["lastBuyTime"] as! String
-            cell.lblLastTime.text = time.characters.count > 0 ? time : "----"
-            return cell
-//        }
+        cell.selectionStyle = .none
+        cell.lblNickName.text = cellData["nickName"] as? String
+        let id = cellData["agentId"] as! Int
+        cell.lblUserId.text = String.init(format: "ID:%d", id)
+        let strURL = cellData["headerImgSrc"] as! String
+        if strURL == "" {
+            cell.imgHeadIco.image = UIImage(named: "headsmall")
+        } else {
+            let icoURL = URL(string: strURL.convertToHttps())
+            cell.imgHeadIco.sd_setImage(with: icoURL, completed: nil)
+        }
+        let hold = cellData["agentCard"] as! Int
+        cell.lblHoldCount.text = String.init(format: "%d", hold)
+        let time = cellData["lastBuyTime"] as! String
+        cell.lblLastTime.text = time.characters.count > 0 ? time : "- - - -            "
+        cell.lblLastTime.textAlignment = time.characters.count > 0 ? .right : .center
+        return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -184,14 +182,21 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
                 listData.append(item)
             }
             tableView.reloadData()
+            tableView.mj_header.endRefreshing()
             showNoData()
         } else {
         }
     }
 
+    func doMJRefresh(){
+        self.page = self.page! + 1
+        reNew(type: self.type!)
+    }
+
     func reNew(type: Int) {
-        var agentType:Int = 0
+        self.type = type
         
+        var agentType:Int = 0
         switch type {
         case 0:
             agentType = 0
@@ -202,7 +207,7 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
         default:
             break
         }
-        request(.myagent(agentType: agentType, page: 1, pageSize: 0), success: handleResult)
+        request(.myagent(agentType: agentType, page: 0, pageSize: self.page!), success: handleResult)
     }
     
     func showNoData(){

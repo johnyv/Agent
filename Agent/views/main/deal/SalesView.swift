@@ -179,7 +179,7 @@ class SalesView: UIViewController {
                 cellData["customerType"] =  "A"
             }
             
-            let vc = loadVCfromMain(identifier: "salesConfirmView") as! SalesConfirmView
+            let vc = SalesConfirmView()
             vc.delegate = vc.self
             let nick = cellData["nick"] as! String
             let headIco = cellData["header_img_src"] as! String
@@ -245,7 +245,7 @@ extension SalesView: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cellData = sourceData[indexPath.row]
-        let vc = loadVCfromMain(identifier: "salesConfirmView") as! SalesConfirmView
+        let vc = SalesConfirmView()
         vc.delegate = vc.self
 
         let nick = cellData["nick"] as! String

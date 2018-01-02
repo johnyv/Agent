@@ -8,12 +8,15 @@
 
 import UIKit
 import SwiftyJSON
+import MJRefresh
 
 class NoticeListView: UITableViewController {
 
     let cellTableIdentifier = "commonCell"
     var sourceData = [[[String:Any]]]()
 
+    var page:Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,7 +30,13 @@ class NoticeListView: UITableViewController {
         tableView.tableFooterView = UIView()
         
         UILabel.appearance(whenContainedInInstancesOf: [UITableViewHeaderFooterView.self]).font = UIFont.systemFont(ofSize: 10.0)
-        request(.noticeList(page: 1, pageSize: 0), success: handleData)
+        
+        self.page = 0
+        let mjRefresh = MJRefreshNormalHeader()
+        mjRefresh.setRefreshingTarget(self, refreshingAction: #selector(self.doMJRefresh))
+        tableView.mj_header = mjRefresh
+
+        request(.noticeList(page: 0, pageSize: self.page!), success: handleData)
     }
 
     override func didReceiveMemoryWarning() {
@@ -82,8 +91,8 @@ class NoticeListView: UITableViewController {
         let result = json["result"]
         let code = result["code"].intValue
         if code == 200 {
-            //            sourceData.removeAll()
-            print(result)
+
+            sourceData.removeAll()
             let data = result["data"]
             let dataArr = data["noticeList"].array
             for(_, element) in (dataArr?.enumerated())!{
@@ -94,9 +103,17 @@ class NoticeListView: UITableViewController {
 
                 sourceData.append([item])
             }
+            
             tableView.reloadData()
+            tableView.mj_header.endRefreshing()
         }
     }
+    
+    func doMJRefresh(){
+        self.page = self.page! + 1
+        request(.noticeList(page: 0, pageSize: self.page!), success: handleData)
+    }
+
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

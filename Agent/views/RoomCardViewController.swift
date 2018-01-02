@@ -28,9 +28,9 @@ class CardsDetailPageController: ButtonBarPagerTabStripViewController {
         settings.style.buttonBarItemsShouldFillAvailableWidth = true
         super.viewDidLoad()
 
-        let childView = viewControllers[currentIndex] as! RoomCardsDetail
-        childView.delegate = childView.self
-        childView.reNew(type: currentIndex)
+//        let childView = viewControllers[currentIndex] as! RoomCardsDetail
+//        childView.delegate = childView.self
+//        childView.reNew(type: currentIndex)
     }
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
@@ -48,6 +48,7 @@ class CardsDetailPageController: ButtonBarPagerTabStripViewController {
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let childView = viewControllers[currentIndex] as! RoomCardsDetail
+        childView.page = 0
         childView.delegate = childView.self
         if time != 0 {
             childView.refreshDate(type: currentIndex, time: time)
@@ -59,6 +60,7 @@ class CardsDetailPageController: ButtonBarPagerTabStripViewController {
     override func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         super.scrollViewDidEndScrollingAnimation(scrollView)
         let childView = viewControllers[currentIndex] as! RoomCardsDetail
+        childView.page = 0
         childView.delegate = childView.self
         if time != 0 {
             childView.refreshDate(type: currentIndex, time: time)
@@ -148,6 +150,7 @@ class RoomCardViewController: UIViewController {
             }
         }
 
+        center.addObserver(self, selector: #selector(doRefresh(notifiction:)), name: notifyRefrsh, object: nil)
         
 //        let timeInterVal = Int(Date().timeIntervalSince1970*1000)
 //
@@ -221,6 +224,18 @@ class RoomCardViewController: UIViewController {
         request(.statisticAllNum(time: String(timeInterVal)), success: handleAllNum)
         request(.goodDetailCollect(time: String(timeInterVal)), success: handleBuyCount)
         request(.myInfo, success: handleInfo)
+
+        let idx = cardsViewPage?.currentIndex
+        let time = (cardsViewPage?.time)!
+        let updateTime = (time == 0) ? timeInterVal : time
+        
+        let childView = cardsViewPage?.viewControllers[idx!] as! RoomCardsDetail
+        childView.delegate = childView.self
+        childView.refreshDate(type: idx!, time: updateTime)
+    }
+    
+    func doRefresh(notifiction:NSNotification){
+        reCount()
     }
     
     @IBAction func backToIndex(_ sender: UIBarButtonItem) {

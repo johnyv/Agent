@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SVProgressHUD
 import SwiftyJSON
 import Moya
 import IQKeyboardManagerSwift

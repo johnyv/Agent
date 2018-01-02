@@ -90,7 +90,6 @@ class MainViewController: UIViewController {
         request(.isAffirm, success: handleAgreement)
         //request(.affirm, success: handleAgreement)
         //request(.agreement, success: handleAgreement)
-        //autoFit()
     }
 
     override func didReceiveMemoryWarning() {

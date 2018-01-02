@@ -9,6 +9,7 @@
 import UIKit
 import XLPagerTabStrip
 import SwiftyJSON
+import MJRefresh
 
 class CustomerDetail: UITableViewController, PageListDelegate, IndicatorInfoProvider {
 
@@ -20,7 +21,7 @@ class CustomerDetail: UITableViewController, PageListDelegate, IndicatorInfoProv
     
     var delegate:PageListDelegate?
     var type:Int?
-    
+    var page:Int?
     var imageNodata:UIImageView!
     var lblNoData:UILabel!
     
@@ -44,7 +45,6 @@ class CustomerDetail: UITableViewController, PageListDelegate, IndicatorInfoProv
         let xib = UINib(nibName: "CustomerTableCell", bundle: nil)
         tableView.register(xib, forCellReuseIdentifier: cellDetailIdentifier)
         tableView.tableFooterView = UIView()
-        
         imageNodata = addImageView()
         imageNodata.image = UIImage(named: "myagency")
         imageNodata.frame.size = CGSize(width: 185, height: 177)
@@ -57,6 +57,10 @@ class CustomerDetail: UITableViewController, PageListDelegate, IndicatorInfoProv
         lblNoData.textAlignment = .center
         alignUIView(v: lblNoData, position: .center)
         
+        self.page = 0
+        let mjRefresh = MJRefreshNormalHeader()
+        mjRefresh.setRefreshingTarget(self, refreshingAction: #selector(self.doMJRefresh))
+        tableView.mj_header = mjRefresh
         showNoData()
     }
 
@@ -137,19 +141,25 @@ class CustomerDetail: UITableViewController, PageListDelegate, IndicatorInfoProv
                 listData.append(cellData)
             }
             tableView.reloadData()
+            tableView.mj_header.endRefreshing()
             showNoData()
         }
     }
 
+    func doMJRefresh(){
+        self.page = self.page! + 1
+        reNew(type: self.type!)
+    }
+    
     func reNew(type: Int) {
         self.type = type
         switch type {
         case 0:
-            request(.customerRecently(searchId: 0, startDate: 0, endDate: 0, sortType: 0, pageIndex: 0, pageNum: 0), success: handleResult)
+            request(.customerRecently(searchId: 0, startDate: 0, endDate: 0, sortType: 0, pageIndex: 0, pageNum: self.page!), success: handleResult)
         case 1:
-            request(.customerTotallist(searchId: 0, startDate: 0, endDate: 0, sortType: 3, pageIndex: 0, pageNum: 0), success: handleResult)
+            request(.customerTotallist(searchId: 0, startDate: 0, endDate: 0, sortType: 3, pageIndex: 0, pageNum: self.page!), success: handleResult)
         case 2:
-            request(.customerTotallist(searchId: 0, startDate: 0, endDate: 0, sortType: 2, pageIndex: 0, pageNum: 0), success: handleResult)
+            request(.customerTotallist(searchId: 0, startDate: 0, endDate: 0, sortType: 2, pageIndex: 0, pageNum: self.page!), success: handleResult)
         default:
             break
         }
@@ -161,11 +171,11 @@ class CustomerDetail: UITableViewController, PageListDelegate, IndicatorInfoProv
         self.type = type
         switch type {
         case 0:
-            request(.customerRecently(searchId: searchId, startDate: startDate, endDate: endDate, sortType: 0, pageIndex: 0, pageNum: 0), success: handleResult)
+            request(.customerRecently(searchId: searchId, startDate: startDate, endDate: endDate, sortType: 0, pageIndex: 0, pageNum: self.page!), success: handleResult)
         case 1:
-            request(.customerTotallist(searchId: searchId, startDate: startDate, endDate: endDate, sortType: 3, pageIndex: 0, pageNum: 0), success: handleResult)
+            request(.customerTotallist(searchId: searchId, startDate: startDate, endDate: endDate, sortType: 3, pageIndex: 0, pageNum: self.page!), success: handleResult)
         case 2:
-            request(.customerTotallist(searchId: searchId, startDate: startDate, endDate: endDate, sortType: 2, pageIndex: 0, pageNum: 0), success: handleResult)
+            request(.customerTotallist(searchId: searchId, startDate: startDate, endDate: endDate, sortType: 2, pageIndex: 0, pageNum: self.page!), success: handleResult)
         default:
             break
         }

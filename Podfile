@@ -5,6 +5,7 @@ target 'Agent' do
 	platform :ios, '8.0'
 	pod 'WechatOpenSDK'
 	pod 'MJRefresh'
+#	pod 'MBProgressHUD'
 	pod 'SVProgressHUD'
 	pod 'SDWebImage'
 	pod 'Alamofire'
@@ -17,7 +18,8 @@ target 'Agent' do
 	pod 'PopupController'
 	pod 'HooDatePicker'
 	pod 'Toast-Swift'
-	pod 'TextFieldCounter'
+	pod 'TXScrollLabelView'
+#	pod 'TextFieldCounter'
 end
 
 post_install do |installer|

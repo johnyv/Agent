@@ -10,6 +10,7 @@ import UIKit
 import SwiftyJSON
 import XLPagerTabStrip
 import PopupController
+import MJRefresh
 
 class OrdersList: UITableViewController, PageListDelegate, IndicatorInfoProvider {
 
@@ -20,6 +21,7 @@ class OrdersList: UITableViewController, PageListDelegate, IndicatorInfoProvider
     let cellDetailIdentifier = "detailCell"
     
     var pageDelegate:PageListDelegate?
+    var page:Int?
     var type:Int?
     
     var imageNodata:UIImageView!
@@ -61,6 +63,11 @@ class OrdersList: UITableViewController, PageListDelegate, IndicatorInfoProvider
         lblNoData.textAlignment = .center
         alignUIView(v: lblNoData, position: .center)
         
+        self.page = 0
+        let mjRefresh = MJRefreshNormalHeader()
+        mjRefresh.setRefreshingTarget(self, refreshingAction: #selector(self.doMJRefresh))
+        tableView.mj_header = mjRefresh
+
         showNoData()
     }
 
@@ -174,6 +181,7 @@ class OrdersList: UITableViewController, PageListDelegate, IndicatorInfoProvider
             }
 //            DispatchQueue.main.async(execute: { () -> Void in
             tableView.reloadData()
+            tableView.mj_header.endRefreshing()
             showNoData()
 //            })
         }
@@ -189,6 +197,11 @@ class OrdersList: UITableViewController, PageListDelegate, IndicatorInfoProvider
         }
     }
 
+    func doMJRefresh(){
+        self.page = self.page! + 1
+        reNew(type: self.type!)
+    }
+
     func reNew(type: Int) {
         self.type = type
         let range = type + 1
@@ -201,14 +214,14 @@ class OrdersList: UITableViewController, PageListDelegate, IndicatorInfoProvider
         let month = comps.month
 
 //        request(.orderlist(year: "2017", month: "12", page: "1", type: type), success: handleData)
-        request(.orderlist(year: String.init(format: "%d",year!), month: String.init(format: "%d",month!), page: "1", type: String(range)), success: handleData)
+        request(.orderlist(year: String.init(format: "%d",year!), month: String.init(format: "%d",month!), page: String.init(format: "%d", self.page!), type: String(range)), success: handleData)
     }
     
     public func reNewRange(type:Int, year:String, month:String){
         self.type = type
         let range = type + 1
         
-        request(.orderlist(year: year, month: month, page: "1", type: String(range)), success: handleData)
+        request(.orderlist(year: year, month: month, page: String.init(format: "%d", self.page!), type: String(range)), success: handleData)
     }
     /*
     // Override to support conditional editing of the table view.

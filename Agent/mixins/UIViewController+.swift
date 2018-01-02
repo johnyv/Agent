@@ -10,6 +10,7 @@ import Foundation
 import Moya
 import SwiftyJSON
 import Toast_Swift
+import SVProgressHUD
 
 extension UIViewController{
     func alertResult(code:Int) -> Void {
@@ -35,6 +36,9 @@ extension UIViewController{
         //error errorCallback: @escaping(Int) -> Void,
         //failure failureCallback: @escaping(MoyaError) -> Void
         ){
+
+        SVProgressHUD.show()
+        
         let source = TokenSource()
         source.token = getSavedToken()
         let provider = MoyaProvider<NetworkManager>(plugins:[AuthPlugin(tokenClosure: {return source.token})])
@@ -70,49 +74,48 @@ extension UIViewController{
                     //如果数据返回成功则直接将结果转为JSON
                     try response.filterSuccessfulStatusCodes()
                     let json = try JSON(response.mapJSON())
+                    SVProgressHUD.dismiss()
                     successCallback(json)
                 }
                 catch let error {
                     //如果数据获取失败，则返回错误状态码
+                    SVProgressHUD.dismiss()
                     handleError(statusCode: (error as! MoyaError).response!.statusCode)
                 }
             case let .failure(error):
                 //如果连接异常，则返沪错误信息（必要时还可以将尝试重新发起请求）
                 //服务器报错等问题
+                SVProgressHUD.dismiss()
                 handleFailure(error: error)
             }
         }
     }
     
-    func autoFit(){
-        let radio:CGFloat = UIScreen.main.bounds.width / 375.0
-        //let radioH:Float =
-        let subviews = self.view.subviews
-        
-        
-        for(_, view) in subviews.enumerated(){
-            if view.subviews.count > 0 {
-                let subviews = view.subviews
-                for(_, view) in subviews.enumerated(){
-                    fitRadio(v: view, radio: radio)
-                }
-//                view.frame.size.width *= radio
-//                view.frame.size.height *= radio
-            }
-            fitRadio(v: view, radio: radio)
-        }
-    }
-    
-    private func fitRadio(v:UIView, radio:CGFloat){
-        if v.isKind(of: UINavigationBar.self) {
-            return
-        }
-        v.autoresizesSubviews = true
-        v.frame.origin.x *= radio
-        v.frame.origin.y *= radio
-        v.frame.size.width *= radio
-        v.frame.size.height *= radio
-    }
+//    func autoFit(v:UIView){
+//        let radio:CGFloat = UIScreen.main.bounds.width / 375.0
+//
+//        fitRadio(v: v, radio: radio)
+//        for(_, view) in v.subviews.enumerated(){
+//            if view.subviews.count > 0 {
+//                let subviews = view.subviews
+//                for(_, view) in subviews.enumerated(){
+//                    fitRadio(v: view, radio: radio)
+//                }
+//            }
+//            fitRadio(v: view, radio: radio)
+//        }
+//    }
+//    
+//    private func fitRadio(v:UIView, radio:CGFloat){
+//        if v.isKind(of: UINavigationBar.self) {
+//            return
+//        }
+//        v.autoresizesSubviews = true
+//        v.frame.origin.x *= radio
+//        v.frame.origin.y *= radio
+//        v.frame.size.width *= radio
+//        v.frame.size.height *= radio
+//    }
 
     private func defaultX() ->CGFloat {
         let width = UIScreen.main.bounds.width * 0.9

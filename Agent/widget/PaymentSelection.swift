@@ -9,7 +9,6 @@
 import UIKit
 import PopupController
 import SwiftyJSON
-import SVProgressHUD
 
 protocol PaymentDelegate {
     func dataForPay(data:[String:Any])
