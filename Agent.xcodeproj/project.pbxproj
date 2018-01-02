@@ -103,6 +103,10 @@
 		52F956091FEFB3D0008C9AE0 /* ComboBox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F956031FEFB3D0008C9AE0 /* ComboBox.xib */; };
 		52F9560A1FEFB3D0008C9AE0 /* ComboBoxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F956051FEFB3D0008C9AE0 /* ComboBoxCell.m */; };
 		52F9560B1FEFB3D0008C9AE0 /* ComboBoxCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F956061FEFB3D0008C9AE0 /* ComboBoxCell.xib */; };
+		52FD52091FD7D868007E023A /* CardSellListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD52081FD7D868007E023A /* CardSellListModel.swift */; };
+		52FD520B1FD7D883007E023A /* CardBuyListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD520A1FD7D883007E023A /* CardBuyListModel.swift */; };
+		52FD520D1FD7DD84007E023A /* CardDetailCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD520C1FD7DD84007E023A /* CardDetailCellModel.swift */; };
+		842E6B091FF0DBFF0064263A /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842E6B081FF0DBFF0064263A /* ProfileModel.swift */; };
 		84F757A81FECA6D6008ED6AA /* UINavigationController+Tracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F757A71FECA6D6008ED6AA /* UINavigationController+Tracking.m */; };
 		84F757AB1FECADA7008ED6AA /* UIViewController+Tracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F757AA1FECADA7008ED6AA /* UIViewController+Tracking.m */; };
 		DB6F216607A6283FC03854C8 /* Pods_Agent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7ADCB9F5510FBAAB5DECF96 /* Pods_Agent.framework */; };
@@ -235,6 +239,10 @@
 		52F956041FEFB3D0008C9AE0 /* ComboBoxCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComboBoxCell.h; sourceTree = "<group>"; };
 		52F956051FEFB3D0008C9AE0 /* ComboBoxCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComboBoxCell.m; sourceTree = "<group>"; };
 		52F956061FEFB3D0008C9AE0 /* ComboBoxCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComboBoxCell.xib; sourceTree = "<group>"; };
+		52FD52081FD7D868007E023A /* CardSellListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardSellListModel.swift; path = model/CardSellListModel.swift; sourceTree = "<group>"; };
+		52FD520A1FD7D883007E023A /* CardBuyListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardBuyListModel.swift; path = model/CardBuyListModel.swift; sourceTree = "<group>"; };
+		52FD520C1FD7DD84007E023A /* CardDetailCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardDetailCellModel.swift; path = model/CardDetailCellModel.swift; sourceTree = "<group>"; };
+		842E6B081FF0DBFF0064263A /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		84F757A61FECA6D6008ED6AA /* UINavigationController+Tracking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+Tracking.h"; sourceTree = "<group>"; };
 		84F757A71FECA6D6008ED6AA /* UINavigationController+Tracking.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+Tracking.m"; sourceTree = "<group>"; };
 		84F757A91FECADA7008ED6AA /* UIViewController+Tracking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Tracking.h"; sourceTree = "<group>"; };
@@ -562,6 +570,13 @@
 			children = (
 			);
 			path = vendor;
+			sourceTree = "<group>";
+		};
+		842E6AFC1FF0A9710064263A /* tool */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = tool;
 			sourceTree = "<group>";
 		};
 		BE6934126BC25E54D11E8C23 /* Frameworks */ = {

@@ -10,7 +10,9 @@
 #endif
 #endif
 
+#import "TXScrollLabelView.h"
+#import "UIView+TXFrame.h"
 
-FOUNDATION_EXPORT double TextFieldCounterVersionNumber;
-FOUNDATION_EXPORT const unsigned char TextFieldCounterVersionString[];
+FOUNDATION_EXPORT double TXScrollLabelViewVersionNumber;
+FOUNDATION_EXPORT const unsigned char TXScrollLabelViewVersionString[];
 
