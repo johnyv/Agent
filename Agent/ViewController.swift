@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let app = UIApplication.shared.delegate as! AppDelegate
         func handleResult(json:JSON)->(){
             print(json)
             let code = json["code"].intValue
@@ -34,20 +34,17 @@ class ViewController: UIViewController {
                 AgentSession.shared.agentModel = agentModel;
                 
                 //进入主页
-                let vc = loadVCfromMain(identifier: "mainMenu") as? MenuViewController
-                delegate.window?.rootViewController = vc
+                app.enterApp()
                 
             }else{
                 //token失败，重新登录
-                let vc = LoginViewController()
-                delegate.window?.rootViewController = vc
+                app.reLogin()
             }
         }
         if AgentSession.shared.isLogin() {
             request(.refresh, success: handleResult)
         } else {
-            let vc = LoginViewController()
-            delegate.window?.rootViewController = vc
+            app.reLogin()
         }
     }
     

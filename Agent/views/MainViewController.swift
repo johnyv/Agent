@@ -87,7 +87,10 @@ class MainViewController: UIViewController {
         request(.noticeScroll, success: handleNotice)
         request(.banner, success: handleBanner)
 
-        autoFit()
+        request(.isAffirm, success: handleAgreement)
+        //request(.affirm, success: handleAgreement)
+        //request(.agreement, success: handleAgreement)
+        //autoFit()
     }
 
     override func didReceiveMemoryWarning() {
@@ -99,13 +102,18 @@ class MainViewController: UIViewController {
 //        let appdelegate = UIApplication.shared.delegate as! AppDelegate
 //        appdelegate.mainNavi?.pushSalesView()
         
-        let vc = loadVCfromMain(identifier: "salesView") as? SalesView
-        self.navigationController?.pushViewController(vc!, animated: true)
+        let vc = SalesView()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func startPurshase(_ sender: UIButton) {
-        let vc = PurchaseView()
-        self.navigationController?.pushViewController(vc, animated: true)
+        let authority = AgentSession.shared.agentModel?.authorityList
+        if (authority?.contains("buy_online"))! {
+            let vc = PurchaseView()
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            view.makeToast("当前用户未开放", duration: 2, position: .center)
+        }
     }
     
     @IBAction func startClub(_ sender: UIButton) {
@@ -121,7 +129,6 @@ class MainViewController: UIViewController {
     
     func handleNotice(json:JSON)->(){
         let result = json["result"]
-        print(result)
         let code = result["code"].intValue
         if code == 200 {
             let data = result["data"]
@@ -137,7 +144,6 @@ class MainViewController: UIViewController {
     
     func handleBanner(json:JSON)->(){
         let result = json["result"]
-        print(result)
         let code = result["code"].intValue
         if code == 200 {
             let dataArr = result["data"].array
@@ -148,6 +154,17 @@ class MainViewController: UIViewController {
                 imgURLs.append(data["imageUrl"].stringValue as AnyObject)
             }
             banner.imageURLs = imgURLs
+        }
+    }
+    
+    func handleAgreement(json:JSON)->(){
+        let result = json["result"]
+        print(result)
+        let affirm = result["data"].intValue
+        if affirm != 1 {
+            let vc = agreement()
+            vc.needAffirm = true
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
     /*

@@ -13,7 +13,6 @@ import SVProgressHUD
 import PopupController
 
 class PurchaseView: UIViewController {
-//    var goodsData = [PurchaseCellModel]()
     var goodsData = [[String:Any]]()
     
     let cellGoodsIdentifier = "GoodsCell"
@@ -59,9 +58,12 @@ class PurchaseView: UIViewController {
         let agent = AgentSession.shared.agentModel
         
         let strURL = agent?.headImg
-        let icoURL = URL(string: strURL!)
-        imgHeadIco.sd_setImage(with: icoURL, completed: nil)
-        
+        if strURL != nil {
+            let icoURL = URL(string: strURL!)
+            imgHeadIco.sd_setImage(with: icoURL, completed: nil)
+        } else {
+            imgHeadIco.image = UIImage(named: "headsmall")
+        }
         let lblNickName = addLabel(title: "")
         lblNickName.frame.origin.x = imgHeadIco.frame.origin.x + imgHeadIco.frame.width + 5
         lblNickName.frame.origin.y = imgHeadIco.frame.origin.y
@@ -97,7 +99,7 @@ class PurchaseView: UIViewController {
         layout.sectionInset.right = 10
 //        layout.sectionInset.bottom = 10
 
-        let frame = CGRect(x: 0, y: line2.frame.origin.y + 15, width: view.bounds.width, height: 350)
+        let frame = CGRect(x: 0, y: line2.frame.origin.y + 15, width: view.bounds.width, height: view.bounds.height - line2.frame.origin.y - 16)
         collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
         collectionView.delegate = self
@@ -129,8 +131,8 @@ class PurchaseView: UIViewController {
     }
     
     func ordersList(_ sender: Any) {
-        let vc = loadVCfromMain(identifier: "ordersView") as? OrdersView
-        self.navigationController?.pushViewController(vc!, animated: true)
+        let vc = OrdersView()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     fileprivate func handleData(json:JSON)->(){
@@ -160,29 +162,6 @@ class PurchaseView: UIViewController {
             collectionView.reloadData()
         }
     }
-
-    
-//    func handlePay(json:JSON)->(){
-//        let result = json["result"]
-//        let code = result["code"].intValue
-//        if code == 200 {
-//            print(result)
-//            let dataStr = result["data"].stringValue
-//            let urlStr = dataStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-//            let url = URL(string: urlStr!)
-////            UIApplication.shared.openURL(url!)
-//            print(url)
-//            UserDefaults.standard.set(dataStr, forKey: "payURL")
-//
-//            let payVC = loadVCfromMain(identifier: "doPayView") as! DoPayView
-//            
-////            payVC.urlData = data
-//            present(payVC, animated: true, completion: nil)
-//        }else{
-//            print(result)
-//            SVProgressHUD.showInfo(withStatus: errMsg.desc(key: code))
-//        }
-//    }
 
     /*
     // MARK: - Navigation
@@ -230,7 +209,20 @@ extension PurchaseView: UICollectionViewDelegate, UICollectionViewDataSource {
         aStr.addAttributes(propertys, range: NSMakeRange(0, oldStr.characters.count))
         
         cell.lblDiscount.attributedText = aStr
-        cell.lblSuperscript.text = cellData["superscript"] as? String
+        
+        let script = cellData["userGoodSuperscript"] as! Int
+        
+        if script == 1{
+            cell.lblSuperscript.isHidden = false
+            cell.lblSuperscript.text = "新手专属"
+            cell.lblSuperscript.textColor = UIColor(hex: "1aad19")
+        } else if script == 2{
+            cell.lblSuperscript.isHidden = false
+            cell.lblSuperscript.text = String.init(format: "VIP享%.1f折", cellData["discount"] as! Double)
+            cell.lblSuperscript.textColor = UIColor(hex: "ff532a")
+        } else {
+            cell.lblSuperscript.isHidden = true
+        }
         
         if tag != nil {
             let imgTag = UIImageView(image: tag!)
@@ -258,10 +250,9 @@ extension PurchaseView: UICollectionViewDelegate, UICollectionViewDataSource {
                 let dataStr = result["data"].stringValue
                 UserDefaults.standard.set(dataStr, forKey: "payURL")
                 let vc = DoPayView()
-                let naviVC = UINavigationController(rootViewController: vc)
-//                let str = UserDefaults.standard.string(forKey: "payURL")
-//                print(str)
-                self.present(naviVC, animated: true, completion: nil)
+                self.navigationController?.pushViewController(vc, animated: true)
+//                let naviVC = UINavigationController(rootViewController: vc)
+//                self.present(naviVC, animated: true, completion: nil)
             }else{
                 self.toastMSG(result: result)
             }
@@ -269,27 +260,5 @@ extension PurchaseView: UICollectionViewDelegate, UICollectionViewDataSource {
         _ = payPopup.show(payContainer)
         payDelegate = payContainer.self
         payDelegate?.dataForPay(data: data)
-        
-//        func handlePay(json:JSON)->(){
-//            let result = json["result"]
-//            let code = result["code"].intValue
-//            if code == 200 {
-//                print(result)
-//                let dataStr = result["data"].stringValue
-//                let urlStr = dataStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-//                let url = URL(string: urlStr!)
-//                //            UIApplication.shared.openURL(url!)
-//                print(url)
-//                UserDefaults.standard.set(dataStr, forKey: "payURL")
-//                
-//                let payVC = loadVCfromMain(identifier: "doPayView") as! DoPayView
-//                
-//                //            payVC.urlData = data
-//                present(payVC, animated: true, completion: nil)
-//            }else{
-//                print(result)
-//                SVProgressHUD.showInfo(withStatus: errMsg.desc(key: code))
-//            }
-//        }
     }
 }

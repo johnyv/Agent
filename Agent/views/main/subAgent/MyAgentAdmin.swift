@@ -10,6 +10,10 @@ import UIKit
 import SwiftyJSON
 import XLPagerTabStrip
 
+protocol PageRefreshDelegate {
+    func refresh()
+}
+
 class AgentViewPageController: ButtonBarPagerTabStripViewController {
     
     var isReload = false
@@ -23,7 +27,11 @@ class AgentViewPageController: ButtonBarPagerTabStripViewController {
         settings.style.selectedBarHeight = 2
         settings.style.selectedBarBackgroundColor = .orange
         settings.style.buttonBarItemsShouldFillAvailableWidth = true
-        super.viewDidLoad()        
+        super.viewDidLoad()
+        
+        let childView = viewControllers[currentIndex] as! MyAgentList
+        childView.delegate = childView.self
+        childView.reNew(type: currentIndex)
     }
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
@@ -40,9 +48,15 @@ class AgentViewPageController: ButtonBarPagerTabStripViewController {
         return childViews
     }
     
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        super.scrollViewDidScroll(scrollView)
-        
+    override func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        super.scrollViewDidEndScrollingAnimation(scrollView)
+
+        let childView = viewControllers[currentIndex] as! MyAgentList
+        childView.delegate = childView.self
+        childView.reNew(type: currentIndex)
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let childView = viewControllers[currentIndex] as! MyAgentList
         childView.delegate = childView.self
         childView.reNew(type: currentIndex)
@@ -50,6 +64,14 @@ class AgentViewPageController: ButtonBarPagerTabStripViewController {
     
     override func reloadPagerTabStripView() {
         super.reloadPagerTabStripView()
+    }
+}
+
+extension AgentViewPageController: PageRefreshDelegate {
+    func refresh() {
+        let childView = viewControllers[currentIndex] as! MyAgentList
+        childView.delegate = childView.self
+        childView.reNew(type: currentIndex)
     }
 }
 
@@ -64,6 +86,8 @@ class MyAgentAdmin: UIViewController {
 //    @IBOutlet weak var segSort: UISegmentedControl!
 //    
 //    var sourceData = [MyAgentCellModel]()
+    var agentViewPage:AgentViewPageController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -71,9 +95,9 @@ class MyAgentAdmin: UIViewController {
         view.backgroundColor = .white
         self.title = "我的代理"
 
-        let agentViewPage = AgentViewPageController()
-        addChildViewController(agentViewPage)
-        view.addSubview(agentViewPage.view)
+        agentViewPage = AgentViewPageController()
+        addChildViewController(agentViewPage!)
+        view.addSubview((agentViewPage?.view)!)
 
         btnNew = addButton(title: "立即开通", action: #selector(toOpen(_:)))
         btnNew.frame.origin.y = UIScreen.main.bounds.height - btnNew.frame.height - 100
@@ -97,6 +121,7 @@ class MyAgentAdmin: UIViewController {
     
     func toOpen(_ button:UIButton){
         let vc = MyAgentNew()
+        vc.pageDelegate = agentViewPage.self
         self.navigationController?.pushViewController(vc, animated: true)
     }
 

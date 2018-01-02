@@ -12,37 +12,62 @@ import SwiftyJSON
 
 class SalesView: UIViewController {
 
-    @IBOutlet weak var segSort: UISegmentedControl!
-    @IBOutlet weak var tableView: UITableView!
+    var segSort: UISegmentedControl!
+    var tableView: UITableView!
     
-    @IBOutlet weak var btnSearch: UIButton!
-    @IBOutlet weak var tfSearch: UITextField!
+    var btnSearch: UIButton!
+    var tfSearch: UITextField!
     
     let cellTableIdentifier = "customerTableCell"
     var sourceData = [[String:Any]]()
 
+    let sortTitles = ["给玩家售卡","给代理售卡"]
+    let placeHolders = ["请输入玩家ID","请输入代理ID"]
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.title = "售卡"
         // Do any additional setup after loading the view.
+        view.backgroundColor = .white
+        segSort = UISegmentedControl(items: sortTitles)
+        segSort.frame = CGRect(x: 0, y: 0, width: 220, height: 25)
+        segSort.frame.origin.y = 15
+        view.addSubview(segSort)
+        alignUIView(v: segSort, position: .center)
         segSort.selectedSegmentIndex = 0
         segSort.addTarget(self, action: #selector(self.segDidchange(_:)), for: .valueChanged)
-        btnSearch.addTarget(self, action: #selector(self.doSearch(_:)), for: .touchUpInside)
+        
+        tfSearch = addTextField(placeholder: placeHolders[0])
+        tfSearch.frame.origin.y = segSort.frame.origin.y + segSort.frame.height + 15
+        tfSearch.keyboardType = .numberPad
+
+        btnSearch = addButton(title: "搜索", action:  #selector(self.doSearch(_:)))
+        btnSearch.frame.size.width = 25
+        btnSearch.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -20)
+        btnSearch.backgroundColor = .clear
+        btnSearch.setTitleColor(UIColor(hex: "565656"), for: .normal)
+        btnSearch.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        btnSearch.frame.origin.y = tfSearch.frame.origin.y
+        alignUIView(v: btnSearch, position: .right)
+
+        let div = addDivLine(y: tfSearch.frame.origin.y + tfSearch.frame.height + 5)
+        div.frame.size.height = 1
         
         requestData(sort: segSort.selectedSegmentIndex)
         
+        let tbRC = CGRect(x: 0, y: div.frame.origin.y + 5, width: view.bounds.width, height: view.bounds.height - div.frame.origin.y)
+        tableView = UITableView(frame: tbRC, style: .plain)
+        view.addSubview(tableView)
+
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(CustomerTableCell.self, forCellReuseIdentifier: cellTableIdentifier)
         let xib = UINib(nibName: "CustomerTableCell", bundle: nil)
         tableView.register(xib, forCellReuseIdentifier: cellTableIdentifier)
         tableView.tableFooterView = UIView()
-        tableView.rowHeight = 65
         
-        tfSearch.keyboardType = .numberPad
         
-        autoFit()
+        //autoFit()
     }
 
     override func didReceiveMemoryWarning() {
@@ -51,7 +76,8 @@ class SalesView: UIViewController {
     }
     
     func segDidchange(_ segmented:UISegmentedControl){
-        print(segmented.selectedSegmentIndex)
+        let sort = segmented.selectedSegmentIndex
+        tfSearch.placeholder = placeHolders[sort]
         tfSearch.text = ""
         requestData(sort: segmented.selectedSegmentIndex)
     }
@@ -189,6 +215,11 @@ extension SalesView: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sourceData.count
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 64
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellTableIdentifier, for: indexPath) as! CustomerTableCell
         

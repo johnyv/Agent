@@ -21,10 +21,6 @@ class ForgotViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func backToPrev(_ sender: UIBarButtonItem) {
-        dismiss(animated: false, completion: nil)
-    }
-
     /*
     // MARK: - Navigation
 

@@ -40,9 +40,9 @@ class MyAgentDetail: UITableViewController, MyAgentDetailDelegate {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
 
-        tableView.register(MyAgentRemarkCell.self, forCellReuseIdentifier: cellRemarkIdentifier)
-        let xibRemark = UINib(nibName: "MyAgentRemarkCell", bundle: nil)
-        tableView.register(xibRemark, forCellReuseIdentifier: cellRemarkIdentifier)
+//        tableView.register(MyAgentRemarkCell.self, forCellReuseIdentifier: cellRemarkIdentifier)
+        let xib = UINib(nibName: "MyAgentRemarkCell", bundle: nil)
+        tableView.register(xib, forCellReuseIdentifier: cellRemarkIdentifier)
 
         tableView.tableFooterView = UIView()
         
@@ -118,7 +118,8 @@ class MyAgentDetail: UITableViewController, MyAgentDetailDelegate {
     }
     
     func cardsDetail(_ sender:Any){
-        let vc = MyAgentRecords()
+        let vc = DealRecords()
+        vc.subAgentId = self.subAgentId!
         navigationController?.pushViewController(vc, animated: true)
     }
 
@@ -195,7 +196,8 @@ class MyAgentDetail: UITableViewController, MyAgentDetailDelegate {
     func reLoad() {
         request(.myagentInfo(subAgentId: self.subAgentId!), success: handleResult)
     }
-/*
+
+    /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.

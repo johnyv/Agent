@@ -23,7 +23,7 @@ enum NetworkManager{
     case gameInfo(serverCode:String)
     case banner //查询banner
     case agreement //查询协议
-    case affirm(agreementId:Int) //确认协议
+    case affirm //确认协议
     case noticeScroll //查询首页公告区域公告
     case noticeList(page:Int, pageSize:Int) //查询公告列表
     case noticeDetail(noticeId:Int) //查询公告详情
@@ -32,6 +32,7 @@ enum NetworkManager{
     case myagentNew(name:String, userId:Int, tel:String, roleId:Int, verificationCode:String, vipAgentOpenLimit:Int, normalAgentOpenLimit:Int, subAgentOpenLimit:Int, validityPeriod:String) //开通代理
     case agentSwitch(agentId:Int, enable:String) //启用，禁用代理
     case pwdChange(pwd:String, rpwd:String) //修改密码
+    case isAffirm //11判断是否已签署合作协议
     case myInfo //13查询当前代理信息
     case editHI(headerImgSrc:String) //14修改头像
     case editNick(nickName:String) //15修改昵称
@@ -133,9 +134,9 @@ extension NetworkManager: AuthorizedTargetType{
             return "/api/agent/gameInfo"
         case .banner:
             return "/api/agent/core/banner/list"
-        case.agreement:
+        case .agreement:
             return "/api/agent/core/agreement/get"
-        case .affirm(_):
+        case .affirm:
             return "/api/agent/core/agreement/affirm"
         case .noticeScroll:
             return "/api/agent/core/notice/scroll"
@@ -151,6 +152,8 @@ extension NetworkManager: AuthorizedTargetType{
             return "/api/agent/core/myagent/new"
         case .agentSwitch(_, _):
             return "/api/agent/core/myagent/switch"
+        case .isAffirm:
+            return "/api/agent/core/agreement/isAffirm"
         case .pwdChange(_, _):
             return "/api/agent/core/pwd/change"
         case .myInfo:

@@ -16,8 +16,6 @@ import IQKeyboardManagerSwift
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-//    var menuTab: MenuViewController?
-//    var mainNavi: MainNaviController?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -70,13 +68,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
         
     func reLogin() -> () {
-// 
-//        var topViewController:UIViewController?
-//        topViewController = (UIApplication.shared.keyWindow?.rootViewController)!
-//        while ((topViewController?.presentedViewController) != nil) {
-//            topViewController = topViewController?.presentedViewController!
-//        }
-//        topViewController?.dismiss(animated: false, completion: nil)
         
         let rootVc = LoginViewController()
         window?.rootViewController = rootVc
@@ -90,7 +81,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        }
 //        topViewController?.dismiss(animated: false, completion: nil)
         
-        let rootVc = loadVCfromMain(identifier: "mainMenu") as? MenuViewController
+        //let rootVc = loadVCfromMain(identifier: "mainMenu") as? MenuViewController
+        let rootVc = AppMain()
         window?.rootViewController = rootVc
     }
 }

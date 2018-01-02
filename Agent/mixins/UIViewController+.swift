@@ -175,7 +175,7 @@ extension UIViewController{
         label.backgroundColor = UIColor.clear
         label.text = title
         label.frame = defaultFrame()
-        label.font = .systemFont(ofSize: 15)
+        label.font = .systemFont(ofSize: 16)
         view.addSubview(label)
         return label
     }
@@ -186,7 +186,7 @@ extension UIViewController{
         textField.frame.size.width = 155
         textField.backgroundColor = UIColor.clear
         textField.textColor = UIColor.black
-        textField.font = UIFont.systemFont(ofSize: 15)
+        textField.font = UIFont.systemFont(ofSize: 16)
         textField.placeholder = placeholder
         textField.borderStyle = .none
         textField.textAlignment = .center
@@ -229,7 +229,7 @@ extension UIViewController{
         case .center:
             v.frame.origin.x = (screenW - viewWidth)/2
         case .right:
-            v.frame.origin.x = screenW - viewWidth - screenW * 0.1
+            v.frame.origin.x = screenW * 0.9 - viewWidth
         default:
             break
         }

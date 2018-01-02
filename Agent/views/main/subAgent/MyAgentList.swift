@@ -25,6 +25,9 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
 
     var delegate:PageListDelegate?
     
+    var imageNodata:UIImageView!
+    var lblNoData:UILabel!
+
     init(style: UITableViewStyle, pageInfo: IndicatorInfo) {
         self.pageInfo = pageInfo
         super.init(style: style)
@@ -52,7 +55,21 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
         let xibCell = UINib(nibName: "MyAgentListCell", bundle: nil)
         tableView.register(xibCell, forCellReuseIdentifier: cellDetailIdentifier)
 
-        request(.myagent(agentType: 0, page: 1, pageSize: 0), success: handleResult)
+        imageNodata = addImageView()
+        imageNodata.image = UIImage(named: "myagency")
+        imageNodata.frame.size = CGSize(width: 185, height: 177)
+        imageNodata.frame.origin.y = 65//view.frame.height/3 - imageNodata.frame.height
+        alignUIView(v: imageNodata, position: .center)
+        
+        lblNoData = addLabel(title: "暂无数据")
+        lblNoData.frame.origin.y = imageNodata.frame.origin.y + imageNodata.frame.height + 25
+        lblNoData.font = UIFont.systemFont(ofSize: 20)
+        lblNoData.textAlignment = .center
+        alignUIView(v: lblNoData, position: .center)
+        
+        showNoData()
+
+        //request(.myagent(agentType: 0, page: 1, pageSize: 0), success: handleResult)
     }
 
     override func didReceiveMemoryWarning() {
@@ -72,21 +89,38 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
         return listData.count
     }
 
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellTitleIdentifier) as! MyAgentListTitle
+
+        let title = ["代理","库存","最后购卡时间"]
+        
+        cell.backgroundColor = UIColor(hex: "f2f2f2")
+        cell.selectionStyle = .none
+        cell.lblAgentType.text = title[0]
+        cell.lblAgentCard.text = title[1]
+        cell.lblLastBuyTime.text = title[2]
+        
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
+    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         // Configure the cell...
-        if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellTitleIdentifier, for: indexPath) as! MyAgentListTitle
-            let cellData = listData[indexPath.row]
-            
-            cell.backgroundColor = UIColor(hex: "dddddd")
-            cell.selectionStyle = .none
-            cell.lblAgentType.text = cellData["agentType"] as? String
-            cell.lblAgentCard.text = cellData["agentCard"] as? String
-            cell.lblLastBuyTime.text = cellData["lastBuyTime"] as? String
-            return cell
-        } else {
+//        if indexPath.row == 0 {
+//            let cell = tableView.dequeueReusableCell(withIdentifier: cellTitleIdentifier, for: indexPath) as! MyAgentListTitle
+//            let cellData = listData[indexPath.row]
+//            
+//            cell.backgroundColor = UIColor(hex: "cccccc")
+//            cell.selectionStyle = .none
+//            cell.lblAgentType.text = cellData["agentType"] as? String
+//            cell.lblAgentCard.text = cellData["agentCard"] as? String
+//            cell.lblLastBuyTime.text = cellData["lastBuyTime"] as? String
+//            return cell
+//        } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: cellDetailIdentifier, for: indexPath) as! MyAgentListCell
             let cellData = listData[indexPath.row]
             
@@ -103,25 +137,20 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
             }
             let hold = cellData["agentCard"] as! Int
             cell.lblHoldCount.text = String.init(format: "%d", hold)
-            cell.lblLastTime.text = cellData["lastBuyTime"] as? String
+            let time = cellData["lastBuyTime"] as! String
+            cell.lblLastTime.text = time.characters.count > 0 ? time : "----"
             return cell
-
-        }
+//        }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.row {
-        case 0:
-            return 25
-        default:
-            return 64
-        }
+        return 64
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 0{
-            return
-        }
+//        if indexPath.row == 0{
+//            return
+//        }
         let vc = MyAgentDetail()
         let cellData = listData[indexPath.row]
         let subAgentId = cellData["agentId"] as! Int
@@ -136,10 +165,10 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
         let code = result["code"].intValue
         if code == 200 {
             listData.removeAll()
-            let title = ["agentType":"代理",
-                         "agentCard":"库存",
-                         "lastBuyTime":"最后购卡时间"]
-            listData.append(title)
+//            let title = ["agentType":"代理",
+//                         "agentCard":"库存",
+//                         "lastBuyTime":"最后购卡时间"]
+//            listData.append(title)
             
             let data = result["data"]
             let dataArr = data["myAgentList"].array
@@ -155,13 +184,37 @@ class MyAgentList: UITableViewController, PageListDelegate, IndicatorInfoProvide
                 listData.append(item)
             }
             tableView.reloadData()
+            showNoData()
         } else {
         }
     }
 
     func reNew(type: Int) {
-        request(.myagent(agentType: type, page: 1, pageSize: 0), success: handleResult)
+        var agentType:Int = 0
+        
+        switch type {
+        case 0:
+            agentType = 0
+        case 1:
+            agentType = 2
+        case 2:
+            agentType = 1
+        default:
+            break
+        }
+        request(.myagent(agentType: agentType, page: 1, pageSize: 0), success: handleResult)
     }
+    
+    func showNoData(){
+        if listData.count > 0 {
+            imageNodata.isHidden = true
+            lblNoData.isHidden = true
+        } else {
+            imageNodata.isHidden = false
+            lblNoData.isHidden = false
+        }
+    }
+
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

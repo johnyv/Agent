@@ -11,6 +11,15 @@ import UIKit
 @IBDesignable class SMSCountButton: UIButton {
     var countdownTimer: Timer?
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -20)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     var remainingSeconds: Int = 0 {
         willSet {
             setTitle("(\(newValue))", for: .normal)
@@ -27,7 +36,7 @@ import UIKit
             if newValue {
                 countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTime(_:)), userInfo: nil, repeats: true)
                 
-                remainingSeconds = 120
+                remainingSeconds = 10
                 
                 //self.backgroundColor = UIColor.gray
             } else {

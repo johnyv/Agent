@@ -1,16 +1,17 @@
 //
-//  RoomCardsDetail.swift
+//  OrdersListView.swift
 //  Agent
 //
-//  Created by 于劲 on 2017/12/25.
+//  Created by 于劲 on 2017/11/29.
 //  Copyright © 2017年 xianlai. All rights reserved.
 //
 
 import UIKit
-import XLPagerTabStrip
 import SwiftyJSON
+import XLPagerTabStrip
+import PopupController
 
-class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoProvider {
+class OrdersList: UITableViewController, PageListDelegate, IndicatorInfoProvider {
 
     var pageInfo = IndicatorInfo(title: "Page")
     
@@ -18,11 +19,13 @@ class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoPro
     
     let cellDetailIdentifier = "detailCell"
     
-    var delegate:PageListDelegate?
+    var pageDelegate:PageListDelegate?
     var type:Int?
     
     var imageNodata:UIImageView!
     var lblNoData:UILabel!
+
+    var payDelegate:PayOrderDelegate?
 
     init(style: UITableViewStyle, pageInfo: IndicatorInfo) {
         self.pageInfo = pageInfo
@@ -32,7 +35,7 @@ class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoPro
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -41,14 +44,15 @@ class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoPro
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        let xib = UINib(nibName: "RoomCardDetailCell", bundle: nil)
+        let xib = UINib(nibName: "OrderListCell", bundle: nil)
         tableView.register(xib, forCellReuseIdentifier: cellDetailIdentifier)
+
         tableView.tableFooterView = UIView()
         
         imageNodata = addImageView()
         imageNodata.image = UIImage(named: "myagency")
         imageNodata.frame.size = CGSize(width: 185, height: 177)
-        imageNodata.frame.origin.y = 65//view.frame.height/2 - imageNodata.frame.height
+        imageNodata.frame.origin.y = 65//view.frame.height/3 - imageNodata.frame.height
         alignUIView(v: imageNodata, position: .center)
         
         lblNoData = addLabel(title: "暂无数据")
@@ -78,145 +82,100 @@ class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoPro
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.row {
-        case 0:
-            return 30
-        default:
-            return 44
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellDetailIdentifier) as! RoomCardDetailCell
-        var title:[String:Any] = [:]
-        if self.type == 0 {
-            title = ["col1":"类型",
-                     "col2":"房卡数",
-                     "col3":"ID",
-                     "col4":"时间"]
-        } else {
-            title = ["col1":"类型",
-                     "col2":"房卡数",
-                     "col3":"金额",
-                     "col4":"时间"]
-        }
-
-        switch section {
-        case 0:
-//            if listData.count > 0 {
-//            let cellData = listData[0]
-            cell.lblCol1.textAlignment = .left
-            cell.lblCol2.textAlignment = .center
-            cell.lblCol3.textAlignment = .center
-            cell.lblCol4.textAlignment = .center
-            cell.backgroundColor = UIColor(hex: "f2f2f2")
-            cell.lblCol1.text = title["col1"] as? String
-            cell.lblCol2.text = title["col2"] as? String
-            cell.lblCol3.text = title["col3"] as? String
-            cell.lblCol4.text = title["col4"] as? String
-            cell.lblCol1.textColor = UIColor.black
-            cell.lblCol2.textColor = UIColor.black
-            cell.lblCol3.textColor = UIColor.black
-            cell.lblCol4.textColor = UIColor.black
-//            }
-        default:
-            break
-        }
-        return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
+        return 64
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellDetailIdentifier, for: indexPath) as! RoomCardDetailCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellDetailIdentifier, for: indexPath) as! OrderListCell
 
         // Configure the cell...
         let cellData = listData[indexPath.row]
-        cell.selectionStyle = .none
-        cell.lblCol1.textAlignment = .left
-        cell.lblCol2.textAlignment = .center
-        cell.lblCol3.textAlignment = .center
-        cell.lblCol4.textAlignment = .center
-//        if indexPath.row == 0 {
-//            cell.backgroundColor = UIColor(hex: "f2f2f2")
-//            cell.lblCol1.textColor = UIColor.black
-//            cell.lblCol2.textColor = UIColor.black
-//            cell.lblCol3.textColor = UIColor.black
-//            cell.lblCol4.textColor = UIColor.black
-//        }else{
-            cell.lblCol1.textAlignment = .left
-            cell.lblCol4.textAlignment = .right
-//        }
+        let gameName = cellData["gameName"] as? String
+        let num = cellData["cardNum"] as? Int
+        cell.lblCardName.text = gameName! + String.init(format: "%d张", num!)
         
-        cell.lblCol1.text = cellData["col1"] as? String
-        cell.lblCol2.text = cellData["col2"] as? String
-        cell.lblCol3.text = cellData["col3"] as? String
-        cell.lblCol4.text = cellData["col4"] as? String
-
+        cell.lblOrderNo.text = cellData["orderNo"] as? String
+        let amount = cellData["amount"] as! Float
+        cell.lblPrice.text = String.init(format: "%.2f元", amount)
+        let status = cellData["orderStatus"] as? String
+        if status == "UP" {
+            cell.lblStatus.textColor = .orange
+            cell.lblStatus.text = "待支付"
+        } else if status == "C"{
+            cell.lblStatus.textColor = .darkGray
+            cell.lblStatus.text = "已完成"
+        } else if status == "CC" {
+            cell.lblStatus.textColor = .darkGray
+            cell.lblStatus.text = "已取消"
+        }
         return cell
     }
-    
+ 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cellData = listData[indexPath.row]
+        if type == 0 {
+            let payPopup = PopupController
+                .create(self)
+                .customize([.layout(.center)])
+            
+            let payContainer = PaymentOpt.instance()
+            payContainer.closeHandler = { _ in
+                payPopup.dismiss()
+            }
+            payContainer.cancelHandler = { result in
+                payPopup.dismiss()
+                print(result)
+                let code = result["code"].intValue
+                if code == 200 {
+                    print(result)
+                    self.view.makeToast("取消成功", duration: 2, position: .center)
+                    self.pageDelegate?.reNew(type: self.type!)
+                }
+            }
+            payContainer.payHandler = { result in
+                print(result)
+                let code = result["code"].intValue
+                if code == 200 {
+                    let dataStr = result["data"].stringValue
+                    UserDefaults.standard.set(dataStr, forKey: "payURL")
+                    let vc = DoPayView()
+                    self.navigationController?.pushViewController(vc, animated: true)
+                } else {
+                    self.toastMSG(result: result)
+                }
+            }
+            
+            _ = payPopup.show(payContainer)
+            payDelegate = payContainer.self
+            let orderNo = cellData["orderNo"] as? String
+            payDelegate?.orderToPay(orderNo: orderNo!)
+        }
+    }
+
     func handleData(json:JSON)->(){
         let result = json["result"]
         let code = result["code"].intValue
-        print(result)
         if code == 200 {
+            print(result)
             listData.removeAll()
-//            var title:[String:Any] = [:]
-//            if self.type == 0 {
-//                title = ["col1":"类型",
-//                         "col2":"房卡数",
-//                         "col3":"ID",
-//                         "col4":"时间"]
-//            } else {
-//                title = ["col1":"类型",
-//                         "col2":"房卡数",
-//                         "col3":"金额",
-//                         "col4":"时间"]
-//            }
-//            listData.append(title)
-            
             let data = result["data"]
             let dataArr = data["datas"].array
             for(_, element) in (dataArr?.enumerated())!{
                 var item:[String:Any] = [:]
-                if type == 0 {
-                    item["col1"] = element["sellType"].stringValue
-                    item["col2"] = element["cardNum"].stringValue
-                    item["col3"] = element["id"].stringValue
-                    item["col4"] = element["sellTime"].stringValue
-                    
-                }else{
-                    item["col1"] = element["buyWay"].stringValue
-                    item["col2"] = element["cardNum"].stringValue
-                    item["col3"] = element["amount"].stringValue
-                    item["col4"] = element["time"].stringValue
-                }
+                item["id"] = element["id"].stringValue
+                item["orderNo"] = element["orderNo"].stringValue
+                item["createTime"] = element["createTime"].stringValue
+                item["cardNum"] = element["cardNum"].intValue
+                item["amount"] = element["amount"].floatValue
+                item["payWay"] = element["payWay"].stringValue
+                item["gameName"] = element["gameName"].stringValue
+                item["orderStatus"] = element["orderStatus"].stringValue
                 listData.append(item)
             }
+//            DispatchQueue.main.async(execute: { () -> Void in
             tableView.reloadData()
             showNoData()
-        }
-    }
-
-    func reNew(type: Int) {
-        self.type = type
-        let timeInterVal = Int(Date().timeIntervalSince1970*1000)
-        if type == 0 {
-            request(.statisticList(time: String(timeInterVal), sortType: 0, pageIndex: 0, pageNum: 0), success: handleData)
-        } else {
-            request(.goodDetail(time: String(timeInterVal), page: 1), success: handleData)
-        }
-    }
-    
-    public func refreshDate(type:Int, time:Int) -> Void {
-        self.type = type
-        if type == 0 {
-            request(.statisticList(time: String(time), sortType: 0, pageIndex: 0, pageNum: 0), success: handleData)
-        } else {
-            request(.goodDetail(time: String(time), page: 1), success: handleData)
+//            })
         }
     }
     
@@ -228,6 +187,28 @@ class RoomCardsDetail: UITableViewController, PageListDelegate, IndicatorInfoPro
             imageNodata.isHidden = false
             lblNoData.isHidden = false
         }
+    }
+
+    func reNew(type: Int) {
+        self.type = type
+        let range = type + 1
+        
+        let calender = Calendar(identifier: .gregorian)
+        var comps:DateComponents = DateComponents()
+        let date = Date()
+        comps = calender.dateComponents([.year, .month], from: date)
+        let year = comps.year
+        let month = comps.month
+
+//        request(.orderlist(year: "2017", month: "12", page: "1", type: type), success: handleData)
+        request(.orderlist(year: String.init(format: "%d",year!), month: String.init(format: "%d",month!), page: "1", type: String(range)), success: handleData)
+    }
+    
+    public func reNewRange(type:Int, year:String, month:String){
+        self.type = type
+        let range = type + 1
+        
+        request(.orderlist(year: year, month: month, page: "1", type: String(range)), success: handleData)
     }
     /*
     // Override to support conditional editing of the table view.

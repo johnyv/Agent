@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class agreement: UIViewController {
 
     var webView: UIWebView!
-
+    var btnAffirm:UIButton!
+    var needAffirm:Bool =  false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,6 +25,11 @@ class agreement: UIViewController {
         let path = Bundle.main.path(forResource: "agreement", ofType: "html")
         let pathURL = URL(fileURLWithPath: path!)
         webView.loadRequest(URLRequest(url: pathURL))
+        
+        if needAffirm {
+            let rightButton = UIBarButtonItem(title: "同意", style: .plain, target: self, action: #selector(affirm(_:)))
+            self.navigationItem.rightBarButtonItem = rightButton
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,6 +38,19 @@ class agreement: UIViewController {
     }
     
 
+    func handAffirm(json:JSON)->(){
+        let result = json["result"]
+        print(result)
+        let code = result["code"].intValue
+        if code == 200 {
+            toastMSG(result: result)
+            _ = navigationController?.popViewController(animated: true)
+        }
+    }
+
+    func affirm(_ sender: Any) {
+        request(.affirm, success: handAffirm)
+    }
     /*
     // MARK: - Navigation
 

@@ -72,15 +72,15 @@ class LoginViewController: UIViewController {
         
         btnSms = addSmsButton(title: "获取验证码", action: #selector(sms(_:)))
         btnSms.frame.origin.y = tfSms.frame.origin.y
-        btnSms.frame.size.width = 80
-        btnSms.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        btnSms.frame.size.width = 70
+        btnSms.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         alignUIView(v: btnSms, position: .right)
         
         btnVoice = addSmsButton(title: "语音验证码", action: #selector(sms(_:)))
         btnVoice.frame.origin.y = btnSms.frame.origin.y + btnSms.frame.height + 15
-        btnVoice.frame.size.width = 65
+        btnVoice.frame.size.width = 55
         btnVoice.setTitleColor(UIColor(hex: "565656"), for: .normal)
-        btnVoice.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        btnVoice.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         alignUIView(v: btnVoice, position: .right)
 
         btnLogin = addButton(title: "登录", action: #selector(login(_:)))
@@ -89,7 +89,7 @@ class LoginViewController: UIViewController {
         btnLogin.setBorder(type: 0)
         
         let line3 = addUnderLine(v: btnLogin)
-        line3.frame.origin.y += 35
+        line3.frame.origin.y += 45
         let lblOther = addLabel(title: "其他方式登录")
         lblOther.backgroundColor = .white
         lblOther.frame.origin.y = line3.frame.origin.y - 13
@@ -101,7 +101,7 @@ class LoginViewController: UIViewController {
         let center = UIScreen.main.bounds.width / 2
         btnWeixin = addButton(title: "微信登录", action: #selector(login(_:)))
         btnWeixin.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-        btnWeixin.frame.origin.x = center - btnWeixin.frame.width + 15
+        btnWeixin.frame.origin.x = center - btnWeixin.frame.width + 30
         btnWeixin.frame.origin.y =  lblOther.frame.origin.y + lblOther.frame.height + 10
         btnWeixin.setTitleColor(UIColor(hex: "565656"), for: .normal)
         btnWeixin.frame.size = CGSize(width: 65, height: 100)
@@ -111,7 +111,7 @@ class LoginViewController: UIViewController {
         
         btnAccount = addButton(title: "密码登录", action: #selector(login(_:)))
         btnAccount.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-        btnAccount.frame.origin.x = center + btnAccount.frame.width / 2
+        btnAccount.frame.origin.x = center + btnAccount.frame.width / 2 - 15
         btnAccount.frame.origin.y =  btnWeixin.frame.origin.y
         btnAccount.setTitleColor(UIColor(hex: "565656"), for: .normal)
         btnAccount.frame.size = CGSize(width: 65, height: 100)
@@ -119,10 +119,10 @@ class LoginViewController: UIViewController {
         btnAccount.setImage(UIImage(named:"pwd"), for: .normal)
         btnAccount.setTitleAlign(position: .bottom)
         
-        dpArea =  ComboBox(frame: CGRect(x: 0, y: lblArea.frame.origin.y, width: 160, height: 25))
+        dpArea =  ComboBox(frame: CGRect(x: 0, y: lblArea.frame.origin.y, width: 110, height: 25))
         dpArea.delegate = self
         let count:CGFloat = CGFloat(area.count)
-        dpArea.setComboBox(CGSize(width: 120, height: 44 * count))
+        dpArea.setComboBox(CGSize(width: 110, height: 44 * count))
         dpArea.setComboBoxData(area)
         view.addSubview(dpArea)
         dpArea.setComboBoxTitle(area[0])
@@ -138,6 +138,7 @@ class LoginViewController: UIViewController {
         let code = json["code"].intValue
         print(json)
         if code == 200 {
+            view.makeToast("发送成功", duration: 2, position: .center)
         }else{
             alertResult(code: code)
         }
@@ -167,7 +168,7 @@ class LoginViewController: UIViewController {
             let usr = tfMobile.text
             let pwd = tfSms.text
             let identifier = UIDevice.current.identifierForVendor
-            request(.login(usr!, pwd!), success: handleLogin)
+            request(.loginByMobile(username: usr!, password: pwd!, areaCode: "86"), success: handleLogin)
             
         case btnAccount:
             let vc = AccountViewController()

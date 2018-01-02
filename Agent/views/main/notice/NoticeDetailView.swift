@@ -26,7 +26,6 @@ class NoticeDetailView: UIViewController {
         lblTitle = addLabel(title: "")
         lblTitle.numberOfLines = 0
         lblTitle.lineBreakMode = .byTruncatingTail
-        lblTitle.frame.origin.y = 75
         lblTitle.frame.size.width = UIScreen.main.bounds.width - 20
         lblTitle.frame.size.height = 40
         lblTitle.font = UIFont.systemFont(ofSize: 16)
@@ -40,7 +39,7 @@ class NoticeDetailView: UIViewController {
         
         request(.noticeDetail(noticeId: noticeId!), success: handleNotice)
         
-        let y = lblTime.frame.origin.y + lblTime.frame.height + 20
+        let y = lblTime.frame.origin.y + lblTime.frame.height + 10
         let rcWeb = CGRect(x: 0, y: y, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - y)
         webView = UIWebView.init(frame: rcWeb)
         view.addSubview(webView)

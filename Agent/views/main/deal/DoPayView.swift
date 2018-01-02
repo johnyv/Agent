@@ -17,7 +17,6 @@ class DoPayView: UIViewController, WKUIDelegate, WKNavigationDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        addBackButtonToNavBar()
         
         let center = NotificationCenter.default
         let mainQueue = OperationQueue.main
@@ -27,7 +26,7 @@ class DoPayView: UIViewController, WKUIDelegate, WKNavigationDelegate{
         if payWay == 1 {
             token = center.addObserver(forName: NSNotification.Name(rawValue: "receiveWeixinSuccess"), object: nil, queue: mainQueue) { (note) in
                 UIApplication.shared.windows[0].makeToast("支付成功", duration: 2, position: .center)
-                self.dismiss(animated: true, completion: nil)
+                _ = self.navigationController?.popViewController(animated: true)
                 center.removeObserver(token!)
             }
         }

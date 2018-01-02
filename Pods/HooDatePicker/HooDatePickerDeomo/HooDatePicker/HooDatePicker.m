@@ -47,7 +47,8 @@ static CGFloat const kHooDatePickerAnimationDuration = 0.4f;
 
 // Constants colors :
 #define kHooDatePickerTintColor [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0]
-#define kHooDatePickerHighlightColor [UIColor colorWithRed:255.0/255.0 green:180.0/255.0 blue:18.0/255.0 alpha:1.0]
+//#define kHooDatePickerHighlightColor [UIColor colorWithRed:255.0/255.0 green:180.0/255.0 blue:18.0/255.0 alpha:1.0]
+#define kHooDatePickerHighlightColor [UIColor colorWithRed:24.0/255.0 green:152.0/255.0 blue:232.0/255.0 alpha:1.0]
 #define kHooDatePickerBackgroundColor [UIColor colorWithRed:244/255.0 green:242/255.0 blue:248/255.0 alpha:1.0]
 #define kHooDatePickerScrolViewBackgroundColor [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0]
 #define kHooDatePickerTitleFontColor kHooDatePickerTintColor
